@@ -5,16 +5,19 @@ import useLogin from '../../hooks/useLogin';
 import imgFondo from '../../assets/loginInstitucionalFondo.jpeg';
 import imgLogo from '../../assets/logoSUM.png';
 import { useEffect } from "react";
+import { useNavigate } from 'react-router-dom';
 
 function LoginInstitucional() {
     const apiUrl = 'https://sumvirtual.unmsm.edu.pe/sumapi/loguearse';
     const { data, loading, error, login } = useLogin(apiUrl);
+    const navigate = useNavigate();
 
     useEffect(() => {
         if (error) {
             console.log("Error: ", error);
         }else if (data) {
             console.log("Login exitoso: ", data);
+            navigate('/validacionSUM');
         }
     }, [data, error]);
 

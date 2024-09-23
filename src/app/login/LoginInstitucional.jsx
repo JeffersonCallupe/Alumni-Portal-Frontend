@@ -7,7 +7,7 @@ import useLogin from '../../hooks/useLogin';
 import { useEffect } from "react";
 
 function LoginInstitucional() {
-    const apiUrl = 'https://localhost:3000/login';
+    const apiUrl = 'https://localhost:3000/api/auth/login';
     const { data, loading, error, login } = useLogin(apiUrl);
 
     useEffect(() => {
