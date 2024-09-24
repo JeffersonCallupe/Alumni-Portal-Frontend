@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import TextInput from "../../atoms/inputs/TextInput";
 import Button from "@mui/material/Button";
 import Box from "@mui/material/Box";
-import useFormRegistro from "../../../hooks/useFormRegistroSUM";
+import useForm, { validateRegistro } from "../../../hooks/useForm";
 
 const RegisterInstitucionalForm = ({ onSubmit }) => {
   const [page, setPage] = useState(1); // Controla la página del formulario
@@ -26,8 +26,11 @@ const RegisterInstitucionalForm = ({ onSubmit }) => {
 
   const initialFormData = extractRequiredData(JSON.parse(sessionStorage.getItem("user")) || {});
 
-  const { formData, errors, handleChange, handleSubmit } =
-    useFormRegistro(initialFormData, onSubmit);
+  const { formData, errors, handleChange, handleSubmit } = useForm(
+    initialFormData, 
+    onSubmit,
+    () => validateRegistro(formData)
+    );
 
   return (
     <Box

@@ -5,16 +5,19 @@ import imgLogo from '../../assets/logoUNMSM.png';
 import RegisterInstitucionalForm from '../../components/organisms/forms/registerInstitucionalForm';
 import useLogin from '../../hooks/useLogin';
 import { useEffect } from "react";
+import { useNavigate } from 'react-router-dom';
 
 function ValidacionSUM() {
     const apiUrl = 'https://localhost:3000/api/auth/register';
     const { data, loading, error, login } = useLogin(apiUrl);
+    const navigate = useNavigate();
 
     useEffect(() => {
         if (error) {
             console.log("Error: ", error);
         }else if (data) {
             console.log("Login exitoso: ", data);
+            navigate('/home');
         }
     }, [data, error]);
 

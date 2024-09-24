@@ -2,12 +2,13 @@ import React from "react";
 import TextInput from "../../atoms/inputs/TextInput";
 import Button from "@mui/material/Button";
 import Box from "@mui/material/Box";
-import useForm from "../../../hooks/useForm";
+import useForm, { validateLogin } from "../../../hooks/useForm";
 
 const LoginForm = ({ onSubmit, disabled}) => {
   const { formData, errors, handleChange, handleSubmit } = useForm(
     { usuario: "", clave: "" },
-    onSubmit
+    onSubmit,
+    () => validateLogin(formData)
   );
 
   return (
