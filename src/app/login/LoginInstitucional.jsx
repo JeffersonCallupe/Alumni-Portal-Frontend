@@ -12,6 +12,7 @@ function LoginInstitucional() {
       apiUrl={apiUrl}
       imgLogo={imgLogo}
       backgroundImage={imgFondo}
+      description={"Módulo de Ingreso Institucional"}
       handleRedirect={{ data, error }}
       loginRedirectUrl={"/loginSUM"}
       loading={loading}

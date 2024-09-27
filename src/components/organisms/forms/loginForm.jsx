@@ -2,7 +2,7 @@ import React from "react";
 import TextInput from "../../atoms/inputs/TextInput";
 import Button from "@mui/material/Button";
 import Box from "@mui/material/Box";
-import useForm, { validateLogin } from "../../../hooks/useForm";
+import useForm,{ validateLogin } from "../../../hooks/useForm";
 
 const LoginForm = ({ onSubmit, disabled}) => {
   const { formData, errors, handleChange, handleSubmit } = useForm(
@@ -20,7 +20,6 @@ const LoginForm = ({ onSubmit, disabled}) => {
         flexDirection: "column",
         gap: 2,
         width: "100%",
-        maxWidth: "400px",
       }}
     >
       <TextInput

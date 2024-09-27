@@ -1,9 +1,9 @@
-import {BrowserRouter, Routes, Route} from 'react-router-dom'
-import './App.css'
-import LoginInstitucional from '../src/app/login/LoginInstitucional'
-import LoginSUM from '../src/app/login/LoginSUM'
-import ValidacionSUM from './app/registro/validacionSUM'
-import Home from './app/dashboard/home'
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import "./App.css";
+import LoginInstitucional from "../src/app/login/LoginInstitucional";
+import LoginSUM from "../src/app/login/LoginSUM";
+import ValidacionSUM from "./app/registro/validacionSUM";
+import Home from "./app/dashboard/home";
 
 function App() {
   return (
@@ -15,7 +15,7 @@ function App() {
         <Route path="/home" element={<Home />} />
       </Routes>
     </BrowserRouter>
-  )
+  );
 }
 
 export default App;
