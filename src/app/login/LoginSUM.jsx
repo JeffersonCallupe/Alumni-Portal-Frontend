@@ -1,4 +1,4 @@
-import LoginBase from "../../components/templates/login/login";
+import LoginBase from "../../components/templates/login/login"
 import useLogin from "../../hooks/useLogin";
 import imgFondo from "../../assets/loginInstitucionalFondo.jpeg";
 import imgLogo from "../../assets/logoSUM.png";

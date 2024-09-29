@@ -1,12 +1,9 @@
-import Footer from "../../components/atoms/footer/footer";
+import HomeBase from "../../components/templates/home/home";
 
 function Home() {
   return (
     <div className="h-screen w-full flex flex-col">
-      <div className="h-screen">
-        <p>*insertar una página de inicio*</p>
-      </div>
-      <Footer />
+      <HomeBase />
     </div>
   );
 }

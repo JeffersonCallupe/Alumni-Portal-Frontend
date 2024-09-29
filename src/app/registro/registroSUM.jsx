@@ -6,9 +6,10 @@ import RegisterInstitucionalForm from "../../components/organisms/forms/register
 import useLogin from "../../hooks/useLogin";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { validateRegistroSM } from "../../hooks/validateLogin";
 
-function ValidacionSUM() {
-  const apiUrl = "https://localhost:3000/api/auth/register";
+function RegistroSUM() {
+  const apiUrl = "http://178.128.147.224:8080/api/user/registerAcademic";
   const { data, loading, error, login } = useLogin(apiUrl);
   const navigate = useNavigate();
 
@@ -22,7 +23,11 @@ function ValidacionSUM() {
   }, [data, error]);
 
   const handleLogin = (formData) => {
-    login(formData);
+    const dataToSubmit = { ...formData };
+            if(dataToSubmit.confirmPassword) {
+                delete dataToSubmit.confirmPassword;
+            }
+    login(dataToSubmit);
   };
 
   return (
@@ -42,6 +47,7 @@ function ValidacionSUM() {
             <RegisterInstitucionalForm
               onSubmit={handleLogin}
               disabled={loading}
+              validate={validateRegistroSM}
             />
           </div>
         </div>
@@ -51,4 +57,4 @@ function ValidacionSUM() {
   );
 }
 
-export default ValidacionSUM;
+export default RegistroSUM;

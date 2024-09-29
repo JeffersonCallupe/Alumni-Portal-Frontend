@@ -15,6 +15,7 @@ function LoginBase({
   loading,
   onSubmit,
   isSUM,
+  validate,
 }) {
   useEffect(() => {
     if (handleRedirect.error) {
@@ -78,7 +79,11 @@ function LoginBase({
                 {description}
               </Typography>
             )}
-            <LoginForm onSubmit={handleLogin} disabled={loading} />
+            <LoginForm
+              onSubmit={handleLogin}
+              disabled={loading}
+              validate={validate}
+            />
             <div className="mt-4 space-y-2">
               <Typography
                 variant="body2"

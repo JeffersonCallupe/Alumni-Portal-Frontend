@@ -2,34 +2,33 @@ import React, { useState } from "react";
 import TextInput from "../../atoms/inputs/TextInput";
 import Button from "@mui/material/Button";
 import Box from "@mui/material/Box";
-import useForm, { validateRegistro } from "../../../hooks/useForm";
+import useForm from "../../../hooks/useForm";
 
-const RegisterInstitucionalForm = ({ onSubmit }) => {
-  const [page, setPage] = useState(1); // Controla la página del formulario
+const RegisterInstitucionalForm = ({ onSubmit, validate }) => {
+  const [page, setPage] = useState(1);
 
   // Inicialización del formulario con los datos del sessionStorage
   const extractRequiredData = (data) => {
     return {
-      apePaterno: data.apePaterno || "",
-      apeMaterno: data.apeMaterno || "",
-      nomAlumno: data.nomAlumno || "",
-      desFacultad: data.desFacultad || "",
-      desEscuela: data.desEscuela || "",
-      codPlan: data.codPlan || "",
-      desPermanencia: data.desPermanencia || "",
-      codAlumno: data.codAlumno || "",
-      correoInstitucional: data.correoInstitucional || "",
+      paternalSurname: data.apePaterno || "",
+      maternalSurname: data.apeMaterno || "",
+      name: data.nomAlumno || "",
+      faculty: data.desFacultad || "",
+      career: data.desEscuela || "",
+      plan: data.codPlan || "",
+      permanence: data.desPermanencia || "",
+      studentCode: data.codAlumno || "",
+      email: data.correoInstitucional || "",
       password: "",
       confirmPassword: "",
     };
   };
 
   const initialFormData = extractRequiredData(JSON.parse(sessionStorage.getItem("user")) || {});
-
   const { formData, errors, handleChange, handleSubmit } = useForm(
     initialFormData, 
     onSubmit,
-    () => validateRegistro(formData)
+    validate ? () => validate(formData) : undefined
     );
 
   return (
@@ -45,78 +44,78 @@ const RegisterInstitucionalForm = ({ onSubmit }) => {
             <div className="space-between">
               <TextInput
                 label="Apellido Paterno"
-                name="apePaterno"
-                value={formData.apePaterno}
+                name="paternalSurname"
+                value={formData.paternalSurname}
                 onChange={handleChange}
-                error={errors.apePaterno}
+                error={errors.paternalSurname}
                 disabled={true}
               />
               <TextInput
                 label="Apellido Materno"
-                name="apeMaterno"
-                value={formData.apeMaterno}
+                name="maternalSurname"
+                value={formData.maternalSurname}
                 onChange={handleChange}
-                error={errors.apeMaterno}
+                error={errors.maternalSurname}
                 disabled={true}
               />
               <TextInput
                 label="Nombres"
-                name="nomAlumno"
-                value={formData.nomAlumno}
+                name="name"
+                value={formData.name}
                 onChange={handleChange}
-                error={errors.nomAlumno}
+                error={errors.name}
                 disabled={true}
               />
             </div>
             <div className="space-between">
               <TextInput
                 label="Facultad"
-                name="desFacultad"
-                value={formData.desFacultad}
+                name="faculty"
+                value={formData.faculty}
                 onChange={handleChange}
-                error={errors.desFacultad}
+                error={errors.faculty}
                 disabled={true}
               />
               <TextInput
                 label="Escuela"
-                name="desEscuela"
-                value={formData.desEscuela}
+                name="career"
+                value={formData.career}
                 onChange={handleChange}
-                error={errors.desEscuela}
+                error={errors.career}
                 disabled={true}
               />
               <TextInput
                 label="Plan de Estudios"
-                name="codPlan"
-                value={formData.codPlan}
+                name="plan"
+                value={formData.plan}
                 onChange={handleChange}
-                error={errors.codPlan}
+                error={errors.plan}
                 disabled={true}
               />
             </div>
             <div className="space-between">
               <TextInput
                 label="Permanencia"
-                name="desPermanencia"
-                value={formData.desPermanencia}
+                name="permanence"
+                value={formData.permanence}
                 onChange={handleChange}
-                error={errors.desPermanencia}
+                error={errors.permanence}
                 disabled={true}
               />
               <TextInput
                 label="Código Alumno"
-                name="codAlumno"
-                value={formData.codAlumno}
+                name="studentCode"
+                value={formData.studentCode}
                 onChange={handleChange}
-                error={errors.codAlumno}
+                error={errors.studentCode}
                 disabled={true}
               />
               <TextInput
                 label="Correo Institucional"
-                name="correoInstitucional"
-                value={formData.correoInstitucional}
+                name="email"
+                value={formData.email}
                 onChange={handleChange}
-                error={errors.correoInstitucional}
+                error={errors.email}
                 disabled={true}
               />
             </div>

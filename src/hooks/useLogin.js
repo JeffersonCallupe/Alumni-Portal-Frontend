@@ -10,6 +10,7 @@ const useLogin = (apiUrl) => {
     setError(null);
 
     const requestBody = JSON.stringify(credentials);
+    console.log(requestBody)
 
     try {
       const response = await fetch(apiUrl, {
