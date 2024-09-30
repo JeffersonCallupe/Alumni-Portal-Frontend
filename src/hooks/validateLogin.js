@@ -1,11 +1,11 @@
 export function validateLoginSM(formData){
   let errors = {};
 
-  if (!formData.usuario.endsWith("@unmsm.edu.pe")) {
-    errors.usuario = "Debe utilizar un correo institucional";
+  if (!formData.email.endsWith("@unmsm.edu.pe")) {
+    errors.email = "Debe utilizar un correo institucional";
   } 
-  if (!formData.clave) {
-    errors.clave = "La contraseña es requerida";
+  if (!formData.password) {
+    errors.password = "La contraseña es requerida";
   }
 
   return errors;

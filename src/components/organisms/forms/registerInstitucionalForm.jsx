@@ -10,6 +10,8 @@ const RegisterInstitucionalForm = ({ onSubmit, validate }) => {
   // Inicialización del formulario con los datos del sessionStorage
   const extractRequiredData = (data) => {
     return {
+      email: data.correoInstitucional || "",
+      password: "",
       paternalSurname: data.apePaterno || "",
       maternalSurname: data.apeMaterno || "",
       name: data.nomAlumno || "",
@@ -18,8 +20,6 @@ const RegisterInstitucionalForm = ({ onSubmit, validate }) => {
       plan: data.codPlan || "",
       permanence: data.desPermanencia || "",
       studentCode: data.codAlumno || "",
-      email: data.correoInstitucional || "",
-      password: "",
       confirmPassword: "",
     };
   };
