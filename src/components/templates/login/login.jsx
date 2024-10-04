@@ -1,4 +1,5 @@
 import LoginForm from "../../organisms/forms/loginForm";
+import LoginSUMForm from "../../organisms/forms/loginSUMForm";
 import Typography from "@mui/material/Typography";
 import Footer from "../../atoms/footer/footer";
 import imgFondo from "../../../assets/fondoRectorado.png";
@@ -68,7 +69,6 @@ function LoginBase({
               </div>
             )}
 
-            {!isSUM && <img src={imgLogo} alt="Logo" className="h-24 mb-6" />}
             {description && (
               <Typography
                 variant="body2"
@@ -79,11 +79,23 @@ function LoginBase({
                 {description}
               </Typography>
             )}
-            <LoginForm
-              onSubmit={handleLogin}
-              disabled={loading}
-              validate={validate}
-            />
+            {!isSUM && (
+              <>
+                <img src={imgLogo} alt="Logo UNMSM" className="h-24 mb-6" />
+                <LoginForm
+                  onSubmit={handleLogin}
+                  disabled={loading}
+                  validate={validate}
+                />
+              </>
+            )}
+            {isSUM && (
+              <LoginSUMForm
+                onSubmit={handleLogin}
+                disabled={loading}
+                validate={validate}
+              />
+            )}
             <div className="mt-4 space-y-2">
               <Typography
                 variant="body2"
