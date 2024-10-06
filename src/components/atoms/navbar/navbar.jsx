@@ -1,22 +1,25 @@
 import * as React from "react";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
-import Toolbar from "@mui/material/Toolbar";
-import IconButton from "@mui/material/IconButton";
-import Typography from "@mui/material/Typography";
-import Menu from "@mui/material/Menu";
-import MenuIcon from "@mui/icons-material/Menu";
 import Container from "@mui/material/Container";
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
-import Tooltip from "@mui/material/Tooltip";
-import MenuItem from "@mui/material/MenuItem";
+import IconButton from "@mui/material/IconButton";
+import LogoActividades from "../../../assets/icons/actividades-button.png";
+import LogoOfertasLaborales from "../../../assets/icons/ofertas-button.png";
 import LogoSM from "../../../assets/logoUNMSM.png";
-import { useUser } from "../../../contexts/userContext";
+import Menu from "@mui/material/Menu";
+import MenuIcon from "@mui/icons-material/Menu";
+import MenuItem from "@mui/material/MenuItem";
+import Toolbar from "@mui/material/Toolbar";
+import Tooltip from "@mui/material/Tooltip";
+import Typography from "@mui/material/Typography";
 import { useNavigate } from "react-router-dom";
 
 function Navbar() {
-  const { user, setUser } = useUser();
+  const user_type = "Empresa" //Reemplazar por la info del contexto/token
+  const user_photo = "https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp"
+  const navigate = useNavigate();
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
   const [anchorElActividades, setAnchorElActividades] = React.useState(null);
@@ -25,27 +28,39 @@ function Navbar() {
   const handleOpenMenu = (setAnchor) => (event) => {
     setAnchor(event.currentTarget);
   };
-  
+
   const handleCloseMenu = (setAnchor) => () => {
     setAnchor(null);
   };
-  
-  const navigate = useNavigate();
-  const handleLogOut = () =>{
-    sessionStorage.removeItem('user');
-    sessionStorage.removeItem('token');
-    setUser(null);
-    navigate('/');
-  }
-  
-  return (
-    <AppBar position="static" sx={{ backgroundColor: '#6F191C' }}>
-      <Container maxWidth="xl">
-        <Toolbar disableGutters>
-          <a href="/home">
-            <img src={LogoSM} alt="Logo" className="h-16 p-2 none md:flex" />
-          </a>
 
+  const handleLogOut = () => { //TODO: Crear función en el contexto
+    sessionStorage.removeItem("user");
+    sessionStorage.removeItem("token");
+    navigate("/");
+  };
+
+  return (
+    <AppBar
+      position="static"
+      sx={{
+        backgroundColor: "#6F191C",
+        height: "4rem",
+        padding: { xs: "none", md: "0 20rem 0 15rem" },
+      }}
+    >
+      <Container maxWidth="xl">
+        <Toolbar
+          disableGutters
+          sx={{ justifyContent: "space-between", height: "100%" }}
+        >
+          {/* Logo */}
+          <Box sx={{ display: { xs: "none", md: "flex" } }}>
+            <a href="/home">
+              <img src={LogoSM} alt="Logo" style={{ height: "3rem" }} />
+            </a>
+          </Box>
+
+          {/* Íconos vista móvil */}
           <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>
             <IconButton
               size="large"
@@ -81,7 +96,7 @@ function Navbar() {
                 open={Boolean(anchorElActividades)}
                 onClose={handleCloseMenu(setAnchorElActividades)}
               >
-                {user?.role === "Institucional" && (
+                {user_type === "Institucional" && (
                   <MenuItem onClick={handleCloseMenu(setAnchorElActividades)}>
                     Mis actividades inscritas
                   </MenuItem>
@@ -99,7 +114,7 @@ function Navbar() {
                 open={Boolean(anchorElOfertas)}
                 onClose={handleCloseMenu(setAnchorElOfertas)}
               >
-                {user?.role === "Institucional" && (
+                {user_type === "Institucional" && (
                   <MenuItem onClick={handleCloseMenu(setAnchorElOfertas)}>
                     Ofertas inscritas
                   </MenuItem>
@@ -111,19 +126,33 @@ function Navbar() {
             </Menu>
           </Box>
 
-          <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
+          {/* Íconos vista de escritorio */}
+          <Box
+            sx={{
+              flexGrow: 1,
+              display: { xs: "none", md: "flex" },
+              justifyContent: "flex-end",
+              gap: "1rem",
+              padding: "0 2rem",
+            }}
+          >
             <Button
               onClick={handleOpenMenu(setAnchorElActividades)}
-              sx={{ my: 2, color: "white", display: "block" }}
+              sx={{ color: "white", display: "flex", flexDirection: "column", textTransform: "capitalize" }}
             >
-              Actividades
+              <img
+                src={LogoActividades}
+                alt="Logo"
+                style={{ height: "2rem"}}
+              />
+              <Typography variant="caption">Actividades</Typography>
             </Button>
             <Menu
               anchorEl={anchorElActividades}
               open={Boolean(anchorElActividades)}
               onClose={handleCloseMenu(setAnchorElActividades)}
             >
-              {user?.role === "Institucional" && (
+              {user_type === "Institucional" && (
                 <MenuItem onClick={handleCloseMenu(setAnchorElActividades)}>
                   Mis actividades inscritas
                 </MenuItem>
@@ -135,16 +164,22 @@ function Navbar() {
 
             <Button
               onClick={handleOpenMenu(setAnchorElOfertas)}
-              sx={{ my: 2, color: "white", display: "block" }}
+              sx={{ color: "white", display: "flex", flexDirection: "column", textTransform: "capitalize" }}
             >
-              Ofertas Laborales
+              <img
+                src={LogoOfertasLaborales}
+                alt="Logo"
+                style={{ height: "2rem"}}
+              />
+              <Typography variant="caption">Ofertas Laborales</Typography>
             </Button>
+
             <Menu
               anchorEl={anchorElOfertas}
               open={Boolean(anchorElOfertas)}
               onClose={handleCloseMenu(setAnchorElOfertas)}
             >
-              {user?.role === "Institucional" && (
+              {user_type === "Institucional" && (
                 <MenuItem onClick={handleCloseMenu(setAnchorElOfertas)}>
                   Ofertas inscritas
                 </MenuItem>
@@ -155,12 +190,17 @@ function Navbar() {
             </Menu>
           </Box>
 
-          <Box sx={{ flexGrow: 0 }}>
+          {/* Perfil de usuario */}
+          <Box sx={{ flexGrow: 0, display: "flex", flexDirection: "column" }}>
             <Tooltip title="Open settings">
-              <IconButton onClick={handleOpenMenu(setAnchorElUser)} sx={{ p: 0 }}>
-                <Avatar alt="Remy Sharp" src={user?.profilePicture} />
+              <IconButton
+                onClick={handleOpenMenu(setAnchorElUser)}
+                sx={{ p: 0 }}
+              >
+                <Avatar alt="Remy Sharp" src={user_photo} sx={{height: "2rem", width:"2rem"}} />
               </IconButton>
             </Tooltip>
+            <Typography variant="caption">Yo</Typography>
             <Menu
               sx={{ mt: "45px" }}
               id="menu-appbar"

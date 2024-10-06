@@ -1,34 +1,32 @@
-import React, { useEffect, useState, useContext } from 'react';
-import { decodeToken } from '../utils/decodeToken';
+import React, { createContext, useContext, useState } from "react";
 
-const UserContext = React.createContext(undefined);
+const UserContext = createContext();
+
+export const useUserContext = () => {
+  return useContext(UserContext);
+};
 
 export const UserProvider = ({ children }) => {
-  const [user, setUser] = useState(null);
+  const [userData, setUserData] = useState({
+    id: 2,
+    name: "Universidad Nacional Mayor de San Marcos",
+    ruc: "20100199721",
+    email: "contact@unmsm.edu.pe",
+    description: "La Universidad Nacional Mayor de San Marcos es una universidad pública ubicada en Lima, Perú. Es la universidad más antigua de América",
+    sector: "Educación Superior",
+    phone: "+51 619 700",
+    website: "https://unmsm.edu.pe",
+    location: "Lima, Peru",
+    
+  });
 
-  useEffect(() => {
-    const token = sessionStorage.getItem('token');
-    if (token) {
-      try {
-        const user = decodeToken(token);
-        setUser(user);
-      } catch (error) {
-        console.error('Error decoding token:', error);
-      }
-    }
-  }, []);
+  const updateUserData = (newData) => {
+    setUserData((prevData) => ({ ...prevData, ...newData }));
+  };
 
   return (
-    <UserContext.Provider value={{ user, setUser }}>
+    <UserContext.Provider value={{ userData, updateUserData }}>
       {children}
     </UserContext.Provider>
   );
-};
-
-export const useUser = () => {
-  const context = useContext(UserContext);
-  if (context === undefined) {
-    throw new Error('useUser must be used within a UserProvider');
-  }
-  return context;
 };

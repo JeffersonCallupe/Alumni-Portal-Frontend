@@ -10,8 +10,6 @@ const useLogin = (apiUrl) => {
     setError(null);
 
     const requestBody = JSON.stringify(credentials);
-    console.log(requestBody)
-
     try {
       const response = await fetch(apiUrl, {
         method: "POST",
@@ -26,13 +24,11 @@ const useLogin = (apiUrl) => {
       }
 
       const result = await response.json();
-      const userData = result['data'][0]['dto']
-      sessionStorage.setItem("user", JSON.stringify(userData))
+      const userData = result["data"][0]["dto"];
+      sessionStorage.setItem("user", JSON.stringify(userData));
       setData(userData);
-
     } catch (err) {
       setError(err.message);
-
     } finally {
       setLoading(false);
     }

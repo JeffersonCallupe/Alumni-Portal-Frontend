@@ -1,17 +1,17 @@
 import Navbar from '../../atoms/navbar/navbar'
 import Footer from "../../atoms/footer/footer";
-import { Route, Routes } from "react-router-dom";
-import { useUser } from "../../../contexts/userContext";
+import PropTypes from 'prop-types';
 
-function HomeBase() {
-  const { user } = useUser();
+HomeBase.propTypes = {
+  children: PropTypes.node.isRequired,
+};
+
+function HomeBase({children}) {
   return (
-    <div className="h-screen w-full flex flex-col"> 
-      <main className="main-content h-screen">
+    <div className="h-auto w-full flex flex-col bg-neutral-100"> 
+      <main className="main-content">
       <Navbar />
-        <Routes>
-          <Route path="/home/*" element={<HomeBase />} />
-        </Routes>
+      {children}
       </main>
       <Footer />
     </div>

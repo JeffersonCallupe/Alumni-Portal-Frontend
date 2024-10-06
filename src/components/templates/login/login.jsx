@@ -3,8 +3,7 @@ import LoginSUMForm from "../../organisms/forms/loginSUMForm";
 import Typography from "@mui/material/Typography";
 import Footer from "../../atoms/footer/footer";
 import imgFondo from "../../../assets/fondoRectorado.png";
-import { useEffect } from "react";
-import React from "react";
+import { React, useEffect } from "react";
 import "../../../App.css";
 
 function LoginBase({
