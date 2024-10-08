@@ -10,11 +10,17 @@ import usePatch from "../../hooks/usePatch";
 
 function ProfileEmpresa() {
   const { userData } = useUserContext();
-  const apiUrl = `http://178.128.147.224:8080/api/company/${userData.id}`;
+  const apiUrl = userData
+    ? `http://178.128.147.224:8080/api/company/${userData.id}`
+    : null;
   const { loading, patch } = usePatch(apiUrl);
-  const handleSaveChanges = (formData) => {
+
+  if (!userData) {
+    return <div>Loading...</div>;
+  }
+  const handleSaveChanges = async (formData) => {
     try {
-      patch(formData);
+      await patch(formData);
     } catch (error) {
       console.error("Error al guardar los cambios:", error);
     }
@@ -33,10 +39,10 @@ function ProfileEmpresa() {
   return (
     <HomeBase>
       <div className="w-full flex flex-col mb-16">
-        <ProfileBaseCard 
+        <ProfileBaseCard
           handleSaveChanges={handleSaveChanges}
           loading={loading}
-          />
+        />
         <InfoBaseCard
           title="Descripción de Actividades"
           cardContent={userData.description || "No especificado"}

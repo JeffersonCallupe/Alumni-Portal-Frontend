@@ -7,16 +7,16 @@ const usePatch = (apiUrl) => {
   const patch = async (data) => {
     setLoading(true);
     setError(null);
+
+    const requestBody = JSON.stringify(data);
     try {
       const response = await fetch(apiUrl, {
         method: "PATCH",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(data),
+        body: requestBody,
       });
-
-      console.log(body);
 
       if (!response.ok) {
         throw new Error("Error al enviar los datos.");

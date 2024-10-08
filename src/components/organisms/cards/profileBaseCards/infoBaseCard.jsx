@@ -34,7 +34,8 @@ const InfoBaseCard = ({ title, cardContent, dialogContent, modalId}) => {
             border: "1px solid #e5e5e5",
             borderRadius: "8px",
             boxShadow: "none",
-            padding: "0.5rem",
+            padding: "0.75rem",
+            margin: "0.5rem 0"
           }}
         >
           {cardContent}
