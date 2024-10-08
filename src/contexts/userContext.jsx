@@ -9,7 +9,7 @@ export const useUserContext = () => {
 export const UserProvider = ({ children }) => {
   const [userData, setUserData] = useState({
     id: 2,
-    name: "Universidad Nacional Mayor de San Marcos",
+    name: "Persona 1",
     ruc: "20100199721",
     email: "contact@unmsm.edu.pe",
     description: "La Universidad Nacional Mayor de San Marcos es una universidad pública ubicada en Lima, Perú. Es la universidad más antigua de América",
@@ -17,7 +17,6 @@ export const UserProvider = ({ children }) => {
     phone: "+51 619 700",
     website: "https://unmsm.edu.pe",
     location: "Lima, Peru",
-    
   });
 
   const updateUserData = (newData) => {

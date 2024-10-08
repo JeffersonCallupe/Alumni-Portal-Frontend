@@ -10,7 +10,7 @@ import EditPhotoButton from "../../../atoms/buttons/editPhotoButton";
 import DefaultHeader from "../../../../assets/fondoRectorado.png";
 import DefaultProfile from "../../../../assets/logoUNMSM.png";
 
-const ProfileBaseCard = () => {
+const ProfileBaseCard = ({ handleSaveChanges, loading }) => {
   const user_type = "Empresa";
   const [headerImage, setHeaderImage] = React.useState(DefaultHeader);
   const [profileImage, setProfileImage] = React.useState(DefaultProfile);
@@ -72,7 +72,7 @@ const ProfileBaseCard = () => {
           {user_type === "Institucional" ? (
             <CardContentInstitucional />
           ) : (
-            <CardContentEmpresa />
+            <CardContentEmpresa onSubmit={handleSaveChanges} loading={loading} />
           )}
         </CardContent>
       </div>
