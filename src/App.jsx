@@ -5,7 +5,6 @@ import LoginSUM from "../src/app/login/LoginSUM";
 import RegistroSUM from "./app/registro/registroSUM";
 import Home from "./app/dashboard/home";
 import ProfileEmpresa from "./app/profile/profileEmpresa";
-import ProfileInstitucional from "./app/profile/profileInstitucional"
 import { UserProvider } from "./contexts/userContext";
 
 function App() {
@@ -18,7 +17,6 @@ function App() {
           <Route path="/validacionSUM" element={<RegistroSUM />} />
           <Route path="/home" element={<Home />} />
           <Route path="/profile" element={<ProfileEmpresa />} />
-          <Route path="/profileInstitucional" element={<ProfileInstitucional />} />
         </Routes>
       </BrowserRouter>
     </UserProvider>
