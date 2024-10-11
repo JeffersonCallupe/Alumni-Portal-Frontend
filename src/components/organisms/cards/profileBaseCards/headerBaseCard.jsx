@@ -5,13 +5,14 @@ import Box from "@mui/material/Box";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import CardContentEmpresa from "../empresa/contentHeader";
+import CardContentInstitucional from "../institucional/contentHeader";
 import CardMedia from "@mui/material/CardMedia";
 import EditPhotoButton from "../../../atoms/buttons/editPhotoButton";
 import DefaultHeader from "../../../../assets/fondoRectorado.png";
 import DefaultProfile from "../../../../assets/logoUNMSM.png";
 
 const ProfileBaseCard = ({ handleSaveChanges, loading }) => {
-  const user_type = "Empresa";
+  const user_type = "Institucional";
   const [headerImage, setHeaderImage] = React.useState(DefaultHeader);
   const [profileImage, setProfileImage] = React.useState(DefaultProfile);
 
@@ -70,7 +71,7 @@ const ProfileBaseCard = ({ handleSaveChanges, loading }) => {
         </Box>
         <CardContent sx={{ marginTop: "3rem", padding: "1rem 1rem 0 2rem" }}>
           {user_type === "Institucional" ? (
-            <CardContentInstitucional />
+            <CardContentInstitucional onSubmit={handleSaveChanges} loading={loading} />
           ) : (
             <CardContentEmpresa onSubmit={handleSaveChanges} loading={loading} />
           )}
