@@ -56,6 +56,7 @@ const WorkExperienceList = () => {
             }
             dialogContent={dialogContent(experience)} // Contenido del modal
             modalId={`modal-work-experience-${experience.id}`} // ID único para cada modal
+            className="subcard" // Asignando la clase CSS
           />
         ))
       ) : (
