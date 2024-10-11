@@ -4,11 +4,12 @@ import imgLogo from "../../assets/logoEmpresa.png";
 import imgFondo from "../../assets/portadaEmpresa.png";
 import {validateLoginEmpresa} from "../../hooks/validateLogin";
 import { useNavigate } from "react-router-dom";
-
+import { useUserContext } from "../../contexts/userContext";
 
 function LoginEmpresa() {
     const apiUrl = "http://178.128.147.224:8080/api/company/loginCompany"; 
-    const { data, loading, error, login } = useLoginEmpresa(apiUrl); 
+    const { loading, error, loginEmpresa } = useLoginEmpresa(apiUrl); 
+    const { userData } = useUserContext();
     const navigate = useNavigate();
   
     return (
@@ -17,10 +18,10 @@ function LoginEmpresa() {
         imgLogo={imgLogo}
         backgroundImage={imgFondo}
         description={"Módulo de Ingreso Empresarial"}
-        handleRedirect={{ data, error, navigate}}
-        loginRedirectUrl={"/home"} 
+        handleRedirect={{ userData, error, navigate}}
+        loginRedirectUrl={"/profile"} 
         loading={loading}
-        onSubmit={login} 
+        onSubmit={loginEmpresa} 
         validate={validateLoginEmpresa}
         isEmpresa = {true}
       />

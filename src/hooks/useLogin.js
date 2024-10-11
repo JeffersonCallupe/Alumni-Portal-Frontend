@@ -1,8 +1,10 @@
 import { useState } from "react";
+import { useUserContext } from "../contexts/userContext";
 
 const useLogin = (apiUrl) => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
+  const { updateUserData } = useUserContext();
   const [data, setData] = useState(null);
 
   const login = async (credentials) => {
@@ -10,8 +12,6 @@ const useLogin = (apiUrl) => {
     setError(null);
 
     const requestBody = JSON.stringify(credentials);
-    console.log(requestBody)
-
     try {
       const response = await fetch(apiUrl, {
         method: "POST",
@@ -26,13 +26,18 @@ const useLogin = (apiUrl) => {
       }
 
       const result = await response.json();
-      const userData = result['data'][0]['dto']
-      sessionStorage.setItem("user", JSON.stringify(userData))
-      setData(userData);
+      let userData = null;
+
+      if (result["data"] && Array.isArray(result["data"]) && result["data"][0]?.["dto"]) {
+        sessionStorage.setItem("user", JSON.stringify(result["data"][0]["dto"]));
+        setData(result["data"][0]["dto"]);
+      } else {
+        userData = result;
+        updateUserData(userData);
+      }
 
     } catch (err) {
       setError(err.message);
-
     } finally {
       setLoading(false);
     }

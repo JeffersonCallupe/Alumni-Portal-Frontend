@@ -1,8 +1,10 @@
 import { useState } from "react";
+import { useUserContext } from "../contexts/userContext";
 
 const useLoginEmpresa = (apiUrl) => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
+  const { updateUserData } = useUserContext();
   const [data, setData] = useState(null);
 
   const loginEmpresa = async (credentials) => {
@@ -23,10 +25,12 @@ const useLoginEmpresa = (apiUrl) => {
       }
 
       const result = await response.json();
-      const companyData = result.data;
+      const companyData = result;
 
       sessionStorage.setItem("company", JSON.stringify(companyData)); 
       setData(companyData);
+      updateUserData(companyData);
+
     } catch (err) {
       setError(err.message);
     } finally {

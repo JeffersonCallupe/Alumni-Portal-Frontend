@@ -18,7 +18,7 @@ function RegistroSUM() {
       console.log("Error: ", error);
     } else if (data) {
       console.log("Login exitoso: ", data);
-      navigate("/home");
+      navigate("/");
     }
   }, [data, error]);
 

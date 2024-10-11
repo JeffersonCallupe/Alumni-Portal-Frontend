@@ -1,34 +1,34 @@
-import React, { useEffect, useState, useContext } from 'react';
-import { decodeToken } from '../utils/decodeToken';
+import React, { createContext, useContext, useState } from "react";
 
-const UserContext = React.createContext(undefined);
+// Creación del contexto para los usuarios
+const UserContext = createContext();
 
+// Hook para acceder al contexto de usuario
+export const useUserContext = () => {
+  return useContext(UserContext);
+};
+
+// Proveedor del contexto de usuario
 export const UserProvider = ({ children }) => {
-  const [user, setUser] = useState(null);
+  const [userData, setUserData] = useState(null);
+  const [isInstitutional, setIsInstitutional] = useState(false); // Variable para guardar si es institucional
 
-  useEffect(() => {
-    const token = sessionStorage.getItem('token');
-    if (token) {
-      try {
-        const user = decodeToken(token);
-        setUser(user);
-      } catch (error) {
-        console.error('Error decoding token:', error);
-      }
+  // Función para actualizar los datos del usuario
+  const updateUserData = (newData) => {
+    // Si el nuevo dato contiene un studentCode, significa que es un usuario institucional
+    if (newData.studentCode) {
+      setIsInstitutional(true);
+    } else {
+      setIsInstitutional(false);
     }
-  }, []);
+
+    // Actualizamos los datos del usuario
+    setUserData((prevData) => ({ ...prevData, ...newData }));
+  };
 
   return (
-    <UserContext.Provider value={{ user, setUser }}>
+    <UserContext.Provider value={{ userData, updateUserData, isInstitutional }}>
       {children}
     </UserContext.Provider>
   );
-};
-
-export const useUser = () => {
-  const context = useContext(UserContext);
-  if (context === undefined) {
-    throw new Error('useUser must be used within a UserProvider');
-  }
-  return context;
 };
