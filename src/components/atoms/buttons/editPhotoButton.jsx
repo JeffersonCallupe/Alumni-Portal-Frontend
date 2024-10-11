@@ -18,18 +18,16 @@ export default function editPhotoButton({ onChange }) {
     <Button
       component="label"
       role={undefined}
+      color="white"
       variant="contained"
       tabIndex={-1}
       sx={{
         position: "absolute",
         top: "8px",
         right: "8px",
-        backgroundColor: "white",
         padding:"0",
-        display: "block", // Mostrar solo al hacer hover
+        display: "block",
       }}
-      onMouseEnter={(e) => (e.target.style.display = "block")}
-      onMouseLeave={(e) => (e.target.style.display = "none")}
     >
       <ModeEditIcon />
       <VisuallyHiddenInput type="file" onChange={onChange} />

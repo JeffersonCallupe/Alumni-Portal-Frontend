@@ -1,5 +1,5 @@
-import React from "react";
 import "../../../../App.css";
+import React from "react";
 import Avatar from "@mui/material/Avatar";
 import Box from "@mui/material/Box";
 import Card from "@mui/material/Card";
@@ -10,7 +10,7 @@ import EditPhotoButton from "../../../atoms/buttons/editPhotoButton";
 import DefaultHeader from "../../../../assets/fondoRectorado.png";
 import DefaultProfile from "../../../../assets/logoUNMSM.png";
 
-const ProfileBaseCard = () => {
+const ProfileBaseCard = ({ handleSaveChanges, loading }) => {
   const user_type = "Empresa";
   const [headerImage, setHeaderImage] = React.useState(DefaultHeader);
   const [profileImage, setProfileImage] = React.useState(DefaultProfile);
@@ -72,7 +72,7 @@ const ProfileBaseCard = () => {
           {user_type === "Institucional" ? (
             <CardContentInstitucional />
           ) : (
-            <CardContentEmpresa />
+            <CardContentEmpresa onSubmit={handleSaveChanges} loading={loading} />
           )}
         </CardContent>
       </div>

@@ -6,8 +6,11 @@ import CardContent from "@mui/material/CardContent";
 import DialogBase from "../../dialog/profileBaseDialog";
 import EditButton from "../../../atoms/buttons/editButton";
 import Typography from "@mui/material/Typography";
+import useModal from "../../../../hooks/useModal";
 
-const InfoBaseCard = ({ title, cardContent, dialogContent, openDialog, onEditClick, onCloseDialog}) => {
+const InfoBaseCard = ({ title, cardContent, dialogContent, modalId}) => {
+  const { open, handleOpen, handleClose } = useModal();
+
   return (
     <Card
       className="profile-base-card"
@@ -22,7 +25,7 @@ const InfoBaseCard = ({ title, cardContent, dialogContent, openDialog, onEditCli
             {title}
           </Typography>
           <CardActions sx={{ padding: "0" }}>
-            <EditButton onClick={onEditClick}>Editar</EditButton>
+            <EditButton onClick={handleOpen}>Editar</EditButton>
           </CardActions>
         </div>
         <Card
@@ -31,7 +34,8 @@ const InfoBaseCard = ({ title, cardContent, dialogContent, openDialog, onEditCli
             border: "1px solid #e5e5e5",
             borderRadius: "8px",
             boxShadow: "none",
-            padding: "0.5rem",
+            padding: "0.75rem",
+            margin: "0.5rem 0"
           }}
         >
           {cardContent}
@@ -39,10 +43,11 @@ const InfoBaseCard = ({ title, cardContent, dialogContent, openDialog, onEditCli
       </CardContent>
 
       <DialogBase
-        open={openDialog}
-        handleClose={onCloseDialog}
+        open={open}
+        handleClose={handleClose}
         title={title}
         content={dialogContent}
+        modalId={modalId}
       />
     </Card>
   );

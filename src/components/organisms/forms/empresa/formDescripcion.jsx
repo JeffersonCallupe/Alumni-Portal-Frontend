@@ -27,6 +27,7 @@ const FormDescripcion = ({ onSubmit, onCancel, loading }) => {
         value={formData.description}
         onChange={handleChange}
         disabled={loading}
+        className="p-4"
       />
       <div>
         <Button type="button" onClick={onCancel}>
