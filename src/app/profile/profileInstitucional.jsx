@@ -3,6 +3,7 @@ import HomeBase from "../../components/templates/home/home";
 import FormAbout from "../../components/organisms/forms/institucional/formAbout";
 import InfoBaseCard from "../../components/organisms/cards/profileBaseCards/infoBaseCard";
 import ProfileBaseCard from "../../components/organisms/cards/profileBaseCards/headerBaseCard";
+import WorkExperienceList from "../../components/organisms/cards/institucional/contentWorkExperienceList";  // <-- Importa el nuevo componente
 import { useUserContext } from "../../contexts/userContextInstitucional";
 import usePatch from "../../hooks/usePatch";
 
@@ -40,8 +41,15 @@ function ProfileInstitucional() {
           title="Acerca de"
           cardContent={userData.about || "No especificado"}
           dialogContent={contentAbout}
-          modalId="modal-descripcion"
+          modalId="modal-about"
         />
+        <InfoBaseCard
+          title="Experiencia Laboral"
+          cardContent={<WorkExperienceList />}
+          dialogContent={contentAbout}
+          modalId="modal-contacto"
+        />
+        
       </div>
     </HomeBase>
   );

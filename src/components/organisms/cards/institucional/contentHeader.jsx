@@ -8,7 +8,7 @@ import VerInfoButton from "../../../atoms/buttons/verInfoButton";
 import { useUserContext } from "../../../../contexts/userContextInstitucional";
 import useModal from "../../../../hooks/useModal";
 
-const CardContentInstitucional = ({loading, onSubmit}) => {
+const CardContentInstitucional = ({ loading, onSubmit }) => {
   const { open, handleOpen, handleClose } = useModal();
   const { userData } = useUserContext();
 
@@ -36,18 +36,24 @@ const CardContentInstitucional = ({loading, onSubmit}) => {
           Número de contacto: {userData.contactNumber || "No especificado"}
         </Typography>
       </div>
-      <div>
+      <div className="flex flex-col items-end"> {/* Flex container para los botones */}
         <Box
           sx={{
             zIndex: 1,
             position: "relative",
             bottom: "1rem",
-            left: "4rem",
           }}
         >
-          <EditButton onClick={handleOpen} />
+        <EditButton onClick={handleOpen} />
         </Box>
-        <VerInfoButton texto={"Cambiar Contraseña"} />
+        <div className="flex flex-row gap-2 items-center" style={{ marginTop: '2rem' }}>
+          <div className="flex-shrink-0"> 
+            <VerInfoButton texto={"Cambiar Contraseña"} />
+          </div>
+          <div className="flex-shrink-0">
+            <VerInfoButton texto={"Descargar CV"} />
+          </div>
+        </div>
       </div>
 
       <DialogBase
