@@ -12,6 +12,7 @@ const FormHeader = ({ onSubmit, onCancel, loading }) => {
       name: userData.name || "",
       paternalSurname: userData.paternalSurname || "",
       maternalSurname: userData.maternalSurname || "",
+      headline: userData.headline || "",
       email: userData.email || "",
       contactNumber: userData.contactNumber || "",
     },
@@ -19,11 +20,12 @@ const FormHeader = ({ onSubmit, onCancel, loading }) => {
   );
 
   const formFields = [
-    { label: "Nombre", name: "name", value: formData.name },
-    { label: "Apellido Paterno", name: "paternalSurname", value: formData.paternalSurname },
-    { label: "Apellido Materno", name: "maternalSurname", value: formData.maternalSurname },
+    { label: "Nombres", name: "name", value: formData.name },
+    { label: "Apell. Paterno", name: "paternalSurname", value: formData.paternalSurname },
+    { label: "Apell. Materno", name: "maternalSurname", value: formData.maternalSurname },
+    { label: "Headline", name: "headline", value: formData.headline },
     { label: "Correo Electrónico", name: "email", value: formData.email },
-    { label: "Número de Contacto", name: "contactNumber", value: formData.contactNumber },
+    { label: "Nro. de Contacto", name: "contactNumber", value: formData.contactNumber },
   ];
 
   return (

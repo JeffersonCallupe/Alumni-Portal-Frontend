@@ -24,16 +24,16 @@ const CardContentInstitucional = ({loading, onSubmit}) => {
     <div className="flex flex-row justify-between">
       <div className="flex flex-col w-3/5 gap-1">
         <Typography variant="h5" align="left">
-          {userData.name || "Nombre del estudiante"}
+          {userData.name + " " + userData.paternalSurname + " " + userData.maternalSurname || "Nombre del estudiante"}
         </Typography>
         <Typography variant="body2" align="left">
           {userData.headline || "No especificado"}
         </Typography>
         <Typography variant="body2" align="left">
-          {userData.email || "No especificado"}
+          Correo Electrónico: {userData.email || "No especificado"}
         </Typography>
         <Typography variant="body2" align="left">
-          {userData.contactNumber || "No especificado"}
+          Número de contacto: {userData.contactNumber || "No especificado"}
         </Typography>
       </div>
       <div>

@@ -9,7 +9,7 @@ import CardContentInstitucional from "../institucional/contentHeader";
 import CardMedia from "@mui/material/CardMedia";
 import EditPhotoButton from "../../../atoms/buttons/editPhotoButton";
 import DefaultHeader from "../../../../assets/fondoRectorado.png";
-import DefaultProfile from "../../../../assets/logoUNMSM.png";
+import DefaultProfile from "../../../../assets/logoPerfil.png";
 
 const ProfileBaseCard = ({ handleSaveChanges, loading }) => {
   const user_type = "Institucional";
