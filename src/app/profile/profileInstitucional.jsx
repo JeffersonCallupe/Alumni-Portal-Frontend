@@ -4,6 +4,8 @@ import FormAbout from "../../components/organisms/forms/institucional/formAbout"
 import InfoBaseCard from "../../components/organisms/cards/profileBaseCards/infoBaseCard";
 import InfoBaseCardContent from "../../components/organisms/cards/profileBaseCards/infoBaseCardContent";
 import ProfileBaseCard from "../../components/organisms/cards/profileBaseCards/headerBaseCard";
+import ProjectList from "../../components/organisms/cards/institucional/contentProjectList";
+import SkillList from "../../components/organisms/cards/institucional/contentSkillList";
 import CertificationList from "../../components/organisms/cards/institucional/contentCertificationList";
 import EducationList from "../../components/organisms/cards/institucional/contentEducationList";
 import WorkExperienceList from "../../components/organisms/cards/institucional/contentWorkExperienceList";
@@ -54,14 +56,26 @@ function ProfileInstitucional() {
           modalId="modal-contacto"
         />
         <InfoBaseCardContent
-          title="Educacion"
+          title="Educación"
           cardContent={<EducationList />}
           dialogContent={contentAbout}
           modalId="modal-contacto"
         />
         <InfoBaseCardContent
-          title="Educacion"
+          title="Certificaciones"
           cardContent={<CertificationList />}
+          dialogContent={contentAbout}
+          modalId="modal-contacto"
+        />
+        <InfoBaseCardContent
+          title="Habilidades Claves"
+          cardContent={<SkillList />}
+          dialogContent={contentAbout}
+          modalId="modal-contacto"
+        />
+        <InfoBaseCardContent
+          title="Projectos"
+          cardContent={<ProjectList />}
           dialogContent={contentAbout}
           modalId="modal-contacto"
         />

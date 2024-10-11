@@ -43,7 +43,7 @@ const EducationList = () => {
         educations.map((education) => (
           <InfoBaseCard
             key={education.id}
-            title={<Typography variant="h5">{education.degree} en {education.fieldOfStudy}</Typography>}
+            title={<Typography variant="h6">{education.degree} en {education.fieldOfStudy}</Typography>}
             cardContent={
               <div>
                 <Typography variant="subtitle2">Institución: {education.institution}</Typography>

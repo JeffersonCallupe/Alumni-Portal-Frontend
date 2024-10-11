@@ -43,7 +43,7 @@ const WorkExperienceList = () => {
         experiences.map((experience) => (
           <InfoBaseCard
             key={experience.id}
-            title={<Typography variant="h5">{experience.jobTitle}</Typography>}
+            title={<Typography variant="h6">{experience.jobTitle}</Typography>}
             cardContent={
               <div>
                 <Typography variant="subtitle2">Empresa: {experience.company}</Typography>
