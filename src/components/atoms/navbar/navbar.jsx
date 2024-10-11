@@ -14,6 +14,7 @@ import MenuItem from "@mui/material/MenuItem";
 import Toolbar from "@mui/material/Toolbar";
 import Tooltip from "@mui/material/Tooltip";
 import Typography from "@mui/material/Typography";
+import { useUserContext } from "../../../contexts/userContext";
 import { useNavigate } from "react-router-dom";
 
 function Navbar() {

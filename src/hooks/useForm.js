@@ -22,7 +22,9 @@ const useForm = (initialValues, onSubmit, validate) => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        if (handleValidation()) {
+        const validationErrors = validate ? validate(formData) : {};
+        setErrors(validationErrors);
+        if (Object.keys(validationErrors).length === 0) {
             onSubmit(formData);
         }
     };

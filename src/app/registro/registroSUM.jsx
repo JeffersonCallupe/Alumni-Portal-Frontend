@@ -13,12 +13,13 @@ function RegistroSUM() {
   const { data, loading, error, login } = useLogin(apiUrl);
   const navigate = useNavigate();
 
+  //TODO: Arreglar error al redireccionar: The string did not match the expected pattern.
   useEffect(() => {
     if (error) {
       console.log("Error: ", error);
     } else if (data) {
       console.log("Login exitoso: ", data);
-      navigate("/home");
+      navigate("/");
     }
   }, [data, error]);
 

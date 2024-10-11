@@ -27,7 +27,7 @@ const LoginForm = ({ onSubmit, disabled, validate}) => {
         name="email"
         value={formData.email}
         onChange={handleChange}
-        error={errors.usuario}
+        error={errors.email}
         helperText={errors.email}
       />
       <TextInput

@@ -1,40 +1,35 @@
 import { useState } from "react";
 import { useUserContext } from "../contexts/userContext";
 
-const useLogin = (apiUrl) => {
+const useLoginEmpresa = (apiUrl) => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const { updateUserData } = useUserContext();
   const [data, setData] = useState(null);
 
-  const login = async (credentials) => {
+  const loginEmpresa = async (credentials) => {
     setLoading(true);
     setError(null);
 
-    const requestBody = JSON.stringify(credentials);
     try {
       const response = await fetch(apiUrl, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: requestBody,
+        body: JSON.stringify(credentials), 
       });
 
       if (!response.ok) {
-        throw new Error("Error en la autenticación");
+        throw new Error("Error en la autenticación de empresa");
       }
 
       const result = await response.json();
-      let userData = null;
+      const companyData = result;
 
-      if (result["data"] && Array.isArray(result["data"]) && result["data"][0]?.["dto"]) {
-        sessionStorage.setItem("user", JSON.stringify(result["data"][0]["dto"]));
-        setData(result["data"][0]["dto"]);
-      } else {
-        userData = result;
-        updateUserData(userData);
-      }
+      sessionStorage.setItem("company", JSON.stringify(companyData)); 
+      setData(companyData);
+      updateUserData(companyData);
 
     } catch (err) {
       setError(err.message);
@@ -43,7 +38,7 @@ const useLogin = (apiUrl) => {
     }
   };
 
-  return { data, loading, error, login };
+  return { data, loading, error, loginEmpresa };
 };
 
-export default useLogin;
+export default useLoginEmpresa;
