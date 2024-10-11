@@ -1,5 +1,7 @@
 import React from "react";
 import HomeBase from "../../components/templates/home/home";
+import FormAbout from "../../components/organisms/forms/institucional/formAbout";
+import InfoBaseCard from "../../components/organisms/cards/profileBaseCards/infoBaseCard";
 import ProfileBaseCard from "../../components/organisms/cards/profileBaseCards/headerBaseCard";
 import { useUserContext } from "../../contexts/userContextInstitucional";
 import usePatch from "../../hooks/usePatch";
@@ -22,12 +24,23 @@ function ProfileInstitucional() {
     }
   };
 
+  const contentAbout = React.cloneElement(<FormAbout />, {
+    onSubmit: handleSaveChanges,
+    loading: loading,
+  });
+
   return (
     <HomeBase>
       <div className="w-full flex flex-col mb-16">
         <ProfileBaseCard
           handleSaveChanges={handleSaveChanges}
           loading={loading}
+        />
+        <InfoBaseCard
+          title="Acerca de"
+          cardContent={userData.about || "No especificado"}
+          dialogContent={contentAbout}
+          modalId="modal-descripcion"
         />
       </div>
     </HomeBase>
