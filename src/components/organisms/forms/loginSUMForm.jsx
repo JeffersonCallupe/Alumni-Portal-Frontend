@@ -6,7 +6,7 @@ import useForm from "../../../hooks/useForm";
 
 const LoginForm = ({ onSubmit, disabled, validate}) => {
   const { formData, errors, handleChange, handleSubmit } = useForm(
-    { email: "", password: "" },
+    { usuario: "", clave: "" },
     onSubmit,
     validate ? () => validate(formData) : undefined
   );
@@ -24,20 +24,20 @@ const LoginForm = ({ onSubmit, disabled, validate}) => {
     >
       <TextInput
         label="Nombre de usuario"
-        name="email"
-        value={formData.email}
+        name="usuario"
+        value={formData.usuario}
         onChange={handleChange}
-        error={errors.email}
-        helperText={errors.email}
+        error={errors.usuario}
+        helperText={errors.usuario}
       />
       <TextInput
         label="Contraseña"
-        name="password"
+        name="clave"
         type="password"
-        value={formData.password}
+        value={formData.clave}
         onChange={handleChange}
         error={errors.password}
-        helperText={errors.password}
+        helperText={errors.clave}
       />
       <Button type="submit" variant="contained" size="large" disabled={disabled} fullWidth>
         Ingresar
