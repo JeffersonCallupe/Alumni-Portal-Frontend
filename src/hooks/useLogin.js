@@ -26,9 +26,15 @@ const useLogin = (apiUrl) => {
       }
 
       const result = await response.json();
-      const userData = result['data'][0]['dto']
-      sessionStorage.setItem("user", JSON.stringify(userData))
-      setData(userData);
+      
+      if (result["data"] && Array.isArray(result["data"]) && result["data"][0]?.["dto"]) {
+        sessionStorage.setItem("user", JSON.stringify(result["data"][0]["dto"]));
+        setData(result["data"][0]["dto"]);
+      } else {
+        sessionStorage.setItem("user", JSON.stringify(result));
+        setData(result);
+      }
+
 
     } catch (err) {
       setError(err.message);
