@@ -9,6 +9,7 @@ const usePatch = (apiUrl) => {
     setError(null);
 
     const requestBody = JSON.stringify(data);
+    console.log(requestBody);
     try {
       const response = await fetch(apiUrl, {
         method: "PATCH",
@@ -16,6 +17,7 @@ const usePatch = (apiUrl) => {
           "Content-Type": "application/json",
         },
         body: requestBody,
+        redirect: "follow",
       });
 
       if (!response.ok) {

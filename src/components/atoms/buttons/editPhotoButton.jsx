@@ -13,7 +13,7 @@ const VisuallyHiddenInput = styled("input")({
   whiteSpace: "nowrap",
 });
 
-export default function editPhotoButton({ onChange }) {
+export default function editPhotoButton({ onClick }) {
   return (
     <Button
       component="label"
@@ -30,7 +30,7 @@ export default function editPhotoButton({ onChange }) {
       }}
     >
       <ModeEditIcon />
-      <VisuallyHiddenInput type="file" onChange={onChange} />
+      <VisuallyHiddenInput onClick={onClick} />
     </Button>
   );
 }

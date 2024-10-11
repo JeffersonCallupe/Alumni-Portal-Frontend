@@ -2,6 +2,7 @@ import React from "react";
 import ContentContactoEmpresa from "../../components/organisms/cards/empresa/contentContacto";
 import FormContacto from "../../components/organisms/forms/empresa/formContacto";
 import FormDescripcion from "../../components/organisms/forms/empresa/formDescripcion";
+import FormFoto from "../../components/organisms/forms/empresa/formFoto";
 import HomeBase from "../../components/templates/home/home";
 import InfoBaseCard from "../../components/organisms/cards/profileBaseCards/infoBaseCard";
 import ProfileBaseCard from "../../components/organisms/cards/profileBaseCards/headerBaseCard";
@@ -13,6 +14,7 @@ function ProfileEmpresa() {
   const apiUrl = userData
     ? `http://178.128.147.224:8080/api/company/${userData.id}`
     : null;
+  const imageUrl = 'http://178.128.147.224:8080/api/image';
   const { loading, patch } = usePatch(apiUrl);
 
   if (!userData) {
@@ -25,6 +27,10 @@ function ProfileEmpresa() {
       console.error("Error al guardar los cambios:", error);
     }
   };
+
+  const contentFoto = React.cloneElement(<FormFoto />, {
+    apiUrl: imageUrl
+  });
 
   const contentDescripcion = React.cloneElement(<FormDescripcion />, {
     onSubmit: handleSaveChanges,
@@ -40,8 +46,11 @@ function ProfileEmpresa() {
     <HomeBase>
       <div className="w-full flex flex-col mb-16">
         <ProfileBaseCard
+          apiUrl={imageUrl}
           handleSaveChanges={handleSaveChanges}
           loading={loading}
+          dialogContent={contentFoto}
+          modalId="modal- foto"
         />
         <InfoBaseCard
           title="Descripción de Actividades"

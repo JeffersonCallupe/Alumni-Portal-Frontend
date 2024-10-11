@@ -28,7 +28,6 @@ export const UserProvider = ({ children }) => {
   // Estado para almacenar los datos del usuario
   const [userData, setUserData] = useState(null);
 
-  // Función para actualizar los datos del usuario
   const updateUserData = (newData) => {
     setUserData((prevData) => ({ ...prevData, ...newData }));
   };

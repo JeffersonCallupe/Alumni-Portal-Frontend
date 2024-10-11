@@ -1,31 +1,39 @@
 import "../../../../App.css";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Avatar from "@mui/material/Avatar";
 import Box from "@mui/material/Box";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import CardContentEmpresa from "../empresa/contentHeader";
 import CardMedia from "@mui/material/CardMedia";
-import EditPhotoButton from "../../../atoms/buttons/editPhotoButton";
 import DefaultHeader from "../../../../assets/fondoRectorado.png";
 import DefaultProfile from "../../../../assets/logoUNMSM.png";
+import DialogBase from "../../dialog/profileBaseDialog";
+import EditButton from "../../../atoms/buttons/editButton";
+import useModal from "../../../../hooks/useModal";
+import { useUserContext } from "../../../../contexts/userContext";
+import { getProfilePicture } from "../../../../hooks/manageImage";
 
-const ProfileBaseCard = ({ handleSaveChanges, loading }) => {
+const ProfileBaseCard = ({ apiUrl, handleSaveChanges, loading, dialogContent, modalId }) => {
   const user_type = "Empresa";
   const [headerImage, setHeaderImage] = React.useState(DefaultHeader);
   const [profileImage, setProfileImage] = React.useState(DefaultProfile);
+  const { open, handleOpen, handleClose } = useModal();
+  const { userData } = useUserContext();
 
-  const handleImageChange = (e, name) => {
-    const file = e.target.files[0];
-    if (file) {
-      const imageUrl = URL.createObjectURL(file);
-      if (name === "headerImage") {
-        setHeaderImage(imageUrl);
-      } else if (name === "profileImage") {
+  useEffect(() => {
+    const fetchProfilePicture = async () => {
+      try {
+        const imageUrl = await getProfilePicture(apiUrl, userData.id);
         setProfileImage(imageUrl);
+      } catch (error) {
+        console.error('Error al obtener la imagen de perfil:', error);
       }
-    }
-  };
+    };
+
+    fetchProfilePicture();
+  }, [apiUrl, userData]);
+
 
   return (
     <Card
@@ -34,9 +42,6 @@ const ProfileBaseCard = ({ handleSaveChanges, loading }) => {
     >
       <div>
         <Box>
-          <EditPhotoButton
-            onChange={(e) => handleImageChange(e, "headerImage")}
-          />
           <CardMedia
             component="img"
             image={headerImage}
@@ -49,13 +54,11 @@ const ProfileBaseCard = ({ handleSaveChanges, loading }) => {
             width: "10rem",
             zIndex: 1,
             position: "absolute",
-            top: "6rem",
+            top: "4rem",
             left: "1rem",
           }}
         >
-          <EditPhotoButton
-            onChange={(e) => handleImageChange(e, "profileImage")}
-          />
+          <EditButton onClick={handleOpen}/>
           <Avatar
             alt="Profile Image"
             src={profileImage}
@@ -76,6 +79,14 @@ const ProfileBaseCard = ({ handleSaveChanges, loading }) => {
           )}
         </CardContent>
       </div>
+
+      <DialogBase
+        open={open}
+        handleClose={handleClose}
+        title={"Editar foto de Perfil"}
+        content={dialogContent}
+        modalId={modalId}
+      />
     </Card>
   );
 };
