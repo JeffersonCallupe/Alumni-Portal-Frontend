@@ -2,8 +2,12 @@ import React from "react";
 import HomeBase from "../../components/templates/home/home";
 import FormAbout from "../../components/organisms/forms/institucional/formAbout";
 import InfoBaseCard from "../../components/organisms/cards/profileBaseCards/infoBaseCard";
+import InfoBaseCardContent from "../../components/organisms/cards/profileBaseCards/infoBaseCardContent";
 import ProfileBaseCard from "../../components/organisms/cards/profileBaseCards/headerBaseCard";
-import WorkExperienceList from "../../components/organisms/cards/institucional/contentWorkExperienceList";  // <-- Importa el nuevo componente
+import CertificationList from "../../components/organisms/cards/institucional/contentCertificationList";
+import EducationList from "../../components/organisms/cards/institucional/contentEducationList";
+import WorkExperienceList from "../../components/organisms/cards/institucional/contentWorkExperienceList";
+
 import { useUserContext } from "../../contexts/userContextInstitucional";
 import usePatch from "../../hooks/usePatch";
 
@@ -43,13 +47,24 @@ function ProfileInstitucional() {
           dialogContent={contentAbout}
           modalId="modal-about"
         />
-        <InfoBaseCard
+        <InfoBaseCardContent
           title="Experiencia Laboral"
           cardContent={<WorkExperienceList />}
           dialogContent={contentAbout}
           modalId="modal-contacto"
         />
-        
+        <InfoBaseCardContent
+          title="Educacion"
+          cardContent={<EducationList />}
+          dialogContent={contentAbout}
+          modalId="modal-contacto"
+        />
+        <InfoBaseCardContent
+          title="Educacion"
+          cardContent={<CertificationList />}
+          dialogContent={contentAbout}
+          modalId="modal-contacto"
+        />
       </div>
     </HomeBase>
   );
