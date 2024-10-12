@@ -99,9 +99,7 @@ function LoginBase({
                   href={isSUM ? "/" : "/loginSUM"}
                   className="text-black hover:underline"
                 >
-
-
-
+                  
                   {isSUM
                     ? "Regresar al módulo de acceso principal"
                     : isEmpresa 
@@ -110,7 +108,6 @@ function LoginBase({
                 </a>
 
               </Typography>
-
 
               <Typography
                 variant="body2"
@@ -121,8 +118,6 @@ function LoginBase({
 
                 <a 
                   href={isEmpresa ? "/crearCuentaEmpresa" : "/loginEmpresa"} 
-                  // href={isEmpresa ? "/" : "/loginEmpresa" }
-                  // href="/loginEmpresa" 
                   className="text-black hover:underline"
                 >
                   {
