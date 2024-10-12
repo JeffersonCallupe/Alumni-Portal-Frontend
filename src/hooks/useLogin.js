@@ -21,11 +21,20 @@ const useLogin = (apiUrl) => {
         body: requestBody,
       });
 
-      if (!response.ok) {
-        throw new Error("Error en la autenticación");
+      // Verificación del contentType
+      const contentType = response.headers.get("content-type");
+      let result;
+
+      if (contentType && contentType.includes("application/json")) {
+        result = await response.json(); 
+      } else {
+        result = await response.text(); 
       }
 
-      const result = await response.json();
+      if (!response.ok) {
+        throw new Error(result.message || result || "Error en la autenticación");
+      }
+
       let userData = null;
 
       if (result["data"] && Array.isArray(result["data"]) && result["data"][0]?.["dto"]) {
