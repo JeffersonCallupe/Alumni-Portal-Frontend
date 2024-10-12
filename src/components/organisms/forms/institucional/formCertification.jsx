@@ -23,6 +23,7 @@ const FormNewCertification = ({ onCancel }) => {
             console.log("Datos a enviar:", formData); // Verificar los datos
             await post(formData); // Realizar la solicitud POST
             if (!error) {
+                window.location.reload();
                 onCancel(); // Cerrar el formulario si no hay errores
             }
         }

@@ -23,6 +23,7 @@ const FormNewExperience = ({ onCancel }) => {
             console.log("Datos a enviar:", formData); // Verificar datos antes de la solicitud
             await post(formData); // Enviar la solicitud
             if (!error) {
+                window.location.reload();
                 onCancel(); // Cerrar el formulario si no hay errores
             }
         }
