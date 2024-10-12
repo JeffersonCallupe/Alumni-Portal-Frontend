@@ -3,7 +3,7 @@ import HomeBase from "../../components/templates/home/home";
 import FormAbout from "../../components/organisms/forms/institucional/formAbout";
 import InfoBaseCard from "../../components/organisms/cards/profileBaseCards/infoBaseCard";
 import InfoBaseCardContent from "../../components/organisms/cards/profileBaseCards/infoBaseCardContent";
-import ProfileBaseCard from "../../components/organisms/cards/profileBaseCards/headerBaseCard";
+import ProfileBaseCard from "../../components/organisms/cards/profileBaseCards/headerBaseCard2";
 import ProjectList from "../../components/organisms/cards/institucional/contentProjectList";
 import SkillList from "../../components/organisms/cards/institucional/contentSkillList";
 import CertificationList from "../../components/organisms/cards/institucional/contentCertificationList";
@@ -15,13 +15,13 @@ import FormNewCertification from "../../components/organisms/forms/institucional
 import FormNewSkill from "../../components/organisms/forms/institucional/formSkill";
 import FormNewProject from "../../components/organisms/forms/institucional/formProject";
 
-import { useUserContext } from "../../contexts/userContextInstitucional";
+import { useUserContext } from "../../contexts/userContext";
 import usePatch from "../../hooks/usePatch";
 import usePost from "../../hooks/usePost";
 
 function ProfileInstitucional() {
+  
   const { userData } = useUserContext();
-
   const apiUrl = userData
       ? `http://178.128.147.224:8080/api/user/${userData.id}`
       : null;

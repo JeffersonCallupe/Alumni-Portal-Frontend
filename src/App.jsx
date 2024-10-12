@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 import "./App.css";
 import LoginInstitucional from "../src/app/login/LoginInstitucional";
 import LoginEmpresa from '../src/app/login/LoginEmpresa';
@@ -7,7 +7,8 @@ import RegistroSUM from "./app/registro/registroSUM";
 import RegistroEmpresa from "./app/registro/registroEmpresa";
 import Home from "./app/dashboard/home";
 import ProfileEmpresa from "./app/profile/profileEmpresa"
-import { UserProvider, useUserContext } from "./contexts/userContext";
+import ProfileInstitucional from "./app/profile/profileInstitucional"
+import { UserProvider } from "./contexts/userContext";
 
 function App() {
   return (
@@ -21,6 +22,7 @@ function App() {
           <Route path="/validacionSUM" element={<RegistroSUM />} />
           <Route path="/crearCuentaEmpresa" element={<RegistroEmpresa/>} />
           <Route path="/profile" element={<ProfileEmpresa />} />
+          <Route path="/profileInstitucional" element={<ProfileInstitucional />} />
           <Route path="/home/" element={<Home />} />
           
         </Routes>

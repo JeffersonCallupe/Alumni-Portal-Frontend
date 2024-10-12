@@ -19,7 +19,7 @@ function LoginInstitucional() {
       backgroundImage={imgFondo}
       description={"Módulo de Ingreso Institucional"}
       handleRedirect={{ userData, error, navigate }}
-      loginRedirectUrl={"/profile"}
+      loginRedirectUrl={"/profileInstitucional"}
       loading={loading}
       onSubmit={login}
       validate={validateLoginSM}

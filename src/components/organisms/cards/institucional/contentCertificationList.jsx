@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useUserContext } from "../../../../contexts/userContextInstitucional";
+import { useUserContext } from "../../../../contexts/userContext";
 import InfoBaseCard from "../profileBaseCards/infosubBaseCard"; // Ajusta la ruta según tu estructura
 import CircularProgress from "@mui/material/CircularProgress";
 import Box from "@mui/material/Box";

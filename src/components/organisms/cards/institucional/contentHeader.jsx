@@ -5,7 +5,7 @@ import DialogBase from "../../dialog/profileBaseDialog";
 import FormHeader from "../../forms/institucional/formHeader";
 import Typography from "@mui/material/Typography";
 import ActionButton from "../../../atoms/buttons/actionButton";
-import { useUserContext } from "../../../../contexts/userContextInstitucional";
+import { useUserContext } from "../../../../contexts/userContext";
 import useModal from "../../../../hooks/useModal";
 
 const CardContentInstitucional = ({ loading, onSubmit }) => {

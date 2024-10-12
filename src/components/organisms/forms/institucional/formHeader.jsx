@@ -3,7 +3,7 @@ import React from "react";
 import Box from "@mui/material/Box";
 import TextInput from "../../../atoms/inputs/TextInput";
 import useForm from "../../../../hooks/useForm";
-import { useUserContext } from "../../../../contexts/userContextInstitucional";
+import { useUserContext } from "../../../../contexts/userContext";
 
 const FormHeader = ({ onSubmit, onCancel, loading }) => {
   const { userData } = useUserContext();

@@ -4,7 +4,7 @@ import Button from "@mui/material/Button";
 import TextInput from "../../../atoms/inputs/TextInput";
 import SelectInput from "../../../atoms/inputs/SelectInput"; // Asegúrate de tener un componente de SelectInput
 import useForm from "../../../../hooks/useForm";
-import { useUserContext } from "../../../../contexts/userContextInstitucional";
+import { useUserContext } from "../../../../contexts/userContext";
 import usePost from "../../../../hooks/usePost";
 
 const FormNewSkill = ({ onCancel }) => {
