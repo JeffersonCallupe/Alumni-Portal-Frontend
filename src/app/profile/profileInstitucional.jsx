@@ -29,10 +29,10 @@ function ProfileInstitucional() {
     : null;
 
   // Hook para realizar un PATCH general en el perfil
-  const { loading: patchLoading, patch } = usePatch(apiUrl);
+  const { loading: patchLoading, patch, error: patchError } = usePatch(apiUrl);
 
   // Hook para realizar un POST para nuevas experiencias laborales
-  const { loading: postLoading, post } = usePost(workExperienceApiUrl);
+  const { loading: postLoading, post, error: postError } = usePost(workExperienceApiUrl);
 
   if (!userData) {
     return <div>Loading...</div>;
@@ -69,40 +69,47 @@ function ProfileInstitucional() {
   return (
     <HomeBase>
       <div className="w-full flex flex-col mb-16">
+        {/* Header del perfil */}
         <ProfileBaseCard
           handleSaveChanges={handleSaveChanges}
           loading={patchLoading}
         />
+        {/* Tarjeta para "Acerca de" */}
         <InfoBaseCard
           title="Acerca de"
           cardContent={userData.about || "No especificado"}
           dialogContent={contentAbout}
           modalId="modal-about"
         />
+        {/* Tarjeta para "Experiencia Laboral" */}
         <InfoBaseCardContent
           title="Experiencia Laboral"
           cardContent={<WorkExperienceList />}
           dialogContent={contentWorkExperience} 
           modalId="modal-work-experience"
         />
+        {/* Tarjeta para "Educación" */}
         <InfoBaseCardContent
           title="Educación"
           cardContent={<EducationList />}
           dialogContent={contentAbout} 
           modalId="modal-education"
         />
+        {/* Tarjeta para "Certificaciones" */}
         <InfoBaseCardContent
           title="Certificaciones"
           cardContent={<CertificationList />}
           dialogContent={contentAbout}  
           modalId="modal-certifications"
         />
+        {/* Tarjeta para "Habilidades Claves" */}
         <InfoBaseCardContent
           title="Habilidades Claves"
           cardContent={<SkillList />}
           dialogContent={contentAbout} 
           modalId="modal-skills"
         />
+        {/* Tarjeta para "Proyectos" */}
         <InfoBaseCardContent
           title="Proyectos"
           cardContent={<ProjectList />}
@@ -110,6 +117,9 @@ function ProfileInstitucional() {
           modalId="modal-projects"
         />
       </div>
+      {/* Mostrar errores si los hay */}
+      {patchError && <p className="text-red-500">Error en el guardado: {patchError}</p>}
+      {postError && <p className="text-red-500">Error al agregar experiencia: {postError}</p>}
     </HomeBase>
   );
 }

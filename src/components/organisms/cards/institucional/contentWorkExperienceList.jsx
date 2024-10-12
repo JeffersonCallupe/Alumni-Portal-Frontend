@@ -28,7 +28,7 @@ const WorkExperienceList = () => {
 
   const dialogContent = (experience) => (
     <div>
-      <Typography variant="h6">Editar Experiencia: {experience.jobTitle}</Typography>
+      <Typography variant="h6" >Editar Experiencia: {experience.jobTitle}</Typography>
       {/* Aquí podrías agregar un formulario o más detalles */}
     </div>
   );

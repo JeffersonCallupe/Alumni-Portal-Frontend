@@ -31,10 +31,10 @@ const InfoBaseCard = ({ title, cardContent, dialogContent, modalId}) => {
         <Card
           align="left"
           sx={{
-            border: "1px solid #e5e5e5",
+            border: "",
             borderRadius: "8px",
             boxShadow: "none",
-            padding: "0.75rem",
+            padding: "0.75rem 0.60rem 0.60rem 0.60rem",
             margin: "0.5rem 0"
           }}
         >

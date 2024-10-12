@@ -4,11 +4,13 @@ import Button from "@mui/material/Button";
 import TextInput from "../../../atoms/inputs/TextInput";
 import useForm from "../../../../hooks/useForm";
 import { useUserContext } from "../../../../contexts/userContextInstitucional";
-import usePost from "../../../../hooks/usePost"; 
+import usePost from "../../../../hooks/usePost";
 
 const FormNewExperience = ({ onCancel }) => {
-    const { userData } = useUserContext();
-    const { loading, error, post } = usePost();
+    const { userData } = useUserContext(); // Obtenemos el contexto de usuario
+    const apiUrl = `http://178.128.147.224:8080/api/work-experience/save/${userData?.id}`; // URL dinámica basada en el ID de usuario
+    const { loading, error, post } = usePost(apiUrl); // Hook adaptado a la nueva implementación
+
     const { formData, errors, handleChange, handleSubmit } = useForm(
         {
             company: "",
@@ -18,19 +20,10 @@ const FormNewExperience = ({ onCancel }) => {
             description: "",
         },
         async (formData) => {
-            const userId = userData?.id; // Asegúrate de que userData tenga un id
-            if (!userId) {
-                console.error("User ID no encontrado");
-                return;
-            }
-            const endpoint = `http://178.128.147.224:8080/api/work-experience/save/${userId}`;
-            console.log("Endpoint:", endpoint); // Verifica que el endpoint sea correcto
-            console.log("Datos a enviar:", formData); // Verifica que los datos sean correctos
-            await post(endpoint, formData);
+            console.log("Datos a enviar:", formData); // Verificar datos antes de la solicitud
+            await post(formData); // Enviar la solicitud
             if (!error) {
-                onCancel(); // Cierra el formulario si no hay error
-            } else {
-                console.error("Error en la solicitud:", error);
+                onCancel(); // Cerrar el formulario si no hay errores
             }
         }
     );
@@ -80,7 +73,7 @@ const FormNewExperience = ({ onCancel }) => {
                     {loading ? "Guardando..." : "Guardar Cambios"}
                 </Button>
             </div>
-            {error && <p className="text-red-500">{error.message}</p>} {/* Mostrar mensaje de error */}
+            {error && <p className="text-red-500">{error}</p>} {/* Mostrar mensaje de error */}
         </Box>
     );
 };
