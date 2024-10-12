@@ -1,44 +1,43 @@
 import { useState } from "react";
+import { useUserContext } from "../contexts/userContext";
 
 const useLoginEmpresa = (apiUrl) => {
-    const [data, setData] = useState(null);
-    const [loading, setLoading] = useState(false);
-    const [error, setError] = useState(null);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
+  const { updateUserData } = useUserContext();
+  const [data, setData] = useState(null);
 
-    const loginEmpresa = async (formData) => {
-        setLoading(true);
-        setError(null);
+  const loginEmpresa = async (formData) => {
+      setLoading(true);
+      setError(null);
 
-        try {
-            const response = await fetch(apiUrl, {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify(formData),
-            });
+      try {
+          const response = await fetch(apiUrl, {
+              method: "POST",
+              headers: {
+                  "Content-Type": "application/json",
+              },
+              body: JSON.stringify(formData),
+          });
 
-            const contentType = response.headers.get("content-type");
-            let result;
+          if (!response.ok) {
+            throw new Error("Error en la autenticación de empresa");
+          }
 
-            if (contentType && contentType.includes("application/json")) {
-                result = await response.json();
-            } else {
-                // Si no es JSON, lee el texto directamente
-                result = await response.text();
-            }
+          const result = await response.json();
+          const companyData = result;
 
-            if (!response.ok) { 
-                throw new Error(result.message || result || "Error en la solicitud");
-            }
 
-            setData(result); 
+          sessionStorage.setItem("company", JSON.stringify(companyData)); 
+          setData(companyData);
+          updateUserData(companyData);
+
         } catch (err) {
-            setError(err.message); 
+          setError(err.message);
         } finally {
-            setLoading(false);
+          setLoading(false);
         }
-    };
+      };
 
     return { data, loading, error, loginEmpresa };
 };

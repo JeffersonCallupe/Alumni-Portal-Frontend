@@ -12,13 +12,14 @@ function RegistroSUM() {
   const apiUrl = "http://178.128.147.224:8080/api/user/registerAcademic";
   const { data, loading, error, login } = useLogin(apiUrl);
   const navigate = useNavigate();
+  console.log(error);
 
   useEffect(() => {
     if (error) {
       console.log("Error: ", error);
     } else if (data) {
       console.log("Login exitoso: ", data);
-      navigate("/home");
+      navigate("/");
     }
   }, [data, error]);
 

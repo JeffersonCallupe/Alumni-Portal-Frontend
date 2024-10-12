@@ -6,7 +6,7 @@ import LoginSUM from "../src/app/login/LoginSUM";
 import RegistroSUM from "./app/registro/registroSUM";
 import RegistroEmpresa from "./app/registro/registroEmpresa";
 import Home from "./app/dashboard/home";
-import { UserProvider } from '../src/contexts/userContext';
+import { UserProvider } from "./contexts/userContext";
 
 function App() {
   return (

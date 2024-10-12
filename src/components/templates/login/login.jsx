@@ -1,4 +1,5 @@
 import LoginForm from "../../organisms/forms/loginForm";
+import LoginSUMForm from "../../organisms/forms/loginSUMForm";
 import Typography from "@mui/material/Typography";
 import Footer from "../../atoms/footer/footer";
 import imgFondo from "../../../assets/fondoRectorado.png";
@@ -21,13 +22,13 @@ function LoginBase({
   useEffect(() => {
     if (handleRedirect.error) {
       console.log("Error: ", handleRedirect.error);
-    } else if (handleRedirect.data) {
-      console.log("Login exitoso: ", handleRedirect.data);
+    } else if (handleRedirect.userData) {
+      console.log("Login exitoso");
       if (loginRedirectUrl) {
         handleRedirect.navigate(loginRedirectUrl);
       }
     }
-  }, [handleRedirect.data, handleRedirect.error]);
+  }, [handleRedirect.userData, handleRedirect.error]);
 
   const handleLogin = (formData) => {
     onSubmit(formData);
@@ -59,78 +60,54 @@ function LoginBase({
               Portal Alumni UNMSM
             </Typography>
 
-            {isSUM && (
-              <div
-                className="mb-6 h-auto "
-                style={{ backgroundColor: "#6F191C" }}
-              >
+            {isSUM ? (
+              <div className="mb-6 h-auto" style={{ backgroundColor: "#6F191C" }}>
                 <center>
                   <img src={imgLogo} alt="Logo" className="h-24" />
                 </center>
               </div>
+            ) : (
+              <img src={imgLogo} alt="Logo" className="h-24 mb-6" />
             )}
 
-            {!isSUM && <img src={imgLogo} alt="Logo" className="h-24 mb-6" />}
             {description && (
-              <Typography
-                variant="body2"
-                component="p"
-                align="center"
-                gutterBottom
-              >
+              <Typography variant="body2" component="p" align="center" gutterBottom>
                 {description}
               </Typography>
             )}
 
-            <LoginForm
-              onSubmit={handleLogin}
-              disabled={loading}
-              validate={validate}
-            />
-            
+            {!isSUM && (
+              <LoginForm
+                onSubmit={handleLogin}
+                disabled={loading}
+                validate={validate}
+              />
+            )}
+            {isSUM && (
+              <LoginSUMForm
+                onSubmit={handleLogin}
+                disabled={loading}
+                validate={validate}
+              />
+            )}
+
             <div className="mt-4 space-y-2">
-              <Typography
-                variant="body2"
-                component="p"
-                align="center"
-                gutterBottom
-              >
-                <a
-                  href={isSUM ? "/" : "/loginSUM"}
-                  className="text-black hover:underline"
-                >
-                  
-                  {isSUM
-                    ? "Regresar al módulo de acceso principal"
-                    : isEmpresa 
-                    ? "Iniciar con cuenta institucional"
-                    : "Crear cuenta institucional"}
-                </a>
-
-              </Typography>
-
-              <Typography
-                variant="body2"
-                component="p"
-                align="center"
-                gutterBottom
-              >
-
-                <a 
-                  href={isEmpresa ? "/crearCuentaEmpresa" : "/loginEmpresa"} 
-                  className="text-black hover:underline"
-                >
-                  {
-                    
-                    isEmpresa
-                    ? " Crear cuenta empresarial "
-                    : " Iniciar sesión como empresa " 
-                  }
-                </a>
-              </Typography>
-
-              
-        
+                {isSUM ? (
+                  <div className="flex flex-col gap-2">
+                    <a className="text-black hover:underline" href="/">Regresar al módulo de acceso principal</a>
+                    <a className="text-black hover:underline" href="/loginEmpresa">Iniciar sesión como empresa</a>
+                    </div>
+                ) : isEmpresa ? (
+                  <div className="flex flex-col gap-2">
+                    <a className="text-black hover:underline" href="/">Iniciar con cuenta institucional</a>
+                    <a className="text-black hover:underline" href="/crearCuentaEmpresa">Crear cuenta empresarial</a>
+                    </div>
+                ) : (
+                  <div className="flex flex-col gap-2">
+                    <a className="text-black hover:underline" href="/loginSUM">Crear cuenta institucional</a>
+                    <a className="text-black hover:underline" href="/loginEmpresa">Iniciar sesión como empresa</a>
+                    </div>
+                )}
             </div>
           </div>
         </div>

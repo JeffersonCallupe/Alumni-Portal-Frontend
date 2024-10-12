@@ -12,7 +12,7 @@ import Button from "@mui/material/Button";
 import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
 import LogoSM from "../../../assets/logoUNMSM.png";
-import { useUser } from "../../../contexts/userContext";
+import { useUserContext } from "../../../contexts/userContext";
 import { useNavigate } from "react-router-dom";
 
 function Navbar() {

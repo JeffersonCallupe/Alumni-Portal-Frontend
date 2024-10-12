@@ -8,16 +8,17 @@ function LoginSUM() {
   const apiUrl = "https://sumvirtual.unmsm.edu.pe/sumapi/loguearse";
   const { data, loading, error, login } = useLogin(apiUrl);
   const navigate = useNavigate();
+  const userData = data
 
   return (
     <LoginBase
       apiUrl={apiUrl}
       imgLogo={imgLogo}
       backgroundImage={imgFondo}
-      handleRedirect={{ data, error, navigate }}
+      handleRedirect={{ userData, error, navigate }}
       loginRedirectUrl={"/validacionSUM"}
       description={"Ingrese credenciales SUM para validar su cuenta"}
-      loading={loading} 
+      loading={loading}
       onSubmit={login}
       isSUM={true}
     />
