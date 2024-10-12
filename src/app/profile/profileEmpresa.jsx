@@ -16,10 +16,10 @@ function ProfileEmpresa() {
     : null;
   const imageUrl = 'http://178.128.147.224:8080/api/image';
   const { loading, patch } = usePatch(apiUrl);
-
   if (!userData) {
     return <div>Loading...</div>;
   }
+  
   const handleSaveChanges = async (formData) => {
     try {
       await patch(formData);

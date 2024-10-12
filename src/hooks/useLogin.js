@@ -34,6 +34,7 @@ const useLogin = (apiUrl) => {
       } else {
         userData = result;
         updateUserData(userData);
+        setData(userData);
       }
 
     } catch (err) {
