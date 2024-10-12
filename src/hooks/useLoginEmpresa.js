@@ -7,7 +7,7 @@ const useLoginEmpresa = (apiUrl) => {
   const { updateUserData } = useUserContext();
   const [data, setData] = useState(null);
 
-  const loginEmpresa = async (credentials) => {
+  const loginEmpresa = async (formData) => {
     setLoading(true);
     setError(null);
 
@@ -17,17 +17,26 @@ const useLoginEmpresa = (apiUrl) => {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(credentials), 
+        body: JSON.stringify(formData),
       });
 
-      if (!response.ok) {
-        throw new Error("Error en la autenticación de empresa");
+    
+      const contentType = response.headers.get("content-type");
+      let result;
+
+      if (contentType && contentType.includes("application/json")) {
+        result = await response.json(); 
+      } else {
+        result = await response.text(); 
       }
 
-      const result = await response.json();
+      if (!response.ok) {
+        throw new Error(result.message || result || "Error en la autenticación de empresa");
+      }
+
       const companyData = result;
 
-      sessionStorage.setItem("company", JSON.stringify(companyData)); 
+      sessionStorage.setItem("company", JSON.stringify(companyData));
       setData(companyData);
       updateUserData(companyData);
 

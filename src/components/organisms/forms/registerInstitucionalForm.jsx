@@ -120,6 +120,7 @@ const RegisterInstitucionalForm = ({ onSubmit, validate }) => {
               />
             </div>
           </div>
+          
           <Button
             variant="contained"
             size="large"
