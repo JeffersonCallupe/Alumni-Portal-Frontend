@@ -5,28 +5,26 @@ import TextInput from "../../../atoms/inputs/TextInput";
 import useForm from "../../../../hooks/useForm";
 import { useUserContext } from "../../../../contexts/userContextInstitucional";
 
-const FormWorkExperience = ({ onSubmit, onCancel, loading, workExperience }) => {
+const FormNewExperience = ({ onSubmit, onCancel, loading }) => {
   const { userData } = useUserContext();
-  
-  // Iniciamos los valores del formulario con la experiencia laboral existente o valores vacíos
   const { formData, errors, handleChange, handleSubmit } = useForm(
     {
-      jobTitle: workExperience?.jobTitle || "",
-      company: workExperience?.company || "",
-      startDate: workExperience?.startDate || "",
-      endDate: workExperience?.endDate || "",
-      description: workExperience?.description || "",
+      company: "", // Empresa
+      jobTitle: "", // Título del puesto
+      startDate: "", // Fecha de inicio
+      endDate: "", // Fecha de fin
+      description: "", // Descripción del trabajo
     },
     onSubmit
   );
 
-  // Definimos los campos específicos para la experiencia laboral
+  // Definición de los campos del formulario
   const formFields = [
-    { label: "Título del Puesto", name: "jobTitle", value: formData.jobTitle },
     { label: "Empresa", name: "company", value: formData.company },
-    { label: "Fecha de Inicio", name: "startDate", value: formData.startDate },
-    { label: "Fecha de Fin", name: "endDate", value: formData.endDate },
-    { label: "Descripción", name: "description", value: formData.description },
+    { label: "Título del puesto", name: "jobTitle", value: formData.jobTitle },
+    { label: "Fecha de inicio", name: "startDate", value: formData.startDate, type: "date" },
+    { label: "Fecha de fin", name: "endDate", value: formData.endDate, type: "date" },
+    { label: "Descripción", name: "description", value: formData.description, multiline: true },
   ];
 
   return (
@@ -40,7 +38,7 @@ const FormWorkExperience = ({ onSubmit, onCancel, loading, workExperience }) => 
         width: "100%",
       }}
     >
-      {formFields.map(({ label, name, value }) => (
+      {formFields.map(({ label, name, value, type, multiline }) => (
         <div key={name} className="flex flex-col sm:flex-row gap-2 sm:gap-4">
           <label className="text-l font-bold text-black sm:w-1/4 lg:w-1/6">
             {label}:
@@ -49,17 +47,21 @@ const FormWorkExperience = ({ onSubmit, onCancel, loading, workExperience }) => 
             name={name}
             value={value}
             onChange={handleChange}
-            error={errors[name]}
-            helperText={errors[name]}
+            error={!!errors[name]} // Usar !! para convertir a booleano
+            helperText={errors[name] || ""} // Evitar undefined
             disabled={loading}
+            type={type || "text"}
+            multiline={multiline || false}
+            rows={multiline ? 4 : 1}
+            variant="outlined" // Si deseas especificar el estilo del TextInput
           />
         </div>
       ))}
-      <div>
-        <Button type="button" onClick={onCancel}>
+      <div className="flex justify-end gap-4 mt-4">
+        <Button variant="outlined" type="button" onClick={onCancel} disabled={loading}>
           Cancelar
         </Button>
-        <Button type="submit" disabled={loading}>
+        <Button variant="contained" type="submit" disabled={loading}>
           Guardar Cambios
         </Button>
       </div>
@@ -67,4 +69,4 @@ const FormWorkExperience = ({ onSubmit, onCancel, loading, workExperience }) => 
   );
 };
 
-export default FormWorkExperience;
+export default FormNewExperience;
