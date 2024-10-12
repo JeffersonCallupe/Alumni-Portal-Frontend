@@ -5,6 +5,7 @@ import Box from "@mui/material/Box";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import CardContentEmpresa from "../empresa/contentHeader";
+import CardContentInstitucional from "../institucional/contentHeader";
 import CardMedia from "@mui/material/CardMedia";
 import DefaultHeader from "../../../../assets/fondoRectorado.png";
 import DefaultProfile from "../../../../assets/logoUNMSM.png";
@@ -73,7 +74,7 @@ const ProfileBaseCard = ({ apiUrl, handleSaveChanges, loading, dialogContent, mo
         </Box>
         <CardContent sx={{ marginTop: "3rem", padding: "1rem 1rem 0 2rem" }}>
           {user_type === "Institucional" ? (
-            <CardContentInstitucional />
+            <CardContentInstitucional onSubmit={handleSaveChanges} loading={loading} />
           ) : (
             <CardContentEmpresa onSubmit={handleSaveChanges} loading={loading} />
           )}

@@ -22,9 +22,22 @@
   background-color: white;
   border-radius: 50px;
   box-shadow: none;
-  border: 1px solid #e5e5e5;
+  border: 1px solid #e5e5e5; 
 
 }
+
+.profile-base-card.subcard {
+  width: 65vw;
+  padding: 0.75rem 0.75rem 0 0.75rem;
+}
+
+@media (min-width: 768px) {
+  /* Para pantallas medianas en adelante (md) */
+  .subcard {
+    width: 50vw;
+  }
+}
+
 
 @media screen and (max-width: 767px) {
   .form-responsive-width{
