@@ -1,4 +1,4 @@
-import * as React from "react";
+import React from "react";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import Container from "@mui/material/Container";
@@ -16,15 +16,15 @@ import Tooltip from "@mui/material/Tooltip";
 import Typography from "@mui/material/Typography";
 import { useUserContext } from "../../../contexts/userContext";
 import { useNavigate } from "react-router-dom";
+import { getProfilePicture } from "../../../hooks/manageImage";
 
 function Navbar() {
-  const user_type = "Empresa" //Reemplazar por la info del contexto/token
-  const user_photo = "https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp"
-  const navigate = useNavigate();
+  const { isInstitutional, logout, userData } = useUserContext();
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
   const [anchorElActividades, setAnchorElActividades] = React.useState(null);
   const [anchorElOfertas, setAnchorElOfertas] = React.useState(null);
+  const Navigate = useNavigate();
 
   const handleOpenMenu = (setAnchor) => (event) => {
     setAnchor(event.currentTarget);
@@ -34,11 +34,10 @@ function Navbar() {
     setAnchor(null);
   };
 
-  const handleLogOut = () => { //TODO: Crear función en el contexto
-    sessionStorage.removeItem("user");
-    sessionStorage.removeItem("token");
-    navigate("/");
-  };
+  const handleLogOut = () => {
+    logout();
+    Navigate("/");
+  }
 
   return (
     <AppBar
@@ -97,7 +96,7 @@ function Navbar() {
                 open={Boolean(anchorElActividades)}
                 onClose={handleCloseMenu(setAnchorElActividades)}
               >
-                {user_type === "Institucional" && (
+                {isInstitutional && (
                   <MenuItem onClick={handleCloseMenu(setAnchorElActividades)}>
                     Mis actividades inscritas
                   </MenuItem>
@@ -115,7 +114,7 @@ function Navbar() {
                 open={Boolean(anchorElOfertas)}
                 onClose={handleCloseMenu(setAnchorElOfertas)}
               >
-                {user_type === "Institucional" && (
+                {isInstitutional && (
                   <MenuItem onClick={handleCloseMenu(setAnchorElOfertas)}>
                     Ofertas inscritas
                   </MenuItem>
@@ -153,7 +152,7 @@ function Navbar() {
               open={Boolean(anchorElActividades)}
               onClose={handleCloseMenu(setAnchorElActividades)}
             >
-              {user_type === "Institucional" && (
+              {isInstitutional && (
                 <MenuItem onClick={handleCloseMenu(setAnchorElActividades)}>
                   Mis actividades inscritas
                 </MenuItem>
@@ -180,7 +179,7 @@ function Navbar() {
               open={Boolean(anchorElOfertas)}
               onClose={handleCloseMenu(setAnchorElOfertas)}
             >
-              {user_type === "Institucional" && (
+              {isInstitutional && (
                 <MenuItem onClick={handleCloseMenu(setAnchorElOfertas)}>
                   Ofertas inscritas
                 </MenuItem>
@@ -198,7 +197,7 @@ function Navbar() {
                 onClick={handleOpenMenu(setAnchorElUser)}
                 sx={{ p: 0 }}
               >
-                <Avatar alt="Remy Sharp" src={user_photo} sx={{height: "2rem", width:"2rem"}} />
+                <Avatar alt="Remy Sharp" src={userData.photoUrl} sx={{height: "2rem", width:"2rem"}} />
               </IconButton>
             </Tooltip>
             <Typography variant="caption">Yo</Typography>

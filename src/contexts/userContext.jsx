@@ -11,9 +11,9 @@ export const useUserContext = () => {
 // Proveedor del contexto de usuario
 export const UserProvider = ({ children }) => {
   const [userData, setUserData] = useState(null);
-  const [isInstitutional, setIsInstitutional] = useState(false); // Variable para guardar si es institucional
+  const [isInstitutional, setIsInstitutional] = useState(false);
 
-   // Cargar datos del usuario desde sessionStorage al iniciar
+  // Cargar datos del usuario desde sessionStorage al iniciar
   useEffect(() => {
     const storedUserData = sessionStorage.getItem("user");
     if (storedUserData) {
@@ -24,6 +24,7 @@ export const UserProvider = ({ children }) => {
       }
     }
   }, []);
+
   // Función para actualizar los datos del usuario
   const updateUserData = (newData) => {
     if (newData.studentCode) {
@@ -38,9 +39,15 @@ export const UserProvider = ({ children }) => {
     });
   };
 
+  // Función para cerrar sesión
+  const logout = () => {
+    sessionStorage.removeItem("user");
+    setUserData(null);
+    setIsInstitutional(false);
+  };
 
   return (
-    <UserContext.Provider value={{ userData, updateUserData, isInstitutional }}>
+    <UserContext.Provider value={{ userData, updateUserData, isInstitutional, logout }}>
       {children}
     </UserContext.Provider>
   );
