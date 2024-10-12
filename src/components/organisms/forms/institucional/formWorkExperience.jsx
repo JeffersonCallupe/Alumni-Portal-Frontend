@@ -70,7 +70,7 @@ const FormNewExperience = ({ onCancel }) => {
                     Cancelar
                 </Button>
                 <Button variant="contained" type="submit" disabled={loading}>
-                    {loading ? "Guardando..." : "Guardar Cambios"}
+                    {loading ? "Guardando..." : "Añadir"}
                 </Button>
             </div>
             {error && <p className="text-red-500">{error}</p>} {/* Mostrar mensaje de error */}

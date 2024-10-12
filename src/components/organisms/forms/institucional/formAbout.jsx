@@ -34,7 +34,7 @@ const FormAbout = ({ onSubmit, onCancel, loading }) => {
           Cancelar
         </Button>
         <Button type="submit" disabled={loading}>
-          Guardar Cambios
+          Guardar
         </Button>
       </div>
     </Box>

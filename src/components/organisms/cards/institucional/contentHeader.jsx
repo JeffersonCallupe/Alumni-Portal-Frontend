@@ -66,6 +66,9 @@ const CardContentInstitucional = ({ loading, onSubmit }) => {
           {userData.headline || "No especificado"}
         </Typography>
         <Typography variant="body2" align="left">
+          {userData.faculty || "No especificado"}
+        </Typography>
+        <Typography variant="body2" align="left">
           Correo Electrónico: {userData.email || "No especificado"}
         </Typography>
         <Typography variant="body2" align="left">
@@ -82,7 +85,7 @@ const CardContentInstitucional = ({ loading, onSubmit }) => {
         >
           <EditButton onClick={handleOpen} />
         </Box>
-        <div className="flex flex-row gap-2 items-center" style={{ marginTop: '2rem' }}>
+        <div className="flex flex-row gap-2 items-center" style={{ marginTop: '3rem' }}>
           <div className="flex-shrink-0"> 
             <ActionButton texto={"Cambiar Contraseña"} />
           </div>
