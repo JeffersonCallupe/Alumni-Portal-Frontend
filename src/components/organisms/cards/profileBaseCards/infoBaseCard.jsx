@@ -8,7 +8,7 @@ import EditButton from "../../../atoms/buttons/editButton";
 import Typography from "@mui/material/Typography";
 import useModal from "../../../../hooks/useModal";
 
-const InfoBaseCard = ({ title, cardContent, dialogContent, modalId}) => {
+const InfoBaseCard = ({ title, cardContent, dialogContent, modalId,sx}) => {
   const { open, handleOpen, handleClose } = useModal();
 
   return (
@@ -45,7 +45,7 @@ const InfoBaseCard = ({ title, cardContent, dialogContent, modalId}) => {
       <DialogBase
         open={open}
         handleClose={handleClose}
-        title={title}
+        title={`Editar ${title}`}
         content={dialogContent}
         modalId={modalId}
       />

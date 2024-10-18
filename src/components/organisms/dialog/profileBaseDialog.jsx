@@ -15,7 +15,7 @@ const DialogBase = ({ open, handleClose, title, content, modalId }) => {
       } 
     }}>
       <div className="bg-neutral-100">
-        <DialogTitle id={modalId} sx={{padding:"1.5rem 2rem"}}>Editar {title}</DialogTitle>
+        <DialogTitle id={modalId} sx={{padding:"1.5rem 2rem"}}>{title}</DialogTitle>
         <DialogContent sx={{padding:"1rem 2rem"}}>
           {dialogContentWithProps}
           </DialogContent>

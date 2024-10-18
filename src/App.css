@@ -38,6 +38,12 @@
   }
 }
 
+@media (min-width: 768px) {
+  /* Para pantallas medianas en adelante (md) */
+  .subcard2 {
+    width: 50vw;
+  }
+}
 
 @media screen and (max-width: 767px) {
   .form-responsive-width{

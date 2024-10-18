@@ -45,7 +45,7 @@ const InfoBaseCard = ({ title, cardContent, dialogContent, modalId}) => {
       <DialogBase
         open={open}
         handleClose={handleClose}
-        title={title}
+        title={`Editar ${title}`}
         content={dialogContent}
         modalId={modalId}
       />
