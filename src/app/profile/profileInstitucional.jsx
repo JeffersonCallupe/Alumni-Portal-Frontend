@@ -3,7 +3,7 @@ import HomeBase from "../../components/templates/home/home";
 import FormAbout from "../../components/organisms/forms/institucional/formAbout";
 import InfoBaseCard from "../../components/organisms/cards/profileBaseCards/infoBaseCard";
 import InfoBaseCardContent from "../../components/organisms/cards/profileBaseCards/infoBaseCardContent";
-import ProfileBaseCard from "../../components/organisms/cards/profileBaseCards/headerBaseCard2";
+import ProfileBaseCard from "../../components/organisms/cards/profileBaseCards/headerBaseCardUser";
 import ProjectList from "../../components/organisms/cards/institucional/contentProjectList";
 import SkillList from "../../components/organisms/cards/institucional/contentSkillList";
 import CertificationList from "../../components/organisms/cards/institucional/contentCertificationList";
@@ -14,6 +14,7 @@ import FormNewExperience from "../../components/organisms/forms/institucional/fo
 import FormNewCertification from "../../components/organisms/forms/institucional/formCertification";
 import FormNewSkill from "../../components/organisms/forms/institucional/formSkill";
 import FormNewProject from "../../components/organisms/forms/institucional/formProject";
+import FormFoto from "../../components/organisms/forms/institucional/formFoto";
 
 import { useUserContext } from "../../contexts/userContext";
 import usePatch from "../../hooks/usePatch";
@@ -25,6 +26,8 @@ function ProfileInstitucional() {
   const apiUrl = userData
       ? `http://178.128.147.224:8080/api/user/${userData.id}`
       : null;
+  
+  const imageUrl = 'http://178.128.147.224:8080/api/image';
 
   const workExperienceApiUrl = userData
       ? `http://178.128.147.224:8080/api/work-experience/save/${userData.id}`
@@ -104,6 +107,10 @@ function ProfileInstitucional() {
           console.error("Error al agregar el proyecto:", error);
       }
   };
+  
+  const contentFoto = React.cloneElement(<FormFoto />, {
+    apiUrl: imageUrl
+  });
 
   const contentAbout = React.cloneElement(<FormAbout />, {
       onSubmit: handleSaveChanges,
@@ -138,7 +145,13 @@ function ProfileInstitucional() {
   return (
       <HomeBase>
           <div className="w-full flex flex-col mb-16">
-              <ProfileBaseCard handleSaveChanges={handleSaveChanges} loading={patchLoading} />
+              <ProfileBaseCard 
+                apiUrl={imageUrl}
+                handleSaveChanges={handleSaveChanges} 
+                loading={patchLoading}
+                dialogContent={contentFoto}
+                modalId="modal- foto"
+              />
               <InfoBaseCard
                   title="Acerca de"
                   cardContent={userData.about || "No especificado"}

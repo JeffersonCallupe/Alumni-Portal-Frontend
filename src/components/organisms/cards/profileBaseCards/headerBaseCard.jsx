@@ -19,7 +19,7 @@ const ProfileBaseCard = ({ apiUrl, handleSaveChanges, loading, dialogContent, mo
   const [headerImage] = React.useState(DefaultHeader);
   const [profileImage, setProfileImage] = React.useState(DefaultProfile);
   const { open, handleOpen, handleClose } = useModal();
-  const { userData } = useUserContext();
+  const { userData, isInstitutional } = useUserContext();
   useEffect(() => {
     const fetchProfilePicture = async () => {
       try {
@@ -72,7 +72,7 @@ const ProfileBaseCard = ({ apiUrl, handleSaveChanges, loading, dialogContent, mo
           />
         </Box>
         <CardContent sx={{ marginTop: "3rem", padding: "1rem 1rem 0 2rem" }}>
-          {userData.studentCode !== undefined ? (
+          {isInstitutional ? (
             <CardContentInstitucional onSubmit={handleSaveChanges} loading={loading} />
           ) : (
             <CardContentEmpresa onSubmit={handleSaveChanges} loading={loading} />
