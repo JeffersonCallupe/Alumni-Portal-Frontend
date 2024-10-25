@@ -1,14 +1,17 @@
 import React, { useEffect, useState } from "react";
 import { useUserContext } from "../../../../contexts/userContext";
-import InfoBaseCard from "../profileBaseCards/infosubBaseCard"; // Ajusta la ruta según tu estructura
+import InfoBaseCard from "../profileBaseCards/infosubBaseCard";
 import CircularProgress from "@mui/material/CircularProgress";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
+import FormEditSkill from "../../forms/institucional/Edit/formEditSkill"; // Importa el formulario
 
 const SkillList = () => {
   const { userData } = useUserContext();
   const [skills, setSkills] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [openModal, setOpenModal] = useState(false);
+  const [selectedSkill, setSelectedSkill] = useState(null);
 
   useEffect(() => {
     const fetchSkills = async () => {
@@ -26,8 +29,42 @@ const SkillList = () => {
     fetchSkills();
   }, [userData]);
 
+  const updateSkillList = (updatedSkill) => {
+    setSkills((prevSkills) =>
+      prevSkills.map((skill) =>
+        skill.id === updatedSkill.id ? updatedSkill : skill
+      )
+    );
+  };
+
+  const handleOpenModal = (skill) => {
+    setSelectedSkill(skill);
+    setOpenModal(true);
+  };
+
+  const handleCloseModal = () => {
+    setOpenModal(false);
+    setSelectedSkill(null);
+  };
+
+  const dialogContent = (skill) => (
+    <div>
+      <Typography variant="h6">Editar Habilidad: {skill.name}</Typography>
+      <FormEditSkill
+        skillId={skill.id}
+        initialData={skill}
+        onUpdate={updateSkillList}
+        onCancel={handleCloseModal}
+      />
+    </div>
+  );
+
   if (loading) {
-    return <CircularProgress />;
+    return (
+      <Box display="flex" justifyContent="center" alignItems="center" height="100vh">
+        <CircularProgress />
+      </Box>
+    );
   }
 
   return (
@@ -42,11 +79,9 @@ const SkillList = () => {
                 <Typography variant="subtitle2">Nivel: {skill.level}</Typography>
               </div>
             }
-            dialogContent={
-              <Typography variant="h6">Editar Habilidad: {skill.name}</Typography>
-            } // Contenido del modal
-            modalId={`modal-skill-${skill.id}`} // ID único para cada modal
-            className="subcard" // Asignando la clase CSS
+            dialogContent={dialogContent(skill)}
+            modalId={`modal-skill-${skill.id}`}
+            className="subcard"
           />
         ))
       ) : (

@@ -3,14 +3,8 @@ import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import TextInput from "../../../atoms/inputs/TextInput";
 import useForm from "../../../../hooks/useForm";
-import { useUserContext } from "../../../../contexts/userContext";
-import usePost from "../../../../hooks/usePost";
 
-const FormNewCertification = ({ onCancel }) => {
-    const { userData } = useUserContext(); // Obtenemos el contexto de usuario
-    const apiUrl = `http://178.128.147.224:8080/api/certification/save/${userData?.id}`; // URL dinámica para guardar la certificación
-    const { loading, error, post } = usePost(apiUrl); // Hook para hacer el POST request
-
+const FormNewCertification = ({ onCancel, onSubmit, loading, error }) => {
     const { formData, errors, handleChange, handleSubmit } = useForm(
         {
             name: "",
@@ -20,11 +14,11 @@ const FormNewCertification = ({ onCancel }) => {
             credentialUrl: "",
         },
         async (formData) => {
-            console.log("Datos a enviar:", formData); // Verificar los datos
-            await post(formData); // Realizar la solicitud POST
+            console.log("Datos a enviar:", formData);
+            await onSubmit(formData);
             if (!error) {
                 window.location.reload();
-                onCancel(); // Cerrar el formulario si no hay errores
+                onCancel();
             }
         }
     );
@@ -72,7 +66,7 @@ const FormNewCertification = ({ onCancel }) => {
                     {loading ? "Guardando..." : "Añadir"}
                 </Button>
             </div>
-            {error && <p className="text-red-500">{error}</p>} {/* Mostrar mensaje de error */}
+            {error && <p className="text-red-500">{error}</p>}
         </Box>
     );
 };
