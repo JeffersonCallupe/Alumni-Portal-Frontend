@@ -10,6 +10,7 @@ import DialogTitle from "@mui/material/DialogTitle";
 import DialogContent from "@mui/material/DialogContent";
 import DialogActions from "@mui/material/DialogActions";
 import FormEditProject from "../../forms/institucional/Edit/formEditProject"; // Ajusta la ruta según tu estructura
+import DeleteIcon from '@mui/icons-material/Delete';
 
 const ProjectList = () => {
   const { userData } = useUserContext();
@@ -82,20 +83,37 @@ const ProjectList = () => {
             cardContent={
               <div>
                 <Typography variant="subtitle2">Fecha: {project.date}</Typography>
-                <Typography variant="subtitle2">Descripción:</Typography>
-                <Typography variant="body2">{project.description}</Typography>
-                <Button
-                  variant="outlined"
-                  onClick={() => handleOpenModal(project)}
-                  style={{
-                    textTransform: "none",
-                    color: "black",
-                    borderColor: "black",
-                    marginTop: "8px",
-                  }}
+                <br></br>
+                <Box 
+                  display="flex" 
+                  justifyContent="space-between"  // Espacio automático entre botones
+                  flexWrap="wrap"                 // Permitir que los botones se muevan en pantallas pequeñas
+                  gap={2}                         // Espacio uniforme entre botones
                 >
-                  Ver descripción
-                </Button>
+                  <Button 
+                    variant="outlined" 
+                    onClick={() => handleOpenModal(project)}
+                    style={{ 
+                      textTransform: "none", 
+                      color: "black", 
+                      borderColor: "black" 
+                    }}
+                  >
+                    Ver descripción
+                  </Button>
+
+                  <Button 
+                    variant="outlined" 
+                    startIcon={<DeleteIcon />}
+                    style={{ 
+                      textTransform: "none", 
+                      color: "black", 
+                      borderColor: "black" 
+                    }}
+                  >
+                    Eliminar
+                  </Button>
+                </Box>
               </div>
             }
             dialogContent={dialogContent(project)} // Llama a la función para pasar el contenido del modal

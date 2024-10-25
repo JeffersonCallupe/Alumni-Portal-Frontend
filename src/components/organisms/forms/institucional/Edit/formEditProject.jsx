@@ -57,6 +57,7 @@ const FormEditProject = ({ projectId, initialData, onUpdate, onCancel }) => {
         width: "100%",
       }}
     >
+      <br></br>
       <TextField
         label="Nombre del Proyecto"
         name="name"

@@ -10,6 +10,7 @@ import Dialog from "@mui/material/Dialog";
 import DialogTitle from "@mui/material/DialogTitle";
 import DialogContent from "@mui/material/DialogContent";
 import DialogActions from "@mui/material/DialogActions";
+import DeleteIcon from '@mui/icons-material/Delete';
 
 const WorkExperienceList = () => {
   const { userData } = useUserContext();
@@ -90,14 +91,36 @@ const WorkExperienceList = () => {
                   Fecha inicio: {experience.startDate} - Fecha fin: {experience.endDate}
                 </Typography>
                 <br></br>
-                <Button variant="outlined" onClick={() => handleOpenModal(experience)} 
-                style={{ 
-                  textTransform: "none",  // Evitar transformación de texto
-                  color: "black",          // Color del texto en negro
-                  borderColor: "black"     // Borde en negro
-                }}>
-                  Ver descripción
-                </Button>
+                <Box 
+                  display="flex" 
+                  justifyContent="space-between"  // Espacio automático entre botones
+                  flexWrap="wrap"                 // Permitir que los botones se muevan en pantallas pequeñas
+                  gap={2}                         // Espacio uniforme entre botones
+                >
+                  <Button 
+                    variant="outlined" 
+                    onClick={() => handleOpenModal(experience)}
+                    style={{ 
+                      textTransform: "none", 
+                      color: "black", 
+                      borderColor: "black" 
+                    }}
+                  >
+                    Ver descripción
+                  </Button>
+
+                  <Button 
+                    variant="outlined" 
+                    startIcon={<DeleteIcon />}
+                    style={{ 
+                      textTransform: "none", 
+                      color: "black", 
+                      borderColor: "black" 
+                    }}
+                  >
+                    Eliminar
+                  </Button>
+                </Box>
               </div>
             }
             dialogContent={dialogContent(experience)} // Contenido del modal con formulario

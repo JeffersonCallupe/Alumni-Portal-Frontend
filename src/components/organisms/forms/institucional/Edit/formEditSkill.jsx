@@ -65,6 +65,7 @@ const FormEditSkill = ({ skillId, initialData, onUpdate, onCancel }) => {
         width: "100%",
       }}
     >
+      <br></br>
       <TextField
         label="Nombre de la Habilidad"
         name="name"

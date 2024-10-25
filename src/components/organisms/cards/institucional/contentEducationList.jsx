@@ -10,6 +10,7 @@ import DialogTitle from "@mui/material/DialogTitle";
 import DialogContent from "@mui/material/DialogContent";
 import DialogActions from "@mui/material/DialogActions";
 import FormEditEducation from "../../forms/institucional/Edit/formEditEducation";
+import DeleteIcon from '@mui/icons-material/Delete';
 
 const EducationList = () => {
   const { userData } = useUserContext();
@@ -85,14 +86,37 @@ const EducationList = () => {
                 <Typography variant="subtitle2">
                   Fecha inicio: {education.startDate} - Fecha fin: {education.endDate}
                 </Typography>
-                <Button variant="outlined" onClick={() => handleOpenModal(education)} 
-                style={{ 
-                  textTransform: "none", 
-                  color: "black", 
-                  borderColor: "black" 
-                }}>
-                  Ver descripción
-                </Button>
+                <br></br>
+                <Box 
+                  display="flex" 
+                  justifyContent="space-between"  // Espacio automático entre botones
+                  flexWrap="wrap"                 // Permitir que los botones se muevan en pantallas pequeñas
+                  gap={2}                         // Espacio uniforme entre botones
+                >
+                  <Button 
+                    variant="outlined" 
+                    onClick={() => handleOpenModal(education)}
+                    style={{ 
+                      textTransform: "none", 
+                      color: "black", 
+                      borderColor: "black" 
+                    }}
+                  >
+                    Ver descripción
+                  </Button>
+
+                  <Button 
+                    variant="outlined" 
+                    startIcon={<DeleteIcon />}
+                    style={{ 
+                      textTransform: "none", 
+                      color: "black", 
+                      borderColor: "black" 
+                    }}
+                  >
+                    Eliminar
+                  </Button>
+                </Box>
               </div>
             }
             dialogContent={dialogContent(education)} 

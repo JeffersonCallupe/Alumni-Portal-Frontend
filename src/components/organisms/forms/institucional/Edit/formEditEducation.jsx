@@ -61,6 +61,7 @@ const FormEditEducation = ({ educationId, initialData, onUpdate, onCancel }) => 
       onSubmit={handleSubmit}
       sx={{ display: "flex", flexDirection: "column", gap: 2, width: "100%" }}
     >
+      <br></br>
       <TextField
         label="Institución"
         name="institution"

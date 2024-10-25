@@ -10,6 +10,7 @@ import DialogTitle from "@mui/material/DialogTitle";
 import DialogContent from "@mui/material/DialogContent";
 import DialogActions from "@mui/material/DialogActions";
 import FormEditCertification from "../../forms/institucional/Edit/formEditCertification"; // Importar el formulario
+import DeleteIcon from '@mui/icons-material/Delete';
 
 const CertificationList = () => {
   const { userData } = useUserContext();
@@ -79,11 +80,31 @@ const CertificationList = () => {
               <div>
                 <Typography variant="subtitle2">Organización: {certification.issuingOrganization}</Typography>
                 <Typography variant="subtitle2">Fecha de emisión: {certification.issueDate}</Typography>
-                <Typography variant="subtitle2">
-                  <a href={certification.credentialUrl} target="_blank" rel="noopener noreferrer" style={{ textDecoration: 'none', color: 'blue' }}>
-                    Ver credencial
-                  </a>
-                </Typography>
+                
+                <Box display="flex" alignItems="center" justifyContent="space-between"  gap={1}> {/* Contenedor para el enlace y el botón */}
+                  <Typography variant="subtitle2">
+                    <a 
+                      href={certification.credentialUrl} 
+                      target="_blank" 
+                      rel="noopener noreferrer" 
+                      style={{ textDecoration: 'none', color: 'blue' }}
+                    >
+                      Ver credencial
+                    </a>
+                  </Typography>
+                  
+                  <Button 
+                    variant="outlined" 
+                    startIcon={<DeleteIcon />}
+                    style={{ 
+                      textTransform: "none", 
+                      color: "black", 
+                      borderColor: "black" 
+                    }}
+                  >
+                    Eliminar
+                  </Button>
+                </Box>
               </div>
             }
             dialogContent={dialogContent(certification)} // Contenido del botón para abrir el modal

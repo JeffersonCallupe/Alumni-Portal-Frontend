@@ -5,6 +5,8 @@ import CircularProgress from "@mui/material/CircularProgress";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import FormEditSkill from "../../forms/institucional/Edit/formEditSkill"; // Importa el formulario
+import Button from "@mui/material/Button";
+import DeleteIcon from '@mui/icons-material/Delete';
 
 const SkillList = () => {
   const { userData } = useUserContext();
@@ -75,9 +77,25 @@ const SkillList = () => {
             key={skill.id}
             title={<Typography variant="h6">{skill.name}</Typography>}
             cardContent={
-              <div>
+              <Box 
+                display="flex" 
+                justifyContent="space-between"  // Coloca el botón al extremo derecho
+                alignItems="center"             // Alinea verticalmente el texto y el botón
+              >
                 <Typography variant="subtitle2">Nivel: {skill.level}</Typography>
-              </div>
+                
+                <Button 
+                  variant="outlined" 
+                  startIcon={<DeleteIcon />}
+                  style={{ 
+                    textTransform: "none", 
+                    color: "black", 
+                    borderColor: "black" 
+                  }}
+                >
+                  Eliminar
+                </Button>
+              </Box>
             }
             dialogContent={dialogContent(skill)}
             modalId={`modal-skill-${skill.id}`}
