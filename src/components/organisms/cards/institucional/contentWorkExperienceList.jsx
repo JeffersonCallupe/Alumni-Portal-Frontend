@@ -4,11 +4,19 @@ import InfoBaseCard from "../profileBaseCards/infosubBaseCard"; // Ajusta la rut
 import CircularProgress from "@mui/material/CircularProgress";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
+import WorkExperienceForm from "../../forms/institucional/Edit/formEditWorkExperience"; // Importa el formulario
+import Button from "@mui/material/Button";
+import Dialog from "@mui/material/Dialog";
+import DialogTitle from "@mui/material/DialogTitle";
+import DialogContent from "@mui/material/DialogContent";
+import DialogActions from "@mui/material/DialogActions";
 
 const WorkExperienceList = () => {
   const { userData } = useUserContext();
   const [experiences, setExperiences] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [openModal, setOpenModal] = useState(false); // Estado para controlar el modal
+  const [selectedExperience, setSelectedExperience] = useState(null); // Guardar la experiencia seleccionada
 
   useEffect(() => {
     const fetchWorkExperiences = async () => {
@@ -26,15 +34,46 @@ const WorkExperienceList = () => {
     fetchWorkExperiences();
   }, [userData]);
 
+  // Función para actualizar la lista después de una edición exitosa
+  const updateExperienceList = (updatedExperience) => {
+    setExperiences((prevExperiences) =>
+      prevExperiences.map((exp) =>
+        exp.id === updatedExperience.id ? updatedExperience : exp
+      )
+    );
+  };
+
+  // Función para abrir el modal con la descripción de una experiencia
+  const handleOpenModal = (experience) => {
+    setSelectedExperience(experience);
+    setOpenModal(true);
+  };
+
+  // Función para cerrar el modal
+  const handleCloseModal = () => {
+    setOpenModal(false);
+    setSelectedExperience(null);
+  };
+
+  // Función para abrir el formulario de edición en un modal o diálogo
   const dialogContent = (experience) => (
     <div>
-      <Typography variant="h6" >Editar Experiencia: {experience.jobTitle}</Typography>
-      {/* Aquí podrías agregar un formulario o más detalles */}
+      <Typography variant="h6">Editar Experiencia: {experience.jobTitle}</Typography>
+      {/* Formulario para editar la experiencia */}
+      <WorkExperienceForm
+        workExperienceId={experience.id}
+        initialData={experience}
+        onUpdate={updateExperienceList} // Callback para actualizar la lista
+      />
     </div>
   );
 
   if (loading) {
-    return <CircularProgress />;
+    return (
+      <Box display="flex" justifyContent="center" alignItems="center" height="100vh">
+        <CircularProgress />
+      </Box>
+    );
   }
 
   return (
@@ -50,11 +89,18 @@ const WorkExperienceList = () => {
                 <Typography variant="subtitle2">
                   Fecha inicio: {experience.startDate} - Fecha fin: {experience.endDate}
                 </Typography>
-                <Typography variant="subtitle2">Descripción:</Typography>
-                <Typography variant="body2">{experience.description}</Typography>
+                <br></br>
+                <Button variant="outlined" onClick={() => handleOpenModal(experience)} 
+                style={{ 
+                  textTransform: "none",  // Evitar transformación de texto
+                  color: "black",          // Color del texto en negro
+                  borderColor: "black"     // Borde en negro
+                }}>
+                  Ver descripción
+                </Button>
               </div>
             }
-            dialogContent={dialogContent(experience)} // Contenido del modal
+            dialogContent={dialogContent(experience)} // Contenido del modal con formulario
             modalId={`modal-work-experience-${experience.id}`} // ID único para cada modal
             className="subcard" // Asignando la clase CSS
           />
@@ -62,8 +108,32 @@ const WorkExperienceList = () => {
       ) : (
         <Typography variant="body1">No se encontraron experiencias laborales.</Typography>
       )}
+
+      {/* Modal para mostrar la descripción completa */}
+      <Dialog open={openModal} onClose={handleCloseModal} maxWidth="sm" fullWidth>
+        <DialogTitle>Descripción:</DialogTitle>
+        <DialogContent>
+          <textarea
+            value={selectedExperience?.description}
+            readOnly
+            rows={6} // Ajusta el número de filas para la altura del textarea
+            style={{
+              width: "100%",
+              resize: "none", // Evita que el textarea sea redimensionable
+              userSelect: "none", // Evita la selección del texto
+              pointerEvents: "none", // Hace que el textarea no sea interactivo
+            }}
+          />
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleCloseModal} color="primary">
+            Cerrar
+          </Button>
+        </DialogActions>
+      </Dialog>
     </Box>
   );
 };
 
 export default WorkExperienceList;
+

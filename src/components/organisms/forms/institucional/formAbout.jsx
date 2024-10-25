@@ -28,6 +28,12 @@ const FormAbout = ({ onSubmit, onCancel, loading }) => {
         onChange={handleChange}
         disabled={loading}
         className="p-4"
+        rows={6} // Ajusta el número de filas para la altura del textarea
+        style={{
+          width: "100%",
+          resize: "none", // Evita que el textarea sea redimensionable
+          userSelect: "none", // Evita la selección del texto 
+        }}
       />
       <div>
         <Button type="button" onClick={onCancel}>

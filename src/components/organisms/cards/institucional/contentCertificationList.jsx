@@ -5,11 +5,18 @@ import CircularProgress from "@mui/material/CircularProgress";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
+import Dialog from "@mui/material/Dialog";
+import DialogTitle from "@mui/material/DialogTitle";
+import DialogContent from "@mui/material/DialogContent";
+import DialogActions from "@mui/material/DialogActions";
+import FormEditCertification from "../../forms/institucional/Edit/formEditCertification"; // Importar el formulario
 
 const CertificationList = () => {
   const { userData } = useUserContext();
   const [certifications, setCertifications] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [openModal, setOpenModal] = useState(false); // Estado para controlar el modal
+  const [selectedCertification, setSelectedCertification] = useState(null); // Guardar la certificación seleccionada
 
   useEffect(() => {
     const fetchCertifications = async () => {
@@ -26,6 +33,36 @@ const CertificationList = () => {
 
     fetchCertifications();
   }, [userData]);
+
+  const updateCertificationList = (updatedCertification) => {
+    setCertifications((prevCertifications) =>
+      prevCertifications.map((cert) =>
+        cert.id === updatedCertification.id ? updatedCertification : cert
+      )
+    );
+  };
+
+  const handleOpenModal = (certification) => {
+    setSelectedCertification(certification);
+    setOpenModal(true);
+  };
+
+  const handleCloseModal = () => {
+    setOpenModal(false);
+    setSelectedCertification(null);
+  };
+
+  const dialogContent = (certification) => (
+    <div>
+      <Typography variant="h6">Editar Certificación: {certification.name}</Typography>
+      <FormEditCertification
+        certificationId={certification.id}
+        initialData={certification}
+        onUpdate={updateCertificationList} // Callback para actualizar la lista
+        onCancel={handleCloseModal} // Cerrar el modal
+      />
+    </div>
+  );
 
   if (loading) {
     return <CircularProgress />;
@@ -49,11 +86,7 @@ const CertificationList = () => {
                 </Typography>
               </div>
             }
-            dialogContent={
-              <Button variant="contained">
-                Editar
-              </Button>
-            } // Contenido del modal o botón
+            dialogContent={dialogContent(certification)} // Contenido del botón para abrir el modal
             modalId={`modal-certification-${certification.id}`} // ID único para cada modal
             className="subcard" // Asignando la clase CSS
           />
@@ -61,8 +94,19 @@ const CertificationList = () => {
       ) : (
         <Typography variant="body1">No se encontraron certificaciones.</Typography>
       )}
+
+      {/* Modal para editar certificación */}
+      <Dialog open={openModal} onClose={handleCloseModal} maxWidth="sm" fullWidth>
+        <DialogTitle>Editar Certificación</DialogTitle>
+        <DialogContent>
+          {selectedCertification && dialogContent(selectedCertification)}
+        </DialogContent>
+      </Dialog>
     </Box>
   );
 };
 
 export default CertificationList;
+
+
+

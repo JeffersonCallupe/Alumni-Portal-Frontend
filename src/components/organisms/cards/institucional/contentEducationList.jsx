@@ -1,14 +1,22 @@
 import React, { useEffect, useState } from "react";
 import { useUserContext } from "../../../../contexts/userContext";
-import InfoBaseCard from "../profileBaseCards/infosubBaseCard"; // Ajusta la ruta según tu estructura
+import InfoBaseCard from "../profileBaseCards/infosubBaseCard"; 
 import CircularProgress from "@mui/material/CircularProgress";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
+import Button from "@mui/material/Button";
+import Dialog from "@mui/material/Dialog";
+import DialogTitle from "@mui/material/DialogTitle";
+import DialogContent from "@mui/material/DialogContent";
+import DialogActions from "@mui/material/DialogActions";
+import FormEditEducation from "../../forms/institucional/Edit/formEditEducation";
 
 const EducationList = () => {
   const { userData } = useUserContext();
   const [educations, setEducations] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [openModal, setOpenModal] = useState(false); 
+  const [selectedEducation, setSelectedEducation] = useState(null); 
 
   useEffect(() => {
     const fetchEducationData = async () => {
@@ -26,15 +34,42 @@ const EducationList = () => {
     fetchEducationData();
   }, [userData]);
 
+  const updateEducationList = (updatedEducation) => {
+    setEducations((prevEducations) =>
+      prevEducations.map((edu) =>
+        edu.id === updatedEducation.id ? updatedEducation : edu
+      )
+    );
+  };
+
+  const handleOpenModal = (education) => {
+    setSelectedEducation(education);
+    setOpenModal(true);
+  };
+
+  const handleCloseModal = () => {
+    setOpenModal(false);
+    setSelectedEducation(null);
+  };
+
   const dialogContent = (education) => (
     <div>
       <Typography variant="h6">Editar Educación: {education.degree} en {education.institution}</Typography>
-      {/* Aquí podrías agregar un formulario o más detalles */}
+      <FormEditEducation
+        educationId={education.id}
+        initialData={education}
+        onUpdate={updateEducationList}
+        onCancel={handleCloseModal}
+      />
     </div>
   );
 
   if (loading) {
-    return <CircularProgress />;
+    return (
+      <Box display="flex" justifyContent="center" alignItems="center" height="100vh">
+        <CircularProgress />
+      </Box>
+    );
   }
 
   return (
@@ -50,20 +85,50 @@ const EducationList = () => {
                 <Typography variant="subtitle2">
                   Fecha inicio: {education.startDate} - Fecha fin: {education.endDate}
                 </Typography>
-                <Typography variant="subtitle2">Descripción:</Typography>
-                <Typography variant="body2">{education.description}</Typography>
+                <Button variant="outlined" onClick={() => handleOpenModal(education)} 
+                style={{ 
+                  textTransform: "none", 
+                  color: "black", 
+                  borderColor: "black" 
+                }}>
+                  Ver descripción
+                </Button>
               </div>
             }
-            dialogContent={dialogContent(education)} // Contenido del modal
-            modalId={`modal-education-${education.id}`} // ID único para cada modal
-            className="subcard" // Asignando la clase CSS
+            dialogContent={dialogContent(education)} 
+            modalId={`modal-education-${education.id}`} 
+            className="subcard" 
           />
         ))
       ) : (
         <Typography variant="body1">No se encontraron registros educativos.</Typography>
       )}
+
+      <Dialog open={openModal} onClose={handleCloseModal} maxWidth="sm" fullWidth>
+        <DialogTitle>Descripción:</DialogTitle>
+        <DialogContent>
+          <textarea
+            value={selectedEducation?.description}
+            readOnly
+            rows={6}
+            style={{
+              width: "100%",
+              resize: "none",
+              userSelect: "none",
+              pointerEvents: "none",
+            }}
+          />
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleCloseModal} color="primary">
+            Cerrar
+          </Button>
+        </DialogActions>
+      </Dialog>
     </Box>
   );
 };
 
 export default EducationList;
+
+
