@@ -4,9 +4,10 @@ import InfoBaseCard from "../profileBaseCards/infosubBaseCard";
 import CircularProgress from "@mui/material/CircularProgress";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
-import FormEditSkill from "../../forms/institucional/Edit/formEditSkill"; // Importa el formulario
+import FormEditSkill from "../../forms/institucional/Edit/formEditSkill";
 import Button from "@mui/material/Button";
 import DeleteIcon from '@mui/icons-material/Delete';
+import DeleteConfirmationModal from "../../forms/institucional/deleteConfirmationModal";
 
 const SkillList = () => {
   const { userData } = useUserContext();
@@ -14,6 +15,8 @@ const SkillList = () => {
   const [loading, setLoading] = useState(true);
   const [openModal, setOpenModal] = useState(false);
   const [selectedSkill, setSelectedSkill] = useState(null);
+  const [deleteConfirmOpen, setDeleteConfirmOpen] = useState(false);
+  const [skillToDelete, setSkillToDelete] = useState(null); // Corrige el nombre de la variable
 
   useEffect(() => {
     const fetchSkills = async () => {
@@ -49,6 +52,37 @@ const SkillList = () => {
     setSelectedSkill(null);
   };
 
+  const handleDeleteClick = (skill) => {
+    setSkillToDelete(skill);
+    setDeleteConfirmOpen(true);
+  };
+
+  const handleDeleteCancel = () => {
+    setDeleteConfirmOpen(false);
+    setSkillToDelete(null);
+  };
+
+  const handleDeleteConfirm = async () => {
+    if (!skillToDelete) return;
+
+    try {
+      const response = await fetch(`http://178.128.147.224:8080/api/skill/${skillToDelete.id}`, {
+        method: "DELETE",
+      });
+      if (response.ok) {
+        setSkills((prevSkills) =>
+          prevSkills.filter((skill) => skill.id !== skillToDelete.id)
+        );
+        setDeleteConfirmOpen(false);
+        setSkillToDelete(null);
+      } else {
+        console.error("Error deleting skill:", response.statusText);
+      }
+    } catch (error) {
+      console.error("Error deleting skill:", error);
+    }
+  };
+
   const dialogContent = (skill) => (
     <div>
       <Typography variant="h6">Editar Habilidad: {skill.name}</Typography>
@@ -79,14 +113,14 @@ const SkillList = () => {
             cardContent={
               <Box 
                 display="flex" 
-                justifyContent="space-between"  // Coloca el botón al extremo derecho
-                alignItems="center"             // Alinea verticalmente el texto y el botón
+                justifyContent="space-between"
+                alignItems="center"
               >
                 <Typography variant="subtitle2">Nivel: {skill.level}</Typography>
-                
                 <Button 
                   variant="outlined" 
                   startIcon={<DeleteIcon />}
+                  onClick={() => handleDeleteClick(skill)}
                   style={{ 
                     textTransform: "none", 
                     color: "black", 
@@ -105,6 +139,13 @@ const SkillList = () => {
       ) : (
         <Typography variant="body1">No se encontraron habilidades.</Typography>
       )}
+      {/* Modal de confirmación de eliminación */}
+      <DeleteConfirmationModal
+        isOpen={deleteConfirmOpen}
+        onClose={handleDeleteCancel}
+        onConfirm={handleDeleteConfirm}
+        message={`¿Está seguro que desea eliminar la habilidad?`}
+      />
     </Box>
   );
 };

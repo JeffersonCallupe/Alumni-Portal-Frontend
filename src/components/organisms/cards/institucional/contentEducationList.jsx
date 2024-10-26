@@ -11,13 +11,17 @@ import DialogContent from "@mui/material/DialogContent";
 import DialogActions from "@mui/material/DialogActions";
 import FormEditEducation from "../../forms/institucional/Edit/formEditEducation";
 import DeleteIcon from '@mui/icons-material/Delete';
+import DeleteConfirmationModal from "../../forms/institucional/deleteConfirmationModal"; // Asegúrate de ajustar la ruta
 
 const EducationList = () => {
   const { userData } = useUserContext();
   const [educations, setEducations] = useState([]);
   const [loading, setLoading] = useState(true);
   const [openModal, setOpenModal] = useState(false); 
-  const [selectedEducation, setSelectedEducation] = useState(null); 
+  const [selectedEducation, setSelectedEducation] = useState(null);
+  // Nuevos estados para el modal de confirmación de eliminación
+  const [deleteConfirmOpen, setDeleteConfirmOpen] = useState(false);
+  const [educationToDelete, setEducationToDelete] = useState(null);
 
   useEffect(() => {
     const fetchEducationData = async () => {
@@ -53,6 +57,38 @@ const EducationList = () => {
     setSelectedEducation(null);
   };
 
+  // Nuevas funciones para manejar la eliminación
+  const handleDeleteClick = (education) => {
+    setEducationToDelete(education);
+    setDeleteConfirmOpen(true);
+  };
+
+  const handleDeleteCancel = () => {
+    setDeleteConfirmOpen(false);
+    setEducationToDelete(null);
+  };
+
+  const handleDeleteConfirm = async () => {
+    if (!educationToDelete) return;
+
+    try {
+      const response = await fetch(`http://178.128.147.224:8080/api/education/${educationToDelete.id}`, {
+        method: "DELETE",
+      });
+      if (response.ok) {
+        setEducations((prevEducations) =>
+          prevEducations.filter((edu) => edu.id !== educationToDelete.id)
+        );
+        setDeleteConfirmOpen(false);
+        setEducationToDelete(null);
+      } else {
+        console.error("Error deleting education:", response.statusText);
+      }
+    } catch (error) {
+      console.error("Error deleting education:", error);
+    }
+  };
+
   const dialogContent = (education) => (
     <div>
       <Typography variant="h6">Editar Educación: {education.degree} en {education.institution}</Typography>
@@ -86,12 +122,12 @@ const EducationList = () => {
                 <Typography variant="subtitle2">
                   Fecha inicio: {education.startDate} - Fecha fin: {education.endDate}
                 </Typography>
-                <br></br>
+                <br />
                 <Box 
                   display="flex" 
-                  justifyContent="space-between"  // Espacio automático entre botones
-                  flexWrap="wrap"                 // Permitir que los botones se muevan en pantallas pequeñas
-                  gap={2}                         // Espacio uniforme entre botones
+                  justifyContent="space-between"
+                  flexWrap="wrap"
+                  gap={2}
                 >
                   <Button 
                     variant="outlined" 
@@ -108,6 +144,7 @@ const EducationList = () => {
                   <Button 
                     variant="outlined" 
                     startIcon={<DeleteIcon />}
+                    onClick={() => handleDeleteClick(education)}
                     style={{ 
                       textTransform: "none", 
                       color: "black", 
@@ -128,6 +165,7 @@ const EducationList = () => {
         <Typography variant="body1">No se encontraron registros educativos.</Typography>
       )}
 
+      {/* Modal de descripción */}
       <Dialog open={openModal} onClose={handleCloseModal} maxWidth="sm" fullWidth>
         <DialogTitle>Descripción:</DialogTitle>
         <DialogContent>
@@ -149,6 +187,14 @@ const EducationList = () => {
           </Button>
         </DialogActions>
       </Dialog>
+
+      {/* Modal de confirmación de eliminación */}
+      <DeleteConfirmationModal
+        isOpen={deleteConfirmOpen}
+        onClose={handleDeleteCancel}
+        onConfirm={handleDeleteConfirm}
+        message={`¿Está seguro que desea eliminar el registro educativo?`}
+      />
     </Box>
   );
 };

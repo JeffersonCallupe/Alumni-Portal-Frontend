@@ -9,8 +9,9 @@ import Dialog from "@mui/material/Dialog";
 import DialogTitle from "@mui/material/DialogTitle";
 import DialogContent from "@mui/material/DialogContent";
 import DialogActions from "@mui/material/DialogActions";
-import FormEditProject from "../../forms/institucional/Edit/formEditProject"; // Ajusta la ruta según tu estructura
-import DeleteIcon from '@mui/icons-material/Delete';
+import FormEditProject from "../../forms/institucional/Edit/formEditProject";
+import DeleteIcon from "@mui/icons-material/Delete";
+import DeleteConfirmationModal from "../../forms/institucional/deleteConfirmationModal";
 
 const ProjectList = () => {
   const { userData } = useUserContext();
@@ -18,6 +19,8 @@ const ProjectList = () => {
   const [loading, setLoading] = useState(true);
   const [openModal, setOpenModal] = useState(false);
   const [selectedProject, setSelectedProject] = useState(null);
+  const [deleteConfirmOpen, setDeleteConfirmOpen] = useState(false);
+  const [projectToDelete, setProjectToDelete] = useState(null);
 
   useEffect(() => {
     const fetchProjects = async () => {
@@ -31,7 +34,6 @@ const ProjectList = () => {
         setLoading(false);
       }
     };
-
     fetchProjects();
   }, [userData]);
 
@@ -51,6 +53,36 @@ const ProjectList = () => {
   const handleCloseModal = () => {
     setOpenModal(false);
     setSelectedProject(null);
+  };
+
+  const handleDeleteClick = (project) => {
+    setProjectToDelete(project);
+    setDeleteConfirmOpen(true);
+  };
+
+  const handleDeleteCancel = () => {
+    setDeleteConfirmOpen(false);
+    setProjectToDelete(null);
+  };
+
+  const handleDeleteConfirm = async () => {
+    if (!projectToDelete) return;
+    try {
+      const response = await fetch(`http://178.128.147.224:8080/api/project/${projectToDelete.id}`, {
+        method: "DELETE",
+      });
+      if (response.ok) {
+        setProjects((prevProjects) =>
+          prevProjects.filter((project) => project.id !== projectToDelete.id)
+        );
+        setDeleteConfirmOpen(false);
+        setProjectToDelete(null);
+      } else {
+        console.error("Error deleting project:", response.statusText);
+      }
+    } catch (error) {
+      console.error("Error deleting project:", error);
+    }
   };
 
   const dialogContent = (project) => (
@@ -83,42 +115,33 @@ const ProjectList = () => {
             cardContent={
               <div>
                 <Typography variant="subtitle2">Fecha: {project.date}</Typography>
-                <br></br>
                 <Box 
                   display="flex" 
-                  justifyContent="space-between"  // Espacio automático entre botones
-                  flexWrap="wrap"                 // Permitir que los botones se muevan en pantallas pequeñas
-                  gap={2}                         // Espacio uniforme entre botones
+                  justifyContent="space-between"
+                  flexWrap="wrap"
+                  gap={2}
                 >
                   <Button 
                     variant="outlined" 
                     onClick={() => handleOpenModal(project)}
-                    style={{ 
-                      textTransform: "none", 
-                      color: "black", 
-                      borderColor: "black" 
-                    }}
+                    style={{ textTransform: "none", color: "black", borderColor: "black" }}
                   >
                     Ver descripción
                   </Button>
-
                   <Button 
                     variant="outlined" 
                     startIcon={<DeleteIcon />}
-                    style={{ 
-                      textTransform: "none", 
-                      color: "black", 
-                      borderColor: "black" 
-                    }}
+                    onClick={() => handleDeleteClick(project)}
+                    style={{ textTransform: "none", color: "black", borderColor: "black" }}
                   >
                     Eliminar
                   </Button>
                 </Box>
               </div>
             }
-            dialogContent={dialogContent(project)} // Llama a la función para pasar el contenido del modal
-            modalId={`modal-project-${project.id}`} // ID único para cada modal
-            className="subcard" // Asignando la clase CSS
+            dialogContent={dialogContent(project)}
+            modalId={`modal-project-${project.id}`}
+            className="subcard"
           />
         ))
       ) : (
@@ -127,20 +150,19 @@ const ProjectList = () => {
 
       {/* Modal de edición */}
       <Dialog open={openModal} onClose={handleCloseModal} maxWidth="sm" fullWidth>
-      <DialogTitle>Descripción:</DialogTitle>
+        <DialogTitle>Descripción:</DialogTitle>
         <DialogContent>
-        <textarea
+          <textarea
             value={selectedProject?.description}
             readOnly
-            rows={6} // Ajusta el número de filas para la altura del textarea
+            rows={6}
             style={{
               width: "100%",
-              resize: "none", // Evita que el textarea sea redimensionable
-              userSelect: "none", // Evita la selección del texto
-              pointerEvents: "none", // Hace que el textarea no sea interactivo
+              resize: "none",
+              userSelect: "none",
+              pointerEvents: "none",
             }}
           />
-
         </DialogContent>
         <DialogActions>
           <Button onClick={handleCloseModal} color="primary">
@@ -148,6 +170,14 @@ const ProjectList = () => {
           </Button>
         </DialogActions>
       </Dialog>
+
+      {/* Modal de confirmación de eliminación */}
+      <DeleteConfirmationModal
+        isOpen={deleteConfirmOpen}
+        onClose={handleDeleteCancel}
+        onConfirm={handleDeleteConfirm}
+        message="¿Está seguro que desea eliminar el proyecto?"
+      />
     </Box>
   );
 };
