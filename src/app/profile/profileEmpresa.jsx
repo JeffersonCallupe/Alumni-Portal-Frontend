@@ -54,7 +54,21 @@ function ProfileEmpresa() {
         />
         <InfoBaseCard
           title="Descripción de Actividades"
-          cardContent={userData.description || "No especificado"}
+          cardContent={
+            <textarea
+              value={userData.about || "No especificado"}
+              readOnly
+              style={{
+                  width: '100%',
+                  height: 'auto',
+                  overflow: 'auto',
+                  resize: 'vertical',
+                  lineHeight: '1.5',
+                  minHeight: '100px',
+                  maxHeight: '200px',
+              }}
+            />
+          }
           dialogContent={contentDescripcion}
           modalId="modal-descripcion"
         />

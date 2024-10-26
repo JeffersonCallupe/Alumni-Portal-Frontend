@@ -154,7 +154,21 @@ function ProfileInstitucional() {
               />
               <InfoBaseCard
                   title="Acerca de"
-                  cardContent={userData.about || "No especificado"}
+                  cardContent={
+                    <textarea
+                        value={userData.about || "No especificado"}
+                        readOnly
+                        style={{
+                            width: '100%',
+                            height: 'auto',
+                            overflow: 'auto',
+                            resize: 'vertical',
+                            lineHeight: '1.5',
+                            minHeight: '100px',
+                            maxHeight: '200px',
+                        }}
+                    />
+                  }
                   dialogContent={contentAbout}
                   modalId="modal-about"
               />

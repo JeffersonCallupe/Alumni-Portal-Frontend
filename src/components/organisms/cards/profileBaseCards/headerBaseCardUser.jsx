@@ -10,7 +10,7 @@ import CardMedia from "@mui/material/CardMedia";
 import DefaultHeader from "../../../../assets/fondoRectorado.png";
 import DefaultProfile from "../../../../assets/logoUNMSM.png";
 import DialogBase from "../../dialog/profileBaseDialog";
-import EditButton from "../../../atoms/buttons/editButton";
+import EditButton from "../../../atoms/buttons/editPhotoButton";
 import useModal from "../../../../hooks/useModal";
 import { useUserContext } from "../../../../contexts/userContext";
 import { getProfilePicture } from "../../../../hooks/manageImageUser";
@@ -51,14 +51,15 @@ const ProfileBaseCard = ({ apiUrl, handleSaveChanges, loading, dialogContent, mo
         </Box>
         <Box
           sx={{
+            display: "flex", // Usar flex para alinear horizontalmente
+            alignItems: "center", // Alinear verticalmente al centro
             width: "10rem",
             zIndex: 1,
             position: "absolute",
-            top: "4rem",
+            top: "6.5rem",
             left: "1rem",
           }}
         >
-          <EditButton onClick={handleOpen}/>
           <Avatar
             alt="Profile Image"
             src={profileImage}
@@ -68,6 +69,16 @@ const ProfileBaseCard = ({ apiUrl, handleSaveChanges, loading, dialogContent, mo
               backgroundColor: "black",
               position: "relative",
               zIndex: 2,
+            }}
+          />
+          <EditButton 
+            onClick={handleOpen}
+            sx={{
+              marginLeft: "0.1rem", // Espacio entre el avatar y el botón
+              height: "0.25rem", // Ajustar la altura del botón según sea necesario
+              width: "0.25rem", // Ajustar el ancho del botón
+              display: "flex", // Usar flex para centrar el ícono en el botón, si es un botón de ícono
+              minWidth: "0", 
             }}
           />
         </Box>
