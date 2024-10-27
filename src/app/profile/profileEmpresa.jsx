@@ -2,7 +2,7 @@ import React from "react";
 import ContentContactoEmpresa from "../../components/organisms/cards/empresa/contentContacto";
 import FormContacto from "../../components/organisms/forms/empresa/formContacto";
 import FormDescripcion from "../../components/organisms/forms/empresa/formDescripcion";
-import FormFoto from "../../components/organisms/forms/empresa/formFoto";
+import FormFoto from "../../components/organisms/forms/formFoto";
 import HomeBase from "../../components/templates/home/home";
 import InfoBaseCard from "../../components/organisms/cards/profileBaseCards/infoBaseCard";
 import ProfileBaseCard from "../../components/organisms/cards/profileBaseCards/headerBaseCard";

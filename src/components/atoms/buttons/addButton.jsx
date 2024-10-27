@@ -1,16 +1,32 @@
 import Button from "@mui/material/Button";
-import AddCircleIcon from '@mui/icons-material/AddCircle';
+import AddOutlinedIcon from '@mui/icons-material/AddOutlined';
 
-const EditButton = ({ onClick }) => {
+const AddButton = ({ onClick }) => {
     return (
       <Button
         color="black"
         onClick={onClick}
-        sx={{ padding: "5px", fontSize: "1.5rem" }} // Personaliza el tamaño del botón
+        sx={
+          {
+            minWidth: 0,
+            width: 35,
+            height: 35,
+            borderRadius: "50%",
+            backgroundColor: "white",  // Fondo blanco por defecto
+            color: "black",            // Icono en negro por defecto
+            padding: 0,
+            transition: "all 0.3s ease", // Transición suave
+            "&:hover": {
+              backgroundColor: "gray", // Fondo negro en hover
+              color: "white",           // Icono en blanco en hover
+              transform: "scale(1.1)",  // Aumenta el tamaño en hover
+            },
+          }
+        } // Personaliza el tamaño del botón
       >
-        <AddCircleIcon sx={{ fontSize: 40 }} /> {/* Ajusta el tamaño del ícono */}
+        <AddOutlinedIcon sx={{ fontSize: 33 }} /> {/* Ajusta el tamaño del ícono */}
       </Button>
     );
 };
 
-export default EditButton;
+export default AddButton;

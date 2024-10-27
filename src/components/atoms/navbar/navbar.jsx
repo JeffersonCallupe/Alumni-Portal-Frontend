@@ -16,7 +16,7 @@ import Tooltip from "@mui/material/Tooltip";
 import Typography from "@mui/material/Typography";
 import { useUserContext } from "../../../contexts/userContext";
 import { useNavigate } from "react-router-dom";
-import { getProfilePicture } from "../../../hooks/manageImage";
+
 
 function Navbar() {
   const { isInstitutional, logout, userData } = useUserContext();

@@ -2,18 +2,18 @@
 import React, { useEffect, useState } from "react";
 import Button from "@mui/material/Button";
 import Box from "@mui/material/Box";
-import { useUserContext } from "../../../../contexts/userContext";
-import { uploadProfilePicture, deleteProfilePicture, getProfilePicture } from '../../../../hooks/manageImage';
+import { useUserContext } from "../../../contexts/userContext";
+import { uploadProfilePicture, deleteProfilePicture, getProfilePicture } from '../../../hooks/manageImageUser';
 
 const FormFoto = ({ apiUrl, onClose }) => {
-  const { userData } = useUserContext();
+  const { userData, isInstitutional } = useUserContext();
   const [imageFile, setImageFile] = useState(null);
   const [currentImage, setCurrentImage] = useState("");
 
   useEffect(() => {
     const fetchProfilePicture = async () => {
       try {
-        const imageUrl = await getProfilePicture(apiUrl, userData.id);
+        const imageUrl = await getProfilePicture(apiUrl, userData.id, isInstitutional);
         setCurrentImage(imageUrl);
       } catch (error) {
         console.error('Error al obtener la imagen de perfil:', error);
@@ -39,7 +39,7 @@ const FormFoto = ({ apiUrl, onClose }) => {
     e.preventDefault();
     if (imageFile) {
       try {
-        await uploadProfilePicture(apiUrl, userData.id, imageFile);
+        await uploadProfilePicture(apiUrl, userData.id, imageFile, isInstitutional);
         window.location.reload();
       } catch (error) {
         console.error('Error al subir la imagen:', error);
@@ -49,7 +49,7 @@ const FormFoto = ({ apiUrl, onClose }) => {
 
   const handleDelete = async () => {
     try {
-      await deleteProfilePicture(apiUrl, userData.id);
+      await deleteProfilePicture(apiUrl, userData.id, isInstitutional);
       setCurrentImage(DefaultProfile);
       window.location.reload();
     } catch (error) {

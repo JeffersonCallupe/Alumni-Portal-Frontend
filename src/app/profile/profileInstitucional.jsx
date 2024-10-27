@@ -3,7 +3,7 @@ import HomeBase from "../../components/templates/home/home";
 import FormAbout from "../../components/organisms/forms/institucional/formAbout";
 import InfoBaseCard from "../../components/organisms/cards/profileBaseCards/infoBaseCard";
 import InfoBaseCardContent from "../../components/organisms/cards/profileBaseCards/infoBaseCardContent";
-import ProfileBaseCard from "../../components/organisms/cards/profileBaseCards/headerBaseCardUser";
+import ProfileBaseCard from "../../components/organisms/cards/profileBaseCards/headerBaseCard";
 import ProjectList from "../../components/organisms/cards/institucional/contentProjectList";
 import SkillList from "../../components/organisms/cards/institucional/contentSkillList";
 import CertificationList from "../../components/organisms/cards/institucional/contentCertificationList";
@@ -14,7 +14,7 @@ import FormNewExperience from "../../components/organisms/forms/institucional/fo
 import FormNewCertification from "../../components/organisms/forms/institucional/formCertification";
 import FormNewSkill from "../../components/organisms/forms/institucional/formSkill";
 import FormNewProject from "../../components/organisms/forms/institucional/formProject";
-import FormFoto from "../../components/organisms/forms/institucional/formFoto";
+import FormFoto from "../../components/organisms/forms/formFoto";
 
 import { useUserContext } from "../../contexts/userContext";
 import usePatch from "../../hooks/usePatch";
@@ -161,8 +161,8 @@ function ProfileInstitucional() {
                         style={{
                             width: '100%',
                             height: 'auto',
-                            overflow: 'auto',
-                            resize: 'vertical',
+                            overflow: 'hidden',
+                            resize: 'none',
                             lineHeight: '1.5',
                             minHeight: '100px',
                             maxHeight: '200px',

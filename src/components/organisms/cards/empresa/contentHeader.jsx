@@ -4,7 +4,7 @@ import EditButton from "../../../atoms/buttons/editButton";
 import DialogBase from "../../dialog/profileBaseDialog";
 import FormHeader from "../../forms/empresa/formHeader";
 import Typography from "@mui/material/Typography";
-import VerInfoButton from "../../../atoms/buttons/verInfoButton";
+import ActionButton from "../../../atoms/buttons/actionButton";
 import { useUserContext } from "../../../../contexts/userContext";
 import useModal from "../../../../hooks/useModal";
 
@@ -36,18 +36,21 @@ const CardContentEmpresa = ({loading, onSubmit}) => {
           RUC: {userData.ruc || "No especificado"}
         </Typography>
       </div>
-      <div>
+      <div className="flex flex-col items-end"> {/* Flex container para los botones */}
         <Box
           sx={{
             zIndex: 1,
             position: "relative",
             bottom: "1rem",
-            left: "4rem",
           }}
         >
           <EditButton onClick={handleOpen} />
         </Box>
-        <VerInfoButton texto={"Cambiar Contraseña"} />
+        <div className="flex flex-row gap-2 items-center" style={{ marginTop: '2rem', marginRight: '0.5rem'}}>
+          <div className="flex-shrink-0"> 
+            <ActionButton texto={"Cambiar Contraseña"} />
+          </div>
+        </div>
       </div>
 
       <DialogBase

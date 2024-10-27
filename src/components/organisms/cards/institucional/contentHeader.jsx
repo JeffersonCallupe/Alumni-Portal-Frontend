@@ -85,7 +85,7 @@ const CardContentInstitucional = ({ loading, onSubmit }) => {
         >
           <EditButton onClick={handleOpen} />
         </Box>
-        <div className="flex flex-row gap-2 items-center" style={{ marginTop: '3rem' }}>
+        <div className="flex flex-row gap-2 items-center" style={{ marginTop: '3.5rem', marginRight: '2rem'}}>
           <div className="flex-shrink-0"> 
             <ActionButton texto={"Cambiar Contraseña"} />
           </div>
