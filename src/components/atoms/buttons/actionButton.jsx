@@ -13,10 +13,11 @@ const StyledButton = styled(Button)(({ theme }) => ({
   },
 }));
 
-const ActionButton = ({ texto, onClick }) => {
+const ActionButton = ({ texto, startIcon, onClick }) => {
   return (
     <StyledButton
       variant="contained"
+      startIcon={startIcon}
       onClick={onClick}
     >
       {texto}

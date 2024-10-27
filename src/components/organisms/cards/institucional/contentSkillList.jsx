@@ -6,6 +6,7 @@ import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import FormEditSkill from "../../forms/institucional/Edit/formEditSkill";
 import Button from "@mui/material/Button";
+import ActionButton from "../../../atoms/buttons/actionButton"
 import DeleteIcon from '@mui/icons-material/Delete';
 import DeleteConfirmationModal from "../../forms/institucional/deleteConfirmationModal";
 
@@ -117,18 +118,13 @@ const SkillList = () => {
                 alignItems="center"
               >
                 <Typography variant="subtitle2">Nivel: {skill.level}</Typography>
-                <Button 
-                  variant="outlined" 
-                  startIcon={<DeleteIcon />}
-                  onClick={() => handleDeleteClick(skill)}
-                  style={{ 
-                    textTransform: "none", 
-                    color: "black", 
-                    borderColor: "black" 
-                  }}
-                >
-                  Eliminar
-                </Button>
+                <ActionButton 
+                    texto={"Eliminar"}
+                    startIcon={<DeleteIcon />}
+                    onClick={() => handleDeleteClick(skill)}
+                  >
+                    
+                  </ActionButton>
               </Box>
             }
             dialogContent={dialogContent(skill)}

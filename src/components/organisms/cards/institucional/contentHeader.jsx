@@ -7,6 +7,7 @@ import Typography from "@mui/material/Typography";
 import ActionButton from "../../../atoms/buttons/actionButton";
 import { useUserContext } from "../../../../contexts/userContext";
 import useModal from "../../../../hooks/useModal";
+import DownloadForOfflineOutlinedIcon from '@mui/icons-material/DownloadForOfflineOutlined';
 
 const CardContentInstitucional = ({ loading, onSubmit }) => {
   const { open, handleOpen, handleClose } = useModal();
@@ -85,12 +86,12 @@ const CardContentInstitucional = ({ loading, onSubmit }) => {
         >
           <EditButton onClick={handleOpen} />
         </Box>
-        <div className="flex flex-row gap-2 items-center" style={{ marginTop: '3.5rem', marginRight: '2rem'}}>
+        <div className="flex flex-row gap-2 items-center" style={{ marginTop: '3.5rem', marginRight: '3.5rem'}}>
           <div className="flex-shrink-0"> 
             <ActionButton texto={"Cambiar Contraseña"} />
           </div>
           <div className="flex-shrink-0">
-            <ActionButton texto={"Descargar CV"} onClick={handleDownloadCV} /> {/* Asocia la función aquí */}
+            <ActionButton texto={"Descargar CV"} startIcon={<DownloadForOfflineOutlinedIcon />} onClick={handleDownloadCV} /> {/* Asocia la función aquí */}
           </div>
         </div>
       </div>

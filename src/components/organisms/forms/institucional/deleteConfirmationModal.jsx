@@ -31,20 +31,14 @@ const DeleteConfirmationModal = ({
         </Typography>
       </DialogContent>
       <DialogActions>
-        <Button 
-          onClick={onClose}
-          style={{ textTransform: "none" }}
-        >
-          {cancelButtonText}
-        </Button>
-        <Button 
-          onClick={onConfirm}
-          color="error"
-          style={{ textTransform: "none" }}
-          autoFocus
-        >
-          {confirmButtonText}
-        </Button>
+        <div className="flex justify-end gap-4 mt-4">
+          <Button variant="outlined" type="button" onClick={onClose}>
+            {cancelButtonText}
+          </Button>
+          <Button variant="contained" type="submit" onClick={onConfirm}>
+            {confirmButtonText}
+          </Button>
+        </div>
       </DialogActions>
     </Dialog>
   );

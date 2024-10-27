@@ -6,11 +6,13 @@ import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import WorkExperienceForm from "../../forms/institucional/Edit/formEditWorkExperience";
 import Button from "@mui/material/Button";
+import ActionButton from "../../../atoms/buttons/actionButton"
 import Dialog from "@mui/material/Dialog";
 import DialogTitle from "@mui/material/DialogTitle";
 import DialogContent from "@mui/material/DialogContent";
 import DialogActions from "@mui/material/DialogActions";
 import DeleteIcon from '@mui/icons-material/Delete';
+import VisibilityIcon from '@mui/icons-material/VisibilityOutlined';
 import DeleteConfirmationModal from "../../../organisms/forms/institucional/deleteConfirmationModal"; // Ajusta la ruta según tu estructura
 
 
@@ -127,21 +129,19 @@ const WorkExperienceList = () => {
                   flexWrap="wrap" 
                   gap={2}
                 >
-                  <Button 
-                    variant="outlined" 
+                  <ActionButton 
+                    texto={"Ver Descripción"}
+                    startIcon={<VisibilityIcon />}
                     onClick={() => handleOpenModal(experience)}
-                    style={{ textTransform: "none", color: "black", borderColor: "black" }}
                   >
-                    Ver descripción
-                  </Button>
-                  <Button 
-                    variant="outlined" 
+                  </ActionButton>
+                  <ActionButton 
+                    texto={"Eliminar"}
                     startIcon={<DeleteIcon />}
                     onClick={() => handleDeleteClick(experience)}
-                    style={{ textTransform: "none", color: "black", borderColor: "black" }}
                   >
-                    Eliminar
-                  </Button>
+                    
+                  </ActionButton>
                 </Box>
               </div>
             }
@@ -171,7 +171,7 @@ const WorkExperienceList = () => {
           />
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleCloseModal} color="primary">
+          <Button variant="outlined" type="button" onClick={handleCloseModal}>
             Cerrar
           </Button>
         </DialogActions>

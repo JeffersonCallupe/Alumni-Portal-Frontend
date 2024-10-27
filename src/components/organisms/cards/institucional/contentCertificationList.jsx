@@ -5,12 +5,14 @@ import CircularProgress from "@mui/material/CircularProgress";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
+import ActionButton from "../../../atoms/buttons/actionButton"
 import Dialog from "@mui/material/Dialog";
 import DialogTitle from "@mui/material/DialogTitle";
 import DialogContent from "@mui/material/DialogContent";
 import DialogActions from "@mui/material/DialogActions";
 import CertificationForm from "../../forms/institucional/Edit/formEditCertification"; // Asegúrate de que esta ruta sea correcta
 import DeleteIcon from '@mui/icons-material/Delete';
+import VisibilityIcon from '@mui/icons-material/VisibilityOutlined';
 import DeleteConfirmationModal from "../../forms/institucional/deleteConfirmationModal"; // Asegúrate de ajustar la ruta
 
 const CertificationList = () => {
@@ -125,34 +127,23 @@ const CertificationList = () => {
                 <br />
                 <Box 
                   display="flex" 
-                  justifyContent="space-between"
-                  flexWrap="wrap"
+                  justifyContent="space-between" 
+                  flexWrap="wrap" 
                   gap={2}
                 >
-                  <Button 
-                    variant="outlined" 
-                    onClick={() => handleOpenModal(certification)}
-                    style={{ 
-                      textTransform: "none", 
-                      color: "black", 
-                      borderColor: "black" 
-                    }}
+                  <ActionButton 
+                    texto={"Ver Credencial"}
+                    startIcon={<VisibilityIcon />}
+                    onClick={() => window.open(certification.credentialUrl, '_blank')}  
                   >
-                    Ver descripción
-                  </Button>
-
-                  <Button 
-                    variant="outlined" 
+                  </ActionButton>
+                  <ActionButton 
+                    texto={"Eliminar"}
                     startIcon={<DeleteIcon />}
                     onClick={() => handleDeleteClick(certification)}
-                    style={{ 
-                      textTransform: "none", 
-                      color: "black", 
-                      borderColor: "black" 
-                    }}
                   >
-                    Eliminar
-                  </Button>
+                    
+                  </ActionButton>
                 </Box>
               </div>
             }
@@ -164,29 +155,6 @@ const CertificationList = () => {
       ) : (
         <Typography variant="body1">No se encontraron certificaciones.</Typography>
       )}
-
-      {/* Modal de descripción */}
-      <Dialog open={openModal} onClose={handleCloseModal} maxWidth="sm" fullWidth>
-        <DialogTitle>Descripción:</DialogTitle>
-        <DialogContent>
-          <textarea
-            value={selectedCertification?.description}
-            readOnly
-            rows={6}
-            style={{
-              width: "100%",
-              resize: "none",
-              userSelect: "none",
-              pointerEvents: "none",
-            }}
-          />
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={handleCloseModal} color="primary">
-            Cerrar
-          </Button>
-        </DialogActions>
-      </Dialog>
 
       {/* Modal de confirmación de eliminación */}
       <DeleteConfirmationModal

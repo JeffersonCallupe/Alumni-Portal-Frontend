@@ -5,12 +5,14 @@ import CircularProgress from "@mui/material/CircularProgress";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
+import ActionButton from "../../../atoms/buttons/actionButton"
 import Dialog from "@mui/material/Dialog";
 import DialogTitle from "@mui/material/DialogTitle";
 import DialogContent from "@mui/material/DialogContent";
 import DialogActions from "@mui/material/DialogActions";
 import FormEditEducation from "../../forms/institucional/Edit/formEditEducation";
 import DeleteIcon from '@mui/icons-material/Delete';
+import VisibilityIcon from '@mui/icons-material/VisibilityOutlined';
 import DeleteConfirmationModal from "../../forms/institucional/deleteConfirmationModal"; // Asegúrate de ajustar la ruta
 
 const EducationList = () => {
@@ -125,34 +127,23 @@ const EducationList = () => {
                 <br />
                 <Box 
                   display="flex" 
-                  justifyContent="space-between"
-                  flexWrap="wrap"
+                  justifyContent="space-between" 
+                  flexWrap="wrap" 
                   gap={2}
                 >
-                  <Button 
-                    variant="outlined" 
+                  <ActionButton 
+                    texto={"Ver Descripción"}
+                    startIcon={<VisibilityIcon />}
                     onClick={() => handleOpenModal(education)}
-                    style={{ 
-                      textTransform: "none", 
-                      color: "black", 
-                      borderColor: "black" 
-                    }}
                   >
-                    Ver descripción
-                  </Button>
-
-                  <Button 
-                    variant="outlined" 
+                  </ActionButton>
+                  <ActionButton 
+                    texto={"Eliminar"}
                     startIcon={<DeleteIcon />}
                     onClick={() => handleDeleteClick(education)}
-                    style={{ 
-                      textTransform: "none", 
-                      color: "black", 
-                      borderColor: "black" 
-                    }}
                   >
-                    Eliminar
-                  </Button>
+                    
+                  </ActionButton>
                 </Box>
               </div>
             }

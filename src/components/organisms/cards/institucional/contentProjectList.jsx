@@ -5,12 +5,14 @@ import CircularProgress from "@mui/material/CircularProgress";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
+import ActionButton from "../../../atoms/buttons/actionButton"
 import Dialog from "@mui/material/Dialog";
 import DialogTitle from "@mui/material/DialogTitle";
 import DialogContent from "@mui/material/DialogContent";
 import DialogActions from "@mui/material/DialogActions";
 import FormEditProject from "../../forms/institucional/Edit/formEditProject";
 import DeleteIcon from "@mui/icons-material/Delete";
+import VisibilityIcon from '@mui/icons-material/VisibilityOutlined';
 import DeleteConfirmationModal from "../../forms/institucional/deleteConfirmationModal";
 
 const ProjectList = () => {
@@ -115,27 +117,26 @@ const ProjectList = () => {
             cardContent={
               <div>
                 <Typography variant="subtitle2">Fecha: {project.date}</Typography>
+                <br/>
                 <Box 
                   display="flex" 
-                  justifyContent="space-between"
-                  flexWrap="wrap"
+                  justifyContent="space-between" 
+                  flexWrap="wrap" 
                   gap={2}
                 >
-                  <Button 
-                    variant="outlined" 
+                  <ActionButton 
+                    texto={"Ver Descripción"}
+                    startIcon={<VisibilityIcon />}
                     onClick={() => handleOpenModal(project)}
-                    style={{ textTransform: "none", color: "black", borderColor: "black" }}
                   >
-                    Ver descripción
-                  </Button>
-                  <Button 
-                    variant="outlined" 
+                  </ActionButton>
+                  <ActionButton 
+                    texto={"Eliminar"}
                     startIcon={<DeleteIcon />}
                     onClick={() => handleDeleteClick(project)}
-                    style={{ textTransform: "none", color: "black", borderColor: "black" }}
                   >
-                    Eliminar
-                  </Button>
+                    
+                  </ActionButton>
                 </Box>
               </div>
             }
