@@ -44,6 +44,7 @@ const RegisterEmpresaForm = ({ onSubmit, validate }) => {
               label="Correo Electrónico"
               name="email"
               type="email"
+              required={true}
               value={formData.email}
               onChange={handleChange}
               error={errors.email}
@@ -55,6 +56,7 @@ const RegisterEmpresaForm = ({ onSubmit, validate }) => {
               name="password"
               type="password"
               value={formData.password}
+              required={true}
               onChange={handleChange}
               error={errors.password}
               helperText={errors.password}
@@ -65,6 +67,7 @@ const RegisterEmpresaForm = ({ onSubmit, validate }) => {
               name="confirmPassword"
               type="password"
               value={formData.confirmPassword}
+              required={true}
               onChange={handleChange}
               error={errors.confirmPassword}
               helperText={errors.confirmPassword}
@@ -75,6 +78,7 @@ const RegisterEmpresaForm = ({ onSubmit, validate }) => {
               name="name"
               type="text"
               value={formData.name}
+              required={true}
               onChange={handleChange}
               error={errors.name}
               helperText={errors.name}
@@ -95,6 +99,7 @@ const RegisterEmpresaForm = ({ onSubmit, validate }) => {
               label="RUC"
               name="ruc"
               type="number"
+              required={true}
               value={formData.ruc}
               onChange={handleChange}
               error={errors.ruc}
@@ -104,6 +109,7 @@ const RegisterEmpresaForm = ({ onSubmit, validate }) => {
             <TextInput
               label="Descripción"
               name="description"
+              required={true}
               type="text"
               value={formData.description}
               onChange={handleChange}
@@ -116,6 +122,7 @@ const RegisterEmpresaForm = ({ onSubmit, validate }) => {
               name="sector"
               type="text"
               value={formData.sector}
+              required={true}
               onChange={handleChange}
               error={errors.sector}
               helperText={errors.sector}

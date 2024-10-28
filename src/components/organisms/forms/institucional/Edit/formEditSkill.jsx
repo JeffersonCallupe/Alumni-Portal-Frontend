@@ -73,6 +73,7 @@ const FormEditSkill = ({ skillId, initialData, onUpdate, onCancel }) => {
         disabled={loading}
         options={levelOptions}
         error={Boolean(error)}
+        required={true}
       />
       <Box sx={{ display: "flex", justifyContent: "flex-end", gap: 2 }}>
         <Button variant="outlined" onClick={handleCancel} disabled={loading}>

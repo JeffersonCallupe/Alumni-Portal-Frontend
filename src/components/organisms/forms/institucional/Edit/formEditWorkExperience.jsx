@@ -54,6 +54,7 @@ const FormWorkExperience = ({ workExperienceId, initialData, onUpdate }) => {
         label="Empresa"
         name="company"
         value={formData.company}
+        required // Campo requerido
         onChange={handleChange}
         disabled={loading}
       />
@@ -61,6 +62,7 @@ const FormWorkExperience = ({ workExperienceId, initialData, onUpdate }) => {
         label="Título del Puesto"
         name="jobTitle"
         value={formData.jobTitle}
+        required // Campo requerido
         onChange={handleChange}
         disabled={loading}
       />
@@ -69,6 +71,7 @@ const FormWorkExperience = ({ workExperienceId, initialData, onUpdate }) => {
         name="startDate"
         type="date"
         value={formData.startDate}
+        required // Campo requerido
         onChange={handleChange}
         disabled={loading}
         InputLabelProps={{ shrink: true }}
@@ -79,6 +82,7 @@ const FormWorkExperience = ({ workExperienceId, initialData, onUpdate }) => {
         type="date"
         value={formData.endDate}
         onChange={handleChange}
+        required // Campo requerido
         disabled={loading}
         InputLabelProps={{ shrink: true }}
       />
@@ -86,6 +90,7 @@ const FormWorkExperience = ({ workExperienceId, initialData, onUpdate }) => {
         label="Descripción"
         name="description"
         value={formData.description}
+        required // Campo requerido
         onChange={handleChange}
         disabled={loading}
         multiline

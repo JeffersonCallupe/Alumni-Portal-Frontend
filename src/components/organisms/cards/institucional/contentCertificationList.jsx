@@ -5,15 +5,15 @@ import CircularProgress from "@mui/material/CircularProgress";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
-import ActionButton from "../../../atoms/buttons/actionButton"
+import ActionButton from "../../../atoms/buttons/actionButton";
 import Dialog from "@mui/material/Dialog";
 import DialogTitle from "@mui/material/DialogTitle";
 import DialogContent from "@mui/material/DialogContent";
 import DialogActions from "@mui/material/DialogActions";
-import CertificationForm from "../../forms/institucional/Edit/formEditCertification"; // Asegúrate de que esta ruta sea correcta
+import CertificationForm from "../../forms/institucional/Edit/formEditCertification";
 import DeleteIcon from '@mui/icons-material/Delete';
 import VisibilityIcon from '@mui/icons-material/VisibilityOutlined';
-import DeleteConfirmationModal from "../../forms/institucional/deleteConfirmationModal"; // Asegúrate de ajustar la ruta
+import DeleteConfirmationModal from "../../forms/institucional/deleteConfirmationModal";
 
 const CertificationList = () => {
   const { userData } = useUserContext();
@@ -21,7 +21,6 @@ const CertificationList = () => {
   const [loading, setLoading] = useState(true);
   const [openModal, setOpenModal] = useState(false);
   const [selectedCertification, setSelectedCertification] = useState(null);
-  // Nuevos estados para el modal de confirmación de eliminación
   const [deleteConfirmOpen, setDeleteConfirmOpen] = useState(false);
   const [certificationToDelete, setCertificationToDelete] = useState(null);
 
@@ -59,7 +58,6 @@ const CertificationList = () => {
     setSelectedCertification(null);
   };
 
-  // Nuevas funciones para manejar la eliminación
   const handleDeleteClick = (certification) => {
     setCertificationToDelete(certification);
     setDeleteConfirmOpen(true);
@@ -88,6 +86,14 @@ const CertificationList = () => {
       }
     } catch (error) {
       console.error("Error deleting certification:", error);
+    }
+  };
+
+  const handleViewCredential = (certification) => {
+    if (!certification.credentialUrl) {
+      alert("Esta certificación no tiene una URL de credencial.");
+    } else {
+      window.open(certification.credentialUrl, "_blank");
     }
   };
 
@@ -134,16 +140,14 @@ const CertificationList = () => {
                   <ActionButton 
                     texto={"Ver Credencial"}
                     startIcon={<VisibilityIcon />}
-                    onClick={() => window.open(certification.credentialUrl, '_blank')}  
-                  >
-                  </ActionButton>
+                    onClick={() => handleViewCredential(certification)}
+                    disabled={!certification.credentialUrl}  // Deshabilita el botón si no hay URL
+                  />
                   <ActionButton 
                     texto={"Eliminar"}
                     startIcon={<DeleteIcon />}
                     onClick={() => handleDeleteClick(certification)}
-                  >
-                    
-                  </ActionButton>
+                  />
                 </Box>
               </div>
             }
@@ -156,7 +160,6 @@ const CertificationList = () => {
         <Typography variant="body1">No se encontraron certificaciones.</Typography>
       )}
 
-      {/* Modal de confirmación de eliminación */}
       <DeleteConfirmationModal
         isOpen={deleteConfirmOpen}
         onClose={handleDeleteCancel}
@@ -168,6 +171,7 @@ const CertificationList = () => {
 };
 
 export default CertificationList;
+
 
 
 

@@ -50,6 +50,7 @@ const FormEditEducation = ({ educationId, initialData, onUpdate, onCancel }) => 
         value={formData.institution}
         onChange={handleChange}
         disabled={loading}
+        required // Campo requerido
       />
       <TextField
         label="Grado"
@@ -57,6 +58,7 @@ const FormEditEducation = ({ educationId, initialData, onUpdate, onCancel }) => 
         value={formData.degree}
         onChange={handleChange}
         disabled={loading}
+        required // Campo requerido
       />
       <TextField
         label="Campo de Estudio"
@@ -64,6 +66,7 @@ const FormEditEducation = ({ educationId, initialData, onUpdate, onCancel }) => 
         value={formData.fieldOfStudy}
         onChange={handleChange}
         disabled={loading}
+        required // Campo requerido
       />
       <TextField
         label="Fecha de Inicio"
@@ -72,6 +75,7 @@ const FormEditEducation = ({ educationId, initialData, onUpdate, onCancel }) => 
         value={formData.startDate}
         onChange={handleChange}
         disabled={loading}
+        required // Campo requerido
         InputLabelProps={{ shrink: true }}
       />
       <TextField
@@ -81,6 +85,7 @@ const FormEditEducation = ({ educationId, initialData, onUpdate, onCancel }) => 
         value={formData.endDate}
         onChange={handleChange}
         disabled={loading}
+        required // Campo requerido
         InputLabelProps={{ shrink: true }}
       />
       <TextField
@@ -90,6 +95,7 @@ const FormEditEducation = ({ educationId, initialData, onUpdate, onCancel }) => 
         onChange={handleChange}
         disabled={loading}
         multiline
+        required // Campo requerido
         rows={4}
       />
       <Box sx={{ display: "flex", justifyContent: "flex-end", gap: 2 }}>

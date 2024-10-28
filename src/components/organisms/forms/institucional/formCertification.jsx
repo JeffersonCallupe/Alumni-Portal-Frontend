@@ -43,14 +43,11 @@ const FormNewCertification = ({ onCancel, onSubmit, loading, error }) => {
         >
             {formFields.map(({ label, name, value, type }) => (
                 <div key={name} className="flex flex-col sm:flex-row gap-2 sm:gap-4">
-                    {/* <label className="text-l font-bold text-black sm:w-1/4 lg:w-1/6">
-                        {label}:
-                    </label> */}
                     <TextInput
                         name={name}
                         label={label}
                         value={value}
-                        required={true}
+                        required={name !== "expirationDate" && name !== "credentialUrl"} // Campo opcional si es "expirationDate"
                         onChange={handleChange}
                         error={errors[name]}
                         helperText={errors[name]}
