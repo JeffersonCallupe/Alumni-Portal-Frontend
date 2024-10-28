@@ -1,10 +1,11 @@
-import React from "react";
+import React, { useState } from "react";
 import Box from "@mui/material/Box";
 import EditButton from "../../../atoms/buttons/editButton";
 import DialogBase from "../../dialog/profileBaseDialog";
 import FormHeader from "../../forms/institucional/formHeader";
 import Typography from "@mui/material/Typography";
 import ActionButton from "../../../atoms/buttons/actionButton";
+import FormPassword from "../../forms/empresa/formPassword"; // Importar el formulario de contraseña
 import { useUserContext } from "../../../../contexts/userContext";
 import useModal from "../../../../hooks/useModal";
 import DownloadForOfflineOutlinedIcon from '@mui/icons-material/DownloadForOfflineOutlined';
@@ -12,47 +13,30 @@ import DownloadForOfflineOutlinedIcon from '@mui/icons-material/DownloadForOffli
 const CardContentInstitucional = ({ loading, onSubmit }) => {
   const { open, handleOpen, handleClose } = useModal();
   const { userData } = useUserContext();
+  const [openPasswordModal, setOpenPasswordModal] = useState(false);
 
-  const contentHeader = (
-    <FormHeader 
-      onSubmit={onSubmit} 
-      onCancel={handleClose} 
-      loading={loading} 
-    />
-  );
+  const handleOpenPasswordChange = () => setOpenPasswordModal(true);
+  const handleClosePasswordChange = () => setOpenPasswordModal(false);
 
-  // Función simplificada para verificar el éxito de la descarga
-  const isDownloadSuccessful = (response) => {
-    if (!response.ok) {
-      throw new Error('Error al descargar el CV');
-    }
-    return true;
-  };
-
-  // Función para descargar el CV
   const handleDownloadCV = async () => {
-    const userId = userData.id; // Asegúrate de que userId esté disponible en userData
-    const url = `http://178.128.147.224:8080/api/user/cv/download/${userId}`; // Endpoint con el userId
+    const userId = userData.id;
+    const url = `http://178.128.147.224:8080/api/user/cv/download/${userId}`;
 
     try {
       const response = await fetch(url);
-
-      // Verifica si la descarga fue exitosa
-      if (isDownloadSuccessful(response)) {
-        const blob = await response.blob(); // Obtener el archivo como blob
-        const link = document.createElement('a');
+      if (response.ok) {
+        const blob = await response.blob();
+        const link = document.createElement("a");
         link.href = window.URL.createObjectURL(blob);
-        link.download = `${userData.name}_CV.pdf`; // Asigna un nombre al archivo
+        link.download = `${userData.name}_CV.pdf`;
         document.body.appendChild(link);
-        link.click(); // Simula un clic en el enlace para iniciar la descarga
-        document.body.removeChild(link); // Eliminar el enlace temporal
-
-        // Mensaje de éxito en consola y alerta simplificada al usuario
-        console.log("CV descargado con éxito");
+        link.click();
+        document.body.removeChild(link);
         alert(`¡Descarga exitosa! El CV de ${userData.name} ha sido descargado.`);
+      } else {
+        throw new Error("Error al descargar el CV");
       }
     } catch (error) {
-      console.error("Error durante la descarga del CV:", error); // Mensaje de error en la consola
       alert("Hubo un error al intentar descargar el CV. Por favor, inténtalo de nuevo.");
     }
   };
@@ -76,7 +60,7 @@ const CardContentInstitucional = ({ loading, onSubmit }) => {
           Número de contacto: {userData.contactNumber || "No especificado"}
         </Typography>
       </div>
-      <div className="flex flex-col items-end"> {/* Flex container para los botones */}
+      <div className="flex flex-col items-end">
         <Box
           sx={{
             zIndex: 1,
@@ -86,9 +70,9 @@ const CardContentInstitucional = ({ loading, onSubmit }) => {
         >
           <EditButton onClick={handleOpen} />
         </Box>
-        <div className="flex flex-row gap-2 items-center" style={{ marginTop: '3.5rem', marginRight: '3.5rem'}}>
+        <div className="flex flex-row gap-2 items-center" style={{ marginTop: "3.5rem", marginRight: "3.5rem" }}>
           <div className="flex-shrink-0"> 
-            <ActionButton texto={"Cambiar Contraseña"} />
+            <ActionButton texto={"Cambiar Contraseña"} onClick={handleOpenPasswordChange}/>
           </div>
           <div className="flex-shrink-0">
             <ActionButton texto={"Descargar CV"} startIcon={<DownloadForOfflineOutlinedIcon />} onClick={handleDownloadCV} /> {/* Asocia la función aquí */}
@@ -96,12 +80,16 @@ const CardContentInstitucional = ({ loading, onSubmit }) => {
         </div>
       </div>
 
+      {/* Modal para editar perfil */}
+      <DialogBase open={open} handleClose={handleClose} title="Información Personal" content={<FormHeader onSubmit={onSubmit} onCancel={handleClose} loading={loading} />} modalId="modal-profile" />
+
+      {/* Modal para cambiar contraseña */}
       <DialogBase
-        open={open}
-        handleClose={handleClose}
-        title="Información Personal"
-        content={contentHeader}
-        modalId="modal-profile"
+        open={openPasswordModal}
+        handleClose={handleClosePasswordChange}
+        title="Cambiar Contraseña"
+        content={<FormPassword userId={userData.id} onCancel={handleClosePasswordChange} />}
+        modalId="modal-password"
       />
     </div>
   );
