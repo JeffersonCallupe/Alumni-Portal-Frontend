@@ -10,9 +10,12 @@ const TextInput = ({ label, name, value, onChange, type = 'text', fullWidth = tr
       onChange={onChange}
       type={type}
       variant="outlined"
-      margin="normal"
+      margin="dense"
       fullWidth={fullWidth}
       disabled = {disabled}
+      InputLabelProps={{
+        shrink: true, // Hace que el label permanezca arriba
+      }}
     />
   );
 };

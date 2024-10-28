@@ -16,16 +16,23 @@ const FormHeader = ({ onSubmit, onCancel, loading }) => {
       email: userData.email || "",
       contactNumber: userData.contactNumber || "",
     },
-    onSubmit
+    async (formData) => {
+      try {
+          await onSubmit(formData);
+          onCancel(); // Cerrar el formulario si no hay errores
+      } catch (error) {
+          console.error("Error al enviar el formulario:", error);
+      }
+  }
   );
 
   const formFields = [
     { label: "Nombres", name: "name", value: formData.name },
-    { label: "Apell. Paterno", name: "paternalSurname", value: formData.paternalSurname },
-    { label: "Apell. Materno", name: "maternalSurname", value: formData.maternalSurname },
+    { label: "Apellido Paterno", name: "paternalSurname", value: formData.paternalSurname },
+    { label: "Apellido Materno", name: "maternalSurname", value: formData.maternalSurname },
     { label: "Headline", name: "headline", value: formData.headline },
     { label: "Correo Electrónico", name: "email", value: formData.email },
-    { label: "Nro. de Contacto", name: "contactNumber", value: formData.contactNumber },
+    { label: "Número de Contacto", name: "contactNumber", value: formData.contactNumber },
   ];
 
   return (
@@ -41,10 +48,8 @@ const FormHeader = ({ onSubmit, onCancel, loading }) => {
     >
       {formFields.map(({ label, name, value }) => (
         <div key={name} className="flex flex-col sm:flex-row gap-2 sm:gap-4">
-          <label className="text-l font-bold text-black sm:w-1/4 lg:w-1/6">
-            {label}:
-          </label>
           <TextInput
+            label={label}
             name={name}
             value={value}
             onChange={handleChange}
@@ -54,12 +59,12 @@ const FormHeader = ({ onSubmit, onCancel, loading }) => {
           />
         </div>
       ))}
-      <div>
-        <Button type="button" onClick={onCancel} disabled={loading}>
+      <div className="flex justify-end gap-4 mt-4">
+        <Button variant="outlined" type="button" onClick={onCancel} disabled={loading}>
           Cancelar
         </Button>
-        <Button type="submit" disabled={loading}>
-          Guardar Cambios
+        <Button variant="contained" type="submit" disabled={loading}>
+          {loading ? "Guardando..." : "Guardar"}
         </Button>
       </div>
     </Box>

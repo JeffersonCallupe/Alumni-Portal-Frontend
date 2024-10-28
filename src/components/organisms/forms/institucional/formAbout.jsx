@@ -8,8 +8,17 @@ const FormAbout = ({ onSubmit, onCancel, loading }) => {
   const { userData } = useUserContext();
   const { formData, handleChange, handleSubmit } = useForm(
     { about: userData.about || "" },
-    onSubmit,
+    async (formData) => {
+      try {
+          await onSubmit(formData);
+          onCancel(); // Cerrar el formulario si no hay errores
+      } catch (error) {
+          console.error("Error al enviar el formulario:", error);
+      }
+    }
   );
+
+  
 
   return (
     <Box

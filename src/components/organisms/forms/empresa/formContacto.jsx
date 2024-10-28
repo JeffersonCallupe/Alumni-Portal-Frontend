@@ -13,7 +13,14 @@ const FormContacto = ({ onSubmit, onCancel, loading }) => {
       phone: userData.phone || "",
       website: userData.website || "",
     },
-    onSubmit
+    async (formData) => {
+      try {
+          await onSubmit(formData);
+          onCancel(); // Cerrar el formulario si no hay errores
+      } catch (error) {
+          console.error("Error al enviar el formulario:", error);
+      }
+    }
   );
 
   const formFields = [
@@ -35,11 +42,12 @@ const FormContacto = ({ onSubmit, onCancel, loading }) => {
     >
       {formFields.map(({ label, name, value }) => (
         <div key={name} className="flex flex-col sm:flex-row gap-2 sm:gap-4">
-          <label className="text-l font-bold text-black sm:w-1/4 lg:w-1/6">
+          {/* <label className="text-l font-bold text-black sm:w-1/4 lg:w-1/6">
             {label}:
-          </label>
+          </label> */}
           <TextInput
             name={name}
+            label={label}
             value={value}
             onChange={handleChange}
             error={errors[name]}
@@ -48,12 +56,12 @@ const FormContacto = ({ onSubmit, onCancel, loading }) => {
           />
         </div>
       ))}
-      <div>
-        <Button type="button" onClick={onCancel}>
+      <div className="flex justify-end gap-4 mt-4">
+        <Button variant="outlined" type="button" onClick={onCancel}>
           Cancelar
         </Button>
-        <Button type="submit" disabled={loading}>
-          Guardar Cambios
+        <Button variant="contained" type="submit" disabled={loading}>
+          Guardar
         </Button>
       </div>
     </Box>

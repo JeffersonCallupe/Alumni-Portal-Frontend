@@ -4,7 +4,6 @@ import Button from "@mui/material/Button";
 import TextInput from "../../../atoms/inputs/TextInput";
 import useForm from "../../../../hooks/useForm";
 
-// Removemos la importación de usePost y useUserContext ya que no los necesitaremos aquí
 const FormNewExperience = ({ onCancel, onSubmit, loading, error }) => {
     const { formData, errors, handleChange, handleSubmit } = useForm(
         {
@@ -15,7 +14,6 @@ const FormNewExperience = ({ onCancel, onSubmit, loading, error }) => {
             description: "",
         },
         async (formData) => {
-            console.log("Datos a enviar:", formData);
             await onSubmit(formData);
             if (!error) {
                 window.location.reload();
@@ -45,11 +43,12 @@ const FormNewExperience = ({ onCancel, onSubmit, loading, error }) => {
         >
             {formFields.map(({ label, name, value, type, multiline }) => (
                 <div key={name} className="flex flex-col sm:flex-row gap-2 sm:gap-4">
-                    <label className="text-l font-bold text-black sm:w-1/4 lg:w-1/6">
+                    {/* <label className="text-l font-bold text-black sm:w-1/4 lg:w-1/6">
                         {label}:
-                    </label>
+                    </label> */}
                     <TextInput
                         name={name}
+                        label={label}
                         value={value}
                         onChange={handleChange}
                         error={errors[name]}

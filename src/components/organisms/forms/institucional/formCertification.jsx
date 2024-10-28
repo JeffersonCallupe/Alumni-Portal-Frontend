@@ -14,7 +14,6 @@ const FormNewCertification = ({ onCancel, onSubmit, loading, error }) => {
             credentialUrl: "",
         },
         async (formData) => {
-            console.log("Datos a enviar:", formData);
             await onSubmit(formData);
             if (!error) {
                 window.location.reload();
@@ -44,11 +43,12 @@ const FormNewCertification = ({ onCancel, onSubmit, loading, error }) => {
         >
             {formFields.map(({ label, name, value, type }) => (
                 <div key={name} className="flex flex-col sm:flex-row gap-2 sm:gap-4">
-                    <label className="text-l font-bold text-black sm:w-1/4 lg:w-1/6">
+                    {/* <label className="text-l font-bold text-black sm:w-1/4 lg:w-1/6">
                         {label}:
-                    </label>
+                    </label> */}
                     <TextInput
                         name={name}
+                        label={label}
                         value={value}
                         onChange={handleChange}
                         error={errors[name]}

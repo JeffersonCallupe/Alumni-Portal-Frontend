@@ -4,29 +4,21 @@ import Button from "@mui/material/Button";
 import TextInput from "../../../atoms/inputs/TextInput";
 import SelectInput from "../../../atoms/inputs/SelectInput"; // Asegúrate de tener un componente de SelectInput
 import useForm from "../../../../hooks/useForm";
-import { useUserContext } from "../../../../contexts/userContext";
-import usePost from "../../../../hooks/usePost";
 
-const FormNewSkill = ({ onCancel }) => {
-    const { userData } = useUserContext(); // Obtenemos el contexto de usuario
-    const apiUrl = `http://178.128.147.224:8080/api/skill/save/${userData?.id}`; // URL dinámica para guardar la habilidad
-    const { loading, error, post } = usePost(apiUrl); // Hook para hacer el POST request
-
+const FormNewSkill = ({ onCancel, onSubmit, loading, error }) => {
     const { formData, errors, handleChange, handleSubmit } = useForm(
         {
             name: "",
             level: "",
         },
         async (formData) => {
-            console.log("Datos a enviar:", formData); // Verificar los datos
-            await post(formData); // Realizar la solicitud POST
+            await onSubmit(formData);
             if (!error) {
                 window.location.reload();
-                onCancel(); // Cerrar el formulario si no hay errores
+                onCancel();
             }
         }
     );
-
     const formFields = [
         { label: "Nombre de la Habilidad", name: "name", value: formData.name },
         {
@@ -56,12 +48,13 @@ const FormNewSkill = ({ onCancel }) => {
         >
             {formFields.map(({ label, name, value, type, options }) => (
                 <div key={name} className="flex flex-col sm:flex-row gap-2 sm:gap-4">
-                    <label className="text-l font-bold text-black sm:w-1/4 lg:w-1/6">
+                    {/* <label className="text-l font-bold text-black sm:w-1/4 lg:w-1/6">
                         {label}:
-                    </label>
+                    </label> */}
                     {type === "select" ? (
                         <SelectInput
                             name={name}
+                            label={label}
                             value={value}
                             onChange={handleChange}
                             error={errors[name]}
@@ -72,6 +65,7 @@ const FormNewSkill = ({ onCancel }) => {
                     ) : (
                         <TextInput
                             name={name}
+                            label={label}
                             value={value}
                             onChange={handleChange}
                             error={errors[name]}

@@ -8,7 +8,14 @@ const FormDescripcion = ({ onSubmit, onCancel, loading }) => {
   const { userData } = useUserContext();
   const { formData, handleChange, handleSubmit } = useForm(
     { description: userData.description || "" },
-    onSubmit,
+    async (formData) => {
+      try {
+          await onSubmit(formData);
+          onCancel(); // Cerrar el formulario si no hay errores
+      } catch (error) {
+          console.error("Error al enviar el formulario:", error);
+      }
+    }
   );
 
   return (
@@ -28,13 +35,20 @@ const FormDescripcion = ({ onSubmit, onCancel, loading }) => {
         onChange={handleChange}
         disabled={loading}
         className="p-4"
+        rows={10} // Ajusta el número de filas para la altura del textarea
+        style={{
+          width: "100%",
+          overflow:"hidden",
+          resize: "none", // Evita que el textarea sea redimensionable
+          userSelect: "none", // Evita la selección del texto 
+        }}
       />
-      <div>
-        <Button type="button" onClick={onCancel}>
+      <div className="flex justify-end gap-4 mt-4">
+        <Button variant="outlined" type="button" onClick={onCancel}>
           Cancelar
         </Button>
-        <Button type="submit" disabled={loading}>
-          Guardar Cambios
+        <Button variant="contained" type="submit" disabled={loading}>
+          Guardar
         </Button>
       </div>
     </Box>

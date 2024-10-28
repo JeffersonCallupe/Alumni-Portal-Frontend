@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
+import useUpdateData from "../../../../../hooks/useEditInstitutional"; // Asegúrate de que la ruta sea correcta
 
 const FormEditProject = ({ projectId, initialData, onUpdate, onCancel }) => {
   const [formData, setFormData] = useState({
@@ -9,8 +10,9 @@ const FormEditProject = ({ projectId, initialData, onUpdate, onCancel }) => {
     date: initialData?.date || "",
     description: initialData?.description || "",
   });
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(null);
+
+  // Usar el hook para manejar la actualización de datos
+  const { loading, error, updateData } = useUpdateData(`http://178.128.147.224:8080/api/project/${projectId}`);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -22,27 +24,15 @@ const FormEditProject = ({ projectId, initialData, onUpdate, onCancel }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setLoading(true);
+
     try {
-      const response = await fetch(`http://178.128.147.224:8080/api/project/${projectId}`, {
-        method: "PATCH",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(formData),
-      });
-
-      if (!response.ok) {
-        throw new Error("Error al actualizar el proyecto.");
+      const updatedProject = await updateData(formData); // Utilizar el hook para actualizar
+      if (updatedProject) { // Verificar que la actualización fue exitosa
+        onUpdate(updatedProject); // Callback para actualizar el proyecto
+        onCancel(); // Cerrar el formulario
       }
-
-      const updatedProject = await response.json();
-      onUpdate(updatedProject);
-      onCancel();
     } catch (error) {
-      setError("No se pudo actualizar el proyecto.");
-    } finally {
-      setLoading(false);
+      console.error(error); // Manejar errores (ya están capturados en el hook)
     }
   };
 
@@ -57,13 +47,14 @@ const FormEditProject = ({ projectId, initialData, onUpdate, onCancel }) => {
         width: "100%",
       }}
     >
-      <br></br>
+      <br />
       <TextField
         label="Nombre del Proyecto"
         name="name"
         value={formData.name}
         onChange={handleChange}
         disabled={loading}
+        required // Campo requerido
       />
       <TextField
         label="Fecha"
@@ -75,6 +66,7 @@ const FormEditProject = ({ projectId, initialData, onUpdate, onCancel }) => {
         InputLabelProps={{
           shrink: true,
         }}
+        required // Campo requerido
       />
       <TextField
         label="Descripción"
@@ -84,6 +76,7 @@ const FormEditProject = ({ projectId, initialData, onUpdate, onCancel }) => {
         disabled={loading}
         multiline
         rows={4}
+        required // Campo requerido
       />
       <Box sx={{ display: "flex", justifyContent: "flex-end", gap: 2 }}>
         <Button variant="outlined" onClick={onCancel} disabled={loading}>
@@ -93,7 +86,7 @@ const FormEditProject = ({ projectId, initialData, onUpdate, onCancel }) => {
           {loading ? "Guardando..." : "Guardar"}
         </Button>
       </Box>
-      {error && <p style={{ color: "red" }}>{error}</p>}
+      {/* {error && <p style={{ color: "red" }}>{error}</p>} Mostrar mensaje de error */}
     </Box>
   );
 };

@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
+import useUpdateData from "../../../../../hooks/useEditInstitutional"; // Asegúrate de que la ruta sea correcta
 
 const FormEditCertification = ({ certificationId, initialData, onUpdate, onCancel }) => {
   const [formData, setFormData] = useState({
@@ -11,8 +12,9 @@ const FormEditCertification = ({ certificationId, initialData, onUpdate, onCance
     expirationDate: initialData?.expirationDate || "",
     credentialUrl: initialData?.credentialUrl || "",
   });
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(null);
+  
+  // Usar el hook para manejar la actualización de datos
+  const { loading, error, updateData } = useUpdateData(`http://178.128.147.224:8080/api/certification/${certificationId}`);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -24,29 +26,15 @@ const FormEditCertification = ({ certificationId, initialData, onUpdate, onCance
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setLoading(true);
-    setError(null); // Limpiar errores anteriores
 
     try {
-      const response = await fetch(`http://178.128.147.224:8080/api/certification/${certificationId}`, {
-        method: "PATCH",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(formData), // Enviar el objeto formateado
-      });
-
-      if (!response.ok) {
-        throw new Error("Error al actualizar la certificación.");
+      const updatedCertification = await updateData(formData); // Utilizar el hook para actualizar
+      if (updatedCertification) { // Verificar que la actualización fue exitosa
+        onUpdate(updatedCertification); // Callback para actualizar la lista de certificaciones
+        onCancel(); // Cerrar el formulario
       }
-
-      const updatedCertification = await response.json();
-      onUpdate(updatedCertification); // Callback para actualizar la lista de certificaciones
-      onCancel(); // Cerrar el formulario
     } catch (error) {
-      setError(error.message); // Guardar el mensaje de error
-    } finally {
-      setLoading(false);
+      console.error(error); // Manejar errores (ya están capturados en el hook)
     }
   };
 
@@ -61,7 +49,7 @@ const FormEditCertification = ({ certificationId, initialData, onUpdate, onCance
         width: "100%",
       }}
     >
-      <br></br>
+      <br />
       <TextField
         label="Nombre"
         name="name"
@@ -116,7 +104,7 @@ const FormEditCertification = ({ certificationId, initialData, onUpdate, onCance
           {loading ? "Guardando..." : "Guardar"}
         </Button>
       </Box>
-      {error && <p style={{ color: 'red' }}>{error}</p>} {/* Mostrar mensaje de error */}
+      {/* {error && <p style={{ color: 'red' }}>{error}</p>} Mostrar mensaje de error */}
     </Box>
   );
 };

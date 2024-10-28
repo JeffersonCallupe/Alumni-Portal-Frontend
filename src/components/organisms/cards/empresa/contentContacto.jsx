@@ -9,12 +9,22 @@ const ContentContactoEmpresa = () => {
       <Typography variant="body2">
         Correo Electrónico: {userData.email || "No especificado"}
       </Typography>
+      <br></br>
       <Typography variant="body2">
         Teléfono: {userData.phone || "No especificado"}
       </Typography>
-      <Typography variant="body2">
-        Sitio Web: {userData.website || "No especificado"}
-      </Typography>
+      <br></br>
+      <Typography variant="body2" sx={{ mb: 1 }}>
+        Sitio Web:
+        <a 
+            href={userData.website || "#"} 
+            target="_blank" 
+            rel="noopener noreferrer" 
+            style={{ color: "darkblue"}}
+        >
+            {" "+userData.website || "No especificado"}
+        </a>
+    </Typography>
     </div>
   );
 };

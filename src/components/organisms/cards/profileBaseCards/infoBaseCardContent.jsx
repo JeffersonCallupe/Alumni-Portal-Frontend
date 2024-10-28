@@ -3,7 +3,7 @@ import "../../../../App.css";
 import Card from "@mui/material/Card";
 import CardActions from "@mui/material/CardActions";
 import CardContent from "@mui/material/CardContent";
-import DialogBase from "../../dialog/profilebaseDialog";
+import DialogBase from "../../dialog/profileBaseDialog";
 import AddButton from "../../../atoms/buttons/addButton";
 import Typography from "@mui/material/Typography";
 import useModal from "../../../../hooks/useModal";

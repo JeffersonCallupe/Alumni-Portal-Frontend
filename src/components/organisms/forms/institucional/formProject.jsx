@@ -4,7 +4,7 @@ import Button from "@mui/material/Button";
 import TextInput from "../../../atoms/inputs/TextInput";
 import useForm from "../../../../hooks/useForm";
 
-const FormNewProject = ({ onSubmit, loading, onCancel }) => {
+const FormNewProject = ({ onCancel, onSubmit, loading, error }) => {
     const { formData, errors, handleChange, handleSubmit } = useForm(
         {
             name: "",
@@ -12,11 +12,10 @@ const FormNewProject = ({ onSubmit, loading, onCancel }) => {
             description: "",
         },
         async (formData) => {
-            try {
-                await onSubmit(formData);
-                onCancel(); // Cerrar el formulario si no hay errores
-            } catch (error) {
-                console.error("Error al enviar el formulario:", error);
+            await onSubmit(formData);
+            if (!error) {
+                window.location.reload();
+                onCancel();
             }
         }
     );
@@ -55,11 +54,12 @@ const FormNewProject = ({ onSubmit, loading, onCancel }) => {
         >
             {formFields.map(({ label, name, value, type, rows }) => (
                 <div key={name} className="flex flex-col sm:flex-row gap-2 sm:gap-4">
-                    <label className="text-l font-bold text-black sm:w-1/4 lg:w-1/6">
+                    {/* <label className="text-l font-bold text-black sm:w-1/4 lg:w-1/6">
                         {label}:
-                    </label>
+                    </label> */}
                     <TextInput
                         name={name}
+                        label={label}
                         value={value}
                         onChange={handleChange}
                         error={errors[name]}

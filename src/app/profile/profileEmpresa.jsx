@@ -53,10 +53,10 @@ function ProfileEmpresa() {
           modalId="modal- foto"
         />
         <InfoBaseCard
-          title="Descripción de Actividades"
+          title="Descripción de la Empresa"
           cardContent={
             <textarea
-              value={userData.about || "No especificado"}
+              value={userData.description || "No especificado"}
               readOnly
               style={{
                   width: '100%',

@@ -3,14 +3,16 @@ import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
 import SelectInput from "../../../../atoms/inputs/SelectInput";
+import useUpdateData from "../../../../../hooks/useEditInstitutional"; // Asegúrate de que la ruta sea correcta
 
 const FormEditSkill = ({ skillId, initialData, onUpdate, onCancel }) => {
   const [formData, setFormData] = useState({
     name: initialData?.name || "",
     level: initialData?.level || "",
   });
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(null);
+
+  // Usar el hook para manejar la actualización de datos
+  const { loading, error, updateData } = useUpdateData(`http://178.128.147.224:8080/api/skill/${skillId}`);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -22,27 +24,15 @@ const FormEditSkill = ({ skillId, initialData, onUpdate, onCancel }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setLoading(true);
+
     try {
-      const response = await fetch(`http://178.128.147.224:8080/api/skill/${skillId}`, {
-        method: "PATCH",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(formData),
-      });
-
-      if (!response.ok) {
-        throw new Error("Error al actualizar la habilidad");
+      const updatedSkill = await updateData(formData); // Utilizar el hook para actualizar
+      if (updatedSkill) { // Verificar que la actualización fue exitosa
+        onUpdate(updatedSkill); // Callback para actualizar la lista de habilidades
+        onCancel(); // Cerrar el formulario
       }
-
-      const updatedSkill = await response.json();
-      onUpdate(updatedSkill); // Callback para actualizar la lista de habilidades
-      onCancel(); // Cierra el formulario
     } catch (error) {
-      setError("");
-    } finally {
-      setLoading(false);
+      console.error(error); // Manejar errores (ya están capturados en el hook)
     }
   };
 
@@ -65,13 +55,14 @@ const FormEditSkill = ({ skillId, initialData, onUpdate, onCancel }) => {
         width: "100%",
       }}
     >
-      <br></br>
+      <br />
       <TextField
         label="Nombre de la Habilidad"
         name="name"
         value={formData.name}
         onChange={handleChange}
         disabled={loading}
+        required // Campo requerido
       />
       <SelectInput
         name="level"
@@ -80,7 +71,6 @@ const FormEditSkill = ({ skillId, initialData, onUpdate, onCancel }) => {
         disabled={loading}
         options={levelOptions}
         error={Boolean(error)}
-        helperText={error}
       />
       <Box sx={{ display: "flex", justifyContent: "flex-end", gap: 2 }}>
         <Button variant="outlined" onClick={onCancel} disabled={loading}>
@@ -90,10 +80,11 @@ const FormEditSkill = ({ skillId, initialData, onUpdate, onCancel }) => {
           {loading ? "Guardando..." : "Guardar"}
         </Button>
       </Box>
-      {error && <p className="text-red-500">{error}</p>}
+      {/* {error && <p style={{ color: 'red' }}>{error}</p>} Mostrar mensaje de error */}
     </Box>
   );
 };
 
 export default FormEditSkill;
+
 
