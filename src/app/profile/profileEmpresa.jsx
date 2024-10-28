@@ -56,7 +56,7 @@ function ProfileEmpresa() {
           title="Descripción de la Empresa"
           cardContent={
             <textarea
-              value={userData.description || "No especificado"}
+              value={userData.description || "No especificado."}
               readOnly
               style={{
                   width: '100%',

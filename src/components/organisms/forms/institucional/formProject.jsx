@@ -64,6 +64,7 @@ const FormNewProject = ({ onCancel, onSubmit, loading, error }) => {
                         onChange={handleChange}
                         error={errors[name]}
                         helperText={errors[name]}
+                        required={true}
                         disabled={loading}
                         type={type === "textarea" ? "text" : type || "text"}
                         multiline={type === "textarea"}

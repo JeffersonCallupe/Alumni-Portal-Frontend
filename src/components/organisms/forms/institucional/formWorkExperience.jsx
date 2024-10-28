@@ -52,6 +52,7 @@ const FormNewExperience = ({ onCancel, onSubmit, loading, error }) => {
                         value={value}
                         onChange={handleChange}
                         error={errors[name]}
+                        required={true}
                         helperText={errors[name]}
                         disabled={loading}
                         type={type || "text"}

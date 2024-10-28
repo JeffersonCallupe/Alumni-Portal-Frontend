@@ -156,13 +156,13 @@ function ProfileInstitucional() {
                   title="Acerca de"
                   cardContent={
                     <textarea
-                        value={userData.about || "No especificado"}
+                        value={userData.about || "No especificado."}
                         readOnly
                         style={{
                             width: '100%',
                             height: 'auto',
-                            overflow: 'hidden',
-                            resize: 'none',
+                            overflow: 'auto',
+                            resize: 'vertical',
                             lineHeight: '1.5',
                             minHeight: '100px',
                             maxHeight: '200px',

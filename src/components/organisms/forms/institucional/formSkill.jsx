@@ -58,6 +58,7 @@ const FormNewSkill = ({ onCancel, onSubmit, loading, error }) => {
                             value={value}
                             onChange={handleChange}
                             error={errors[name]}
+                            required={true}
                             helperText={errors[name]}
                             disabled={loading}
                             options={options}
@@ -68,6 +69,7 @@ const FormNewSkill = ({ onCancel, onSubmit, loading, error }) => {
                             label={label}
                             value={value}
                             onChange={handleChange}
+                            required={true}
                             error={errors[name]}
                             helperText={errors[name]}
                             disabled={loading}

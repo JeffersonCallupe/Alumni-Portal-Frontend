@@ -52,6 +52,7 @@ const FormHeader = ({ onSubmit, onCancel, loading }) => {
             label={label}
             name={name}
             value={value}
+            required={true}
             onChange={handleChange}
             error={errors[name]}
             helperText={errors[name]}

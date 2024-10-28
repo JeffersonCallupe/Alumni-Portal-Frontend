@@ -53,6 +53,7 @@ const FormNewEducation = ({ onCancel, onSubmit, loading, error }) => {
                         name={name}
                         label={label}
                         value={value}
+                        required={true}
                         onChange={handleChange}
                         error={errors[name]}
                         helperText={errors[name]}
