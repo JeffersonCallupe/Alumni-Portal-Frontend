@@ -1,15 +1,16 @@
 import React, { useState } from "react";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
-import TextField from "@mui/material/TextField"; 
-import useUpdateData from '../../../../../hooks/useEditInstitutional'; // Importa el hook
+import TextField from "@mui/material/TextField";
+import useUpdateData from '../../../../../hooks/useEditInstitutional';
 
-const FormWorkExperience = ({ workExperienceId, initialData, onUpdate, onCancel }) => {
+const FormWorkExperience = ({ workExperienceId, initialData, onUpdate }) => {
+  const [isEditing, setIsEditing] = useState(true);
   const [formData, setFormData] = useState({
     company: initialData?.company || "",
     jobTitle: initialData?.jobTitle || "",
-    startDate: initialData?.startDate || "", 
-    endDate: initialData?.endDate || "", 
+    startDate: initialData?.startDate || "",
+    endDate: initialData?.endDate || "",
     description: initialData?.description || "",
   });
 
@@ -27,10 +28,20 @@ const FormWorkExperience = ({ workExperienceId, initialData, onUpdate, onCancel 
     e.preventDefault();
     const updatedExperience = await updateData(formData);
     if (updatedExperience) {
-      onUpdate(updatedExperience);
-      onCancel();
+      if (onUpdate) {
+        onUpdate(updatedExperience);
+      }
+      setIsEditing(false);
     }
   };
+
+  const handleCancel = () => {
+    window.location.reload();
+  };
+
+  if (!isEditing) {
+    return null; // O podrías mostrar un mensaje o redirigir
+  }
 
   return (
     <Box
@@ -38,7 +49,7 @@ const FormWorkExperience = ({ workExperienceId, initialData, onUpdate, onCancel 
       onSubmit={handleSubmit}
       sx={{ display: "flex", flexDirection: "column", gap: 2, width: "100%" }}
     >
-      <br></br>
+      <br />
       <TextField
         label="Empresa"
         name="company"
@@ -81,14 +92,18 @@ const FormWorkExperience = ({ workExperienceId, initialData, onUpdate, onCancel 
         rows={4}
       />
       <Box sx={{ display: "flex", justifyContent: "flex-end", gap: 2 }}>
-        <Button variant="outlined" type="button" onClick={onCancel} disabled={loading}>
+        <Button variant="outlined" type="button" onClick={handleCancel} disabled={loading}>
           Cancelar
         </Button>
         <Button variant="contained" type="submit" disabled={loading}>
           {loading ? "Guardando..." : "Guardar"}
         </Button>
       </Box>
-      {/* {error && <p className="text-red-500">{error}</p>} */}
+      {error && (
+        <Box sx={{ color: 'error.main', mt: 2 }}>
+          {error}
+        </Box>
+      )}
     </Box>
   );
 };

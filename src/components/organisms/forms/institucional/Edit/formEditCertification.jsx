@@ -38,6 +38,10 @@ const FormEditCertification = ({ certificationId, initialData, onUpdate, onCance
     }
   };
 
+  const handleCancel = () => {
+    window.location.reload();
+  };
+
   return (
     <Box
       component="form"
@@ -97,7 +101,7 @@ const FormEditCertification = ({ certificationId, initialData, onUpdate, onCance
         disabled={loading}
       />
       <Box sx={{ display: "flex", justifyContent: "flex-end", gap: 2 }}>
-        <Button variant="outlined" type="button" onClick={onCancel} disabled={loading}>
+        <Button variant="outlined" type="button" onClick={handleCancel} disabled={loading}>
           Cancelar
         </Button>
         <Button variant="contained" type="submit" disabled={loading}>

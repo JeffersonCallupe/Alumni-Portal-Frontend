@@ -20,7 +20,7 @@ const useUpdateData = (updateUrl) => {
       if (!response.ok) {
         throw new Error('Error al actualizar los datos.');
       }
-      // window.location.reload();
+      window.location.reload();
       return await response.json();
     } catch (error) {
       setError(error.message);

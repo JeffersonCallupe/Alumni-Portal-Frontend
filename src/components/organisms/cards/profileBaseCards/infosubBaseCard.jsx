@@ -8,8 +8,15 @@ import EditButton from "../../../atoms/buttons/editButton";
 import Typography from "@mui/material/Typography";
 import useModal from "../../../../hooks/useModal";
 
-const InfoBaseCard = ({ title, cardContent, dialogContent, modalId}) => {
+const InfoBaseCard = ({ title, cardContent, dialogContent, modalId }) => {
   const { open, handleOpen, handleClose } = useModal();
+
+  // Create a wrapper for the dialog content that passes down the handleClose
+  const wrappedDialogContent = dialogContent 
+    ? React.cloneElement(dialogContent, {
+        onClose: handleClose
+      })
+    : dialogContent;
 
   return (
     <Card
@@ -45,7 +52,7 @@ const InfoBaseCard = ({ title, cardContent, dialogContent, modalId}) => {
       <DialogBase
         open={open}
         handleClose={handleClose}
-        content={dialogContent}
+        content={wrappedDialogContent}
         modalId={modalId}
       />
     </Card>

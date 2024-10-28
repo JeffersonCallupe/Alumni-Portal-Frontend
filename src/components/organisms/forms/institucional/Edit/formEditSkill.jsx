@@ -35,7 +35,9 @@ const FormEditSkill = ({ skillId, initialData, onUpdate, onCancel }) => {
       console.error(error); // Manejar errores (ya están capturados en el hook)
     }
   };
-
+  const handleCancel = () => {
+    window.location.reload();
+  };
   // Opciones para el nivel de habilidad
   const levelOptions = [
     { value: "", label: "Selecciona un nivel" },
@@ -73,7 +75,7 @@ const FormEditSkill = ({ skillId, initialData, onUpdate, onCancel }) => {
         error={Boolean(error)}
       />
       <Box sx={{ display: "flex", justifyContent: "flex-end", gap: 2 }}>
-        <Button variant="outlined" onClick={onCancel} disabled={loading}>
+        <Button variant="outlined" onClick={handleCancel} disabled={loading}>
           Cancelar
         </Button>
         <Button variant="contained" type="submit" disabled={loading}>

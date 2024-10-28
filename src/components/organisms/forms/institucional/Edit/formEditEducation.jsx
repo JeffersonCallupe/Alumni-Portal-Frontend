@@ -33,6 +33,10 @@ const FormEditEducation = ({ educationId, initialData, onUpdate, onCancel }) => 
     }
   };
 
+  const handleCancel = () => {
+    window.location.reload();
+  };
+
   return (
     <Box
       component="form"
@@ -89,7 +93,7 @@ const FormEditEducation = ({ educationId, initialData, onUpdate, onCancel }) => 
         rows={4}
       />
       <Box sx={{ display: "flex", justifyContent: "flex-end", gap: 2 }}>
-        <Button variant="outlined" type="button" onClick={onCancel} disabled={loading}>
+        <Button variant="outlined" type="button" onClick={handleCancel} disabled={loading}>
           Cancelar
         </Button>
         <Button variant="contained" type="submit" disabled={loading}>

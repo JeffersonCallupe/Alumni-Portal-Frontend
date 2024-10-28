@@ -36,6 +36,10 @@ const FormEditProject = ({ projectId, initialData, onUpdate, onCancel }) => {
     }
   };
 
+  const handleCancel = () => {
+    window.location.reload();
+  };
+
   return (
     <Box
       component="form"
@@ -79,7 +83,7 @@ const FormEditProject = ({ projectId, initialData, onUpdate, onCancel }) => {
         required // Campo requerido
       />
       <Box sx={{ display: "flex", justifyContent: "flex-end", gap: 2 }}>
-        <Button variant="outlined" onClick={onCancel} disabled={loading}>
+        <Button variant="outlined" onClick={handleCancel} disabled={loading}>
           Cancelar
         </Button>
         <Button variant="contained" type="submit" disabled={loading}>
