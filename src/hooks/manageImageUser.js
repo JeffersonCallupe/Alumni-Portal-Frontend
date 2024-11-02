@@ -2,10 +2,15 @@ export const uploadProfilePicture = async (apiUrl, id, imageFile, isInstitutiona
   const usertype = isInstitutional ? "user" : "company";
   const formData = new FormData();
   formData.append("image", imageFile);
+  const token = sessionStorage.getItem("token");
 
   try {
     const response = await fetch(`${apiUrl}/upload-${usertype}/${id}`, {
       method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`,
+    },
       body: formData,
     });
     
@@ -22,9 +27,14 @@ export const uploadProfilePicture = async (apiUrl, id, imageFile, isInstitutiona
 
 export const getProfilePicture = async (apiUrl, id, isInstitutional) => {
   const usertype = isInstitutional ? "user" : "company";
+  const token = sessionStorage.getItem("token");
   try {
     const response = await fetch(`${apiUrl}/download-${usertype}/${id}`, {
       method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`,
+    },
     });
 
     if (!response.ok) {
@@ -41,10 +51,15 @@ export const getProfilePicture = async (apiUrl, id, isInstitutional) => {
 };
 
 export const deleteProfilePicture = async (apiUrl, id, isInstitutional) => {
+  const token = sessionStorage.getItem("token");
   const usertype = isInstitutional ? "user" : "company";
   try {
     const response = await fetch(`${apiUrl}/delete-image-${usertype}/${id}`, {
       method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`,
+    },
     });
 
     if (!response.ok) {

@@ -19,7 +19,7 @@ const ProfileBaseCard = ({ apiUrl, handleSaveChanges, loading, dialogContent, mo
   const [profileImage, setProfileImage] = React.useState(DefaultProfile);
   const { open, handleOpen, handleClose } = useModal();
   const { userData, isInstitutional } = useUserContext();
-  console.log(isInstitutional);
+  
   useEffect(() => {
     const fetchProfilePicture = async () => {
       try {
@@ -31,7 +31,6 @@ const ProfileBaseCard = ({ apiUrl, handleSaveChanges, loading, dialogContent, mo
     };
 
     fetchProfilePicture();
-    console.log(userData);
   }, [apiUrl, userData]);
 
 

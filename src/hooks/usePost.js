@@ -5,6 +5,7 @@ const usePost = (apiUrl) => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const { updateUserData } = useUserContext();
+  const token = sessionStorage.getItem("token");
 
   const post = async (data) => {
     setLoading(true);
@@ -15,8 +16,9 @@ const usePost = (apiUrl) => {
       const response = await fetch(apiUrl, {
         method: "POST",
         headers: {
-          "Content-Type": "application/json",
-        },
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`,
+      },
         body: requestBody,
         redirect: "follow",
       });
@@ -29,7 +31,8 @@ const usePost = (apiUrl) => {
       const getResponse = await fetch(apiUrl, {
         method: "GET",
         headers: {
-          "Content-Type": "application/json",
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`,
         },
       });
 

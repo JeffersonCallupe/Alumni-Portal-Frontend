@@ -4,6 +4,7 @@ import { useState } from 'react';
 const useUpdateData = (updateUrl) => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
+  const token = sessionStorage.getItem("token");
 
   const updateData = async (data) => {
     setLoading(true);
@@ -13,7 +14,8 @@ const useUpdateData = (updateUrl) => {
         method: 'PATCH',
         headers: {
           'Content-Type': 'application/json',
-        },
+          'Authorization': `Bearer ${token}`,
+      },
         body: JSON.stringify(data),
       });
 

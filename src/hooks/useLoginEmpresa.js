@@ -40,6 +40,9 @@ const useLoginEmpresa = (apiUrl) => {
       setData(companyData);
       updateUserData(companyData);
 
+      const token = result["token"];
+      sessionStorage.setItem("token", token);
+
     } catch (err) {
       setError(err.message);
     } finally {

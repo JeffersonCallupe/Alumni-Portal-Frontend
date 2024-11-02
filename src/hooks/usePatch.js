@@ -5,6 +5,7 @@ const usePatch = (apiUrl) => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const { updateUserData } = useUserContext();
+  const token = sessionStorage.getItem("token");
 
   const patch = async (data) => {
     setLoading(true);
@@ -15,8 +16,9 @@ const usePatch = (apiUrl) => {
       const response = await fetch(apiUrl, {
         method: "PATCH",
         headers: {
-          "Content-Type": "application/json",
-        },
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`,
+      },
         body: requestBody,
         redirect: "follow",
       });
@@ -29,7 +31,8 @@ const usePatch = (apiUrl) => {
       const getResponse = await fetch(apiUrl, {
         method: "GET",
         headers: {
-          "Content-Type": "application/json",
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`,
         },
       });
 

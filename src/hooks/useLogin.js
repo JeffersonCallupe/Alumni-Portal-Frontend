@@ -42,8 +42,11 @@ const useLogin = (apiUrl) => {
         setData(result["data"][0]["dto"]);
       } else {
         userData = result;
-        updateUserData(userData);
         setData(userData);
+        updateUserData(userData);
+        
+        const token = result["token"];
+        sessionStorage.setItem("token", token);
       }
 
     } catch (err) {

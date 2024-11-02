@@ -6,6 +6,8 @@ const useUpdatePassword = () => {
   const [error, setError] = useState(null);
   const { isInstitutional } = useUserContext();
   const usertype = isInstitutional ? "user" : "company";
+  const token = sessionStorage.getItem("token");
+  
   const updatePassword = async (userId, email, password, newPassword) => {
     setLoading(true);
     setError(null);
@@ -15,7 +17,10 @@ const useUpdatePassword = () => {
     try {
       const response = await fetch(`http://178.128.147.224:8080/api/${usertype}/updatePassword/${userId}`, {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`,
+      },
         body: JSON.stringify({ email, password, newPassword }),
       });
 
