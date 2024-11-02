@@ -1,5 +1,5 @@
-import LoginForm from "../../organisms/forms/loginForm";
-import LoginSUMForm from "../../organisms/forms/loginSUMForm";
+import LoginForm from "../../organisms/forms/login/loginForm";
+import LoginSUMForm from "../../organisms/forms/login/loginSUMForm";
 import Typography from "@mui/material/Typography";
 import Footer from "../../atoms/footer/footer";
 import imgFondo from "../../../assets/fondoRectorado.png";

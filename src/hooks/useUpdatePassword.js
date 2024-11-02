@@ -11,9 +11,6 @@ const useUpdatePassword = () => {
   const updatePassword = async (userId, email, password, newPassword) => {
     setLoading(true);
     setError(null);
-    // Datos que se enviarán
-    const payload = { email, password, newPassword };
-    console.log("Datos enviados:", JSON.stringify(payload));
     try {
       const response = await fetch(`http://178.128.147.224:8080/api/${usertype}/updatePassword/${userId}`, {
         method: "POST",
@@ -25,7 +22,6 @@ const useUpdatePassword = () => {
       });
 
       if (!response.ok) throw new Error("Error al actualizar la contraseña");
-      console.log()
       window.location.reload();
       alert("Contraseña actualizada con éxito");
     } catch (error) {
