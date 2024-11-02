@@ -9,7 +9,7 @@ import { useNavigate } from "react-router-dom";
 import { validateRegistroEmpresa } from "../../hooks/validateLogin"; 
 
 function RegistroEmpresa() {
-    const apiUrl = "http://178.128.147.224:8080/api/company/registerCompany";
+    const apiUrl = `${import.meta.env.VITE_API_URL}/api/company/registerCompany`;
     const { data, loading, error, loginEmpresa } = useLoginEmpresa(apiUrl);
     const navigate = useNavigate();
     const [message, setMessage] = useState(""); 

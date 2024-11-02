@@ -12,9 +12,9 @@ import usePatch from "../../hooks/usePatch";
 function ProfileEmpresa() {
   const { userData } = useUserContext();
   const apiUrl = userData
-    ? `http://178.128.147.224:8080/api/company/${userData.id}`
+    ? `${import.meta.env.VITE_API_URL}/api/company/${userData.id}`
     : null;
-  const imageUrl = 'http://178.128.147.224:8080/api/image';
+  const imageUrl = `${import.meta.env.VITE_API_URL}/api/image`;
   const { loading, patch } = usePatch(apiUrl);
   if (!userData) {
     return <div>Loading...</div>;

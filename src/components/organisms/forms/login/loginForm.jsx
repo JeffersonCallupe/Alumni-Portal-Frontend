@@ -1,8 +1,8 @@
 import React from "react";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
-import TextInput from "../../atoms/inputs/TextInput";
-import useForm from "../../../hooks/useForm";
+import TextInput from "../../../atoms/inputs/TextInput";
+import useForm from "../../../../hooks/useForm";
 
 const LoginForm = ({ onSubmit, disabled, validate}) => {
   const { formData, errors, handleChange, handleSubmit } = useForm(

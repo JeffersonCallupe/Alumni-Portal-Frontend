@@ -7,7 +7,7 @@ import { useNavigate } from "react-router-dom";
 import { useUserContext } from "../../contexts/userContext";
 
 function LoginEmpresa() {
-    const apiUrl = "http://178.128.147.224:8080/api/company/loginCompany"; 
+    const apiUrl = `${import.meta.env.VITE_API_URL}/api/company/loginCompany`; 
     const { loading, error, loginEmpresa } = useLoginEmpresa(apiUrl); 
     const { userData } = useUserContext();
     const navigate = useNavigate();

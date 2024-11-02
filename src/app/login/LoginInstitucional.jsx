@@ -7,7 +7,7 @@ import { useNavigate } from "react-router-dom";
 import { useUserContext } from "../../contexts/userContext";
 
 function LoginInstitucional() {
-  const apiUrl = "http://178.128.147.224:8080/api/user/loginAcademic";
+  const apiUrl = `${import.meta.env.VITE_API_URL}/api/user/loginAcademic`;
   const { loading, error, login } = useLogin(apiUrl);
   const { userData } = useUserContext();
   const navigate = useNavigate();

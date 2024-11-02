@@ -1,8 +1,8 @@
 import React, { useState } from "react";
-import TextInput from "../../atoms/inputs/TextInput";
+import TextInput from "../../../atoms/inputs/TextInput";
 import Button from "@mui/material/Button";
 import Box from "@mui/material/Box";
-import useForm from "../../../hooks/useForm";
+import useForm from "../../../../hooks/useForm";
 
 const RegisterInstitucionalForm = ({ onSubmit, validate }) => {
   const [page, setPage] = useState(1);

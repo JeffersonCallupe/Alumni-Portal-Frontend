@@ -42,6 +42,7 @@ export const UserProvider = ({ children }) => {
   // Función para cerrar sesión
   const logout = () => {
     sessionStorage.removeItem("user");
+    sessionStorage.removeItem("token");
     setUserData(null);
     setIsInstitutional(false);
   };

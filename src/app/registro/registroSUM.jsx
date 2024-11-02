@@ -9,7 +9,7 @@ import { useNavigate } from "react-router-dom";
 import { validateRegistroSM } from "../../hooks/validateLogin";
 
 function RegistroSUM() {
-  const apiUrl = "http://178.128.147.224:8080/api/user/registerAcademic";
+  const apiUrl = `${import.meta.env.VITE_API_URL}/api/user/registerAcademic`;
   const { data, loading, error, login } = useLogin(apiUrl);
   const navigate = useNavigate();
 

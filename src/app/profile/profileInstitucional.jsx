@@ -21,32 +21,32 @@ import usePatch from "../../hooks/usePatch";
 import usePost from "../../hooks/usePost";
 
 function ProfileInstitucional() {
-  
+    
   const { userData } = useUserContext();
   const apiUrl = userData
-      ? `http://178.128.147.224:8080/api/user/${userData.id}`
+      ? `${import.meta.env.VITE_API_URL}/api/user/${userData.id}`
       : null;
   
-  const imageUrl = 'http://178.128.147.224:8080/api/image';
+  const imageUrl = `${import.meta.env.VITE_API_URL}/api/image`;
 
   const workExperienceApiUrl = userData
-      ? `http://178.128.147.224:8080/api/work-experience/save/${userData.id}`
+      ? `${import.meta.env.VITE_API_URL}/api/work-experience/save/${userData.id}`
       : null;
 
   const educationApiUrl = userData
-      ? `http://178.128.147.224:8080/api/education/save/${userData.id}`
+      ? `${import.meta.env.VITE_API_URL}/api/education/save/${userData.id}`
       : null;
 
   const certificationApiUrl = userData
-      ? `http://178.128.147.224:8080/api/certification/save/${userData.id}`
+      ? `${import.meta.env.VITE_API_URL}/api/certification/save/${userData.id}`
       : null;
 
   const skillApiUrl = userData
-      ? `http://178.128.147.224:8080/api/skill/save/${userData.id}`
+      ? `${import.meta.env.VITE_API_URL}/api/skill/save/${userData.id}`
       : null;
 
   const projectApiUrl = userData
-      ? `http://178.128.147.224:8080/api/project/save/${userData.id}`
+      ? `${import.meta.env.VITE_API_URL}/api/project/save/${userData.id}`
       : null;
 
   const { loading: patchLoading, patch } = usePatch(apiUrl);
