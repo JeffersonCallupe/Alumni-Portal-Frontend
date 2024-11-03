@@ -44,7 +44,6 @@ export const UserProvider = ({ children }) => {
     sessionStorage.removeItem("user");
     sessionStorage.removeItem("token");
     setUserData(null);
-    setIsInstitutional(false);
   };
 
   return (

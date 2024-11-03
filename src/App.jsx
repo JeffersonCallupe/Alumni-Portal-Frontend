@@ -1,13 +1,14 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import "./App.css";
+import Actividades from "./app/dashboard/actividades";
+import Home from "./app/dashboard/home";
 import LoginInstitucional from "../src/app/login/LoginInstitucional";
 import LoginEmpresa from '../src/app/login/LoginEmpresa';
 import LoginSUM from "../src/app/login/LoginSUM";
-import RegistroSUM from "./app/registro/registroSUM";
-import RegistroEmpresa from "./app/registro/registroEmpresa";
-import Home from "./app/dashboard/home";
 import ProfileEmpresa from "./app/profile/profileEmpresa"
 import ProfileInstitucional from "./app/profile/profileInstitucional"
+import RegistroSUM from "./app/registro/registroSUM";
+import RegistroEmpresa from "./app/registro/registroEmpresa";
 import { UserProvider } from "./contexts/userContext";
 
 function App() {
@@ -24,7 +25,7 @@ function App() {
           <Route path="/profile" element={<ProfileEmpresa />} />
           <Route path="/profileInstitucional" element={<ProfileInstitucional />} />
           <Route path="/home/" element={<Home />} />
-          
+          <Route path="/actividades" element={<Actividades />} />
         </Routes>
       </BrowserRouter>
     </UserProvider>

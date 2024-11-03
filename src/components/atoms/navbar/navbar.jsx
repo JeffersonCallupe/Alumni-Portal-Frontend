@@ -98,11 +98,11 @@ function Navbar() {
               >
                 {isInstitutional && (
                   <MenuItem onClick={handleCloseMenu(setAnchorElActividades)}>
-                    Mis actividades inscritas
+                    <a href="/actividades">Mis actividades inscritas</a>
                   </MenuItem>
                 )}
                 <MenuItem onClick={handleCloseMenu(setAnchorElActividades)}>
-                  Mis actividades publicadas
+                <a href="/actividades">Mis actividades publicadas</a>
                 </MenuItem>
               </Menu>
 
@@ -154,11 +154,11 @@ function Navbar() {
             >
               {isInstitutional && (
                 <MenuItem onClick={handleCloseMenu(setAnchorElActividades)}>
-                  Mis actividades inscritas
+                  <a href="/actividades">Mis actividades inscritas</a>
                 </MenuItem>
               )}
               <MenuItem onClick={handleCloseMenu(setAnchorElActividades)}>
-                Mis actividades publicadas
+              <a href="/actividades">Mis actividades publicadas</a>
               </MenuItem>
             </Menu>
 
