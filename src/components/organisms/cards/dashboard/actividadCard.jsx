@@ -1,18 +1,47 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import { Card, CardHeader, CardMedia, CardContent, CardActions, Avatar, IconButton, Typography } from '@mui/material';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import ShareIcon from '@mui/icons-material/Share';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
+import { getProfilePicture } from '../../../../hooks/manageImageUser';
 
-const ActividadCard = ({ actividad }) => {
-  const { title, description, eventType, startDate, endDate, location, url, enrollable } = actividad;
+const ActividadCard = ({ actividad, multimediaApi }) => {
+  const { id, title, description, eventType, startDate, endDate, location, enrollable, userId, userRole, userName, userPaternalSurname, userMaternalSurname} = actividad;
+  const [profileImage, setProfileImage] = React.useState(null);
+  const [multimedia, setMultimedia] = React.useState(null);
+  const usertype = userRole === 'USER' ? 'user' : 'company';
+  const profileApi = `${import.meta.env.VITE_API_URL}/api/image/download-${usertype}`;
+
+  useEffect(() => {
+    const fetchProfilePicture = async () => {
+        try {
+            const imageUrl = await getProfilePicture(profileApi, userId);
+            setProfileImage(imageUrl);
+        } catch (error) {
+            console.error('Error al obtener la imagen de perfil:', error);
+        }
+    };
+    fetchProfilePicture();
+  }, [profileApi, actividad]);
+
+  useEffect(() => {
+    const fetchMultimedia = async () => {
+        try {
+            const multimediaUrl = await getProfilePicture(multimediaApi, id);
+            setMultimedia(multimediaUrl);
+        } catch (error) {
+            console.error('Error al obtener el contenido multimedia de la actividad:', error);
+        }
+    };
+    fetchMultimedia();
+  }, [multimediaApi, actividad]);
 
   return (
-    <Card>
+    <Card sx={{ textAlign: 'left'}}>
       <CardHeader
         avatar={
           <Avatar aria-label="profile-pic">
-            <img src="https://i.pinimg.com/236x/2f/97/f0/2f97f05b32547f54ef1bdf99cd207c90.jpg" alt="Profile pic" />
+            <img src={profileImage} alt="Profile pic" />
           </Avatar>
         }
         action={
@@ -20,14 +49,19 @@ const ActividadCard = ({ actividad }) => {
             <MoreVertIcon />
           </IconButton>
         }
-        title={title}
+        title={[userName, userPaternalSurname, userMaternalSurname].join(' ')}
         subheader={`${eventType} | ${startDate} - ${endDate}`}
       />
       <CardMedia
         component="img"
-        height="194"
-        image={url}
+        image={multimedia}
         alt={title}
+        sx={{ 
+            width: 'auto',
+            height: 'auto',
+            maxWidth: '80%',
+            justifySelf: 'center',
+         }}
       />
       <CardContent>
         <Typography variant="body2" sx={{ color: 'text.secondary' }}>

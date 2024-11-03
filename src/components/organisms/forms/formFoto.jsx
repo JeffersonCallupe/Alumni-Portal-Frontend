@@ -1,4 +1,3 @@
-// formFoto.jsx
 import React, { useEffect, useState } from "react";
 import Button from "@mui/material/Button";
 import Box from "@mui/material/Box";
@@ -6,15 +5,17 @@ import { useUserContext } from "../../../contexts/userContext";
 import { uploadProfilePicture, deleteProfilePicture, getProfilePicture } from '../../../hooks/manageImageUser';
 import DefaultProfile from "../../../assets/logoUNMSM.png";
 
-const FormFoto = ({ apiUrl}) => {
-  const { userData, isInstitutional } = useUserContext();
+const FormFoto = ({apiUrl}) => {
+  const { userData, isInstitutional} = useUserContext();
   const [imageFile, setImageFile] = useState(null);
-  const [currentImage, setCurrentImage] = useState("");
+  const [currentImage, setCurrentImage] = useState();
+  const usertype = isInstitutional ? 'user' : 'company';
+  const imageApi = `${apiUrl}/download-${usertype}`
 
   useEffect(() => {
     const fetchProfilePicture = async () => {
       try {
-        const imageUrl = await getProfilePicture(apiUrl, userData.id, isInstitutional);
+        const imageUrl = await getProfilePicture(imageApi, userData.id);
         setCurrentImage(imageUrl);
       } catch (error) {
         console.error('Error al obtener la imagen de perfil:', error);
@@ -22,7 +23,7 @@ const FormFoto = ({ apiUrl}) => {
     };
 
     fetchProfilePicture();
-  }, [apiUrl, userData.id]);
+  }, [imageApi, userData]);
 
   const handleImageChange = (e) => {
     const file = e.target.files[0];
@@ -41,7 +42,7 @@ const FormFoto = ({ apiUrl}) => {
     window.location.reload();
     if (imageFile) {
       try {
-        await uploadProfilePicture(apiUrl, userData.id, imageFile, isInstitutional);
+        await uploadProfilePicture(`${apiUrl}/upload-${usertype}`, userData.id, imageFile);
       } catch (error) {
         console.error('Error al subir la imagen:', error);
       }
@@ -51,7 +52,7 @@ const FormFoto = ({ apiUrl}) => {
   const handleDelete = async () => {
     window.location.reload();
     try {
-      await deleteProfilePicture(apiUrl, userData.id, isInstitutional);
+      await deleteProfilePicture(`${apiUrl}/delete-image-${usertype}`, userData.id);
       setCurrentImage(DefaultProfile);
     } catch (error) {
       console.error('Error al eliminar la imagen:', error);

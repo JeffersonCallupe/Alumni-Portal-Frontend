@@ -1,11 +1,11 @@
-export const uploadProfilePicture = async (apiUrl, id, imageFile, isInstitutional) => {
-  const usertype = isInstitutional ? "user" : "company";
+export const uploadProfilePicture = async (apiUrl, id, imageFile) => {
   const formData = new FormData();
   formData.append("image", imageFile);
   const token = sessionStorage.getItem("token");
 
   try {
-    const response = await fetch(`${apiUrl}/upload-${usertype}/${id}`, {
+    //const response = await fetch(`${import.meta.env.VITE_API_URL}/api/image/upload-${usertype}/${id}`, {
+    const response = await fetch(`${apiUrl}/${id}`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -25,11 +25,11 @@ export const uploadProfilePicture = async (apiUrl, id, imageFile, isInstitutiona
   }
 };
 
-export const getProfilePicture = async (apiUrl, id, isInstitutional) => {
-  const usertype = isInstitutional ? "user" : "company";
+export const getProfilePicture = async (apiUrl, id) => {
   const token = sessionStorage.getItem("token");
   try {
-    const response = await fetch(`${apiUrl}/download-${usertype}/${id}`, {
+    //const response = await fetch(`${import.meta.env.VITE_API_URL}/api/image/download-${usertype}/${id}`, {
+    const response = await fetch(`${apiUrl}/${id}`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
@@ -50,11 +50,11 @@ export const getProfilePicture = async (apiUrl, id, isInstitutional) => {
   }
 };
 
-export const deleteProfilePicture = async (apiUrl, id, isInstitutional) => {
+export const deleteProfilePicture = async (apiUrl, id) => {
   const token = sessionStorage.getItem("token");
-  const usertype = isInstitutional ? "user" : "company";
   try {
-    const response = await fetch(`${apiUrl}/delete-image-${usertype}/${id}`, {
+    //const response = await fetch(`${import.meta.env.VITE_API_URL}/api/image/delete-image-${usertype}/${id}`, {
+    const response = await fetch(`${apiUrl}/${id}`, {
       method: 'DELETE',
       headers: {
         'Content-Type': 'application/json',

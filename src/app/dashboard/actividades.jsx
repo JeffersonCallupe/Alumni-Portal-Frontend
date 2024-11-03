@@ -14,15 +14,12 @@ function Actividades() {
     const { open, handleOpen, handleClose } = useModal();
     const [actividades, setActividades] = useState([]);
     const [selectedActivity, setSelectedActivity] = useState(null);
-    const { userData, isInstitutional } = useUserContext();
-    console.log(userData)
-
-    //console.log("actividad es?", isInstitutional);
-    //console.log("actividad data", userData);
+    const { userData } = useUserContext();
 
     const { loading: getLoading, error: getError, getData } = useGet(`${import.meta.env.VITE_API_URL}/api/activity/all`);
     const { loading: postLoading, error: postError, post } = usePost(/*postApi*/null);
     const { loading: patchLoading, error: patchError, patch } = usePatch(/*postApi*/null);
+    const multimediaApi = `${import.meta.env.VITE_API_URL}/api/activity/activity-image`;
 
     const fetchDataRef = useRef(false);
 
@@ -76,7 +73,11 @@ function Actividades() {
 
     return (
         <HomeBase>
-            <div>
+        <div className="flex flex-rol gap-8 mt-4 mb-16 lg:mx-12 justify-center">
+            <div className="lg:w-4/12">
+                <p>Filtros aaa</p>
+            </div>
+            <div className="flex flex-col w-10/12 lg:w-7/12">
                 <Button variant="contained" color="primary" onClick={() => handleOpenDialog()}>
                     Nueva Actividad
                 </Button>
@@ -99,14 +100,14 @@ function Actividades() {
                 <div>
                     {actividades && actividades.length > 0 ? (
                         actividades.map((actividad) => (
-                            <ActividadCard key={actividad.id} actividad={actividad} />
+                            <ActividadCard key={actividad.id} actividad={actividad} multimediaApi={multimediaApi}/>
                         ))
                     ) : (
                         <div>No hay actividades disponibles</div>
                     )}
                 </div>
             </div>
-
+        </div>
         </HomeBase>
     );
 }
