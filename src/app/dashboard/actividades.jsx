@@ -3,24 +3,28 @@ import ActividadCard from "../../components/organisms/cards/dashboard/actividadC
 import ActividadDialog from "../../components/organisms/dialog/actividadDialog";
 import Button from "@mui/material/Button";
 import HomeBase from "../../components/templates/home/home";
-
 import { useUserContext } from "../../contexts/userContext";
 import useGet from "../../hooks/useGet";
 import useModal from "../../hooks/useModal";
 import usePatch from "../../hooks/usePatch";
 import usePost from "../../hooks/usePost";
+import useDelete from "../../hooks/useDelete";
 
 function Actividades() {
     const { open, handleOpen, handleClose } = useModal();
     const [actividades, setActividades] = useState([]);
     const [selectedActivity, setSelectedActivity] = useState(null);
-    const { userData } = useUserContext();
+    const { userData, isInstitutional } = useUserContext();
 
-    const { loading: getLoading, error: getError, getData } = useGet(`${import.meta.env.VITE_API_URL}/api/activity/all`);
-    const { loading: postLoading, error: postError, post } = usePost(/*postApi*/null);
-    const { loading: patchLoading, error: patchError, patch } = usePatch(/*postApi*/null);
-    const multimediaApi = `${import.meta.env.VITE_API_URL}/api/activity/activity-image`;
+    // Definimos userType y URL dinámicas sólo si userData está disponible
+    const userType = isInstitutional ? "user" : "company";
+    const baseUrl = import.meta.env.VITE_API_URL;
 
+    const { getData } = useGet(`${baseUrl}/api/activity/all`);
+    const { post } = usePost(userData ? `${baseUrl}/api/activity/save-${userType}/${userData.id}` : null);
+    const { patch } = usePatch(`${baseUrl}/api/activity/update-activity`);
+    const { deleteData } = useDelete(`${baseUrl}/api/activity`);
+    const multimediaApi = `${baseUrl}/api/activity/activity-image`;
     const fetchDataRef = useRef(false);
 
     useEffect(() => {
@@ -42,11 +46,25 @@ function Actividades() {
         return <div>Loading...</div>;
     }
 
+    const handleCreate = () => {
+        setSelectedActivity(null);
+        handleOpen();
+    };
 
-    const handleOpenDialog = (actividad) => {
+    const handleEdit = (actividad) => {
         setSelectedActivity(actividad);
         handleOpen();
-    }
+    };
+
+    const handleDelete = async (activityId) => {
+        try {
+            await deleteData(activityId);
+            setActividades((prevActividades) => prevActividades.filter((act) => act.id !== activityId));
+        } catch (error) {
+            console.error("Error al eliminar la actividad:", error);
+        }
+    };
+
     const handleSaveActivity = async (formData) => {
         const requestData = new FormData();
         requestData.append("title", formData.title);
@@ -60,54 +78,57 @@ function Actividades() {
             requestData.append("multimedia", formData.multimedia);
         }
 
-        if (selectedActivity) {
-            //await patch(requestData);
-            console.log("patch");
-        } else {
-            //await post(requestData);
-            console.log("post");
+        try {
+            if (selectedActivity) {
+                await patch(`/${selectedActivity.id}`, requestData);
+            } else {
+                await post(requestData);
+            }
+            handleClose();
+            const updatedActivities = await getData();
+            setActividades(updatedActivities);
+        } catch (error) {
+            console.error("Error al guardar la actividad:", error);
         }
-
-        handleClose();
     };
+
+    if (!userData) {
+        return <div>Loading...</div>;
+    }
 
     return (
         <HomeBase>
-        <div className="flex flex-rol gap-8 mt-4 mb-16 lg:mx-12 justify-center">
-            <div className="lg:w-4/12">
-                <p>Filtros aaa</p>
-            </div>
-            <div className="flex flex-col w-10/12 lg:w-7/12">
-                <Button variant="contained" color="primary" onClick={() => handleOpenDialog()}>
-                    Nueva Actividad
-                </Button>
-                {/* Ejemplo para editar */}
-                <Button
-                    variant="contained"
-                    color="secondary"
-                    onClick={() => handleOpenDialog(actividades[0])}
-                >
-                    Editar Actividad
-                </Button>
-                <ActividadDialog
-                    open={open}
-                    onClose={handleClose}
-                    initialData={selectedActivity}
-                    onSave={handleSaveActivity}
-                    loading={postLoading || patchLoading}
-                    error={postError || patchError}
-                />
-                <div>
-                    {actividades && actividades.length > 0 ? (
-                        actividades.map((actividad) => (
-                            <ActividadCard key={actividad.id} actividad={actividad} multimediaApi={multimediaApi}/>
-                        ))
-                    ) : (
-                        <div>No hay actividades disponibles</div>
-                    )}
+            <div className="flex flex-row gap-8 mt-4 mb-16 lg:mx-12 justify-center">
+                <div className="lg:w-4/12">
+                    <p>Filtros aaa</p>
+                </div>
+                <div className="flex flex-col w-10/12 lg:w-7/12">
+                    <Button variant="contained" color="primary" onClick={handleCreate}>
+                        Nueva Actividad
+                    </Button>
+                    <ActividadDialog
+                        open={open}
+                        onClose={handleClose}
+                        initialData={selectedActivity || {}}
+                        onSave={handleSaveActivity}
+                    />
+                    <div>
+                        {actividades.length > 0 ? (
+                            actividades.map((actividad) => (
+                                <ActividadCard
+                                    key={actividad.id}
+                                    actividad={actividad}
+                                    multimediaApi={multimediaApi}
+                                    onEdit={handleEdit}
+                                    onDelete={handleDelete}
+                                />
+                            ))
+                        ) : (
+                            <div>No hay actividades disponibles</div>
+                        )}
+                    </div>
                 </div>
             </div>
-        </div>
         </HomeBase>
     );
 }

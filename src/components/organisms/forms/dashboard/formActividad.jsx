@@ -2,10 +2,20 @@ import React from "react";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Switch from "@mui/material/Switch";
+import Textarea from "../../../atoms/inputs/TextareaAutosize";
 import TextInput from "../../../atoms/inputs/TextInput";
 import useForm from "../../../../hooks/useForm";
 
-const FormActividad = ({ initialData = {}, onSubmit, onCancel, loading, error }) => {
+const FormActividad = ({ initialData = {}, onSubmit, onCancel, loading, error }) => {  
+    const handleSwitchChange = (e) => {
+        handleChange({
+            target: {
+                name: e.target.name,
+                value: e.target.checked,
+            }
+        });
+    };
+
     const { formData, errors, handleChange, handleSubmit } = useForm(
         {
             title: initialData.title || "",
@@ -36,73 +46,85 @@ const FormActividad = ({ initialData = {}, onSubmit, onCancel, loading, error })
                 width: "100%",
             }}
         >
-            <div className="flex flex-row">
+            <div className="flex flex-row gap-4">
                 <TextInput
                     label="Título"
                     name="title"
                     value={formData.title}
                     onChange={handleChange}
+                    required={true}
                     fullWidth
                     margin="normal"
                     error={!!errors.title}
                     helperText={errors.title}
+                    disabled={loading}
                 />
                 <TextInput
                     label="Tipo de evento"
                     name="eventType"
                     value={formData.eventType}
                     onChange={handleChange}
+                    required={true}
                     fullWidth
                     margin="normal"
                     error={!!errors.eventType}
                     helperText={errors.eventType}
+                    disabled={loading}
                 />
-                <Switch label="Inscribible" checked={formData.enrollable} onChange={handleChange} name="enrollable" />
+                <Switch 
+                    label="Inscribible" 
+                    name="enrollable"
+                    checked={formData.enrollable} 
+                    onChange={handleSwitchChange}
+                />
             </div>
             <div>
-                <TextInput
+                <Textarea
                     label="Descripción"
                     name="description"
                     value={formData.description}
+                    maxRows={5}
                     onChange={handleChange}
-                    fullWidth
-                    margin="normal"
-                    error={!!errors.description}
-                    helperText={errors.description}
-                    multiline
-                    rows={4}
+                    disabled={loading}
                 />
             </div>
-            <div className="flex flex-row">
+            <div className="flex flex-row gap-4">
                 <TextInput
                     label="Fecha de inicio"
                     name="startDate"
                     value={formData.startDate}
+                    type="date"
+                    required={true}
                     onChange={handleChange}
                     fullWidth
                     margin="normal"
                     error={!!errors.startDate}
                     helperText={errors.startDate}
+                    disabled={loading}
                 />
                 <TextInput
                     label="Fecha de finalización"
                     name="endDate"
                     value={formData.endDate}
+                    type="date"
                     onChange={handleChange}
                     fullWidth
                     margin="normal"
                     error={!!errors.endDate}
                     helperText={errors.endDate}
+                    disabled={loading}
                 />
                 <TextInput
                     label="Ubicación"
                     name="location"
                     value={formData.location}
+                    required={true}
                     onChange={handleChange}
                     fullWidth
                     margin="normal"
                     error={!!errors.location}
                     helperText={errors.location}
+                    disabled={loading}
                 />
             </div>
             <input
