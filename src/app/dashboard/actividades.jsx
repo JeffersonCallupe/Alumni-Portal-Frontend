@@ -15,20 +15,38 @@ function Actividades() {
     const [actividades, setActividades] = useState([]);
     const [selectedActivity, setSelectedActivity] = useState(null);
     const { userData, isInstitutional } = useUserContext();
-
-    // Definimos userType y URL dinámicas sólo si userData está disponible
-    const userType = isInstitutional ? "user" : "company";
-    const baseUrl = import.meta.env.VITE_API_URL;
-
-    const { getData } = useGet(`${baseUrl}/api/activity/all`);
-    const { post } = usePost(userData ? `${baseUrl}/api/activity/save-${userType}/${userData.id}` : null);
-    const { patch } = usePatch(`${baseUrl}/api/activity/update-activity`);
-    const { deleteData } = useDelete(`${baseUrl}/api/activity`);
-    const multimediaApi = `${baseUrl}/api/activity/activity-image`;
+    const [apiEndpoints, setApiEndpoints] = useState({});
     const fetchDataRef = useRef(false);
 
+    // Solo se define userType y URLs dinámicas si userData está disponible
     useEffect(() => {
-        if (!fetchDataRef.current) {
+        if (userData) {
+            let userType;
+            if (userData.role === "USER") {
+                userType = "user";
+            } else if (userData.role === "COMPANY") {
+                userType = "company";
+            }
+            setApiEndpoints({
+                getAll: `${import.meta.env.VITE_API_URL}/api/activity/all`,
+                save: `${import.meta.env.VITE_API_URL}/api/activity/save-${userType}/${userData.id}`,
+                update: selectedActivity
+                    ? `${import.meta.env.VITE_API_URL}/api/activity/update-activity/${selectedActivity.id}`
+                    : `${import.meta.env.VITE_API_URL}/api/activity/update-activity`,
+                delete: `${import.meta.env.VITE_API_URL}/api/activity`,
+                multimedia: `${import.meta.env.VITE_API_URL}/api/activity/activity-image`,
+            });
+        }
+    }, [userData, isInstitutional, selectedActivity]);
+
+    // Hooks de API solo se inicializan cuando los endpoints están definidos
+    const { getData } = useGet(apiEndpoints.getAll);
+    const { post } = usePost(apiEndpoints.save);
+    const { patch } = usePatch(apiEndpoints.update);
+    const { deleteData } = useDelete(apiEndpoints.delete);
+
+    useEffect(() => {
+        if (userData && apiEndpoints.getAll && !fetchDataRef.current) {
             const fetchActividades = async () => {
                 try {
                     const data = await getData();
@@ -40,7 +58,7 @@ function Actividades() {
             fetchActividades();
             fetchDataRef.current = true;
         }
-    }, [getData]);
+    }, [userData, apiEndpoints.getAll, getData]);
 
     if (!userData) {
         return <div>Loading...</div>;
@@ -66,23 +84,30 @@ function Actividades() {
     };
 
     const handleSaveActivity = async (formData) => {
-        const requestData = new FormData();
-        requestData.append("title", formData.title);
-        requestData.append("description", formData.description);
-        requestData.append("eventType", formData.eventType);
-        requestData.append("startDate", formData.startDate);
-        requestData.append("endDate", formData.endDate);
-        requestData.append("location", formData.location);
-        requestData.append("enrollable", formData.enrollable);
+        const formdata = new FormData();
+        const activityData = {
+            title: formData.title,
+            description: formData.description,
+            eventType: formData.eventType,
+            startDate: formData.startDate,
+            endDate: formData.endDate,
+            location: formData.location,
+            url: null,
+            enrollable: formData.enrollable,
+        };
+
+        formdata.append("activity", JSON.stringify(activityData));
         if (formData.multimedia) {
-            requestData.append("multimedia", formData.multimedia);
+            formdata.append("image", formData.multimedia);
         }
 
         try {
             if (selectedActivity) {
-                await patch(`/${selectedActivity.id}`, requestData);
+                console.log("patch", formdata);
+                await patch(formdata, true);
             } else {
-                await post(requestData);
+                console.log("post", formdata);
+                await post(formdata, true);
             }
             handleClose();
             const updatedActivities = await getData();
@@ -91,10 +116,6 @@ function Actividades() {
             console.error("Error al guardar la actividad:", error);
         }
     };
-
-    if (!userData) {
-        return <div>Loading...</div>;
-    }
 
     return (
         <HomeBase>
@@ -118,7 +139,7 @@ function Actividades() {
                                 <ActividadCard
                                     key={actividad.id}
                                     actividad={actividad}
-                                    multimediaApi={multimediaApi}
+                                    multimediaApi={apiEndpoints.multimedia}
                                     onEdit={handleEdit}
                                     onDelete={handleDelete}
                                 />

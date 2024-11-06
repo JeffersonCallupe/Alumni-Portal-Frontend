@@ -7,18 +7,33 @@ const usePost = (apiUrl) => {
   const { updateUserData } = useUserContext();
   const token = sessionStorage.getItem("token");
 
-  const post = async (data) => {
+  const post = async (data, isFormData = false) => {
     setLoading(true);
     setError(null);
 
-    const requestBody = JSON.stringify(data);
+    let requestBody;
+    let headers = {
+      'Authorization': `Bearer ${token}`,
+    };
+
+    if (isFormData) {
+      requestBody = data;
+      console.log(requestBody)
+      for (let pair of data.entries()) {
+        console.log(pair[0]+ ', ' + pair[1]); 
+      }
+      
+    } else {
+      requestBody = JSON.stringify(data);
+      headers['Content-Type'] = 'application/json';
+      console.log(requestBody)
+    }
+    console.log(token)
+
     try {
       const response = await fetch(apiUrl, {
         method: "POST",
-        headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${token}`,
-      },
+        headers: headers,
         body: requestBody,
         redirect: "follow",
       });

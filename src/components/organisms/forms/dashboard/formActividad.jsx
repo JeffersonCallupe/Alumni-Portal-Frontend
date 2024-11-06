@@ -38,7 +38,7 @@ const FormActividad = ({ initialData = {}, onSubmit, onCancel, loading, error })
     return (
         <Box
             component="form"
-            onSubmit={handleSubmit}
+            onSubmit={(e) => handleSubmit(e)}
             sx={{
                 display: "flex",
                 flexDirection: "column",
@@ -51,7 +51,7 @@ const FormActividad = ({ initialData = {}, onSubmit, onCancel, loading, error })
                     label="Título"
                     name="title"
                     value={formData.title}
-                    onChange={handleChange}
+                    onChange={(e) => handleChange(e)}
                     required={true}
                     fullWidth
                     margin="normal"
@@ -63,7 +63,7 @@ const FormActividad = ({ initialData = {}, onSubmit, onCancel, loading, error })
                     label="Tipo de evento"
                     name="eventType"
                     value={formData.eventType}
-                    onChange={handleChange}
+                    onChange={(e) => handleChange(e)}
                     required={true}
                     fullWidth
                     margin="normal"
@@ -84,7 +84,7 @@ const FormActividad = ({ initialData = {}, onSubmit, onCancel, loading, error })
                     name="description"
                     value={formData.description}
                     maxRows={5}
-                    onChange={handleChange}
+                    onChange={(e) => handleChange(e)}
                     disabled={loading}
                 />
             </div>
@@ -95,7 +95,7 @@ const FormActividad = ({ initialData = {}, onSubmit, onCancel, loading, error })
                     value={formData.startDate}
                     type="date"
                     required={true}
-                    onChange={handleChange}
+                    onChange={(e) => handleChange(e)}
                     fullWidth
                     margin="normal"
                     error={!!errors.startDate}
@@ -107,7 +107,7 @@ const FormActividad = ({ initialData = {}, onSubmit, onCancel, loading, error })
                     name="endDate"
                     value={formData.endDate}
                     type="date"
-                    onChange={handleChange}
+                    onChange={(e) => handleChange(e)}
                     fullWidth
                     margin="normal"
                     error={!!errors.endDate}
@@ -119,7 +119,7 @@ const FormActividad = ({ initialData = {}, onSubmit, onCancel, loading, error })
                     name="location"
                     value={formData.location}
                     required={true}
-                    onChange={handleChange}
+                    onChange={(e) => handleChange(e)}
                     fullWidth
                     margin="normal"
                     error={!!errors.location}

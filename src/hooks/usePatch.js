@@ -7,18 +7,31 @@ const usePatch = (apiUrl) => {
   const { updateUserData } = useUserContext();
   const token = sessionStorage.getItem("token");
 
-  const patch = async (data) => {
+  const patch = async (data, isFormData = false) => {
     setLoading(true);
     setError(null);
 
-    const requestBody = JSON.stringify(data);
+    let requestBody;
+    let headers = {
+      'Authorization': `Bearer ${token}`,
+    };
+
+    if (isFormData) {
+      requestBody = data;
+      console.log(requestBody);
+      for (let pair of data.entries()) {
+        console.log(pair[0]+ ', ' + pair[1]); 
+      }
+    } else {
+      requestBody = JSON.stringify(data);
+      headers['Content-Type'] = 'application/json';
+      console.log(requestBody);
+    }
+
     try {
       const response = await fetch(apiUrl, {
         method: "PATCH",
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${token}`,
-      },
+        headers: headers,
         body: requestBody,
         redirect: "follow",
       });
