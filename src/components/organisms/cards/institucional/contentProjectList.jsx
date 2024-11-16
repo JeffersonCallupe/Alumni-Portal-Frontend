@@ -113,7 +113,7 @@ const ProjectList = () => {
         projects.map((project) => (
           <InfoBaseCard
             key={project.id}
-            title={<Typography variant="h6">{project.name}</Typography>}
+            title={project.name}
             cardContent={
               <div>
                 <Typography variant="subtitle2">Fecha: {project.date}</Typography>
