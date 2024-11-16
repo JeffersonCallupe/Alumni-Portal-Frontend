@@ -10,25 +10,27 @@ import ProfileInstitucional from "./app/profile/profileInstitucional"
 import RegistroSUM from "./app/registro/registroSUM";
 import RegistroEmpresa from "./app/registro/registroEmpresa";
 import { UserProvider } from "./contexts/userContext";
+import { AlertProvider } from "./contexts/alertContext";
 
 function App() {
   return (
-    <UserProvider>
-      <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<LoginInstitucional />} />
-          <Route path="/loginEmpresa" element={<LoginEmpresa/>} />
-          <Route path="/loginSUM" element={<LoginSUM />} />
-          <Route path="/loginEmpresa" element={<LoginEmpresa/>} />
-          <Route path="/validacionSUM" element={<RegistroSUM />} />
-          <Route path="/crearCuentaEmpresa" element={<RegistroEmpresa/>} />
-          <Route path="/profile" element={<ProfileEmpresa />} />
-          <Route path="/profileInstitucional" element={<ProfileInstitucional />} />
-          <Route path="/home/" element={<Home />} />
-          <Route path="/actividades" element={<Actividades />} />
-        </Routes>
-      </BrowserRouter>
-    </UserProvider>
+    <AlertProvider>
+      <UserProvider>
+        <BrowserRouter>
+          <Routes>
+            <Route path="/" element={<LoginInstitucional />} />
+            <Route path="/loginEmpresa" element={<LoginEmpresa/>} />
+            <Route path="/loginSUM" element={<LoginSUM />} />
+            <Route path="/loginEmpresa" element={<LoginEmpresa/>} />
+            <Route path="/validacionSUM" element={<RegistroSUM />} />
+            <Route path="/crearCuentaEmpresa" element={<RegistroEmpresa/>} />
+            <Route path="/profile" element={<ProfileEmpresa />} />
+            <Route path="/profileInstitucional" element={<ProfileInstitucional />} />
+            <Route path="/home/" element={<Home />} />
+          </Routes>
+        </BrowserRouter>
+      </UserProvider>
+    </AlertProvider>
   );
 }
 

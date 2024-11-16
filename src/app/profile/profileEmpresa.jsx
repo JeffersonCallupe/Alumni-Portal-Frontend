@@ -7,10 +7,12 @@ import HomeBase from "../../components/templates/home/home";
 import InfoBaseCard from "../../components/organisms/cards/profileBaseCards/infoBaseCard";
 import ProfileBaseCard from "../../components/organisms/cards/profileBaseCards/headerBaseCard";
 import { useUserContext } from "../../contexts/userContext";
+import { useAlert } from "../../contexts/alertContext";
 import usePatch from "../../hooks/usePatch";
 
 function ProfileEmpresa() {
   const { userData } = useUserContext();
+  const { showAlert } = useAlert();
   const apiUrl = userData
     ? `${import.meta.env.VITE_API_URL}/api/company/${userData.id}`
     : null;
@@ -23,8 +25,9 @@ function ProfileEmpresa() {
   const handleSaveChanges = async (formData) => {
     try {
       await patch(formData);
+      showAlert("La información se actualizó con éxito", "success");
     } catch (error) {
-      console.error("Error al guardar los cambios:", error);
+      showAlert("Error al guardar los cambios", "error");
     }
   };
 

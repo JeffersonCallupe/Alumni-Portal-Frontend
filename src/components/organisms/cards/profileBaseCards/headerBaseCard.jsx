@@ -7,8 +7,8 @@ import CardContent from "@mui/material/CardContent";
 import CardContentEmpresa from "../empresa/contentHeader";
 import CardContentInstitucional from "../institucional/contentHeader";
 import CardMedia from "@mui/material/CardMedia";
-import DefaultHeader from "../../../../assets/fondoRectorado.png";
-import DefaultProfile from "../../../../assets/logoUNMSM.png";
+import DefaultHeader from "../../../../assets/headerDefault.jpg";
+import DefaultProfile from "../../../../assets/logoPerfil.png";
 import DialogBase from "../../dialog/profileBaseDialog";
 import useModal from "../../../../hooks/useModal";
 import { useUserContext } from "../../../../contexts/userContext";
@@ -82,12 +82,6 @@ const ProfileBaseCard = ({ apiUrl, handleSaveChanges, loading, dialogContent, mo
             }}
             onClick={handleOpen}
           />
-          {/* <EditButton 
-            onClick={handleOpen}
-            sx={{
-              zIndex: 3,
-            }}
-          /> */}
         </Box>
         <CardContent sx={{ marginTop: "3rem", padding: "1rem 1rem 0 2rem" }}>
           {isInstitutional ? (

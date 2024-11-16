@@ -7,7 +7,6 @@ export const uploadProfilePicture = async (apiUrl, id, imageFile) => {
     const response = await fetch(`${apiUrl}/${id}`, {
       method: 'POST',
       headers: {
-        // Sólo agrega Authorization; Content-Type es automático con FormData
         'Authorization': `Bearer ${token}`,
       },
       body: formData, // FormData se usa para enviar el archivo
@@ -18,8 +17,8 @@ export const uploadProfilePicture = async (apiUrl, id, imageFile) => {
       const errorResponse = await response.json();
       throw new Error(`Error al subir la imagen: ${errorResponse.message || response.statusText}`);
     }
+    return await response.text();
 
-    return await response.json(); // Devuelve la respuesta JSON si es exitosa
   } catch (error) {
     console.error("Error al subir la imagen:", error);
     throw error;
@@ -33,7 +32,6 @@ export const getProfilePicture = async (apiUrl, id) => {
     const response = await fetch(`${apiUrl}/${id}`, {
       method: 'GET',
       headers: {
-        'Content-Type': 'application/json',
         'Authorization': `Bearer ${token}`,
     },
     });
@@ -57,15 +55,15 @@ export const deleteProfilePicture = async (apiUrl, id) => {
     const response = await fetch(`${apiUrl}/${id}`, {
       method: 'DELETE',
       headers: {
-        'Authorization': `Bearer ${token}`, // Solo Authorization es necesario
-      },
+        'Authorization': `Bearer ${token}`,
+    },
     });
 
     if (!response.ok) {
       throw new Error('Error al eliminar la imagen');
     }
 
-    return await response.json(); // Devuelve la respuesta JSON si es exitosa
+    return await response.text();
   } catch (error) {
     console.error("Error al eliminar la imagen:", error);
     throw error;
