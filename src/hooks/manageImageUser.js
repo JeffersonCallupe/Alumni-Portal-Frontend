@@ -8,7 +8,6 @@ export const uploadProfilePicture = async (apiUrl, id, imageFile, isInstitutiona
     const response = await fetch(`${apiUrl}/upload-${usertype}/${id}`, {
       method: 'POST',
       headers: {
-        'Content-Type': 'application/json',
         'Authorization': `Bearer ${token}`,
     },
       body: formData,
@@ -17,8 +16,8 @@ export const uploadProfilePicture = async (apiUrl, id, imageFile, isInstitutiona
     if (!response.ok) {
       throw new Error('Error al subir la imagen');
     }
+    return await response.text();
 
-    return await response.json();
   } catch (error) {
     console.error(error);
     throw error;
@@ -32,7 +31,6 @@ export const getProfilePicture = async (apiUrl, id, isInstitutional) => {
     const response = await fetch(`${apiUrl}/download-${usertype}/${id}`, {
       method: 'GET',
       headers: {
-        'Content-Type': 'application/json',
         'Authorization': `Bearer ${token}`,
     },
     });
@@ -57,7 +55,6 @@ export const deleteProfilePicture = async (apiUrl, id, isInstitutional) => {
     const response = await fetch(`${apiUrl}/delete-image-${usertype}/${id}`, {
       method: 'DELETE',
       headers: {
-        'Content-Type': 'application/json',
         'Authorization': `Bearer ${token}`,
     },
     });
@@ -66,7 +63,7 @@ export const deleteProfilePicture = async (apiUrl, id, isInstitutional) => {
       throw new Error('Error al eliminar la imagen');
     }
 
-    return await response.json();
+    return await response.text();
   } catch (error) {
     console.error(error);
     throw error;
