@@ -7,17 +7,19 @@ import useLogin from "../../hooks/useLogin";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { validateRegistroSM } from "../../hooks/validateLogin";
+import { useAlert } from "../../contexts/alertContext";
 
 function RegistroSUM() {
   const apiUrl = "http://178.128.147.224:8080/api/user/registerAcademic";
   const { data, loading, error, login } = useLogin(apiUrl);
   const navigate = useNavigate();
+  const { showAlert } = useAlert();
 
   useEffect(() => {
     if (error) {
-      console.log("Error: ", error);
+      showAlert("Error con las credenciales del SUM", "error");
     } else if (data) {
-      console.log("Login exitoso: ", data);
+      showAlert("Login Exitoso", "success");
       navigate("/");
     }
   }, [data, error]);

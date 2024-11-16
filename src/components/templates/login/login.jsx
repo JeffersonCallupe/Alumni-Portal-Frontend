@@ -4,6 +4,7 @@ import Typography from "@mui/material/Typography";
 import Footer from "../../atoms/footer/footer";
 import imgFondo from "../../../assets/fondoRectorado.png";
 import { React, useEffect } from "react";
+import { useAlert } from "../../../contexts/alertContext";
 import "../../../App.css";
 
 function LoginBase({
@@ -18,11 +19,13 @@ function LoginBase({
   isEmpresa,
   validate,
 }) {
+  const { showAlert } = useAlert();
   useEffect(() => {
     if (handleRedirect.error) {
       console.log("Error: ", handleRedirect.error);
+      showAlert("Error al iniciar sesión", "error");
     } else if (handleRedirect.userData) {
-      console.log("Login exitoso");
+      showAlert("Inicio de sesión exitoso", "success");
       if (loginRedirectUrl) {
         handleRedirect.navigate(loginRedirectUrl);
       }

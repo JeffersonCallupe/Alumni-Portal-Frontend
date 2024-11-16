@@ -15,7 +15,7 @@ import FormNewCertification from "../../components/organisms/forms/institucional
 import FormNewSkill from "../../components/organisms/forms/institucional/formSkill";
 import FormNewProject from "../../components/organisms/forms/institucional/formProject";
 import FormFoto from "../../components/organisms/forms/formFoto";
-
+import { useAlert } from "../../contexts/alertContext";
 import { useUserContext } from "../../contexts/userContext";
 import usePatch from "../../hooks/usePatch";
 import usePost from "../../hooks/usePost";
@@ -23,6 +23,7 @@ import usePost from "../../hooks/usePost";
 function ProfileInstitucional() {
   
   const { userData } = useUserContext();
+  const { showAlert } = useAlert();
   const apiUrl = userData
       ? `http://178.128.147.224:8080/api/user/${userData.id}`
       : null;
@@ -63,48 +64,54 @@ function ProfileInstitucional() {
   const handleSaveChanges = async (formData) => {
       try {
           await patch(formData);
+            showAlert("La información se actualizó con éxito", "success");
       } catch (error) {
-          console.error("Error al guardar los cambios:", error);
+            showAlert('Error al guardar los cambios:', "error");
       }
   };
 
   const handleAddWorkExperience = async (formData) => {
       try {
           await postWorkExperience(formData);
+          showAlert("La información se registró con éxito", "success");
       } catch (error) {
-          console.error("Error al agregar la experiencia laboral:", error);
+            showAlert('Error al agregar la experiencia laboral:', "error");
       }
   };
 
   const handleAddEducation = async (formData) => {
       try {
           await postEducation(formData);
+          showAlert("La información se registró con éxito", "success");
       } catch (error) {
-          console.error("Error al agregar la educación:", error);
+          showAlert("Error al agregar la educación", "error");
       }
   };
 
   const handleAddCertification = async (formData) => {
       try {
           await postCertification(formData);
+          showAlert("La información se registró con éxito", "success");
       } catch (error) {
-          console.error("Error al agregar la certificación:", error);
+          showAlert("Error al agregar la certificación:", "error");
       }
   };
 
   const handleAddSkill = async (formData) => {
       try {
           await postSkill(formData);
+          showAlert("La información se registró con éxito", "success");
       } catch (error) {
-          console.error("Error al agregar la habilidad:", error);
+          showAlert("Error al agregar la habilidad:", "error");
       }
   };
 
   const handleAddProject = async (formData) => {
       try {
           await postProject(formData);
+          showAlert("La información se registró con éxito", "success");
       } catch (error) {
-          console.error("Error al agregar el proyecto:", error);
+          showAlert("Error al agregar el proyecto:", "error");
       }
   };
   

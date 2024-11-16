@@ -7,22 +7,21 @@ import useLoginEmpresa from "../../hooks/useLoginEmpresa";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { validateRegistroEmpresa } from "../../hooks/validateLogin"; 
+import Alert from "../../components/atoms/alert/alert";
+import { useAlert } from "../../contexts/alertContext";
 
 function RegistroEmpresa() {
     const apiUrl = "http://178.128.147.224:8080/api/company/registerCompany";
     const { data, loading, error, loginEmpresa } = useLoginEmpresa(apiUrl);
     const navigate = useNavigate();
-    const [message, setMessage] = useState(""); 
+    const { showAlert } = useAlert();
 
     useEffect(() => {
         if (error) {
-            console.log("Error: ", error);
-            setMessage("Error en el registro: " + error); 
+            showAlert("Error al registrar usuario", "error");
         } else if (data) {
-            setMessage("¡Éxito! " + data); 
-            console.log("Registro exitoso: ", data);
+            showAlert("¡Registro exitoso!", "success");
             setTimeout(() => {
-                console.log("Redirigiendo a /loginEmpresa...");
                 navigate("/loginEmpresa"); 
             }, 2000);
         }
@@ -38,6 +37,7 @@ function RegistroEmpresa() {
 
     return (
         <div className="relative h-screen flex flex-col">
+            <Alert/>
             <div className="relative h-screen w-full flex flex-col justify-center items-center">
                 <div
                     className="absolute inset-0 bg-cover bg-center filter blur-sm"
@@ -50,12 +50,6 @@ function RegistroEmpresa() {
                     <Typography variant="body2" component="p" align="center" gutterBottom>
                         Módulo de Registro de Empresas
                     </Typography>
-                    {message && ( 
-                        <div className="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative mb-4" role="alert">
-                            <strong className="font-bold">¡Éxito!</strong>
-                            <span className="block sm:inline"> {message}</span>
-                        </div>
-                    )}
                     <div className="mt-4 space-y-4">
                         <RegisterEmpresaForm
                             onSubmit={handleLogin}
