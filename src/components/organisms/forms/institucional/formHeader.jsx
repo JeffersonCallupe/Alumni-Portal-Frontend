@@ -31,7 +31,7 @@ const FormHeader = ({ onSubmit, onCancel, loading }) => {
     { label: "Apellido Paterno", name: "paternalSurname", value: formData.paternalSurname },
     { label: "Apellido Materno", name: "maternalSurname", value: formData.maternalSurname },
     { label: "Headline", name: "headline", value: formData.headline },
-    { label: "Correo Electrónico", name: "email", value: formData.email },
+    // { label: "Correo Electrónico", name: "email", value: formData.email },
     { label: "Número de Contacto", name: "contactNumber", value: formData.contactNumber },
   ];
 

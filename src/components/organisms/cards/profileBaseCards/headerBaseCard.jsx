@@ -25,7 +25,7 @@ const ProfileBaseCard = ({ apiUrl, handleSaveChanges, loading, dialogContent, mo
   useEffect(() => {
     const fetchProfilePicture = async () => {
       try {
-        const imageUrl = await getProfilePicture(imageApi, userData.id,isInstitutional);
+        const imageUrl = await getProfilePicture(imageApi, userData.id);
         setProfileImage(imageUrl);
       } catch (error) {
         console.error('Error al obtener la imagen de perfil:', error);

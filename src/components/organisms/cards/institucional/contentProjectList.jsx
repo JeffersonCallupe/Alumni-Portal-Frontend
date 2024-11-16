@@ -166,7 +166,7 @@ const ProjectList = () => {
           />
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleCloseModal} color="primary">
+          <Button variant="outlined" type="button" onClick={handleCloseModal}>
             Cerrar
           </Button>
         </DialogActions>

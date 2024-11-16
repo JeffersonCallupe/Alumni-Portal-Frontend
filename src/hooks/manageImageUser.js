@@ -1,26 +1,27 @@
 export const uploadProfilePicture = async (apiUrl, id, imageFile) => {
   const formData = new FormData();
-  formData.append("image", imageFile);
-  const token = sessionStorage.getItem("token");
+  formData.append("image", imageFile); // Clave 'image', como en Postman
+  const token = sessionStorage.getItem("token"); // Recupera el token
 
   try {
-    //const response = await fetch(`${import.meta.env.VITE_API_URL}/api/image/upload-${usertype}/${id}`, {
     const response = await fetch(`${apiUrl}/${id}`, {
       method: 'POST',
       headers: {
-        'Content-Type': 'application/json',
+        // Sólo agrega Authorization; Content-Type es automático con FormData
         'Authorization': `Bearer ${token}`,
-    },
-      body: formData,
+      },
+      body: formData, // FormData se usa para enviar el archivo
     });
-    
+
     if (!response.ok) {
-      throw new Error('Error al subir la imagen');
+      // Lanza un error si la respuesta no es 200 OK
+      const errorResponse = await response.json();
+      throw new Error(`Error al subir la imagen: ${errorResponse.message || response.statusText}`);
     }
 
-    return await response.json();
+    return await response.json(); // Devuelve la respuesta JSON si es exitosa
   } catch (error) {
-    console.error(error);
+    console.error("Error al subir la imagen:", error);
     throw error;
   }
 };
@@ -53,22 +54,20 @@ export const getProfilePicture = async (apiUrl, id) => {
 export const deleteProfilePicture = async (apiUrl, id) => {
   const token = sessionStorage.getItem("token");
   try {
-    //const response = await fetch(`${import.meta.env.VITE_API_URL}/api/image/delete-image-${usertype}/${id}`, {
     const response = await fetch(`${apiUrl}/${id}`, {
       method: 'DELETE',
       headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${token}`,
-    },
+        'Authorization': `Bearer ${token}`, // Solo Authorization es necesario
+      },
     });
 
     if (!response.ok) {
       throw new Error('Error al eliminar la imagen');
     }
 
-    return await response.json();
+    return await response.json(); // Devuelve la respuesta JSON si es exitosa
   } catch (error) {
-    console.error(error);
+    console.error("Error al eliminar la imagen:", error);
     throw error;
   }
 };

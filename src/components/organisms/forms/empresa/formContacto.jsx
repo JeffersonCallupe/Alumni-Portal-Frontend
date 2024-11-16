@@ -24,7 +24,7 @@ const FormContacto = ({ onSubmit, onCancel, loading }) => {
   );
 
   const formFields = [
-    { label: "Correo Electrónico", name: "email", value: formData.email },
+    // { label: "Correo Electrónico", name: "email", value: formData.email },
     { label: "Teléfono", name: "phone", value: formData.phone },
     { label: "Sitio Web", name: "website", value: formData.website },
   ];
