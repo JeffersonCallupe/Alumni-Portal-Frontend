@@ -1,3 +1,4 @@
+// formFoto.jsx
 import React, { useEffect, useState } from "react";
 import Button from "@mui/material/Button";
 import Box from "@mui/material/Box";
@@ -42,6 +43,7 @@ const FormFoto = ({ apiUrl}) => {
 
   const handleUpload = async (e) => {
     e.preventDefault();
+    window.location.reload();
     if (imageFile) {
       try {
         await uploadProfilePicture(apiUrl, userData.id, imageFile, isInstitutional);
@@ -55,8 +57,9 @@ const FormFoto = ({ apiUrl}) => {
   };
 
   const handleDelete = async () => {
+    window.location.reload();
     try {
-      await deleteProfilePicture(`${apiUrl}/delete-image-${usertype}`, userData.id);
+      await deleteProfilePicture(apiUrl, userData.id, isInstitutional);
       setCurrentImage(DefaultProfile);
       showAlert("Imagen de perfil eliminada con éxito", "success");
     } catch (error) {

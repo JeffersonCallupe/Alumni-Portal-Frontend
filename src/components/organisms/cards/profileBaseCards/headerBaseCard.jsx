@@ -19,13 +19,11 @@ const ProfileBaseCard = ({ apiUrl, handleSaveChanges, loading, dialogContent, mo
   const [profileImage, setProfileImage] = React.useState(DefaultProfile);
   const { open, handleOpen, handleClose } = useModal();
   const { userData, isInstitutional } = useUserContext();
-  const usertype = isInstitutional ? "user" : "company";
-  const imageApi = `${apiUrl}/download-${usertype}`;
   
   useEffect(() => {
     const fetchProfilePicture = async () => {
       try {
-        const imageUrl = await getProfilePicture(imageApi, userData.id);
+        const imageUrl = await getProfilePicture(apiUrl, userData.id,isInstitutional);
         setProfileImage(imageUrl);
       } catch (error) {
         console.error('Error al obtener la imagen de perfil:', error);
@@ -33,7 +31,7 @@ const ProfileBaseCard = ({ apiUrl, handleSaveChanges, loading, dialogContent, mo
     };
 
     fetchProfilePicture();
-  }, [imageApi, userData]);
+  }, [apiUrl, userData]);
 
 
   return (
