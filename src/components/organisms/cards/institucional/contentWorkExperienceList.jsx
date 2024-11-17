@@ -94,7 +94,7 @@ const WorkExperienceList = () => {
 
   const dialogContent = (experience) => (
     <div>
-      Editar Experiencia: {experience.jobTitle}
+      <Typography variant="h6">Editar Experiencia: {experience.jobTitle}</Typography>
       <WorkExperienceForm
         workExperienceId={experience.id}
         initialData={experience}

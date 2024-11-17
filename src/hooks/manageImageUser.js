@@ -1,11 +1,10 @@
-export const uploadProfilePicture = async (apiUrl, id, imageFile, isInstitutional) => {
-  const usertype = isInstitutional ? "user" : "company";
-  const formData = new FormData();
-  formData.append("image", imageFile);
+export const uploadProfilePicture = async (apiUrl, id, imageFile) => {
   const token = sessionStorage.getItem("token");
+  const formData = new FormData();
+  if(imageFile) formData.append("image", imageFile);
 
   try {
-    const response = await fetch(`${apiUrl}/upload-${usertype}/${id}`, {
+    const response = await fetch(`${apiUrl}/${id}`, {
       method: 'POST',
       headers: {
         'Authorization': `Bearer ${token}`,
@@ -24,11 +23,10 @@ export const uploadProfilePicture = async (apiUrl, id, imageFile, isInstitutiona
   }
 };
 
-export const getProfilePicture = async (apiUrl, id, isInstitutional) => {
-  const usertype = isInstitutional ? "user" : "company";
+export const getProfilePicture = async (apiUrl, id) => {
   const token = sessionStorage.getItem("token");
   try {
-    const response = await fetch(`${apiUrl}/download-${usertype}/${id}`, {
+    const response = await fetch(`${apiUrl}/${id}`, {
       method: 'GET',
       headers: {
         'Authorization': `Bearer ${token}`,
@@ -48,11 +46,10 @@ export const getProfilePicture = async (apiUrl, id, isInstitutional) => {
   }
 };
 
-export const deleteProfilePicture = async (apiUrl, id, isInstitutional) => {
+export const deleteProfilePicture = async (apiUrl, id) => {
   const token = sessionStorage.getItem("token");
-  const usertype = isInstitutional ? "user" : "company";
   try {
-    const response = await fetch(`${apiUrl}/delete-image-${usertype}/${id}`, {
+    const response = await fetch(`${apiUrl}/${id}`, {
       method: 'DELETE',
       headers: {
         'Authorization': `Bearer ${token}`,
