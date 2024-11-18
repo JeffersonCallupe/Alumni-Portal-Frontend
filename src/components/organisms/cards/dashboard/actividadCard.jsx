@@ -6,7 +6,7 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 import ShareIcon from '@mui/icons-material/Share';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
-import { getProfilePicture } from '../../../../hooks/manageImageUser';
+import { getProfilePicture } from '../../../../hooks/manageImageActivity';
 
 const ActividadCard = ({ actividad, multimediaApi, onEdit, onDelete }) => {
   const { id, title, description, eventType, startDate, endDate, location, enrollable, userRole } = actividad;
