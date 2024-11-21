@@ -1,7 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { Card, CardHeader, CardMedia, CardContent, CardActions, Avatar, Typography } from '@mui/material';
 import Button from '../../../atoms/buttons/actionButton';
+
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
+import ModeEditIcon from '@mui/icons-material/ModeEdit';
+import VisibilityIcon from '@mui/icons-material/VisibilityOutlined';
+import DeleteIcon from '@mui/icons-material/Delete';
 import { getProfilePicture } from '../../../../hooks/manageImageActivity';
 import { useUserContext } from '../../../../contexts/userContext';
 
@@ -78,15 +82,14 @@ const ActividadCard2 = ({
           </Avatar>
         }
         action={
-          <>
-            {onSeeListParticipants && <Button texto={"Ver participantes"} onClick={handleSeeListParticipants}></Button>}
-            {onEdit && <Button texto={"Editar"} onClick={handleEdit}></Button>}
-            {onDelete && <Button texto={"Eliminar"} onClick={handleDelete}></Button>}
+          <div style={{ display: 'flex', gap: '10px' }}>
+            {onEdit && <Button startIcon={<ModeEditIcon />} texto={"Editar"} onClick={handleEdit}></Button>}
+            {onDelete && <Button startIcon={<DeleteIcon />} texto={"Eliminar"} onClick={handleDelete}></Button>}
             {onCancelEnrollment && <Button texto={"Cancelar inscripción"} onClick={handleCancelEnrollment}></Button>}
-          </>
+          </div>
         }
-        title={entityName}
-        subheader={`${eventType} | ${startDate} - ${endDate}`}
+        title={`${title} | ${eventType}`}
+        subheader={`${entityName} | ${startDate} - ${endDate}`}
       />
       <CardMedia
         component="img"
@@ -113,8 +116,13 @@ const ActividadCard2 = ({
         )}
       </CardContent>
       <CardActions disableSpacing>
-        {onRegister && <Button texto={"Registrar Inscripción"} onClick={handleRegister}></Button>}
+        <div style={{ display: 'flex', justifyContent: 'flex-end', width: '100%' }}>
+          <Button startIcon={<VisibilityIcon/>} texto={"Ver participantes"} onClick={handleSeeListParticipants}></Button>
+          {onSeeListParticipants && <Button texto={"Ver participantes"} onClick={handleSeeListParticipants}></Button>}
+          {onRegister && <Button texto={"Registrar Inscripción"} onClick={handleRegister}></Button>}
+        </div>
       </CardActions>
+      
     </Card>
   );
 };
