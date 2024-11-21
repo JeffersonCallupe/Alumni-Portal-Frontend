@@ -1,5 +1,5 @@
 import LoginBase from "../../components/templates/login/login";
-import useLoginEmpresa from "../../hooks/useLoginEmpresa"; 
+import useLogin from "../../hooks/useLogin";
 import imgLogo from "../../assets/logoEmpresa.png";
 import imgFondo from "../../assets/portadaEmpresa.png";
 import {validateLoginEmpresa} from "../../hooks/validateLogin";
@@ -8,7 +8,7 @@ import { useUserContext } from "../../contexts/userContext";
 
 function LoginEmpresa() {
     const apiUrl = `${import.meta.env.VITE_API_URL}/api/company/loginCompany`; 
-    const { loading, error, loginEmpresa } = useLoginEmpresa(apiUrl); 
+    const { loading, error, login } = useLogin(apiUrl); 
     const { userData } = useUserContext();
     const navigate = useNavigate();
   
@@ -21,7 +21,7 @@ function LoginEmpresa() {
         handleRedirect={{ userData, error, navigate}}
         loginRedirectUrl={"/profile"} 
         loading={loading}
-        onSubmit={loginEmpresa} 
+        onSubmit={login} 
         validate={validateLoginEmpresa}
         isEmpresa = {true}
       />

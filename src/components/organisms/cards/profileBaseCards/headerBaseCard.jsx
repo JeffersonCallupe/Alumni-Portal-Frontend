@@ -1,5 +1,5 @@
 import "../../../../App.css";
-import React, { useEffect } from "react";
+import React from "react";
 import Avatar from "@mui/material/Avatar";
 import Box from "@mui/material/Box";
 import Card from "@mui/material/Card";
@@ -8,31 +8,14 @@ import CardContentEmpresa from "../empresa/contentHeader";
 import CardContentInstitucional from "../institucional/contentHeader";
 import CardMedia from "@mui/material/CardMedia";
 import DefaultHeader from "../../../../assets/headerDefault.jpg";
-import DefaultProfile from "../../../../assets/logoPerfil.png";
 import DialogBase from "../../dialog/profileBaseDialog";
 import useModal from "../../../../hooks/useModal";
 import { useUserContext } from "../../../../contexts/userContext";
-import { getProfilePicture } from "../../../../hooks/manageImageUser";
 
-const ProfileBaseCard = ({ apiUrl, handleSaveChanges, loading, dialogContent, modalId }) => {
+const ProfileBaseCard = ({ handleSaveChanges, loading, dialogContent, modalId }) => {
   const [headerImage] = React.useState(DefaultHeader);
-  const [profileImage, setProfileImage] = React.useState(DefaultProfile);
   const { open, handleOpen, handleClose } = useModal();
-  const { userData, isInstitutional } = useUserContext();
-  
-  useEffect(() => {
-    const fetchProfilePicture = async () => {
-      try {
-        const imageUrl = await getProfilePicture(apiUrl, userData.id,isInstitutional);
-        setProfileImage(imageUrl);
-      } catch (error) {
-        console.error('Error al obtener la imagen de perfil:', error);
-      }
-    };
-
-    fetchProfilePicture();
-  }, [apiUrl, userData]);
-
+  const { userData, isInstitutional, profilePicture } = useUserContext();
 
   return (
     <Card
@@ -61,7 +44,7 @@ const ProfileBaseCard = ({ apiUrl, handleSaveChanges, loading, dialogContent, mo
         >
           <Avatar
             alt="Profile Image"
-            src={profileImage}
+            src={profilePicture}
             sx={{
               height: "7rem",
               width: "7rem",

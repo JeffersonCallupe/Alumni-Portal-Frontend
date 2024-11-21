@@ -12,10 +12,14 @@ export const uploadProfilePicture = async (apiUrl, id, imageFile) => {
       body: formData,
     });
     
-    if (!response.ok) {
-      throw new Error('Error al subir la imagen');
+    if (!response.status !== 200) {
+      throw new Error(`Error al enviar los datos: ${response.statusText}`);
     }
-    return await response.text();
+
+    const contentType = response.headers.get("content-type");
+        return contentType && contentType.includes("application/json")
+            ? await response.json()
+            : await response.text();
 
   } catch (error) {
     console.error(error);

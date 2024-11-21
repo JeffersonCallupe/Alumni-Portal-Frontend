@@ -4,17 +4,20 @@ import ActividadDialog from "../../components/organisms/dialog/actividadDialog";
 import Button from "@mui/material/Button";
 import HomeBase from "../../components/templates/home/home";
 import { useUserContext } from "../../contexts/userContext";
+import { useAlert } from "../../contexts/alertContext";
 import useGet from "../../hooks/useGet";
 import useModal from "../../hooks/useModal";
 import usePatch from "../../hooks/usePatch";
 import usePost from "../../hooks/usePost";
 import useDelete from "../../hooks/useDelete";
+import { uploadProfilePicture } from "../../hooks/manageImageUser";
 
 function Actividades() {
     const { open, handleOpen, handleClose } = useModal();
     const [actividades, setActividades] = useState([]);
     const [selectedActivity, setSelectedActivity] = useState(null);
     const { userData, isInstitutional } = useUserContext();
+    const { showAlert } = useAlert();
     const [apiEndpoints, setApiEndpoints] = useState({});
     const fetchDataRef = useRef(false);
 
@@ -84,7 +87,6 @@ function Actividades() {
     };
 
     const handleSaveActivity = async (formData) => {
-        const formdata = new FormData();
         const activityData = {
             title: formData.title,
             description: formData.description,
@@ -95,27 +97,47 @@ function Actividades() {
             url: null,
             enrollable: formData.enrollable,
         };
-
-        formdata.append("activity", JSON.stringify(activityData));
-        if (formData.multimedia) {
-            formdata.append("image", formData.multimedia);
-        }
-
+    
         try {
+            let activityId;
+    
             if (selectedActivity) {
-                console.log("patch", formdata);
-                await patch(formdata, true);
+                // Actualización de la actividad
+                //const patchEndpoint = `${import.meta.env.VITE_API_URL}/api/activity/update-activity/${selectedActivity.id}`;
+                await patch(activityData, false);
+                activityId = selectedActivity.id;
+                showAlert(`Actividad actualizada con ID: ${activityId}`, "success");
             } else {
-                console.log("post", formdata);
-                await post(formdata, true);
+                // Creación de la actividad
+                const activityResponse = await post(activityData);
+                const match = activityResponse.match(/: (\d+)/); // Busca el ID en la respuesta
+                activityId = match ? match[1] : null;
+    
+                if (!activityId) {
+                    throw new Error("No se pudo obtener el ID de la actividad de la respuesta.");
+                }
+    
+                showAlert(`Actividad creada con ID: ${activityId}`, "success");
             }
-            handleClose();
+    
+            // Subir o actualizar multimedia
+            if (formData.multimedia) {
+                await uploadProfilePicture(apiEndpoints.multimedia, activityId, formData.multimedia);
+                window.location.reload();
+                showAlert("Multimedia subida o actualizada con éxito.", "success");
+            }
+    
+            // Actualizar la lista de actividades
             const updatedActivities = await getData();
             setActividades(updatedActivities);
+    
+            handleClose(); // Cierra el modal
         } catch (error) {
-            console.error("Error al guardar la actividad:", error);
+            console.error("Error al guardar o actualizar la actividad y/o multimedia:", error);
         }
     };
+    
+    
 
     return (
         <HomeBase>

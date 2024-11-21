@@ -1,3 +1,4 @@
+import Alert from "../../atoms/alert/alert";
 import LoginForm from "../../organisms/forms/login/loginForm";
 import LoginSUMForm from "../../organisms/forms/login/loginSUMForm";
 import Typography from "@mui/material/Typography";
@@ -38,6 +39,7 @@ function LoginBase({
 
   return (
     <div className="relative md:h-screen flex flex-col">
+      <Alert />
       <div
         className="absolute inset-0 bg-cover bg-center filter blur-sm"
         style={{ backgroundImage: `url(${imgFondo})` }}

@@ -28,7 +28,7 @@ const ActividadCard = ({ actividad, multimediaApi, onEdit, onDelete }) => {
         const imageUrl = await getProfilePicture(profileApi, entityId);
         setProfileImage(imageUrl);
       } catch (error) {
-        console.error('Error al obtener la imagen de perfil:', error);
+        console.error('noai foto de perfil:', error);
       }
     };
     fetchProfilePicture();

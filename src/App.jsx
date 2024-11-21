@@ -5,6 +5,7 @@ import Home from "./app/dashboard/home";
 import LoginInstitucional from "../src/app/login/LoginInstitucional";
 import LoginEmpresa from '../src/app/login/LoginEmpresa';
 import LoginSUM from "../src/app/login/LoginSUM";
+import OfertasLaborales from "./app/dashboard/ofertasLaborales";
 import ProfileEmpresa from "./app/profile/profileEmpresa"
 import ProfileInstitucional from "./app/profile/profileInstitucional"
 import RegistroSUM from "./app/registro/registroSUM";
@@ -26,8 +27,9 @@ function App() {
             <Route path="/crearCuentaEmpresa" element={<RegistroEmpresa/>} />
             <Route path="/profile" element={<ProfileEmpresa />} />
             <Route path="/profileInstitucional" element={<ProfileInstitucional />} />
-            <Route path="/home/" element={<Home />} />
-            <Route path="/actividades/" element={<Actividades />} />
+            <Route path="/home" element={<Home />} />
+            <Route path="/actividades" element={<Actividades />} />
+            <Route path="/ofertasLaborales" element={<OfertasLaborales />} />
           </Routes>
         </BrowserRouter>
       </UserProvider>

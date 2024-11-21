@@ -17,9 +17,8 @@ import Typography from "@mui/material/Typography";
 import { useUserContext } from "../../../contexts/userContext";
 import { useNavigate } from "react-router-dom";
 
-
 function Navbar() {
-  const { isInstitutional, logout, userData } = useUserContext();
+  const { isInstitutional, logout, profilePicture } = useUserContext();
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
   const [anchorElActividades, setAnchorElActividades] = React.useState(null);
@@ -116,11 +115,11 @@ function Navbar() {
               >
                 {isInstitutional && (
                   <MenuItem onClick={handleCloseMenu(setAnchorElOfertas)}>
-                    Ofertas inscritas
+                    <a href="/ofertasLaborales">Ofertas Inscritas</a>
                   </MenuItem>
                 )}
                 <MenuItem onClick={handleCloseMenu(setAnchorElOfertas)}>
-                  Ofertas publicadas
+                <a href="/ofertasLaborales">Ofertas Publicadas</a>
                 </MenuItem>
               </Menu>
             </Menu>
@@ -181,11 +180,11 @@ function Navbar() {
             >
               {isInstitutional && (
                 <MenuItem onClick={handleCloseMenu(setAnchorElOfertas)}>
-                  Ofertas inscritas
+                  <a href="/ofertasLaborales">Ofertas Inscritas</a>
                 </MenuItem>
               )}
               <MenuItem onClick={handleCloseMenu(setAnchorElOfertas)}>
-                Ofertas publicadas
+                <a href="/ofertasLaborales">Ofertas Publicadas</a>
               </MenuItem>
             </Menu>
           </Box>
@@ -197,7 +196,9 @@ function Navbar() {
                 onClick={handleOpenMenu(setAnchorElUser)}
                 sx={{ p: 0 }}
               >
-                <Avatar alt="Remy Sharp" src={userData.photoUrl} sx={{height: "2rem", width:"2rem"}} />
+              <Avatar aria-label="profile-pic">
+                <img src={profilePicture}></img>
+              </Avatar>
               </IconButton>
             </Tooltip>
             <Typography variant="caption">Yo</Typography>
