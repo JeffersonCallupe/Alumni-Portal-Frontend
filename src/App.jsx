@@ -31,7 +31,7 @@ function App() {
             <Route path="/home" element={<Home />} />
             <Route path="/actividades" element={<Actividades />} />
             <Route path="/ofertasLaborales" element={<OfertasLaborales />} />
-            <Route path="/actividadesRegistradas" element={<ActividadesRegistradas />} /> 
+            <Route path="/actividadesRegistradas" element={<ActividadesRegistradas />} />
           </Routes>
         </BrowserRouter>
       </UserProvider>

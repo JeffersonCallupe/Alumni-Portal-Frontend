@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
-import ActividadCard from "../../components/organisms/cards/dashboard/actividadCard2";
+import ActividadCard from "../../components/organisms/cards/dashboard/actividadCard";
 import ActividadDialog from "../../components/organisms/dialog/actividadDialog";
 import Button from "@mui/material/Button";
 import HomeBase from "../../components/templates/home/home";

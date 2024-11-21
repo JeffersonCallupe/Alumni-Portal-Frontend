@@ -1,59 +1,59 @@
-import React, { useState, useEffect } from "react";
-import ActividadRegistradaCard from "../../components/organisms/cards/dashboard/actividadRegistradaCard";
+import React, { useState, useEffect, useRef } from "react";
+import ActividadCard from "../../components/organisms/cards/dashboard/actividadCard";
 import HomeBase from "../../components/templates/home/home";
 import { useUserContext } from "../../contexts/userContext";
+import { useAlert } from "../../contexts/alertContext";
+import useGet from "../../hooks/useGet";
+import useModal from "../../hooks/useModal";
+import useDelete from "../../hooks/useDelete";
 
 function ActividadesRegistradas() {
-    const { userData } = useUserContext();
+    const { open, handleOpen, handleClose } = useModal();
     const [actividades, setActividades] = useState([]);
-    const [isLoading, setIsLoading] = useState(true);
+    const [selectedActivity, setSelectedActivity] = useState(null);
+    const { userData, isInstitutional } = useUserContext();
+    const [apiEndpoints, setApiEndpoints] = useState({});
+    const fetchDataRef = useRef(false);
+
+    // Solo se define userType y URLs dinámicas si userData está disponible
+    useEffect(() => {
+        if (userData) {
+            setApiEndpoints({
+                getAll: `${import.meta.env.VITE_API_URL}/api/activity/all`,
+                multimedia: `${import.meta.env.VITE_API_URL}/api/activity/activity-image`,
+            });
+        }
+    }, [userData, isInstitutional, selectedActivity]);
+
+    // Hooks de API solo se inicializan cuando los endpoints están definidos
+    const { getData } = useGet(apiEndpoints.getAll);
+    
 
     useEffect(() => {
-        const fetchUserEnrollments = async () => {
-            if (!userData?.id) return;
+        if (userData && apiEndpoints.getAll && !fetchDataRef.current) {
+            const fetchActividades = async () => {
+                try {
+                    const data = await getData();
+                    setActividades(data);
+                } catch (error) {
+                    console.error("Error al obtener las actividades:", error);
+                }
+            };
+            fetchActividades();
+            fetchDataRef.current = true;
+        }
+    }, [userData, apiEndpoints.getAll, getData]);
 
-            try {
-                // Obtener inscripciones del usuario
-                const enrollmentsResponse = await fetch(
-                    `http://178.128.147.224:8080/api/enrollment/user/${userData.id}`
-                );
-                const enrollments = await enrollmentsResponse.json();
-
-                // Obtener detalles de actividades y enriquecer los datos
-                const actividadesData = await Promise.all(
-                    enrollments.map(async (enrollment) => {
-                        const activityResponse = await fetch(
-                            `http://178.128.147.224:8080/api/activity/${enrollment.activityId}`
-                        );
-                        const activityDetails = await activityResponse.json();
-
-                        return {
-                            ...activityDetails,
-                            enrollmentId: enrollment.id,
-                            enrollmentStatus: enrollment.status,
-                            enrollmentDate: enrollment.enrollmentDate,
-                        };
-                    })
-                );
-
-                setActividades(actividadesData);
-            } catch (error) {
-                console.error("Error al obtener las actividades registradas:", error);
-            } finally {
-                setIsLoading(false);
-            }
-        };
-
-        fetchUserEnrollments();
-    }, [userData]);
-
-    if (isLoading) {
+    if (!userData) {
         return <div>Loading...</div>;
+    } 
+    
+    const handleCancelEnrollment = async (id) => {
+
     }
 
     return (
         <HomeBase>
-            
             <div className="flex flex-row gap-8 mt-4 mb-16 lg:mx-12 justify-center">
                 <div className="lg:w-4/12">
                     <p>Filtros aaa</p>
@@ -62,26 +62,15 @@ function ActividadesRegistradas() {
                     <div>
                         {actividades.length > 0 ? (
                             actividades.map((actividad) => (
-                                <ActividadRegistradaCard
+                                <ActividadCard
                                     key={actividad.id}
                                     actividad={actividad}
-                                    onCancelEnrollment={async (activityId) => {
-                                        try {
-                                            await fetch(
-                                                `http://178.128.147.224:8080/api/enrollment/${actividad.enrollmentId}`,
-                                                { method: "DELETE" }
-                                            );
-                                            setActividades((prev) =>
-                                                prev.filter((item) => item.id !== activityId)
-                                            );
-                                        } catch (error) {
-                                            console.error("Error al cancelar la inscripción:", error);
-                                        }
-                                    }}
+                                    multimediaApi={apiEndpoints.multimedia}
+                                    onCancelEnrollment={handleCancelEnrollment}
                                 />
                             ))
                         ) : (
-                            <div>No hay actividades registradas</div>
+                            <div>No hay actividades disponibles</div>
                         )}
                     </div>
                 </div>
@@ -91,4 +80,3 @@ function ActividadesRegistradas() {
 }
 
 export default ActividadesRegistradas;
-
