@@ -1,10 +1,8 @@
 import { useState } from 'react';
-import { useUserContext } from '../contexts/userContext';
 
 const useGet = (apiUrl) => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
-  const { updateUserData } = useUserContext();
   const token = sessionStorage.getItem("token");
 
   const getData = async () => {
@@ -26,12 +24,12 @@ const useGet = (apiUrl) => {
       }
 
       const data = await response.json();
-      updateUserData(data);
       return data;
 
     } catch (error) {
       setError(error.message);
       console.error("Error en la solicitud GET:", error);
+      throw error;
     } finally {
       setLoading(false);
     }

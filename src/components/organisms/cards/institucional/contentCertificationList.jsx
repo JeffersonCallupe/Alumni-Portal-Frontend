@@ -122,7 +122,7 @@ const CertificationList = () => {
         certifications.map((certification) => (
           <InfoBaseCard
             key={certification.id}
-            title={<Typography variant="h6">{certification.name}</Typography>}
+            title={certification.name}
             cardContent={
               <div>
                 <Typography variant="subtitle2">Institución: {certification.issuingOrganization}</Typography>

@@ -110,7 +110,7 @@ const SkillList = () => {
         skills.map((skill) => (
           <InfoBaseCard
             key={skill.id}
-            title={<Typography variant="h6">{skill.name}</Typography>}
+            title={skill.name}
             cardContent={
               <Box 
                 display="flex" 

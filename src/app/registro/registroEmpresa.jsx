@@ -3,8 +3,8 @@ import Footer from "../../components/atoms/footer/footer";
 import imgLogo from "../../assets/logoUNMSM.png";
 import imgFondo from "../../assets/fondoRectorado.png";
 import RegisterEmpresaForm from "../../components/organisms/forms/login/registerEmpresaForm";
-import useLoginEmpresa from "../../hooks/useLoginEmpresa";
-import { useEffect, useState } from "react";
+import useLogin from "../../hooks/useLogin";
+import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { validateRegistroEmpresa } from "../../hooks/validateLogin"; 
 import Alert from "../../components/atoms/alert/alert";
@@ -12,7 +12,7 @@ import { useAlert } from "../../contexts/alertContext";
 
 function RegistroEmpresa() {
     const apiUrl = `${import.meta.env.VITE_API_URL}/api/company/registerCompany`;
-    const { data, loading, error, loginEmpresa } = useLoginEmpresa(apiUrl);
+    const { data, loading, error, login } = useLogin(apiUrl);
     const navigate = useNavigate();
     const { showAlert } = useAlert();
 
@@ -32,7 +32,7 @@ function RegistroEmpresa() {
         if (dataToSubmit.confirmPassword) {
             delete dataToSubmit.confirmPassword;
         }
-        loginEmpresa(dataToSubmit);
+        login(dataToSubmit);
     };
 
     return (

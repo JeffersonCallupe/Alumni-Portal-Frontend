@@ -4,7 +4,7 @@ import { useUserContext } from "../contexts/userContext";
 const useLogin = (apiUrl) => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
-  const { updateUserData } = useUserContext();
+  const { updateUserData, loadProfilePicture } = useUserContext();
   const [data, setData] = useState(null);
 
   const login = async (credentials) => {
@@ -35,18 +35,16 @@ const useLogin = (apiUrl) => {
         throw new Error(result.message || result || "Error en la autenticación");
       }
 
-      let userData = null;
-
       if (result["data"] && Array.isArray(result["data"]) && result["data"][0]?.["dto"]) {
-        sessionStorage.setItem("user", JSON.stringify(result["data"][0]["dto"]));
+        sessionStorage.setItem("userSUM", JSON.stringify(result["data"][0]["dto"]));
         setData(result["data"][0]["dto"]);
       } else {
-        userData = result;
-        setData(userData);
-        updateUserData(userData);
-        
+        setData(result);
+        updateUserData(result);
+        sessionStorage.setItem("user", JSON.stringify(result));
         const token = result["token"];
         sessionStorage.setItem("token", token);
+        await loadProfilePicture(result);
       }
 
     } catch (err) {

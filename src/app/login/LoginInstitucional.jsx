@@ -9,8 +9,7 @@ import { useUserContext } from "../../contexts/userContext";
 function LoginInstitucional() {
   const apiUrl = `${import.meta.env.VITE_API_URL}/api/user/loginAcademic`;
   const { loading, error, login } = useLogin(apiUrl);
-  const { userData, isInstitutional} = useUserContext();
-  console.log(userData, isInstitutional)
+  const { userData } = useUserContext();
   const navigate = useNavigate();
 
   return (

@@ -1,32 +1,20 @@
-// formFoto.jsx
 import React, { useEffect, useState } from "react";
 import Button from "@mui/material/Button";
 import Box from "@mui/material/Box";
 import { useUserContext } from "../../../contexts/userContext";
 import { useAlert } from "../../../contexts/alertContext";
-import { uploadProfilePicture, deleteProfilePicture, getProfilePicture } from '../../../hooks/manageImageUser';
-import DefaultProfile from "../../../assets/logoPerfil.png";
+import { uploadProfilePicture, deleteProfilePicture } from '../../../hooks/manageImageUser';
 
 const FormFoto = ({ apiUrl}) => {
-  const { userData, isInstitutional } = useUserContext();
+  const { userData, isInstitutional, profilePicture, loadProfilePicture } = useUserContext();
+  const userType = isInstitutional ? "user" : "company";
   const { showAlert } = useAlert();
   const [imageFile, setImageFile] = useState(null);
-  const [currentImage, setCurrentImage] = useState(DefaultProfile);
+  const [currentImage, setCurrentImage] = useState(profilePicture);
 
   useEffect(() => {
-    if (apiUrl && userData?.id) {
-      const fetchProfilePicture = async () => {
-        try {
-          const imageUrl = await getProfilePicture(apiUrl, userData.id, isInstitutional);
-          if(imageUrl) setCurrentImage(imageUrl);
-        } catch (error) {
-          showAlert('Error al obtener la imagen de perfil', "error");
-          setCurrentImage(DefaultProfile);
-        }
-      };
-      fetchProfilePicture();
-    }
-  }, [apiUrl, userData?.id]);
+    setCurrentImage(profilePicture);
+  }, [profilePicture]);
   
 
   const handleImageChange = (e) => {
@@ -43,13 +31,12 @@ const FormFoto = ({ apiUrl}) => {
 
   const handleUpload = async (e) => {
     e.preventDefault();
-    window.location.reload();
     if (imageFile) {
       try {
-        await uploadProfilePicture(apiUrl, userData.id, imageFile, isInstitutional);
-        const updatedImage = await getProfilePicture(apiUrl, userData.id, isInstitutional);
-        setCurrentImage(updatedImage);
+        await uploadProfilePicture(`${apiUrl}/upload-${userType}`, userData.id, imageFile);
+        await loadProfilePicture(userData);
         showAlert("Imagen de perfil actualizada con éxito", "success");
+        setImageFile(null);
       } catch (error) {
         showAlert('Error al actualizar la imagen de perfil', "error");
       }
@@ -57,13 +44,14 @@ const FormFoto = ({ apiUrl}) => {
   };
 
   const handleDelete = async () => {
-    window.location.reload();
-    try {
-      await deleteProfilePicture(apiUrl, userData.id, isInstitutional);
-      setCurrentImage(DefaultProfile);
-      showAlert("Imagen de perfil eliminada con éxito", "success");
-    } catch (error) {
-      showAlert('Error al eliminar la imagen de perfil', "error");
+    if (userData?.id) {
+      try {
+        await deleteProfilePicture(`${apiUrl}/delete-image-${userType}`, userData.id);
+        await loadProfilePicture(userData);
+        showAlert("Imagen de perfil eliminada con éxito", "success");
+      } catch (error) {
+        showAlert("Error al eliminar la imagen de perfil", "error");
+      }
     }
   };
 
@@ -84,7 +72,7 @@ const FormFoto = ({ apiUrl}) => {
         </label>
       </div>
       <div>
-        <Button type="button" onClick={handleDelete} disabled={currentImage === DefaultProfile}>
+        <Button type="button" onClick={handleDelete} disabled={userData?.photoUrl === null}>
           Eliminar Foto
         </Button>
         <Button type="submit" disabled={!imageFile}>

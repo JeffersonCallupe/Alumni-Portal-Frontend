@@ -5,7 +5,7 @@ import imgLogo from "../../assets/logoSUM.png";
 import { useNavigate } from "react-router-dom";
 
 function LoginSUM() {
-  const apiUrl = "https://sumvirtual.unmsm.edu.pe/sumapi/loguearse";
+  const apiUrl = 'https://sumvirtual.unmsm.edu.pe/sumapi/loguearse';
   const { data, loading, error, login } = useLogin(apiUrl);
   const navigate = useNavigate();
   const userData = data

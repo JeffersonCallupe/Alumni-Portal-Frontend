@@ -24,7 +24,7 @@ const RegisterInstitucionalForm = ({ onSubmit, validate }) => {
     };
   };
 
-  const initialFormData = extractRequiredData(JSON.parse(sessionStorage.getItem("user")) || {});
+  const initialFormData = extractRequiredData(JSON.parse(sessionStorage.getItem("userSUM")) || {});
   const { formData, errors, handleChange, handleSubmit } = useForm(
     initialFormData, 
     onSubmit,
