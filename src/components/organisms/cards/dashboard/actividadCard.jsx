@@ -132,7 +132,7 @@ const ActividadCard = ({
       <CardActions disableSpacing>
         <div style={{ display: 'flex', justifyContent: 'flex-end', width: '100%' }}>
           {onSeeListParticipants && <Button startIcon={<VisibilityIcon/>} texto={"Ver participantes"} onClick={handleSeeListParticipants}></Button>}
-          {onRegister && <Button texto={"Registrar Inscripción"} onClick={handleRegister}></Button>}
+          {onRegister && <Button texto={"Registrarse"} onClick={handleRegister}></Button>}
         </div>
       </CardActions>
       

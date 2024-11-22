@@ -152,7 +152,7 @@ function Navbar() {
               onClose={handleCloseMenu(setAnchorElActividades)}
             >
               <MenuItem onClick={handleCloseMenu(setAnchorElActividades)}>
-              <a href="/actividades">Ver actividades</a>
+              <a href="/actividadesHistorico">Ver actividades</a>
               </MenuItem>
               <MenuItem onClick={handleCloseMenu(setAnchorElActividades)}>
               <a href="/actividades">Mis actividades publicadas</a>
