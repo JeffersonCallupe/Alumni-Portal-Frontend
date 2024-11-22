@@ -6,7 +6,7 @@ import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import ModeEditIcon from '@mui/icons-material/ModeEdit';
 import VisibilityIcon from '@mui/icons-material/VisibilityOutlined';
 import DeleteIcon from '@mui/icons-material/Delete';
-import { getProfilePicture } from '../../../../hooks/manageImageActivity';
+import { getProfilePicture } from '../../../../hooks/manageImageUser';
 import { useUserContext } from '../../../../contexts/userContext';
 
 const ActividadCard = ({ 
