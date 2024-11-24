@@ -19,7 +19,7 @@ const ActividadCard = ({
   onSeeListParticipants = false 
 }) => {
   const { id, title, description, eventType, startDate, endDate, location, enrollable, userRole } = actividad;
-  const { userId } = useUserContext();
+  const { userId, isInstitutional } = useUserContext();
   const isUser = userRole === 'USER';
   const entityId = isUser ? actividad.userId : actividad.companyId;
   const entityName = isUser
@@ -132,7 +132,7 @@ const ActividadCard = ({
       <CardActions disableSpacing>
         <div style={{ display: 'flex', justifyContent: 'flex-end', width: '100%' }}>
           {onSeeListParticipants && <Button startIcon={<VisibilityIcon/>} texto={"Ver participantes"} onClick={handleSeeListParticipants}></Button>}
-          {onRegister && <Button texto={"Registrarse"} onClick={handleRegister}></Button>}
+          {isInstitutional && onRegister && <Button texto={"Registrarse"} onClick={handleRegister}></Button>}
         </div>
       </CardActions>
       
