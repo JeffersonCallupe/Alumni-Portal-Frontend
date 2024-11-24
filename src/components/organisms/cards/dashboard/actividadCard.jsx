@@ -95,6 +95,7 @@ const ActividadCard = ({
             {onEdit && <Button startIcon={<ModeEditIcon />} texto={"Editar"} onClick={handleEdit}></Button>}
             {onDelete && <Button startIcon={<DeleteIcon />} texto={"Eliminar"} onClick={handleDelete}></Button>}
             {onCancelEnrollment && <Button texto={"Cancelar inscripción"} onClick={handleCancelEnrollment}></Button>}
+            {isInstitutional && onRegister && <Button texto={"Registrarse"} onClick={handleRegister}></Button>}
           </div>
         }
         title={`${title} (${eventType})`}
@@ -132,7 +133,6 @@ const ActividadCard = ({
       <CardActions disableSpacing>
         <div style={{ display: 'flex', justifyContent: 'flex-end', width: '100%' }}>
           {onSeeListParticipants && <Button startIcon={<VisibilityIcon/>} texto={"Ver participantes"} onClick={handleSeeListParticipants}></Button>}
-          {isInstitutional && onRegister && <Button texto={"Registrarse"} onClick={handleRegister}></Button>}
         </div>
       </CardActions>
       
