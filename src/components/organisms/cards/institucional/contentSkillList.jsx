@@ -5,10 +5,9 @@ import CircularProgress from "@mui/material/CircularProgress";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import FormEditSkill from "../../forms/institucional/Edit/formEditSkill";
-import Button from "@mui/material/Button";
 import ActionButton from "../../../atoms/buttons/actionButton"
 import DeleteIcon from '@mui/icons-material/Delete';
-import DeleteConfirmationModal from "../../forms/institucional/deleteConfirmationModal";
+import DeleteConfirmationModal from "../../dialog/deleteConfirmationModal";
 
 const SkillList = () => {
   const { userData } = useUserContext();
