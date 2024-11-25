@@ -13,9 +13,7 @@ import DialogContent from "@mui/material/DialogContent";
 import DialogActions from "@mui/material/DialogActions";
 import DeleteIcon from '@mui/icons-material/Delete';
 import VisibilityIcon from '@mui/icons-material/VisibilityOutlined';
-import DeleteConfirmationModal from "../../../organisms/forms/institucional/deleteConfirmationModal"; // Ajusta la ruta según tu estructura
-import useUpdateData from '../../../../hooks/useEditInstitutional';
-
+import DeleteConfirmationModal from "../../../organisms/dialog/deleteConfirmationModal";
 
 const WorkExperienceList = () => {
   const { userData } = useUserContext();

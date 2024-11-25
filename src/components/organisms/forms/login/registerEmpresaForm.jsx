@@ -4,30 +4,21 @@ import Button from "@mui/material/Button";
 import Box from "@mui/material/Box";
 import useForm from "../../../../hooks/useForm";
 
-
-const RegisterEmpresaForm = ({ onSubmit, validate }) => {
+const RegisterEmpresaForm = ({ onSubmit, disabled, validate }) => {
     const [page, setPage] = useState(1);
-  
-    const extractRequiredData = (data) => {
-      return {
-        name: data.name || "",
-        ruc: data.ruc || "",
-        email: data.email || "",
-        password: "",
-        description: data.description || " ",
-        sector: data.sector || " ",
-        phone: data.phone || " ",
-        website: data.website || " ",
-        location: data.location || " ",
-        confirmPassword: "",
-      };
-    };
-  
-    const initialFormData = extractRequiredData(
-      JSON.parse(sessionStorage.getItem("user")) || {}
-    );
     const { formData, errors, handleChange, handleSubmit } = useForm(
-      initialFormData,
+      {
+        name: "",
+        ruc: "",
+        email: "",
+        password: "",
+        description: "",
+        sector: "",
+        phone: "",
+        website: "",
+        location: "",
+        confirmPassword: "",
+    },
       onSubmit,
       validate ? () => validate(formData) : undefined
     );
@@ -36,7 +27,10 @@ const RegisterEmpresaForm = ({ onSubmit, validate }) => {
       <Box
         component="form"
         onSubmit={handleSubmit}
-        sx={{ display: "flex", flexDirection: "column" }}
+        sx={{ 
+          display: "flex", 
+          flexDirection: "column" 
+        }}
       >
         {page === 1 && (
           <div>
@@ -44,10 +38,9 @@ const RegisterEmpresaForm = ({ onSubmit, validate }) => {
               label="Correo Electrónico"
               name="email"
               type="email"
-              required={true}
               value={formData.email}
               onChange={handleChange}
-              error={errors.email}
+              error={!!errors.email}
               helperText={errors.email}
             />
   
@@ -56,9 +49,8 @@ const RegisterEmpresaForm = ({ onSubmit, validate }) => {
               name="password"
               type="password"
               value={formData.password}
-              required={true}
               onChange={handleChange}
-              error={errors.password}
+              error={!!errors.password}
               helperText={errors.password}
             />
   
@@ -67,9 +59,8 @@ const RegisterEmpresaForm = ({ onSubmit, validate }) => {
               name="confirmPassword"
               type="password"
               value={formData.confirmPassword}
-              required={true}
               onChange={handleChange}
-              error={errors.confirmPassword}
+              error={!!errors.confirmPassword}
               helperText={errors.confirmPassword}
             />
   
@@ -78,9 +69,8 @@ const RegisterEmpresaForm = ({ onSubmit, validate }) => {
               name="name"
               type="text"
               value={formData.name}
-              required={true}
               onChange={handleChange}
-              error={errors.name}
+              error={!!errors.name}
               helperText={errors.name}
             />
             <Button
@@ -99,21 +89,19 @@ const RegisterEmpresaForm = ({ onSubmit, validate }) => {
               label="RUC"
               name="ruc"
               type="number"
-              required={true}
               value={formData.ruc}
               onChange={handleChange}
-              error={errors.ruc}
+              error={!!errors.ruc}
               helperText={errors.ruc}
             />
   
             <TextInput
               label="Descripción"
               name="description"
-              required={true}
               type="text"
               value={formData.description}
               onChange={handleChange}
-              error={errors.description}
+              error={!!errors.description}
               helperText={errors.description}
             />
   
@@ -122,12 +110,11 @@ const RegisterEmpresaForm = ({ onSubmit, validate }) => {
               name="sector"
               type="text"
               value={formData.sector}
-              required={true}
               onChange={handleChange}
-              error={errors.sector}
+              error={!!errors.sector}
               helperText={errors.sector}
             />
-            <Button type="submit" variant="contained" size="large">
+            <Button type="submit" variant="contained" disabled={disabled} size="large">
               Registrar
             </Button>
           </div>

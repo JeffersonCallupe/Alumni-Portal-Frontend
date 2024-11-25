@@ -1,12 +1,33 @@
 export function validateLoginSM(formData){
   let errors = {};
-
+  const emailPattern = /^[a-zA-Z0-9._%+-]+@unmsm\.edu\.pe$/;
+  if (!emailPattern.test(formData.email)) {
+    errors.email = "Debe ingresar un correo institucional válido (unmsm.edu.pe)";
+  }
+  if (!formData.password) {
+    errors.password = "La contraseña es requerida";
+  }
   return errors;
 };
+
+export function validateLoginSUM(formData){
+  let errors = {};
+  if (!formData.usuario) {
+    errors.usuario = "El usuario de SUM es requerido";
+  }
+
+  if(!formData.clave) {
+    errors.clave = "La contraseña es requerida";
+  }
+  return errors;
+}
 
 export function validateRegistroSM(formData){
   let errors = {};
 
+  if (formData.password !== formData.confirmPassword) {
+    errors.confirmPassword = "Las contraseñas no coinciden";
+  }
 
   return errors;
 };

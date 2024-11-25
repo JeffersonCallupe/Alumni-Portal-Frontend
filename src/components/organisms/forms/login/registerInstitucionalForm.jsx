@@ -46,24 +46,18 @@ const RegisterInstitucionalForm = ({ onSubmit, validate }) => {
                 label="Apellido Paterno"
                 name="paternalSurname"
                 value={formData.paternalSurname}
-                onChange={handleChange}
-                error={errors.paternalSurname}
                 disabled={true}
               />
               <TextInput
                 label="Apellido Materno"
                 name="maternalSurname"
                 value={formData.maternalSurname}
-                onChange={handleChange}
-                error={errors.maternalSurname}
                 disabled={true}
               />
               <TextInput
                 label="Nombres"
                 name="name"
                 value={formData.name}
-                onChange={handleChange}
-                error={errors.name}
                 disabled={true}
               />
             </div>
@@ -72,23 +66,18 @@ const RegisterInstitucionalForm = ({ onSubmit, validate }) => {
                 label="Facultad"
                 name="faculty"
                 value={formData.faculty}
-                onChange={handleChange}
-                error={errors.faculty}
                 disabled={true}
               />
               <TextInput
                 label="Escuela"
                 name="career"
                 value={formData.career}
-                onChange={handleChange}
-                error={errors.career}
                 disabled={true}
               />
               <TextInput
                 label="Plan de Estudios"
                 name="plan"
                 value={formData.plan}
-                onChange={handleChange}
                 error={errors.plan}
                 disabled={true}
               />
@@ -98,24 +87,18 @@ const RegisterInstitucionalForm = ({ onSubmit, validate }) => {
                 label="Permanencia"
                 name="permanence"
                 value={formData.permanence}
-                onChange={handleChange}
-                error={errors.permanence}
                 disabled={true}
               />
               <TextInput
                 label="Código Alumno"
                 name="studentCode"
                 value={formData.studentCode}
-                onChange={handleChange}
-                error={errors.studentCode}
                 disabled={true}
               />
               <TextInput
                 label="Correo Institucional"
                 name="email"
                 value={formData.email}
-                onChange={handleChange}
-                error={errors.email}
                 disabled={true}
               />
             </div>
@@ -140,7 +123,7 @@ const RegisterInstitucionalForm = ({ onSubmit, validate }) => {
             type="password"
             value={formData.password}
             onChange={handleChange}
-            error={errors.password}
+            error={!!errors.password}
             helperText={errors.password}
           />
           <TextInput
@@ -149,7 +132,7 @@ const RegisterInstitucionalForm = ({ onSubmit, validate }) => {
             type="password"
             value={formData.confirmPassword}
             onChange={handleChange}
-            error={errors.confirmPassword}
+            error={!!errors.confirmPassword}
             helperText={errors.confirmPassword}
           />
           <Button type="submit" variant="contained" size="large">

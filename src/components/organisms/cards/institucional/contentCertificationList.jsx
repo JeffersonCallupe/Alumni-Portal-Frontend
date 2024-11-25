@@ -4,16 +4,11 @@ import InfoBaseCard from "../profileBaseCards/infosubBaseCard";
 import CircularProgress from "@mui/material/CircularProgress";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
-import Button from "@mui/material/Button";
 import ActionButton from "../../../atoms/buttons/actionButton";
-import Dialog from "@mui/material/Dialog";
-import DialogTitle from "@mui/material/DialogTitle";
-import DialogContent from "@mui/material/DialogContent";
-import DialogActions from "@mui/material/DialogActions";
 import CertificationForm from "../../forms/institucional/Edit/formEditCertification";
 import DeleteIcon from '@mui/icons-material/Delete';
 import VisibilityIcon from '@mui/icons-material/VisibilityOutlined';
-import DeleteConfirmationModal from "../../forms/institucional/deleteConfirmationModal";
+import DeleteConfirmationModal from "../../dialog/deleteConfirmationModal";
 
 const CertificationList = () => {
   const { userData } = useUserContext();

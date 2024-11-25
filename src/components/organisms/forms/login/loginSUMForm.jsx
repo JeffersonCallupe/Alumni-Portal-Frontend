@@ -27,7 +27,7 @@ const LoginForm = ({ onSubmit, disabled, validate}) => {
         name="usuario"
         value={formData.usuario}
         onChange={handleChange}
-        error={errors.usuario}
+        error={!!errors.usuario}
         helperText={errors.usuario}
       />
       <TextInput
@@ -36,7 +36,7 @@ const LoginForm = ({ onSubmit, disabled, validate}) => {
         type="password"
         value={formData.clave}
         onChange={handleChange}
-        error={errors.password}
+        error={!!errors.clave}
         helperText={errors.clave}
       />
       <Button type="submit" variant="contained" size="large" disabled={disabled} fullWidth>

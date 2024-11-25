@@ -1,9 +1,13 @@
 import React from "react";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
+import InputLabel from '@mui/material/InputLabel';
+import MenuItem from "@mui/material/MenuItem";
+import Select from "@mui/material/Select";
 import Textarea from "../../../atoms/inputs/TextareaAutosize";
 import TextInput from "../../../atoms/inputs/TextInput";
 import useForm from "../../../../hooks/useForm";
+import { Menu } from "@mui/material";
 
 const FormOferta = ({ initialData = {}, onSubmit, onCancel, loading, error }) => {
 
@@ -62,18 +66,22 @@ const FormOferta = ({ initialData = {}, onSubmit, onCancel, loading, error }) =>
                     disabled={loading}
                 />
             <div className="flex flex-row gap-4">
-                <TextInput
-                    label="Modalidad"
-                    name="modality"
-                    value={formData.modality}
-                    onChange={(e) => handleChange(e)}
-                    required={true}
-                    fullWidth
-                    margin="normal"
-                    error={!!errors.modality}
-                    helperText={errors.modality}
-                    disabled={loading}
-                />
+                <div className="flex flex-col flex-1">
+                    <InputLabel htmlFor="modality"> Modalidad </InputLabel>
+                    <Select
+                        label="Modalidad"
+                        id="modality"
+                        name="modality"
+                        value={formData.modality}
+                        onChange={(e) => handleChange(e)}
+                        disabled={loading}
+                        size="small"
+                    >
+                        <MenuItem value="Presencial">Presencial</MenuItem>
+                        <MenuItem value="Remoto">Remoto</MenuItem>
+                        <MenuItem value="Híbrido">Híbrido</MenuItem>
+                    </Select>
+                </div>
                 <TextInput
                     label="Años de Experiencia"
                     name="experience"
@@ -97,17 +105,28 @@ const FormOferta = ({ initialData = {}, onSubmit, onCancel, loading, error }) =>
                     disabled={loading}
                 />
             <div className="flex flex-row gap-4">
-                <TextInput
-                    label="Area"
-                    name="area"
-                    value={formData.area}
-                    onChange={(e) => handleChange(e)}
-                    fullWidth
-                    margin="normal"
-                    error={!!errors.area}
-                    helperText={errors.area}
-                    disabled={loading}
-                />
+                <div className="flex flex-col flex-1">
+                    <InputLabel id="area-label">Área</InputLabel>
+                    <Select
+                        labelId="area-label"
+                        label="Area"
+                        id="area"
+                        name="area"
+                        value={formData.area}
+                        onChange={(e) => handleChange(e)}
+                        disabled={loading}
+                        size="small"
+                    >
+                        <MenuItem value="Banca">Banca</MenuItem>
+                        <MenuItem value="Educación">Educación</MenuItem>
+                        <MenuItem value="Finanzas">Finanzas</MenuItem>
+                        <MenuItem value="Salud">Salud</MenuItem>
+                        <MenuItem value="Retail">Retail</MenuItem>
+                        <MenuItem value="Tecnología">Tecnología</MenuItem>
+                        <MenuItem value="Transporte">Transporte</MenuItem>
+                        <MenuItem value="Otro">Otro</MenuItem>
+                    </Select>
+                </div>
                 <TextInput
                     label="Horas Semanales"
                     name="workload"
@@ -136,17 +155,25 @@ const FormOferta = ({ initialData = {}, onSubmit, onCancel, loading, error }) =>
                 />
             </div>
             <div className="flex flex-row gap-4">
-                <TextInput
-                    label="Nivel"
-                    name="nivel"
-                    value={formData.nivel}
-                    onChange={(e) => handleChange(e)}
-                    fullWidth
-                    margin="normal"
-                    error={!!errors.nivel}
-                    helperText={errors.nivel}
-                    disabled={loading}
-                />
+                <div className="flex flex-col flex-1">
+                    <InputLabel htmlFor="nivel">Nivel</InputLabel>
+                    <Select
+                        id="nivel"
+                        name="nivel"
+                        value={formData.nivel}
+                        onChange={(e) => handleChange(e)}
+                        disabled={loading}
+                        size="small"
+                    >
+                        <MenuItem value="Practicante">Practicante</MenuItem>
+                        <MenuItem value="Trainee">Trainee</MenuItem>
+                        <MenuItem value="Junior">Junior</MenuItem>
+                        <MenuItem value="Semi-Senior">Semi-Senior</MenuItem>
+                        <MenuItem value="Senior">Senior</MenuItem>
+                        <MenuItem value="Ejecutivo">Ejecutivo</MenuItem>
+                        <MenuItem value="Otro">Otro</MenuItem>
+                    </Select>
+                </div>
                 <TextInput
                     label="Salario Minimo"
                     name="minSalary"
