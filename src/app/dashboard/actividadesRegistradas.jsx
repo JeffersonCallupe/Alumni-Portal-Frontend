@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import ActividadCard from '../../components/organisms/cards/dashboard/actividadCard';
 import HomeBase from '../../components/templates/home/home';
+import ConfirmationDialog from '../../components/organisms/dialog/confirmationDialog'; // Modal reutilizable
 import { useUserContext } from '../../contexts/userContext';
 import { useAlert } from '../../contexts/alertContext';
 import useGet from '../../hooks/useGet';
@@ -9,14 +10,14 @@ import useDelete from '../../hooks/useDelete';
 function ActividadesRegistradas() {
   const [enrollments, setEnrollments] = useState([]);
   const [activities, setActivities] = useState([]);
+  const [selectedActivity, setSelectedActivity] = useState(null); // Actividad seleccionada para cancelar inscripción
   const { userData } = useUserContext();
   const { showAlert } = useAlert();
+  const [openConfirmationDialog, setOpenConfirmationDialog] = useState(false); // Estado del modal
 
-  // Endpoint for user's enrollments
   const enrollmentsEndpoint = `${import.meta.env.VITE_API_URL}/api/enrollment/user/${userData?.id}`;
   const { getData: getEnrollments } = useGet(enrollmentsEndpoint);
 
-  // Endpoint for deleting enrollment
   const deleteEnrollmentEndpoint = `${import.meta.env.VITE_API_URL}/api/enrollment`;
   const { deleteData: deleteEnrollment } = useDelete(deleteEnrollmentEndpoint);
 
@@ -28,12 +29,11 @@ function ActividadesRegistradas() {
           const enrollmentData = await getEnrollments();
           setEnrollments(enrollmentData);
 
-          // Fetch details for each enrolled activity
-          const activityPromises = enrollmentData.map(enrollment => 
+          const activityPromises = enrollmentData.map(enrollment =>
             fetch(`${import.meta.env.VITE_API_URL}/api/activity/${enrollment.activityId}`, {
               headers: {
-                'Authorization': `Bearer ${sessionStorage.getItem('token')}`
-              }
+                'Authorization': `Bearer ${sessionStorage.getItem('token')}`,
+              },
             }).then(response => response.json())
           );
 
@@ -49,21 +49,33 @@ function ActividadesRegistradas() {
     fetchEnrollments();
   }, [userData]);
 
+  // Open confirmation modal
+  const handleOpenConfirmation = (activity) => {
+    setSelectedActivity(activity); // Guarda la actividad seleccionada
+    setOpenConfirmationDialog(true);
+  };
+
+  // Close confirmation modal
+  const handleCloseConfirmation = () => {
+    setSelectedActivity(null);
+    setOpenConfirmationDialog(false);
+  };
+
   // Handle canceling enrollment
-  const handleCancelEnrollment = async (activityId) => {
+  const handleConfirmCancelEnrollment = async () => {
+    if (!selectedActivity) return;
+
     try {
-      // Find the enrollment ID for this activity
-      const enrollment = enrollments.find(e => e.activityId === activityId);
-      
+      const enrollment = enrollments.find(e => e.activityId === selectedActivity.id);
       if (enrollment) {
         await deleteEnrollment(enrollment.id);
-        
-        // Remove the activity from the list
-        setActivities(prevActivities => 
-          prevActivities.filter(activity => activity.id !== activityId)
+
+        setActivities(prevActivities =>
+          prevActivities.filter(activity => activity.id !== selectedActivity.id)
         );
-        
+
         showAlert('Inscripción cancelada exitosamente', 'success');
+        handleCloseConfirmation(); // Cierra el modal
       }
     } catch (error) {
       console.error('Error canceling enrollment:', error);
@@ -79,7 +91,7 @@ function ActividadesRegistradas() {
     <HomeBase>
       <div className="flex flex-row gap-8 mt-4 mb-16 lg:mx-12 justify-center">
         <div className="lg:w-4/12">
-            <p>Filtros aaa</p>
+          <p>Filtros aaa</p>
         </div>
         <div className="flex flex-col w-10/12 lg:w-7/12">
           {activities.length > 0 ? (
@@ -94,7 +106,7 @@ function ActividadesRegistradas() {
                   userMaternalSurname: userData.maternalSurname,
                 }}
                 multimediaApi={`${import.meta.env.VITE_API_URL}/api/activity/activity-image`}
-                onCancelEnrollment={() => handleCancelEnrollment(activity.id)}
+                onCancelEnrollment={() => handleOpenConfirmation(activity)} // Muestra el modal de confirmación
               />
             ))
           ) : (
@@ -104,8 +116,16 @@ function ActividadesRegistradas() {
           )}
         </div>
       </div>
+      <ConfirmationDialog
+        open={openConfirmationDialog}
+        onClose={handleCloseConfirmation}
+        onConfirm={handleConfirmCancelEnrollment}
+        title="Cancelar Inscripción"
+        content={`¿Estás seguro de que deseas cancelar tu inscripción en la actividad "${selectedActivity?.title}"?`}
+      />
     </HomeBase>
   );
 }
 
 export default ActividadesRegistradas;
+

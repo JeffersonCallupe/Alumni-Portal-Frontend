@@ -19,7 +19,7 @@ const ActividadCard = ({
   onSeeListParticipants = false 
 }) => {
   const { id, title, description, eventType, startDate, endDate, location, enrollable, userRole } = actividad;
-  const { userId } = useUserContext();
+  const { userId, isInstitutional } = useUserContext();
   const isUser = userRole === 'USER';
   const entityId = isUser ? actividad.userId : actividad.companyId;
   const entityName = isUser
@@ -103,6 +103,7 @@ const ActividadCard = ({
             {onEdit && <Button startIcon={<ModeEditIcon />} texto={"Editar"} onClick={handleEdit}></Button>}
             {onDelete && <Button startIcon={<DeleteIcon />} texto={"Eliminar"} onClick={handleDelete}></Button>}
             {onCancelEnrollment && <Button texto={"Cancelar inscripción"} onClick={handleCancelEnrollment}></Button>}
+            {isInstitutional && onRegister && <Button texto={"Registrarse"} onClick={handleRegister}></Button>}
           </div>
         }
         title={`${title} (${eventType})`}
@@ -140,7 +141,6 @@ const ActividadCard = ({
       <CardActions disableSpacing>
         <div style={{ display: 'flex', justifyContent: 'flex-end', width: '100%' }}>
           {onSeeListParticipants && <Button startIcon={<VisibilityIcon/>} texto={"Ver participantes"} onClick={handleSeeListParticipants}></Button>}
-          {onRegister && <Button texto={"Registrarse"} onClick={handleRegister}></Button>}
         </div>
       </CardActions>
     </Card>
