@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import ActividadCard from "../../components/organisms/cards/dashboard/actividadCard";
 import HomeBase from "../../components/templates/home/home";
 import { useUserContext } from "../../contexts/userContext";
@@ -11,6 +11,7 @@ function ActividadesHistorico() {
   const { showAlert } = useAlert();
   const [actividades, setActividades] = useState([]);
   const [inscripciones, setInscripciones] = useState([]);
+  const fetchDataRef = useRef(false);
   const { getData: getActividades } = useGet(
     `${import.meta.env.VITE_API_URL}/api/activity/all`
   );
@@ -22,20 +23,21 @@ function ActividadesHistorico() {
   );
 
   useEffect(() => {
-    const fetchDatos = async () => {
-      try {
-        const actividadesData = await getActividades();
-        setActividades(actividadesData);
+    if(userData && !fetchDataRef.current) {
+      const fetchDatos = async () => {
+        try {
+          const actividadesData = await getActividades();
+          setActividades(actividadesData);
 
-        const inscripcionesData = await getInscripciones();
-        setInscripciones(inscripcionesData.map((i) => i.activityId)); // Solo IDs de actividades inscritas
-      } catch (error) {
-        console.error("Error al obtener los datos:", error);
-      }
-    };
+          const inscripcionesData = await getInscripciones();
+          setInscripciones(inscripcionesData.map((i) => i.activityId)); // Solo IDs de actividades inscritas
+        } catch (error) {
+          console.error("Error al obtener los datos:", error);
+        }
+      };
 
-    if (userData) {
       fetchDatos();
+      fetchDataRef.current = true;
     }
   }, [userData, getActividades, getInscripciones]);
 

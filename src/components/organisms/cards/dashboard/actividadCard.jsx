@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Card, CardHeader, CardMedia, CardContent, CardActions, Avatar, Typography } from '@mui/material';
 import Button from '../../../atoms/buttons/actionButton';
-
+import DeleteConfirmationModal from "../../dialog/deleteConfirmationModal";
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import ModeEditIcon from '@mui/icons-material/ModeEdit';
 import VisibilityIcon from '@mui/icons-material/VisibilityOutlined';
@@ -29,6 +29,8 @@ const ActividadCard = ({
 
   const [profileImage, setProfileImage] = useState(null);
   const [multimedia, setMultimedia] = useState(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
   const formatDate = (date) => {
     const d = new Date(date);
     const day = String(d.getDate()).padStart(2, '0');  // Asegura que el día tenga dos dígitos
@@ -65,12 +67,18 @@ const ActividadCard = ({
   }, [multimediaApi, id]);
 
   const handleEdit = () => onEdit && onEdit(actividad);
-  const handleDelete = () => onDelete && onDelete(id);
+  const handleDelete = () => setIsModalOpen(true);
+  const handleConfirmDelete = () => {
+    setIsModalOpen(false);
+    onDelete && onDelete(id);
+  }
   const handleSeeListParticipants = () => onSeeListParticipants && onSeeListParticipants(id);
   const handleRegister = () => onRegister && onRegister(id, userId);
   const handleCancelEnrollment = () => onCancelEnrollment && onCancelEnrollment(id);
 
+
   return (
+    <>
     <Card
       sx={{ 
         textAlign: 'left', 
@@ -125,7 +133,7 @@ const ActividadCard = ({
         </Typography>
         {enrollable && (
           <Typography variant="body2" color="primary">
-            Enrollable
+            Inscripciones Abiertas
           </Typography>
         )}
       </CardContent>
@@ -135,8 +143,16 @@ const ActividadCard = ({
           {onRegister && <Button texto={"Registrarse"} onClick={handleRegister}></Button>}
         </div>
       </CardActions>
-      
     </Card>
+
+    <DeleteConfirmationModal 
+      isOpen={isModalOpen}
+      onClose={() => setIsModalOpen(false)}
+      onConfirm={handleConfirmDelete}
+      title="Confirmar eliminación"
+      message="¿Está seguro de que desea eliminar esta actividad? Esta acción no se puede deshacer."
+    />
+    </>
   );
 };
 

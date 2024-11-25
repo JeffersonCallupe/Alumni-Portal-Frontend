@@ -94,7 +94,7 @@ function Actividades() {
             startDate: formData.startDate,
             endDate: formData.endDate,
             location: formData.location,
-            url: null,
+            url: formData.url,
             enrollable: formData.enrollable,
         };
     
@@ -103,7 +103,6 @@ function Actividades() {
     
             if (selectedActivity) {
                 // Actualización de la actividad
-                //const patchEndpoint = `${import.meta.env.VITE_API_URL}/api/activity/update-activity/${selectedActivity.id}`;
                 await patch(activityData, false);
                 activityId = selectedActivity.id;
                 showAlert(`Actividad actualizada con ID: ${activityId}`, "success");
@@ -123,22 +122,21 @@ function Actividades() {
             // Subir o actualizar multimedia
             if (formData.multimedia) {
                 await uploadProfilePicture(apiEndpoints.multimedia, activityId, formData.multimedia);
-                window.location.reload();
                 showAlert("Multimedia subida o actualizada con éxito.", "success");
             }
     
             // Actualizar la lista de actividades
-            const updatedActivities = await getData();
+            const updatedActivities = actividades.map(activity => 
+                activity.id === activityId ? { ...activity, ...formData } : activity
+            );
             setActividades(updatedActivities);
-    
-            handleClose(); // Cierra el modal
+
+            handleClose();
         } catch (error) {
             console.error("Error al guardar o actualizar la actividad y/o multimedia:", error);
         }
     };
     
-    
-
     return (
         <HomeBase>
             <div className="flex flex-row gap-8 mt-4 mb-16 lg:mx-12 justify-center">
@@ -154,6 +152,7 @@ function Actividades() {
                         onClose={handleClose}
                         initialData={selectedActivity || {}}
                         onSave={handleSaveActivity}
+                        multimediaApi={apiEndpoints.multimedia}
                     />
                     <div>
                         {actividades.length > 0 ? (
@@ -175,5 +174,4 @@ function Actividades() {
         </HomeBase>
     );
 }
-
 export default Actividades;

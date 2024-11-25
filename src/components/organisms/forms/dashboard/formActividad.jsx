@@ -1,12 +1,60 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
+import CloudUploadIcon from '@mui/icons-material/CloudUpload';
+import DeleteIcon from '@mui/icons-material/Delete';
+import InputLabel from "@mui/material/InputLabel";
+import NativeSelect from "@mui/material/NativeSelect";
+import Stack from "@mui/material/Stack";
 import Switch from "@mui/material/Switch";
 import Textarea from "../../../atoms/inputs/TextareaAutosize";
 import TextInput from "../../../atoms/inputs/TextInput";
+import Typography from "@mui/material/Typography";
 import useForm from "../../../../hooks/useForm";
+import { getProfilePicture, deleteProfilePicture } from "../../../../hooks/manageImageUser";
+import { useAlert } from "../../../../contexts/alertContext";
 
-const FormActividad = ({ initialData = {}, onSubmit, onCancel, loading, error }) => {  
+const FormActividad = ({ initialData = {}, onSubmit, onCancel, multimediaApi, loading, error }) => {  
+    const [imageFile, setImageFile] = useState(null);
+    const [multimedia, setMultimedia] = useState(initialData.multimedia || null);
+    const { showAlert } = useAlert();
+    
+    useEffect(() => {
+        const fetchMultimedia = async () => {
+          if (initialData.url) {
+            try {
+              const multimediaUrl = await getProfilePicture(multimediaApi, initialData.id);
+              setMultimedia(multimediaUrl);
+            } catch (error) {
+              showAlert('Error al obtener el contenido multimedia de la actividad:', "error");
+              setMultimedia(null);
+            }
+          }
+        };
+        fetchMultimedia();
+      }, [multimediaApi, initialData]);
+
+    const handleImageUpdate = (e) => {
+        const file = e.target.files[0];
+        if (file) {
+          setImageFile(file);
+          const reader = new FileReader();
+          reader.onloadend = () => {
+            setMultimedia(reader.result);
+          };
+          reader.readAsDataURL(file);
+        }
+      };
+
+      const handleImageDelete = async () => {
+        if (multimedia && initialData.id) {
+            await deleteProfilePicture(multimediaApi, initialData.id);
+            setMultimedia(null);
+            setImageFile(null);
+            showAlert("Imagen eliminada correctamente", "success");
+        }
+      };
+
     const handleSwitchChange = (e) => {
         handleChange({
             target: {
@@ -24,11 +72,10 @@ const FormActividad = ({ initialData = {}, onSubmit, onCancel, loading, error })
             startDate: initialData.startDate || "",
             endDate: initialData.endDate || "",
             location: initialData.location || "",
-            enrollable: initialData.enrollable || false,
-            multimedia: initialData.multimedia || null,
+            enrollable: initialData.enrollable || true,
         },
         async (formData) => {
-            await onSubmit(formData);
+            await onSubmit({...formData, multimedia: imageFile });
             if (!error) {
                 onCancel();
             }
@@ -46,6 +93,17 @@ const FormActividad = ({ initialData = {}, onSubmit, onCancel, loading, error })
                 width: "100%",
             }}
         >
+            <Stack direction="row" justifyContent={"flex-end"} spacing={1} sx={{ alignItems: 'center' }}>
+                <Typography>
+                    {formData.enrollable ? "Se aceptan inscripciones" : "Las inscripciones están cerradas"}
+                </Typography>
+                <Switch 
+                    label="Inscribible" 
+                    name="enrollable"
+                    checked={formData.enrollable} 
+                    onChange={handleSwitchChange}
+                />
+            </Stack>
             <div className="flex flex-row gap-4">
                 <TextInput
                     label="Título"
@@ -53,30 +111,32 @@ const FormActividad = ({ initialData = {}, onSubmit, onCancel, loading, error })
                     value={formData.title}
                     onChange={(e) => handleChange(e)}
                     required={true}
-                    fullWidth
                     margin="normal"
                     error={!!errors.title}
                     helperText={errors.title}
                     disabled={loading}
+                    className="flex-1"
                 />
-                <TextInput
-                    label="Tipo de evento"
-                    name="eventType"
-                    value={formData.eventType}
-                    onChange={(e) => handleChange(e)}
-                    required={true}
-                    fullWidth
-                    margin="normal"
-                    error={!!errors.eventType}
-                    helperText={errors.eventType}
-                    disabled={loading}
-                />
-                <Switch 
-                    label="Inscribible" 
-                    name="enrollable"
-                    checked={formData.enrollable} 
-                    onChange={handleSwitchChange}
-                />
+                <div className="flex flex-col flex-1">
+                    <InputLabel variant="standard" htmlFor="eventType">
+                        Tipo de Evento
+                    </InputLabel>
+                    <NativeSelect
+                        label="Tipo de evento"
+                        name="eventType"
+                        value={formData.eventType}
+                        onChange={(e) => handleChange(e)}
+                        fullWidth
+                        disabled={loading}
+                    >
+                        <option value={"Charla"}>Charla</option>
+                        <option value={"Conferencia"}>Conferencia</option>
+                        <option value={"Curso"}>Curso</option>
+                        <option value={"Taller"}>Taller</option>
+                        <option value={"Seminario"}>Seminario</option>
+                        <option value={"Otro"}>Otro</option>
+                    </NativeSelect>
+                </div>
             </div>
             <div>
                 <Textarea
@@ -127,14 +187,42 @@ const FormActividad = ({ initialData = {}, onSubmit, onCancel, loading, error })
                     disabled={loading}
                 />
             </div>
-            <input
-                type="file"
-                name="multimedia"
-                onChange={(e) => handleChange({ target: { name: "multimedia", value: e.target.files[0] } })}
-                accept="image/*,video/*"
-                style={{ marginTop: '16px' }}
-                disabled={loading}
-            />
+            {/* Sección de multimedia */}
+            <div className="flex flex-col items-center gap-4">
+                {multimedia && (
+                <div className="relative">
+                    <img src={multimedia} alt="Previsualización" style={{ maxWidth: "200px", borderRadius: "8px" }} />
+                </div>
+                )}
+                <label htmlFor="file-upload">
+                <input
+                    type="file"
+                    id="file-upload"
+                    style={{ display: "none" }}
+                    accept="image/*,video/*"
+                    onChange={handleImageUpdate}
+                />
+                <div className="flex flex-col md:flex-row gap-4 justify-center">
+                    <Button
+                        variant="contained"
+                        component="span"
+                        startIcon={<CloudUploadIcon />}
+                        disabled={loading}
+                    >
+                        {multimedia ? "Actualizar Archivo" : "Subir Archivo"}
+                    </Button>
+                    <Button 
+                        className="text-red-700"
+                        onClick={handleImageDelete} 
+                        startIcon={<DeleteIcon />}
+                        disabled={multimedia==null}
+                    >
+                        Eliminar archivo
+                    </Button>
+                </div>
+                </label>
+            </div>
+
             <div className="flex justify-end gap-4 mt-4">
                 <Button variant="outlined" onClick={onCancel} disabled={loading}>
                     Cancelar
@@ -143,7 +231,6 @@ const FormActividad = ({ initialData = {}, onSubmit, onCancel, loading, error })
                     {loading ? "Guardando..." : "Guardar"}
                 </Button>
             </div>
-            {error && <p className="text-red-500">{error}</p>}
         </Box>
     );
 };
