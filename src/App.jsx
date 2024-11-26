@@ -1,6 +1,9 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import "./App.css";
+import ActividadesRegistradas from "./app/dashboard/actividadesRegistradas";
+import ActividadesHistorico from "./app/dashboard/actividadesHistorico";
 import Actividades from "./app/dashboard/actividades";
+import Actividades2 from "./app/dashboard/actividades2";
 import Home from "./app/dashboard/home";
 import LoginInstitucional from "../src/app/login/LoginInstitucional";
 import LoginEmpresa from '../src/app/login/LoginEmpresa';
@@ -22,7 +25,7 @@ function App() {
             <Route path="/" element={<LoginInstitucional />} /> 
             <Route path="/loginEmpresa" element={<LoginEmpresa/>} />
             <Route path="/loginSUM" element={<LoginSUM />} />
-            <Route path="/loginEmpresa" element={<LoginEmpresa/>} />
+            {/* <Route path="/loginEmpresa" element={<LoginEmpresa/>} /> */}
             <Route path="/validacionSUM" element={<RegistroSUM />} />
             <Route path="/crearCuentaEmpresa" element={<RegistroEmpresa/>} />
             <Route path="/profile" element={<ProfileEmpresa />} />
@@ -30,6 +33,9 @@ function App() {
             <Route path="/home" element={<Home />} />
             <Route path="/actividades" element={<Actividades />} />
             <Route path="/ofertasLaborales" element={<OfertasLaborales />} />
+            <Route path="/actividadesRegistradas" element={<ActividadesRegistradas />} />
+            <Route path="/actividadesHistorico" element={<ActividadesHistorico />} />
+            <Route path="/actividades2" element={<Actividades2 />} />
           </Routes>
         </BrowserRouter>
       </UserProvider>

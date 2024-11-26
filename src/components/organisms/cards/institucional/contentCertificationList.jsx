@@ -13,7 +13,7 @@ import DialogActions from "@mui/material/DialogActions";
 import CertificationForm from "../../forms/institucional/Edit/formEditCertification";
 import DeleteIcon from '@mui/icons-material/Delete';
 import VisibilityIcon from '@mui/icons-material/VisibilityOutlined';
-import DeleteConfirmationModal from "../../forms/institucional/deleteConfirmationModal";
+import DeleteConfirmationModal from "../../dialog/deleteConfirmationModal";
 
 const CertificationList = () => {
   const { userData } = useUserContext();

@@ -151,14 +151,17 @@ function Navbar() {
               open={Boolean(anchorElActividades)}
               onClose={handleCloseMenu(setAnchorElActividades)}
             >
-              {isInstitutional && (
-                <MenuItem onClick={handleCloseMenu(setAnchorElActividades)}>
-                  <a href="/actividades">Mis actividades inscritas</a>
-                </MenuItem>
-              )}
+              <MenuItem onClick={handleCloseMenu(setAnchorElActividades)}>
+              <a href="/actividadesHistorico">Ver actividades</a>
+              </MenuItem>
               <MenuItem onClick={handleCloseMenu(setAnchorElActividades)}>
               <a href="/actividades">Mis actividades publicadas</a>
               </MenuItem>
+              {isInstitutional && (
+                <MenuItem onClick={handleCloseMenu(setAnchorElActividades)}>
+                  <a href="/actividadesRegistradas">Actividades registradas</a>
+                </MenuItem>
+              )}
             </Menu>
 
             <Button
@@ -178,14 +181,19 @@ function Navbar() {
               open={Boolean(anchorElOfertas)}
               onClose={handleCloseMenu(setAnchorElOfertas)}
             >
-              {isInstitutional && (
+              <MenuItem onClick={handleCloseMenu(setAnchorElOfertas)}>
+                <a href="/ofertasLaborales">Ver ofertas laborales</a>
+              </MenuItem>
+              {!isInstitutional && (
                 <MenuItem onClick={handleCloseMenu(setAnchorElOfertas)}>
-                  <a href="/ofertasLaborales">Ofertas Inscritas</a>
+                  <a href="/ofertasLaborales">Mis ofertas laborales</a>
                 </MenuItem>
               )}
-              <MenuItem onClick={handleCloseMenu(setAnchorElOfertas)}>
-                <a href="/ofertasLaborales">Ofertas Publicadas</a>
-              </MenuItem>
+              {isInstitutional && (
+                <MenuItem onClick={handleCloseMenu(setAnchorElOfertas)}>
+                  <a href="/ofertasLaborales">Mis ofertas postuladas</a>
+                </MenuItem>
+              )}
             </Menu>
           </Box>
 

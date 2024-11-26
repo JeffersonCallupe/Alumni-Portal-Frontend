@@ -1,17 +1,25 @@
-import React, { useEffect } from 'react';
-import { Card, CardHeader, CardMedia, CardContent, CardActions, Avatar, IconButton, Typography } from '@mui/material';
+import React, { useEffect, useState } from 'react';
+import { Card, CardHeader, CardMedia, CardContent, CardActions, Avatar, Typography } from '@mui/material';
+import Button from '../../../atoms/buttons/actionButton';
+import DeleteConfirmationModal from "../../dialog/deleteConfirmationModal";
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
-import FavoriteIcon from '@mui/icons-material/Favorite';
+import ModeEditIcon from '@mui/icons-material/ModeEdit';
+import VisibilityIcon from '@mui/icons-material/VisibilityOutlined';
 import DeleteIcon from '@mui/icons-material/Delete';
-import EditIcon from '@mui/icons-material/Edit';
-import ShareIcon from '@mui/icons-material/Share';
-import MoreVertIcon from '@mui/icons-material/MoreVert';
 import { getProfilePicture } from '../../../../hooks/manageImageUser';
+import { useUserContext } from '../../../../contexts/userContext';
 
-const ActividadCard = ({ actividad, multimediaApi, onEdit, onDelete }) => {
+const ActividadCard = ({ 
+  actividad,  
+  multimediaApi, 
+  onEdit = false, 
+  onDelete = false, 
+  onCancelEnrollment = false, 
+  onRegister = false, 
+  onSeeListParticipants = false 
+}) => {
   const { id, title, description, eventType, startDate, endDate, location, enrollable, userRole } = actividad;
-
-  // Detectamos si es un usuario o una compañía
+  const { userId, isInstitutional } = useUserContext();
   const isUser = userRole === 'USER';
   const entityId = isUser ? actividad.userId : actividad.companyId;
   const entityName = isUser
@@ -19,8 +27,17 @@ const ActividadCard = ({ actividad, multimediaApi, onEdit, onDelete }) => {
     : actividad.companyName;
   const profileApi = `${import.meta.env.VITE_API_URL}/api/image/download-${isUser ? 'user' : 'company'}`;
 
-  const [profileImage, setProfileImage] = React.useState(null);
-  const [multimedia, setMultimedia] = React.useState(null);
+  const [profileImage, setProfileImage] = useState(null);
+  const [multimedia, setMultimedia] = useState(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const formatDate = (date) => {
+    const d = new Date(date);
+    const day = String(d.getDate()).padStart(2, '0');  // Asegura que el día tenga dos dígitos
+    const month = String(d.getMonth() + 1).padStart(2, '0');  // Los meses comienzan en 0, así que sumamos 1
+    const year = d.getFullYear();
+    return `${day}-${month}-${year}`;
+  };
 
   useEffect(() => {
     const fetchProfilePicture = async () => {
@@ -28,7 +45,7 @@ const ActividadCard = ({ actividad, multimediaApi, onEdit, onDelete }) => {
         const imageUrl = await getProfilePicture(profileApi, entityId);
         setProfileImage(imageUrl);
       } catch (error) {
-        console.error('noai foto de perfil:', error);
+        console.error('Error al obtener la imagen de perfil:', error);
       }
     };
     fetchProfilePicture();
@@ -36,84 +53,106 @@ const ActividadCard = ({ actividad, multimediaApi, onEdit, onDelete }) => {
 
   useEffect(() => {
     const fetchMultimedia = async () => {
-      try {
-        const multimediaUrl = await getProfilePicture(multimediaApi, id);
-        setMultimedia(multimediaUrl);
-      } catch (error) {
-        console.error('Error al obtener el contenido multimedia de la actividad:', error);
+      if (multimediaApi) { // Solo intenta obtener multimedia si la URL está definida
+        try {
+          const multimediaUrl = await getProfilePicture(multimediaApi, id);
+          setMultimedia(multimediaUrl);
+        } catch (error) {
+          console.error('Error al obtener el contenido multimedia de la actividad:', error);
+          setMultimedia(null); // Asegúrate de manejar el error correctamente
+        }
       }
     };
     fetchMultimedia();
   }, [multimediaApi, id]);
 
-  const handleDelete = async () => {
-    try {
-      await onDelete(id);
-    } catch (error) {
-      console.error("Error al eliminar la actividad:", error);
-    }
+  const handleEdit = () => onEdit && onEdit(actividad);
+  const handleDelete = () => setIsModalOpen(true);
+  const handleConfirmDelete = () => {
+    setIsModalOpen(false);
+    onDelete && onDelete(id);
   }
+  const handleSeeListParticipants = () => onSeeListParticipants && onSeeListParticipants(id);
+  const handleRegister = () => onRegister && onRegister(id, userId);
+  const handleCancelEnrollment = () => onCancelEnrollment && onCancelEnrollment(id);
+
 
   return (
-    <Card sx={{ 
-      textAlign: 'left',
-      borderRadius: "8px",
-      boxShadow: "none",
-      padding: "0.75rem",
-      margin: "0.5rem 0",
-      
-    }}>
+    <>
+    <Card
+      sx={{ 
+        textAlign: 'left', 
+        borderRadius: "8px", 
+        boxShadow: "none", 
+        padding: "0.75rem", 
+        margin: "0.5rem 0" 
+      }}
+    >
       <CardHeader
         avatar={
           <Avatar aria-label="profile-pic">
-            {profileImage ? <img src={profileImage} alt="Profile pic" /> : <AccountCircleIcon sx={{ width: '100%', height: '100%' }}/>}
+            {profileImage ? (
+              <img src={profileImage} alt="Profile pic" />
+            ) : (
+              <AccountCircleIcon sx={{ width: '100%', height: '100%' }} />
+            )}
           </Avatar>
         }
         action={
-          <>
-            <IconButton aria-label="edit" onClick={() => onEdit(actividad)}>
-              <EditIcon />
-            </IconButton>
-            <IconButton aria-label="delete" onClick={handleDelete}>
-              <DeleteIcon />
-            </IconButton>
-            <IconButton aria-label="settings">
-              <MoreVertIcon />
-            </IconButton>
-          </>
+          <div style={{ display: 'flex', gap: '10px' }}>
+            {onEdit && <Button startIcon={<ModeEditIcon />} texto={"Editar"} onClick={handleEdit}></Button>}
+            {onDelete && <Button startIcon={<DeleteIcon />} texto={"Eliminar"} onClick={handleDelete}></Button>}
+            {onCancelEnrollment && <Button texto={"Cancelar inscripción"} onClick={handleCancelEnrollment}></Button>}
+            {isInstitutional && onRegister && <Button texto={"Registrarse"} onClick={handleRegister}></Button>}
+          </div>
         }
-        title={entityName} // Se muestra el nombre correcto
-        subheader={`${eventType} | ${startDate} - ${endDate}`}
+        title={`${title} (${eventType})`}
+        subheader={`${entityName}`}
       />
-      <CardMedia
-        component="img"
-        image={multimedia}
-        alt={title}
-        sx={{
-          width: 'auto',
-          height: 'auto',
-          maxWidth: '80%',
-          justifySelf: 'center',
-        }}
-      />
+      {multimedia && (
+        <CardMedia
+          component="img"
+          image={multimedia}
+          alt={title}
+          sx={{
+            width: 'auto',
+            height: 'auto',
+            maxWidth: '80%',
+            justifySelf: 'center',
+          }}
+        />
+      )}
       <CardContent>
+      <Typography variant="body2" sx={{ color: 'text.primary' }}>
+        {`Inicio: ${formatDate(startDate)} | Fin: ${formatDate(endDate)}`}
+      </Typography>
         <Typography variant="body2" sx={{ color: 'text.secondary' }}>
           {description}
         </Typography>
         <Typography variant="body2" color="textSecondary">
           {location}
         </Typography>
-        {enrollable && <Typography variant="body2" color="primary">Enrollable</Typography>}
+        {enrollable && (
+          <Typography variant="body2" color="primary">
+            Inscripciones Abiertas
+          </Typography>
+        )}
       </CardContent>
       <CardActions disableSpacing>
-        <IconButton aria-label="add to favorites">
-          <FavoriteIcon />
-        </IconButton>
-        <IconButton aria-label="share">
-          <ShareIcon />
-        </IconButton>
+        <div style={{ display: 'flex', justifyContent: 'flex-end', width: '100%' }}>
+          {onSeeListParticipants && <Button startIcon={<VisibilityIcon/>} texto={"Ver participantes"} onClick={handleSeeListParticipants}></Button>}
+        </div>
       </CardActions>
     </Card>
+
+    <DeleteConfirmationModal 
+      isOpen={isModalOpen}
+      onClose={() => setIsModalOpen(false)}
+      onConfirm={handleConfirmDelete}
+      title="Confirmar eliminación"
+      message="¿Está seguro de que desea eliminar esta actividad? Esta acción no se puede deshacer."
+    />
+    </>
   );
 };
 
