@@ -19,7 +19,7 @@ function App() {
       <UserProvider>
         <BrowserRouter>
           <Routes>
-            <Route path="/" element={<LoginInstitucional />} />
+            <Route path="/" element={<LoginInstitucional />} /> 
             <Route path="/loginEmpresa" element={<LoginEmpresa/>} />
             <Route path="/loginSUM" element={<LoginSUM />} />
             <Route path="/loginEmpresa" element={<LoginEmpresa/>} />

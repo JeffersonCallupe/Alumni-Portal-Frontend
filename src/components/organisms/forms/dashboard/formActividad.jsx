@@ -46,7 +46,7 @@ const FormActividad = ({ initialData = {}, onSubmit, onCancel, loading, error })
                 width: "100%",
             }}
         >
-            <div className="flex flex-row gap-4">
+            <div className="flex flex-row gap-4 ">
                 <TextInput
                     label="Título"
                     name="title"

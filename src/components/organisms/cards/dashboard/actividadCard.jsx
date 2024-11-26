@@ -60,7 +60,8 @@ const ActividadCard = ({ actividad, multimediaApi, onEdit, onDelete }) => {
       borderRadius: "8px",
       boxShadow: "none",
       padding: "0.75rem",
-      margin: "0.5rem 0"
+      margin: "0.5rem 0",
+      
     }}>
       <CardHeader
         avatar={
