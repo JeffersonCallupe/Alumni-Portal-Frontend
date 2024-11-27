@@ -229,6 +229,12 @@ function Actividades() {
             onSave={handleSaveActivity}
             multimediaApi={apiEndpoints.multimedia}
           />
+          <ParticipantsDialog
+            open={openParticipantsModal}
+            onClose={handleCloseParticipants}
+            participants={participants}
+            activityTitle={selectedActivity?.title}
+          />
         <div className="flex flex-col w-12/12 lg:w-11/12 ">
           <div>
             {filteredActividades.length > 0 ? (
