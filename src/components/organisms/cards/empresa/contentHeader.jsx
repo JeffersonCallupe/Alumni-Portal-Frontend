@@ -12,10 +12,6 @@ import useModal from "../../../../hooks/useModal";
 const CardContentEmpresa = ({ loading, onSubmit }) => {
   const { open, handleOpen, handleClose } = useModal();
   const { userData } = useUserContext();
-  const [openPasswordModal, setOpenPasswordModal] = useState(false); // Corregido: useState ahora está importado
-
-  const handleOpenPasswordChange = () => setOpenPasswordModal(true);
-  const handleClosePasswordChange = () => setOpenPasswordModal(false);
 
   const contentHeader = (
     <FormHeader 
@@ -47,15 +43,11 @@ const CardContentEmpresa = ({ loading, onSubmit }) => {
             zIndex: 1,
             position: "relative",
             bottom: "1rem",
+            marginRight: "0.3rem",
           }}
         >
           <EditButton onClick={handleOpen} />
         </Box>
-        <div className="flex flex-row gap-2 items-center" style={{ marginTop: '2rem', marginRight: '0.5rem' }}>
-          <div className="flex-shrink-0"> 
-            <ActionButton texto={"Cambiar Contraseña"} onClick={handleOpenPasswordChange}/>
-          </div>
-        </div>
       </div>
 
       {/* Modal para editar perfil */}
@@ -67,14 +59,6 @@ const CardContentEmpresa = ({ loading, onSubmit }) => {
         modalId="modal-profile"
       />
       
-      {/* Modal para cambiar contraseña */}
-      <DialogBase
-        open={openPasswordModal}
-        handleClose={handleClosePasswordChange}
-        title="Cambiar Contraseña"
-        content={<FormPassword userId={userData.id} onCancel={handleClosePasswordChange} />}
-        modalId="modal-password"
-      />
     </div>
   );
 };
