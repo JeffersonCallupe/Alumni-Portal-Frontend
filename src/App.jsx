@@ -3,7 +3,6 @@ import "./App.css";
 import ActividadesRegistradas from "./app/dashboard/actividadesRegistradas";
 import ActividadesHistorico from "./app/dashboard/actividadesHistorico";
 import Actividades from "./app/dashboard/actividades";
-import Actividades2 from "./app/dashboard/actividades2";
 import Configuraciones from "./app/profile/settings";
 import Home from "./app/dashboard/home";
 import LoginInstitucional from "../src/app/login/LoginInstitucional";
@@ -35,7 +34,6 @@ function App() {
             <Route path="/ofertasLaborales" element={<OfertasLaborales />} />
             <Route path="/actividadesRegistradas" element={<ActividadesRegistradas />} />
             <Route path="/actividadesHistorico" element={<ActividadesHistorico />} />
-            <Route path="/actividades2" element={<Actividades2 />} />
             <Route path="/settings" element={<Configuraciones />} />
           </Routes>
         </BrowserRouter>
