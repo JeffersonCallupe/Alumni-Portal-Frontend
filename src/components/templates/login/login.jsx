@@ -75,7 +75,7 @@ function LoginBase({
             )}
 
             {description && (
-              <Typography variant="body2" component="p" align="center" gutterBottom>
+              <Typography variant="h6" component="h2" align="center" gutterBottom>
                 {description}
               </Typography>
             )}

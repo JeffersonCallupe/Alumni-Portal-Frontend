@@ -3,8 +3,10 @@ import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import CloudUploadIcon from '@mui/icons-material/CloudUpload';
 import DeleteIcon from '@mui/icons-material/Delete';
+import FormControl from "@mui/material/FormControl";
 import InputLabel from "@mui/material/InputLabel";
-import NativeSelect from "@mui/material/NativeSelect";
+import MenuItem from "@mui/material/MenuItem";
+import Select from "@mui/material/Select";
 import Stack from "@mui/material/Stack";
 import Switch from "@mui/material/Switch";
 import Textarea from "../../../atoms/inputs/TextareaAutosize";
@@ -15,6 +17,7 @@ import { getProfilePicture, deleteProfilePicture } from "../../../../hooks/manag
 import { useAlert } from "../../../../contexts/alertContext";
 
 const FormActividad = ({ initialData = {}, onSubmit, onCancel, multimediaApi, loading, error }) => {  
+    const eventTypeOptions = ["Charla", "Conferencia", "Curso", "Taller", "Seminario", "Otro"]
     const [imageFile, setImageFile] = useState(null);
     const [multimedia, setMultimedia] = useState(initialData.multimedia || null);
     const { showAlert } = useAlert();
@@ -106,38 +109,40 @@ const FormActividad = ({ initialData = {}, onSubmit, onCancel, multimediaApi, lo
                     onChange={handleSwitchChange}
                 />
             </Stack>
-            <div className="flex flex-row gap-4">
-                <TextInput
-                    label="Título"
-                    name="title"
-                    value={formData.title}
-                    onChange={(e) => handleChange(e)}
-                    required={true}
-                    margin="normal"
-                    error={!!errors.title}
-                    helperText={errors.title}
-                    disabled={loading}
-                    className="flex-1"
-                />
-                <div className="flex flex-col flex-1">
-                    <InputLabel variant="standard" htmlFor="eventType">
-                        Tipo de Evento
-                    </InputLabel>
-                    <NativeSelect
-                        label="Tipo de evento"
+            <div className="flex flex-col md:flex-row gap-4">
+                <div className="w-full md:w-3/5">
+                    <TextInput
+                        label="Título"
+                        name="title"
+                        value={formData.title}
+                        onChange={(e) => handleChange(e)}
+                        required={true}
+                        margin="normal"
+                        error={!!errors.title}
+                        helperText={errors.title}
+                        disabled={loading}
+                        className="flex-1"
+                        fullWidth={true}
+                    />
+                </div>
+                <div className="flex flex-col flex-1 mt-2">
+                <FormControl>
+                    <InputLabel>Tipo de Evento</InputLabel>
+                    <Select
                         name="eventType"
                         value={formData.eventType}
                         onChange={(e) => handleChange(e)}
-                        fullWidth
+                        error={!!errors.eventType}
+                        label="Tipo de Evento"
                         disabled={loading}
                     >
-                        <option value={"Charla"}>Charla</option>
-                        <option value={"Conferencia"}>Conferencia</option>
-                        <option value={"Curso"}>Curso</option>
-                        <option value={"Taller"}>Taller</option>
-                        <option value={"Seminario"}>Seminario</option>
-                        <option value={"Otro"}>Otro</option>
-                    </NativeSelect>
+                        {eventTypeOptions.map((evento) => (
+                        <MenuItem key={evento} value={evento}>
+                            {evento}
+                        </MenuItem>
+                        ))}
+                    </Select>
+                </FormControl>
                 </div>
             </div>
             <div>
@@ -150,7 +155,7 @@ const FormActividad = ({ initialData = {}, onSubmit, onCancel, multimediaApi, lo
                     disabled={loading}
                 />
             </div>
-            <div className="flex flex-row gap-4">
+            <div className="flex flex-col md:flex-row gap-4">
                 <TextInput
                     label="Fecha de inicio"
                     name="startDate"

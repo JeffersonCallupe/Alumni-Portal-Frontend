@@ -46,10 +46,11 @@ function RegistroEmpresa() {
 
                 {/* Contenedor del formulario */}
                 <div className="relative flex flex-col items-center justify-center bg-white border border-gray-300 shadow-lg p-8 w-7/12 h-auto rounded-md">
-                    <img src={imgLogo} alt="Logo" className="h-32 mb-6" />
-                    <Typography variant="body2" component="p" align="center" gutterBottom>
+                <a href="/loginEmpresa">Regresar al Módulo de Inicio de Sesión</a>
+                <img src={imgLogo} alt="Logo" className="h-32 mb-6" />
+                    <Typography variant="h6" component="h1" align="center" gutterBottom>
                         Módulo de Registro de Empresas
-                    </Typography>
+                   </Typography>
                     <div className="mt-4 space-y-4">
                         <RegisterEmpresaForm
                             onSubmit={handleLogin}

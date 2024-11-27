@@ -41,8 +41,9 @@ function RegistroSUM() {
         ></div>
         {/* Contenedor del formulario */}
         <div className="relative flex flex-col items-center justify-center bg-white border border-gray-300 shadow-lg p-8 w-7/12 h-auto rounded-md">
+          <a href="/">Regresar a la página principal</a>
           <img src={imgLogo} alt="Logo" className="h-32 mb-6" />
-          <Typography variant="body2" component="p" align="center" gutterBottom>
+          <Typography variant="h6" component="h2" align="center" gutterBottom>
             Verificar Información Académica
           </Typography>
           <div className="mt-4 space-y-4">

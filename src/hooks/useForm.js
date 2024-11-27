@@ -11,11 +11,22 @@ const useForm = (initialValues, onSubmit, validate) => {
         }));
     };
 
-    const handleValidation = () => {
+    const handleValidation = (fieldsToValidate=null) => {
         if (validate) {
             const validationErrors = validate(formData);
-            setErrors(validationErrors);
-            return Object.keys(validationErrors).length === 0;
+    
+            // Si se pasan campos específicos, filtrar los errores
+            const filteredErrors = fieldsToValidate
+                ? Object.keys(validationErrors).reduce((acc, field) => {
+                    if (fieldsToValidate.includes(field)) {
+                        acc[field] = validationErrors[field];
+                    }
+                    return acc;
+                }, {})
+                : validationErrors;
+    
+            setErrors(filteredErrors);
+            return Object.keys(filteredErrors).length === 0;
         }
         return true;
     };
@@ -33,6 +44,7 @@ const useForm = (initialValues, onSubmit, validate) => {
         formData,
         errors,
         handleChange,
+        handleValidation,
         handleSubmit
     };
 };
