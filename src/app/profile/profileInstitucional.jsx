@@ -2,7 +2,7 @@ import React from "react";
 import HomeBase from "../../components/templates/home/home";
 import FormAbout from "../../components/organisms/forms/institucional/formAbout";
 import InfoBaseCard from "../../components/organisms/cards/profileBaseCards/infoBaseCard";
-import InfoBaseCardContent from "../../components/organisms/cards/profileBaseCards/infoBaseCardContent";
+import InfoBaseCardContent from "../../components/organisms/cards/profileBaseCards/infoBaseCard";
 import ProfileBaseCard from "../../components/organisms/cards/profileBaseCards/headerBaseCard";
 import ProjectList from "../../components/organisms/cards/institucional/contentProjectList";
 import SkillList from "../../components/organisms/cards/institucional/contentSkillList";
@@ -181,30 +181,35 @@ function ProfileInstitucional() {
               />
               <InfoBaseCardContent
                   title="Experiencia Laboral"
+                  content={true}
                   cardContent={<WorkExperienceList />}
                   dialogContent={contentWorkExperience}
                   modalId="modal-work-experience"
               />
               <InfoBaseCardContent
                   title="Educación"
+                  content={true}
                   cardContent={<EducationList />}
                   dialogContent={contentEducation}
                   modalId="modal-education"
               />
               <InfoBaseCardContent
                   title="Certificaciones"
+                  content={true}
                   cardContent={<CertificationList />}
                   dialogContent={contentCertification}
                   modalId="modal-certifications"
               />
               <InfoBaseCardContent
                   title="Habilidades Claves"
+                  content={true}
                   cardContent={<SkillList />}
                   dialogContent={contentSkills}
                   modalId="modal-skills"
               />
               <InfoBaseCardContent
                   title="Proyectos"
+                  content={true}
                   cardContent={<ProjectList />}
                   dialogContent={contentProject}
                   modalId="modal-projects"

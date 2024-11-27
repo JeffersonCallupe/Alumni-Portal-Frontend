@@ -12,7 +12,7 @@ const useUpdatePassword = () => {
     setLoading(true);
     setError(null);
     try {
-      const response = await fetch(`http://178.128.147.224:8080/api/${usertype}/updatePassword/${userId}`, {
+      const response = await fetch(`${import.meta.env.VITE_API_URL}/api/${usertype}/updatePassword/${userId}`, {
         method: "POST",
         headers: {
           'Content-Type': 'application/json',

@@ -14,7 +14,7 @@ const FormEditEducation = ({ educationId, initialData, onUpdate, onCancel }) => 
     description: initialData?.description || "",
   });
 
-  const { loading, error, updateData } = useUpdateData(`http://178.128.147.224:8080/api/education/${educationId}`);
+  const { loading, error, updateData } = useUpdateData(`${import.meta.env.VITE_API_URL}/api/education/${educationId}`);
 
   const handleChange = (e) => {
     const { name, value } = e.target;

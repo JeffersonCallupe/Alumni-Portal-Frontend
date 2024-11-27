@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { useUserContext } from "../../../../contexts/userContext";
-import InfoBaseCard from "../profileBaseCards/infosubBaseCard";
+import InfoBaseCard from "../profileBaseCards/infoBaseCard";
 import CircularProgress from "@mui/material/CircularProgress";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import FormEditSkill from "../../forms/institucional/Edit/formEditSkill";
 import ActionButton from "../../../atoms/buttons/actionButton"
 import DeleteIcon from '@mui/icons-material/Delete';
-import DeleteConfirmationModal from "../../dialog/deleteConfirmationModal";
+import DeleteConfirmationModal from "../../dialog/deleteConfirmationDialog";
 
 const SkillList = () => {
   const { userData } = useUserContext();
@@ -21,7 +21,7 @@ const SkillList = () => {
   useEffect(() => {
     const fetchSkills = async () => {
       try {
-        const response = await fetch(`http://178.128.147.224:8080/api/skill/user/${userData.id}`);
+        const response = await fetch(`${import.meta.env.VITE_API_URL}/api/skill/user/${userData.id}`);
         const data = await response.json();
         setSkills(data);
       } catch (error) {
@@ -66,7 +66,7 @@ const SkillList = () => {
     if (!skillToDelete) return;
 
     try {
-      const response = await fetch(`http://178.128.147.224:8080/api/skill/${skillToDelete.id}`, {
+      const response = await fetch(`${import.meta.env.VITE_API_URL}/api/skill/${skillToDelete.id}`, {
         method: "DELETE",
       });
       if (response.ok) {
@@ -110,6 +110,7 @@ const SkillList = () => {
           <InfoBaseCard
             key={skill.id}
             title={skill.name}
+            sub={true}
             cardContent={
               <Box 
                 display="flex" 

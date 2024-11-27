@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useUserContext } from "../../../../contexts/userContext";
-import InfoBaseCard from "../profileBaseCards/infosubBaseCard";
+import InfoBaseCard from "../profileBaseCards/infoBaseCard";
 import CircularProgress from "@mui/material/CircularProgress";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
@@ -13,7 +13,7 @@ import DialogContent from "@mui/material/DialogContent";
 import DialogActions from "@mui/material/DialogActions";
 import DeleteIcon from '@mui/icons-material/Delete';
 import VisibilityIcon from '@mui/icons-material/VisibilityOutlined';
-import DeleteConfirmationModal from "../../../organisms/dialog/deleteConfirmationModal";
+import DeleteConfirmationModal from "../../../organisms/dialog/deleteConfirmationDialog";
 
 const WorkExperienceList = () => {
   const { userData } = useUserContext();
@@ -27,7 +27,7 @@ const WorkExperienceList = () => {
   useEffect(() => {
     const fetchWorkExperiences = async () => {
       try {
-        const response = await fetch(`http://178.128.147.224:8080/api/work-experience/user/${userData.id}`);
+        const response = await fetch(`${import.meta.env.VITE_API_URL}/api/work-experience/user/${userData.id}`);
         const data = await response.json();
         setExperiences(data);
       } catch (error) {
@@ -73,7 +73,7 @@ const WorkExperienceList = () => {
     if (!experienceToDelete) return;
 
     try {
-      const response = await fetch(`http://178.128.147.224:8080/api/work-experience/${experienceToDelete.id}`, {
+      const response = await fetch(`${import.meta.env.VITE_API_URL}/api/work-experience/${experienceToDelete.id}`, {
         method: "DELETE",
       });
       if (response.ok) {
@@ -115,6 +115,7 @@ const WorkExperienceList = () => {
         experiences.map((experience) => (
           <InfoBaseCard
             key={experience.id}
+            sub={true}
             title={experience.jobTitle}
             cardContent={
               <div>

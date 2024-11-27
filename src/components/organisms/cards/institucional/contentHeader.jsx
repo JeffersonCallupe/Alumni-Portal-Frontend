@@ -5,25 +5,35 @@ import DialogBase from "../../dialog/profileBaseDialog";
 import FormHeader from "../../forms/institucional/formHeader";
 import Typography from "@mui/material/Typography";
 import ActionButton from "../../../atoms/buttons/actionButton";
-import FormPassword from "../../forms/empresa/formPassword"; // Importar el formulario de contraseña
 import { useUserContext } from "../../../../contexts/userContext";
 import useModal from "../../../../hooks/useModal";
 import DownloadForOfflineOutlinedIcon from '@mui/icons-material/DownloadForOfflineOutlined';
 
 const CardContentInstitucional = ({ loading, onSubmit }) => {
   const { open, handleOpen, handleClose } = useModal();
-  const { userData } = useUserContext();
-  const [openPasswordModal, setOpenPasswordModal] = useState(false);
-
-  const handleOpenPasswordChange = () => setOpenPasswordModal(true);
-  const handleClosePasswordChange = () => setOpenPasswordModal(false);
+  const { userData } = useUserContext();  // Desestructuramos solo userData
 
   const handleDownloadCV = async () => {
     const userId = userData.id;
-    const url = `http://178.128.147.224:8080/api/user/cv/download/${userId}`;
+    const url = `${import.meta.env.VITE_API_URL}/api/user/cv/download/${userId}`;
+    
+    // Obtener el token desde sessionStorage
+    const token = sessionStorage.getItem("token");  // Asumiendo que el token se guarda con la clave 'token'
+
+    if (!token) {
+      alert("No se pudo obtener el token. Por favor, inicie sesión nuevamente.");
+      return;
+    }
 
     try {
-      const response = await fetch(url);
+      const response = await fetch(url, {
+        method: "GET",
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`,  // Usar el token desde sessionStorage
+        }
+      });
+
       if (response.ok) {
         const blob = await response.blob();
         const link = document.createElement("a");
@@ -66,31 +76,20 @@ const CardContentInstitucional = ({ loading, onSubmit }) => {
             zIndex: 1,
             position: "relative",
             bottom: "1rem",
+            marginRight: "0.3rem",
           }}
         >
           <EditButton onClick={handleOpen} />
         </Box>
-        <div className="flex flex-row gap-2 items-center" style={{ marginTop: "3.5rem", marginRight: "3.5rem" }}>
-          <div className="flex-shrink-0"> 
-            <ActionButton texto={"Cambiar Contraseña"} onClick={handleOpenPasswordChange}/>
-          </div>
+        <div className="flex flex-col gap-2 items-center" style={{ marginTop: "3.5rem", marginRight: "0.5rem" }}>
           <div className="flex-shrink-0">
-            <ActionButton texto={"Descargar CV"} startIcon={<DownloadForOfflineOutlinedIcon />} onClick={handleDownloadCV} /> {/* Asocia la función aquí */}
+            <ActionButton texto={"Descargar CV"} startIcon={<DownloadForOfflineOutlinedIcon />} onClick={handleDownloadCV} />
           </div>
         </div>
       </div>
 
       {/* Modal para editar perfil */}
       <DialogBase open={open} handleClose={handleClose} title="Información Personal" content={<FormHeader onSubmit={onSubmit} onCancel={handleClose} loading={loading} />} modalId="modal-profile" />
-
-      {/* Modal para cambiar contraseña */}
-      <DialogBase
-        open={openPasswordModal}
-        handleClose={handleClosePasswordChange}
-        title="Cambiar Contraseña"
-        content={<FormPassword userId={userData.id} onCancel={handleClosePasswordChange} />}
-        modalId="modal-password"
-      />
     </div>
   );
 };

@@ -3,7 +3,7 @@ import Dialog from "@mui/material/Dialog";
 import DialogContent from "@mui/material/DialogContent";
 import DialogTitle from "@mui/material/DialogTitle";
 
-const DialogBase = ({ open, handleClose, title, content, modalId }) => {
+const DialogBase = ({ open, handleClose, title=false, content, modalId }) => {
 
   const dialogContentWithProps = React.cloneElement(content, { onCancel: handleClose});
 
@@ -15,10 +15,10 @@ const DialogBase = ({ open, handleClose, title, content, modalId }) => {
       } 
     }}>
       <div className="bg-neutral-100">
-        <DialogTitle id={modalId} sx={{padding:"1.5rem 2rem"}}>{title}</DialogTitle>
+        {title && <DialogTitle id={modalId} sx={{padding:"1.5rem 2rem"}}>{title}</DialogTitle>}
         <DialogContent sx={{padding:"1rem 2rem"}}>
           {dialogContentWithProps}
-          </DialogContent>
+        </DialogContent>
       </div>
     </Dialog>
   );

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useUserContext } from "../../../../contexts/userContext";
-import InfoBaseCard from "../profileBaseCards/infosubBaseCard";
+import InfoBaseCard from "../profileBaseCards/infoBaseCard";
 import CircularProgress from "@mui/material/CircularProgress";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
@@ -13,7 +13,7 @@ import DialogActions from "@mui/material/DialogActions";
 import FormEditProject from "../../forms/institucional/Edit/formEditProject";
 import DeleteIcon from "@mui/icons-material/Delete";
 import VisibilityIcon from '@mui/icons-material/VisibilityOutlined';
-import DeleteConfirmationModal from "../../dialog/deleteConfirmationModal";
+import DeleteConfirmationModal from "../../dialog/deleteConfirmationDialog";
 
 const ProjectList = () => {
   const { userData } = useUserContext();
@@ -27,7 +27,7 @@ const ProjectList = () => {
   useEffect(() => {
     const fetchProjects = async () => {
       try {
-        const response = await fetch(`http://178.128.147.224:8080/api/project/user/${userData.id}`);
+        const response = await fetch(`${import.meta.env.VITE_API_URL}/api/project/user/${userData.id}`);
         const data = await response.json();
         setProjects(data);
       } catch (error) {
@@ -70,7 +70,7 @@ const ProjectList = () => {
   const handleDeleteConfirm = async () => {
     if (!projectToDelete) return;
     try {
-      const response = await fetch(`http://178.128.147.224:8080/api/project/${projectToDelete.id}`, {
+      const response = await fetch(`${import.meta.env.VITE_API_URL}/api/project/${projectToDelete.id}`, {
         method: "DELETE",
       });
       if (response.ok) {
@@ -89,7 +89,6 @@ const ProjectList = () => {
 
   const dialogContent = (project) => (
     <div>
-      <Typography variant="h6">Editar Proyecto: {project.name}</Typography>
       <FormEditProject
         projectId={project.id}
         initialData={project}
@@ -114,6 +113,7 @@ const ProjectList = () => {
           <InfoBaseCard
             key={project.id}
             title={project.name}
+            sub={true}
             cardContent={
               <div>
                 <Typography variant="subtitle2">Fecha: {project.date}</Typography>

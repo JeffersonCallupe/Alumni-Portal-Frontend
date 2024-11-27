@@ -5,17 +5,20 @@ import CardActions from "@mui/material/CardActions";
 import CardContent from "@mui/material/CardContent";
 import DialogBase from "../../dialog/profileBaseDialog";
 import EditButton from "../../../atoms/buttons/editButton";
+import AddButton from "../../../atoms/buttons/addButton";
 import Typography from "@mui/material/Typography";
 import useModal from "../../../../hooks/useModal";
 
-const InfoBaseCard = ({ title, cardContent, dialogContent, modalId,sx}) => {
+const InfoBaseCard = ({ title, cardContent, dialogContent, modalId,sub=false,content=false}) => {
   const { open, handleOpen, handleClose } = useModal();
 
   return (
     <Card
       className="profile-base-card"
       sx={{
-        width: { xs: "70vw", md: "55vw" },
+        width: sub
+        ? { xs: "65vw", md: "50vw" }
+        : { xs: "70vw", md: "55vw" },
         padding: "0.75rem 0.75rem 0 0.75rem",
       }}
     >
@@ -25,17 +28,18 @@ const InfoBaseCard = ({ title, cardContent, dialogContent, modalId,sx}) => {
             {title}
           </Typography>
           <CardActions sx={{ padding: "0" }}>
-            <EditButton onClick={handleOpen}>Editar</EditButton>
+            {content && <AddButton onClick={handleOpen}>Añadir</AddButton>}
+            {!content && <EditButton onClick={handleOpen}>Editar</EditButton>}
           </CardActions>
         </div>
         <Card
           align="left"
           sx={{
-            border: "1px solid #e5e5e5",
-            borderRadius: "8px",
+            border: sub || content ? "none" : "1px solid #e5e5e5", // Condicional para la propiedad 'border'
+            borderRadius: sub ? "0px" : "8px",          // Condicional para la propiedad 'borderRadius'
             boxShadow: "none",
-            padding: "0.75rem",
-            margin: "0.5rem 0"
+            padding: sub ? "0.03remx" : "0.75rem 0.60rem 0.60rem 0.60rem",
+            margin: sub ? "0.3rem 0" : "0.5rem 0",
           }}
         >
           {cardContent}
@@ -45,7 +49,7 @@ const InfoBaseCard = ({ title, cardContent, dialogContent, modalId,sx}) => {
       <DialogBase
         open={open}
         handleClose={handleClose}
-        title={`Editar ${title}`}
+        title={sub ? false : content ? `Añadir ${title}`:`Editar ${title}`} // Condicional para la propiedad 'title'
         content={dialogContent}
         modalId={modalId}
       />

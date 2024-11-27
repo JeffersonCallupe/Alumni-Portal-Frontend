@@ -14,7 +14,7 @@ const FormEditCertification = ({ certificationId, initialData, onUpdate, onCance
   });
   
   // Usar el hook para manejar la actualización de datos
-  const { loading, error, updateData } = useUpdateData(`http://178.128.147.224:8080/api/certification/${certificationId}`);
+  const { loading, error, updateData } = useUpdateData(`${import.meta.env.VITE_API_URL}/api/certification/${certificationId}`);
 
   const handleChange = (e) => {
     const { name, value } = e.target;

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useUserContext } from "../../../../contexts/userContext";
-import InfoBaseCard from "../profileBaseCards/infosubBaseCard"; 
+import InfoBaseCard from "../profileBaseCards/infoBaseCard"; 
 import CircularProgress from "@mui/material/CircularProgress";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
@@ -13,7 +13,7 @@ import DialogActions from "@mui/material/DialogActions";
 import FormEditEducation from "../../forms/institucional/Edit/formEditEducation";
 import DeleteIcon from '@mui/icons-material/Delete';
 import VisibilityIcon from '@mui/icons-material/VisibilityOutlined';
-import DeleteConfirmationModal from "../../dialog/deleteConfirmationModal"; // Asegúrate de ajustar la ruta
+import DeleteConfirmationModal from "../../dialog/deleteConfirmationDialog"; // Asegúrate de ajustar la ruta
 
 const EducationList = () => {
   const { userData } = useUserContext();
@@ -28,7 +28,7 @@ const EducationList = () => {
   useEffect(() => {
     const fetchEducationData = async () => {
       try {
-        const response = await fetch(`http://178.128.147.224:8080/api/education/user/${userData.id}`);
+        const response = await fetch(`${import.meta.env.VITE_API_URL}/api/education/user/${userData.id}`);
         const data = await response.json();
         setEducations(data);
       } catch (error) {
@@ -74,7 +74,7 @@ const EducationList = () => {
     if (!educationToDelete) return;
 
     try {
-      const response = await fetch(`http://178.128.147.224:8080/api/education/${educationToDelete.id}`, {
+      const response = await fetch(`${import.meta.env.VITE_API_URL}/api/education/${educationToDelete.id}`, {
         method: "DELETE",
       });
       if (response.ok) {
@@ -118,6 +118,7 @@ const EducationList = () => {
           <InfoBaseCard
             key={education.id}
             title={education.degree + " en " + education.fieldOfStudy}
+            sub={true}
             cardContent={
               <div>
                 <Typography variant="subtitle2">Institución: {education.institution}</Typography>

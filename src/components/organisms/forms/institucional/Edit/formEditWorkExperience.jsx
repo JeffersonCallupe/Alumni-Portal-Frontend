@@ -14,7 +14,7 @@ const FormWorkExperience = ({ workExperienceId, initialData, onUpdate }) => {
     description: initialData?.description || "",
   });
 
-  const { loading, error, updateData } = useUpdateData(`http://178.128.147.224:8080/api/work-experience/${workExperienceId}`);
+  const { loading, error, updateData } = useUpdateData(`${import.meta.env.VITE_API_URL}/api/work-experience/${workExperienceId}`);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
