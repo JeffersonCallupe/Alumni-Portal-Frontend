@@ -221,8 +221,7 @@ function Actividades() {
 
   return (
     <HomeBase aside={asideContent}>
-      <div className="flex flex-row gap-8 mt-4 mb-16 lg:mx-12 justify-center">
-        
+      <div className="flex flex-row  mt-4 mb-16 gap-8 lg:mx-1 justify-center">
           <ActividadDialog
             open={open}
             onClose={handleClose}
@@ -230,13 +229,7 @@ function Actividades() {
             onSave={handleSaveActivity}
             multimediaApi={apiEndpoints.multimedia}
           />
-          <ParticipantsDialog
-            open={openParticipantsModal}
-            onClose={handleCloseParticipants}
-            participants={participants}
-            activityTitle={selectedActivity?.title}
-          />
-        <div className="flex flex-col w-12/12 lg:w-12/12 ">
+        <div className="flex flex-col w-12/12 lg:w-11/12 ">
           <div>
             {filteredActividades.length > 0 ? (
               filteredActividades.map((actividad) => (
