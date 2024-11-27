@@ -150,7 +150,7 @@ function OfertasLaborales() {
   return (
     <HomeBase>
       <div className="flex flex-row gap-8 mt-4 mb-16 lg:mx-12 justify-center">
-        <div className="lg:w-4/12 ">
+        <div className="lg:w-4/12  ">
           <ConBuscador
           searchTerm={searchTerm}
           setSearchParams={setSearchParams}

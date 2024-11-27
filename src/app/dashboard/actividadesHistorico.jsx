@@ -99,10 +99,14 @@ function ActividadesHistorico() {
 
 
   // Se filtra las actividades según los términos de búsqueda, tipo de evento y fecha
+
+  const normalizeDate = (dateStr) => new Date(dateStr).setHours(0, 0, 0, 0);
+
   const filteredActivities = actividades.filter((actividad) => {
     if (!searchTerm && !eventTypeFilter && !startDateFilter) return true; // Sin filtro por defecto
     if (!actividad) return false;
-    if (searchTerm) {   // Filtro por el nombre de la empresa 
+  
+    if (searchTerm) { // Filtro por el nombre de la empresa 
       if (
         !actividad.companyName ||
         !actividad.companyName.toLowerCase().includes(searchTerm.toLowerCase())
@@ -110,31 +114,22 @@ function ActividadesHistorico() {
         return false;
       }
     }
-    
-
-    if (eventTypeFilter) {     // Filtro del tipo de evento
+  
+    if (eventTypeFilter) { // Filtro del tipo de evento
       if (!actividad.eventType || actividad.eventType !== eventTypeFilter) {
         return false;
       }
     }
-
-    if (startDateFilter) {      // Filtrar por fecha de inicio 
-      const actividadStartDate = new Date(actividad.startDate);
-      const filterStartDate = new Date(startDateFilter);
-
-      // Comparando solo la fecha (sin horas)
-      const actividadStartDateFormatted = actividadStartDate
-        .toISOString()
-        .split("T")[0]; // "YYYY-MM-DD"
-      const filterStartDateFormatted = filterStartDate
-        .toISOString()
-        .split("T")[0]; // "YYYY-MM-DD"
-
-      if (actividadStartDateFormatted !== filterStartDateFormatted) {
+  
+    if (startDateFilter) { // Filtrar por fecha de inicio
+      const actividadStartDate = normalizeDate(actividad.startDate);
+      const filterStartDate = normalizeDate(startDateFilter);
+  
+      if (actividadStartDate < filterStartDate) { // Comparación ajustada
         return false;
       }
     }
-
+  
     return true;
   });
 

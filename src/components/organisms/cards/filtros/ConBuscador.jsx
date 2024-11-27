@@ -32,15 +32,15 @@ const ConBuscador = ({ searchTerm, setSearchParams, viewActivies }) => {
   const handleApplyFilters = () => {
     const params = {};
     if (inputValue.trim()) params.filter = inputValue;
-    if (selectedEventType) params.eventType = selectedEventType;
-    if (selectedStartDate) params.startDate = selectedStartDate;
-    if (!viewActivies) {
+    if(viewActivies){
+      if (selectedEventType) params.eventType = selectedEventType;
+      if (selectedStartDate) params.startDate = selectedStartDate;
+    }else{
       if (selectedModality) params.modality = selectedModality;
       if (selectedArea) params.area = selectedArea;
       if (selectedNivel) params.nivel = selectedNivel;
-   
+    }
     setSearchParams(params);
-  };
 }
 
 
@@ -86,7 +86,7 @@ const ConBuscador = ({ searchTerm, setSearchParams, viewActivies }) => {
         <Box sx={{ display: "flex", flexDirection: "column", width: "70%", margin: "0 auto", paddingTop: "20px", gap: "20px" }}>
           
           {/* Renderizado por condicional */}
-          
+
           {viewActivies ? (
             <>
               <Autocomplete
