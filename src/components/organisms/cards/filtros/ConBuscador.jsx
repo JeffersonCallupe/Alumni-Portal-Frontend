@@ -1,98 +1,100 @@
 import * as React from "react";
 import Box from "@mui/material/Box";
 import Card from "@mui/material/Card";
-import {TextField } from "@mui/material";
-
+import { TextField } from "@mui/material";
+import { useState, useEffect } from "react";
 import FilterAltIcon from "@mui/icons-material/FilterAlt";
 import Autocomplete from "@mui/material/Autocomplete";
-import TextInput from "../../../atoms/inputs/TextInput";
 import ActionButton from "../../../atoms/buttons/actionButton";
-import { useSearchParams } from "react-router-dom";
 
-const options = ["The Godfather", "Pulp Fiction"];
+const options = ["Charla", "Conferencia", "Curso", "Taller", "Seminario", "Otro"];
+
+const ConBuscador = ({ searchTerm, setSearchParams }) => {
+  const [inputValue, setInputValue] = useState(searchTerm);
+  const [selectedEventType, setSelectedEventType] = useState("");
+  const [selectedStartDate, setSelectedStartDate] = useState("");
+
+  // Actualiza el valor del parámetro de búsqueda en la URL
+  const handleInputChange = (e) => {
+    const value = e.target.value;
+    setInputValue(value);
+    setSearchParams({ filter: value });
+  };
+
+  const handleApplyFilters = () => {
+    const params = {};
+    if (inputValue.trim()) params.filter = inputValue;
+    if (selectedEventType) params.eventType = selectedEventType;
+    if (selectedStartDate) params.startDate = selectedStartDate;
+    
+    setSearchParams(params);
+  };
 
 
+  const handleClearFilters = () => {
+    // Limpia los filtros aplicados
+    setInputValue("");
+    setSelectedEventType("");
+    setSelectedStartDate("");
+    
+    // Limpia los filtros que estan en la URL 
+    setSearchParams((prevParams) => {
+      const newParams = { ...prevParams };
+      delete newParams.filter;
+      delete newParams.eventType;
+      delete newParams.startDate;
+      return newParams;
+  });
+  };
 
 
+  useEffect(() => {
+    setInputValue(searchTerm);
+  }, [searchTerm]);
 
-const ConBuscador = ({ onSearch, searchTerm }) => {
   return (
     <Box sx={{ minWidth: 275 }}>
-      <Card
-        variant="outlined"
-        sx={{ paddingTop: "30px", paddingBottom: "30px" }}
-      >
-        <React.Fragment>
+      <Card variant="outlined" sx={{ paddingTop: "30px", paddingBottom: "30px" }}>
           <Box component="form" sx={{ width: "80%", margin: "0 auto", mb: 2 }}>
             <TextField
-              id="outlined-basic"
-              label="Ingrese nombre de empresa ...  "
+              label="Ingrese nombre de empresa..."
               variant="outlined"
               size="small"
-              type="text"
-              value={searchTerm}
-              onChange={onSearch}
+              value={inputValue}
+              onChange={handleInputChange}
               sx={{ width: "100%" }}
-             />
-            
+            />
           </Box>
 
-          <hr className="w-full h-1 " />
+          <hr className="w-full h-1" />
 
-          <Box
-            sx={{
-              display: "flex",
-              flexDirection: "row",
-              width: "80%",
-              margin: "0 auto",
-              paddingTop: "20px",
-            }}
-          >
+          <Box sx={{ display: "flex", flexDirection: "row", width: "80%", margin: "0 auto", paddingTop: "20px" }}>
             <FilterAltIcon />
-            <p> Filtros</p>
+            <p>Filtros</p>
           </Box>
 
-          <Box
-            sx={{
-              display: "flex",
-              flexDirection: "column",
-              width: "70%",
-              margin: "0 auto",
-              paddingTop: "20px",
-              gap: "20px",
-            }}
-          >
+          <Box sx={{ display: "flex", flexDirection: "column", width: "70%", margin: "0 auto", paddingTop: "20px", gap: "20px" }}>
             <Autocomplete
-              disablePortal
               options={options}
-              sx={{ width: "100%" }}
-              renderInput={(params) => (
-                <TextField {...params} label="Tipo de evento" />
-              )}
+              onChange={(event, newValue) => setSelectedEventType(newValue || "")}
+              renderInput={(params) => <TextField {...params} label="Tipo de evento" />}
               size="small"
             />
-
-            <TextInput
+            <TextField
               label="Fecha de inicio"
-              name="startDate"
-              //   value={formData.startDate}
               type="date"
-              required={true}
-              //   onChange={(e) => handleChange(e)}
-              fullWidth
-              margin="normal"
+              value={selectedStartDate}
+              onChange={(e) => setSelectedStartDate(e.target.value)}
+              InputLabelProps={{ shrink: true }}
               size="small"
-              //   error={!!errors.startDate}
-              //   helperText={errors.startDate}
-              //   disabled={loading}
+              sx={{ width: "100%" }}
             />
-
-            <ActionButton texto="Aplicar" />
+            <ActionButton texto="Aplicar" onClick={handleApplyFilters} />
+            <ActionButton texto="Limpiar Filtros" onClick={handleClearFilters} />
           </Box>
-        </React.Fragment>
       </Card>
     </Box>
   );
-}
+};
 
 export default ConBuscador;

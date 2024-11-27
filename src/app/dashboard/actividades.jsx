@@ -11,6 +11,7 @@ import usePatch from "../../hooks/usePatch";
 import usePost from "../../hooks/usePost";
 import useDelete from "../../hooks/useDelete";
 import { uploadProfilePicture } from "../../hooks/manageImageUser";
+import SinBuscador from "../../components/organisms/cards/filtros/SinBuscador";
 
 function Actividades() {
     const { open, handleOpen, handleClose } = useModal();
@@ -20,6 +21,13 @@ function Actividades() {
     const { showAlert } = useAlert();
     const [apiEndpoints, setApiEndpoints] = useState({});
     const fetchDataRef = useRef(false);
+
+
+    // Estados para los filtros
+    const [eventTypeFilter, setEventTypeFilter] = useState("");
+    const [startDateFilter, setStartDateFilter] = useState("");
+    const [filteredActividades, setFilteredActividades] = useState([]);
+
 
     // Solo se define userType y URLs dinámicas si userData está disponible
     useEffect(() => {
@@ -54,6 +62,8 @@ function Actividades() {
                 try {
                     const data = await getData();
                     setActividades(data);
+                    setFilteredActividades(data); 
+
                 } catch (error) {
                     console.error("Error al obtener las actividades:", error);
                 }
@@ -85,6 +95,30 @@ function Actividades() {
             console.error("Error al eliminar la actividad:", error);
         }
     };
+
+
+    // Filtrado de actividades
+    const applyFilters = () => {
+        let filtered = actividades;
+        if (eventTypeFilter) {
+            filtered = filtered.filter(actividad => actividad.eventType === eventTypeFilter);
+        }
+        if (startDateFilter) {
+            filtered = filtered.filter(actividad => actividad.startDate >= startDateFilter);
+        }
+        setFilteredActividades(filtered);
+    };
+    
+
+    const clearFilters = () => {
+        setEventTypeFilter("");
+        setStartDateFilter("");
+        setFilteredActividades(actividades); // Restaurar todas las actividades
+    };
+    
+
+
+
 
     const handleSaveActivity = async (formData) => {
         const activityData = {
@@ -141,7 +175,14 @@ function Actividades() {
         <HomeBase>
             <div className="flex flex-row gap-8 mt-4 mb-16 lg:mx-12 justify-center">
                 <div className="lg:w-4/12">
-                    <p>Filtros aaa</p>
+                <SinBuscador
+                        eventTypeFilter={eventTypeFilter}
+                        setEventTypeFilter={setEventTypeFilter}
+                        startDateFilter={startDateFilter}
+                        setStartDateFilter={setStartDateFilter}
+                        applyFilters={applyFilters}
+                        clearFilters={clearFilters}
+                    />
                 </div>
                 <div className="flex flex-col w-10/12 lg:w-7/12">
                     <Button variant="contained" color="primary" onClick={handleCreate}>
@@ -155,19 +196,19 @@ function Actividades() {
                         multimediaApi={apiEndpoints.multimedia}
                     />
                     <div>
-                        {actividades.length > 0 ? (
-                            actividades.map((actividad) => (
-                                <ActividadCard
-                                    key={actividad.id}
-                                    actividad={actividad}
-                                    multimediaApi={apiEndpoints.multimedia}
-                                    onEdit={handleEdit}
-                                    onDelete={handleDelete}
-                                />
-                            ))
-                        ) : (
-                            <div>No hay actividades disponibles</div>
-                        )}
+                        {filteredActividades.length > 0 ? (
+                                filteredActividades.map((actividad) => (
+                                    <ActividadCard
+                                        key={actividad.id}
+                                        actividad={actividad}
+                                        multimediaApi={apiEndpoints.multimedia}
+                                        onEdit={handleEdit}
+                                        onDelete={handleDelete}
+                                    />
+                                ))
+                            ) : (
+                                <div>No hay actividades disponibles</div>
+                            )}
                     </div>
                 </div>
             </div>

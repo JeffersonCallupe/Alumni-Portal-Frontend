@@ -82,6 +82,8 @@ const FormActividad = ({ initialData = {}, onSubmit, onCancel, multimediaApi, lo
         }
     );
 
+
+
     return (
         <Box
             component="form"
