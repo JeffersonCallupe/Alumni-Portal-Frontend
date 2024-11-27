@@ -1,12 +1,16 @@
 import React, { useState } from "react";
-import TextInput from "../../../atoms/inputs/TextInput";
-import Button from "@mui/material/Button";
 import Box from "@mui/material/Box";
+import Button from "@mui/material/Button";
+import FormControl from "@mui/material/FormControl";
+import InputLabel from "@mui/material/InputLabel";
+import MenuItem from "@mui/material/MenuItem";
+import Select from "@mui/material/Select";
+import TextInput from "../../../atoms/inputs/TextInput";
 import useForm from "../../../../hooks/useForm";
 
 const RegisterEmpresaForm = ({ onSubmit, disabled, validate }) => {
     const [page, setPage] = useState(1);
-    const { formData, errors, handleChange, handleSubmit } = useForm(
+    const { formData, errors, handleChange, handleValidation, handleSubmit } = useForm(
       {
         name: "",
         ruc: "",
@@ -22,6 +26,29 @@ const RegisterEmpresaForm = ({ onSubmit, disabled, validate }) => {
       onSubmit,
       validate ? () => validate(formData) : undefined
     );
+
+    const sectorOptions = [
+      "Agricultura",
+      "Banca",
+      "Construcción",
+      "Educación",
+      "Energía",
+      "Finanzas",
+      "Manufactura",
+      "Salud",
+      "Tecnología",
+      "Telecomunicaciones",
+      "Transporte",
+      "Turismo",
+      "Otro",
+    ]
+
+    const handleNextPage = () => {
+      const fieldsToValidate = ["email", "password", "confirmPassword", "name"];
+      if (handleValidation(fieldsToValidate)) {
+          setPage(2);
+      }
+  };  
   
     return (
       <Box
@@ -76,7 +103,7 @@ const RegisterEmpresaForm = ({ onSubmit, disabled, validate }) => {
             <Button
               variant="contained"
               size="large"
-              onClick={() => setPage(2)}
+              onClick={handleNextPage}
             >
               Siguiente
             </Button>
@@ -104,19 +131,30 @@ const RegisterEmpresaForm = ({ onSubmit, disabled, validate }) => {
               error={!!errors.description}
               helperText={errors.description}
             />
-  
-            <TextInput
-              label="Sector"
-              name="sector"
-              type="text"
-              value={formData.sector}
-              onChange={handleChange}
-              error={!!errors.sector}
-              helperText={errors.sector}
-            />
-            <Button type="submit" variant="contained" disabled={disabled} size="large">
-              Registrar
-            </Button>
+            <FormControl fullWidth sx={{marginBottom: 2}}>
+              <InputLabel>Sector</InputLabel>
+              <Select
+                name="sector"
+                value={formData.sector}
+                onChange={handleChange}
+                error={!!errors.sector}
+                label="sector"
+              >
+                {sectorOptions.map((sector) => (
+                  <MenuItem key={sector} value={sector}>
+                    {sector}
+                  </MenuItem>
+                ))}
+              </Select>
+            </FormControl>
+            <div className="flex flex-col md:flex-row gap-4 justify-around">
+              <Button type="button" variant="contained" disabled={disabled} size="large" onClick={() => setPage(1)}>
+                Regresar
+              </Button>
+              <Button type="submit" variant="contained" disabled={disabled} size="large">
+                Registrar
+              </Button>
+            </div>
           </div>
         )}
       </Box>

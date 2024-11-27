@@ -25,7 +25,6 @@ function App() {
             <Route path="/" element={<LoginInstitucional />} />
             <Route path="/loginEmpresa" element={<LoginEmpresa/>} />
             <Route path="/loginSUM" element={<LoginSUM />} />
-            {/* <Route path="/loginEmpresa" element={<LoginEmpresa/>} /> */}
             <Route path="/validacionSUM" element={<RegistroSUM />} />
             <Route path="/crearCuentaEmpresa" element={<RegistroEmpresa/>} />
             <Route path="/profile" element={<ProfileEmpresa />} />
