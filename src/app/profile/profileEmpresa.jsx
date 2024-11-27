@@ -8,7 +8,7 @@ import InfoBaseCard from "../../components/organisms/cards/profileBaseCards/info
 import ProfileBaseCard from "../../components/organisms/cards/profileBaseCards/headerBaseCard";
 import { useUserContext } from "../../contexts/userContext";
 import { useAlert } from "../../contexts/alertContext";
-import usePatch from "../../hooks/usePatch";
+import usePatch from "../../hooks/usePatchProfile";
 
 function ProfileEmpresa() {
   const { userData } = useUserContext();

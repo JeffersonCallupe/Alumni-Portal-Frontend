@@ -17,7 +17,7 @@ import FormNewProject from "../../components/organisms/forms/institucional/formP
 import FormFoto from "../../components/organisms/forms/formFoto";
 import { useAlert } from "../../contexts/alertContext";
 import { useUserContext } from "../../contexts/userContext";
-import usePatch from "../../hooks/usePatch";
+import usePatch from "../../hooks/usePatchProfile";
 import usePost from "../../hooks/usePost";
 
 function ProfileInstitucional() {
