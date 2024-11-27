@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import ActividadCard from "../../components/organisms/cards/dashboard/actividadCard";
 import ActividadDialog from "../../components/organisms/dialog/actividadDialog";
-import Button from "@mui/material/Button";
+import Button from "../../components/atoms/buttons/actionButton";
 import HomeBase from "../../components/templates/home/home";
 import { useUserContext } from "../../contexts/userContext";
 import { useAlert } from "../../contexts/alertContext";
@@ -136,17 +136,18 @@ function Actividades() {
             console.error("Error al guardar o actualizar la actividad y/o multimedia:", error);
         }
     };
+
+    const asideContent = (
+        <div className="sticky top-8 bg-white p-6 lg:mt-2 mx-8 rounded-lg flex flex-col gap-4">
+            <Button texto={"Publica una actividad"} onClick={handleCreate}/>
+            <p>Filtros aaa</p>
+        </div>
+    )
     
     return (
-        <HomeBase>
+        <HomeBase aside={asideContent}>
             <div className="flex flex-row gap-8 mt-4 mb-16 lg:mx-12 justify-center">
-                <div className="lg:w-4/12">
-                    <p>Filtros aaa</p>
-                </div>
-                <div className="flex flex-col w-10/12 lg:w-7/12">
-                    <Button variant="contained" color="primary" onClick={handleCreate}>
-                        Nueva Actividad
-                    </Button>
+                <div className="flex flex-col mx-8 lg:ml-0">
                     <ActividadDialog
                         open={open}
                         onClose={handleClose}

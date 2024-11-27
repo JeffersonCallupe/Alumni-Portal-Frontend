@@ -4,6 +4,7 @@ import ActividadesRegistradas from "./app/dashboard/actividadesRegistradas";
 import ActividadesHistorico from "./app/dashboard/actividadesHistorico";
 import Actividades from "./app/dashboard/actividades";
 import Actividades2 from "./app/dashboard/actividades2";
+import Configuraciones from "./app/profile/settings";
 import Home from "./app/dashboard/home";
 import LoginInstitucional from "../src/app/login/LoginInstitucional";
 import LoginEmpresa from '../src/app/login/LoginEmpresa';
@@ -20,12 +21,11 @@ function App() {
   return (
     <AlertProvider>
       <UserProvider>
-        <BrowserRouter>
+        <BrowserRouter future={{ v7_startTransition: true, v7_relativeSplatPath: true }}>
           <Routes>
             <Route path="/" element={<LoginInstitucional />} />
             <Route path="/loginEmpresa" element={<LoginEmpresa/>} />
             <Route path="/loginSUM" element={<LoginSUM />} />
-            {/* <Route path="/loginEmpresa" element={<LoginEmpresa/>} /> */}
             <Route path="/validacionSUM" element={<RegistroSUM />} />
             <Route path="/crearCuentaEmpresa" element={<RegistroEmpresa/>} />
             <Route path="/profile" element={<ProfileEmpresa />} />
@@ -36,6 +36,7 @@ function App() {
             <Route path="/actividadesRegistradas" element={<ActividadesRegistradas />} />
             <Route path="/actividadesHistorico" element={<ActividadesHistorico />} />
             <Route path="/actividades2" element={<Actividades2 />} />
+            <Route path="/settings" element={<Configuraciones />} />
           </Routes>
         </BrowserRouter>
       </UserProvider>

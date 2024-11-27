@@ -54,7 +54,7 @@ function Navbar() {
         >
           {/* Logo */}
           <Box sx={{ display: { xs: "none", md: "flex" } }}>
-            <a href="/home">
+            <a href="/actividades">
               <img src={LogoSM} alt="Logo" style={{ height: "3rem" }} />
             </a>
           </Box>
@@ -226,7 +226,33 @@ function Navbar() {
               open={Boolean(anchorElUser)}
               onClose={handleCloseMenu(setAnchorElUser)}
             >
-              <MenuItem onClick={handleLogOut}>
+              {/* Ver Perfil */}
+              <MenuItem
+                onClick={() => {
+                  handleCloseMenu(setAnchorElUser)();
+                  Navigate(isInstitutional ? "/profileInstitucional" : "/profile");
+                }}
+              >
+                <Typography textAlign="center">Ver Perfil</Typography>
+              </MenuItem>
+
+              {/* Configuración */}
+              <MenuItem
+                onClick={() => {
+                  handleCloseMenu(setAnchorElUser)();
+                  Navigate("/settings");
+                }}
+              >
+                <Typography textAlign="center">Configuración</Typography>
+              </MenuItem>
+
+              {/* Cerrar Sesión */}
+              <MenuItem
+                onClick={() => {
+                  handleCloseMenu(setAnchorElUser)();
+                  handleLogOut();
+                }}
+              >
                 <Typography textAlign="center">Cerrar Sesión</Typography>
               </MenuItem>
             </Menu>
