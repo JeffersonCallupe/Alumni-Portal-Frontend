@@ -19,6 +19,7 @@ function ActividadesHistorico() {
   const { showAlert } = useAlert();
   const [apiEndpoints, setApiEndpoints] = useState({});
   const fetchDataRef = useRef(false);
+  let viewActivies= true;
 
   // useSearchParams para manejar el término de búsqueda en la URL
   const [searchParams, setSearchParams] = useSearchParams();
@@ -109,7 +110,7 @@ function ActividadesHistorico() {
         return false;
       }
     }
-
+    
 
     if (eventTypeFilter) {     // Filtro del tipo de evento
       if (!actividad.eventType || actividad.eventType !== eventTypeFilter) {
@@ -144,6 +145,7 @@ function ActividadesHistorico() {
           <ConBuscador
             searchTerm={searchTerm}
             setSearchParams={setSearchParams}
+            viewActivies={viewActivies}
           />
         </div>
         <div className="flex flex-col w-10/12 lg:w-7/12">
