@@ -31,7 +31,8 @@ const CardContentInstitucional = ({ loading, onSubmit }) => {
         headers: {
           'Content-Type': 'application/json',
           'Authorization': `Bearer ${token}`,  // Usar el token desde sessionStorage
-        }
+        },
+        redirect: "follow",
       });
 
       if (response.ok) {

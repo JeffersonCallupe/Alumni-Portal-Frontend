@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import ActividadCard from "../../components/organisms/cards/dashboard/actividadCard";
 import ActividadDialog from "../../components/organisms/dialog/actividadDialog";
+import ParticipantsDialog from "../../components/organisms/dialog/participantsDialog";
 import Button from "../../components/atoms/buttons/actionButton";
 import HomeBase from "../../components/templates/home/home";
 import { useUserContext } from "../../contexts/userContext";
@@ -15,8 +16,10 @@ import SinBuscador from "../../components/organisms/cards/filtros/SinBuscador";
 
 function Actividades() {
   const { open, handleOpen, handleClose } = useModal();
+  const { open: openParticipantsModal, handleOpen: handleOpenParticipants, handleClose: handleCloseParticipants } = useModal();
   const [actividades, setActividades] = useState([]);
   const [selectedActivity, setSelectedActivity] = useState(null);
+  const [participants, setParticipants] = useState([]);
   const { userData, isInstitutional } = useUserContext();
   const { showAlert } = useAlert();
   const [apiEndpoints, setApiEndpoints] = useState({});
@@ -50,12 +53,16 @@ function Actividades() {
         multimedia: `${
           import.meta.env.VITE_API_URL
         }/api/activity/activity-image`,
+        getParticipants: selectedActivity
+          ? `${import.meta.env.VITE_API_URL}/api/enrollment/activity/${selectedActivity.id}`
+          : null,
       });
     }
   }, [userData, isInstitutional, selectedActivity]);
 
   // Hooks de API solo se inicializan cuando los endpoints están definidos
   const { getData } = useGet(apiEndpoints.getAll);
+  const { getData: getParticipantsData } = useGet(apiEndpoints.getParticipants);
   const { post } = usePost(apiEndpoints.save);
   const { patch } = usePatch(apiEndpoints.update);
   const { deleteData } = useDelete(apiEndpoints.delete);
@@ -98,6 +105,21 @@ function Actividades() {
       );
     } catch (error) {
       console.error("Error al eliminar la actividad:", error);
+    }
+  };
+
+  const handleViewParticipants = async () => {
+    if (!apiEndpoints.getParticipants) {
+      showAlert("No se seleccionó una actividad válida.", "warning");
+      return;
+    }
+    try {
+      const data = await getParticipantsData();
+      setParticipants(data);
+      handleOpenParticipants();
+    } catch (error) {
+      console.error("Error al obtener los participantes:", error);
+      showAlert("No se pudo cargar la lista de participantes.", "error");
     }
   };
 
@@ -208,6 +230,12 @@ function Actividades() {
             onSave={handleSaveActivity}
             multimediaApi={apiEndpoints.multimedia}
           />
+          <ParticipantsDialog
+            open={openParticipantsModal}
+            onClose={handleCloseParticipants}
+            participants={participants}
+            activityTitle={selectedActivity?.title}
+          />
         <div className="flex flex-col w-12/12 lg:w-12/12 ">
           <div>
             {filteredActividades.length > 0 ? (
@@ -218,6 +246,10 @@ function Actividades() {
                   multimediaApi={apiEndpoints.multimedia}
                   onEdit={handleEdit}
                   onDelete={handleDelete}
+                  onSeeListParticipants={() => {
+                    setSelectedActivity(actividad);
+                    handleViewParticipants();
+                  }}
                 />
               ))
             ) : (
