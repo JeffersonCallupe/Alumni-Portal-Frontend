@@ -12,6 +12,7 @@ import usePatch from "../../hooks/usePatch";
 import usePost from "../../hooks/usePost";
 import useDelete from "../../hooks/useDelete";
 import { uploadProfilePicture } from "../../hooks/manageImageUser";
+import SinBuscador from "../../components/organisms/cards/filtros/SinBuscador";
 
 function Actividades() {
   const { open: openActivityModal, handleOpen: handleOpenActivity, handleClose: handleCloseActivity } = useModal();
@@ -160,7 +161,7 @@ function Actividades() {
     <HomeBase>
       <div className="flex flex-row gap-8 mt-4 mb-16 lg:mx-12 justify-center">
         <div className="lg:w-4/12">
-          <p>Filtros aaa</p>
+          
         </div>
         <div className="flex flex-col w-10/12 lg:w-7/12">
           <Button variant="contained" color="primary" onClick={handleCreate}>

@@ -23,7 +23,7 @@ function App() {
       <UserProvider>
         <BrowserRouter future={{ v7_startTransition: true, v7_relativeSplatPath: true }}>
           <Routes>
-            <Route path="/" element={<LoginInstitucional />} />
+            <Route path="/" element={<LoginInstitucional />} /> 
             <Route path="/loginEmpresa" element={<LoginEmpresa/>} />
             <Route path="/loginSUM" element={<LoginSUM />} />
             <Route path="/validacionSUM" element={<RegistroSUM />} />
