@@ -95,14 +95,17 @@ function Navbar() {
                 open={Boolean(anchorElActividades)}
                 onClose={handleCloseMenu(setAnchorElActividades)}
               >
-                {isInstitutional && (
-                  <MenuItem onClick={handleCloseMenu(setAnchorElActividades)}>
-                    <a href="/actividades">Mis actividades inscritas</a>
-                  </MenuItem>
-                )}
+                <MenuItem onClick={handleCloseMenu(setAnchorElActividades)}>
+                <a href="/actividadesHistorico">Ver actividades</a>
+                </MenuItem>
                 <MenuItem onClick={handleCloseMenu(setAnchorElActividades)}>
                 <a href="/actividades">Mis actividades publicadas</a>
                 </MenuItem>
+                {isInstitutional && (
+                  <MenuItem onClick={handleCloseMenu(setAnchorElActividades)}>
+                    <a href="/actividadesRegistradas">Actividades registradas</a>
+                  </MenuItem>
+                )}
               </Menu>
 
               <MenuItem onClick={handleOpenMenu(setAnchorElOfertas)}>
@@ -113,14 +116,18 @@ function Navbar() {
                 open={Boolean(anchorElOfertas)}
                 onClose={handleCloseMenu(setAnchorElOfertas)}
               >
+                <MenuItem onClick={handleCloseMenu(setAnchorElOfertas)}>
+                <a href="/ofertasHistorico">Ver ofertas</a>
+                </MenuItem>
                 {isInstitutional && (
                   <MenuItem onClick={handleCloseMenu(setAnchorElOfertas)}>
-                    <a href="/ofertasLaborales">Ofertas Inscritas</a>
+                    <a href="/ofertasAplicadas">Ofertas aplicadas</a>
                   </MenuItem>
                 )}
-                <MenuItem onClick={handleCloseMenu(setAnchorElOfertas)}>
-                <a href="/ofertasLaborales">Ofertas Publicadas</a>
+                {!isInstitutional && (<MenuItem onClick={handleCloseMenu(setAnchorElOfertas)}>
+                <a href="/ofertasLaborales">Mis ofertas publicadas</a>
                 </MenuItem>
+                )}  
               </Menu>
             </Menu>
           </Box>
@@ -182,18 +189,17 @@ function Navbar() {
               onClose={handleCloseMenu(setAnchorElOfertas)}
             >
               <MenuItem onClick={handleCloseMenu(setAnchorElOfertas)}>
-                <a href="/ofertasLaborales">Ver ofertas laborales</a>
+              <a href="/ofertasHistorico">Ver ofertas</a>
               </MenuItem>
-              {!isInstitutional && (
-                <MenuItem onClick={handleCloseMenu(setAnchorElOfertas)}>
-                  <a href="/ofertasLaborales">Mis ofertas laborales</a>
-                </MenuItem>
-              )}
               {isInstitutional && (
                 <MenuItem onClick={handleCloseMenu(setAnchorElOfertas)}>
-                  <a href="/ofertasLaborales">Mis ofertas postuladas</a>
+                  <a href="/ofertasAplicadas">Ofertas aplicadas</a>
                 </MenuItem>
               )}
+              {!isInstitutional && (<MenuItem onClick={handleCloseMenu(setAnchorElOfertas)}>
+              <a href="/ofertasLaborales">Mis ofertas publicadas</a>
+              </MenuItem>
+              )}  
             </Menu>
           </Box>
 

@@ -1,26 +1,42 @@
-import React from "react";
-import { Card, CardHeader, CardContent, CardActions, Avatar, IconButton, Typography } from "@mui/material";
+import React, { useEffect, useState } from 'react';
+import { Card, CardHeader, CardContent, CardActions, Avatar, IconButton, Typography, Box, Grid } from "@mui/material";
+import Button from '../../../atoms/buttons/actionButton';
+import DeleteConfirmationModal from "../../dialog/deleteConfirmationDialog";
 import BusinessIcon from "@mui/icons-material/Business";
+import ModeEditIcon from '@mui/icons-material/ModeEdit';
+import VisibilityIcon from '@mui/icons-material/VisibilityOutlined';
+import DeleteIcon from '@mui/icons-material/Delete';
 import FavoriteIcon from "@mui/icons-material/Favorite";
-import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
 import ShareIcon from "@mui/icons-material/Share";
-import MoreVertIcon from "@mui/icons-material/MoreVert";
 import { useUserContext } from "../../../../contexts/userContext";
 
-const OfertaLaboralCard = ({ oferta, onEdit, onDelete }) => {
-  const { id, title, description, area, nivel, modality, minSalary, maxSalary, companyId, companyName } = oferta;
+const OfertaLaboralCard = ({ 
+  oferta, 
+  onEdit=false, 
+  onDelete=false,
+  onCancelApplication=false,
+  onRegister=false,
+  onSeeListPostulants=false, 
+}) => {
+  const { id, title, description, area, nivel, modality, minSalary, maxSalary, companyId, experience, companyName, vacancies, workload, companyEmail, companyPhone, companyRuc,createdAt } = oferta;
+  const { userId, isInstitutional } = useUserContext();
   const { profilePicture } = useUserContext();
 
-  const handleDelete = async () => {
-    try {
-      await onDelete(id);
-    } catch (error) {
-      console.error("Error al eliminar la oferta laboral:", error);
-    }
-  };
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const handleEdit = () => onEdit && onEdit(oferta);
+  const handleDelete = () => setIsModalOpen(true);
+  const handleConfirmDelete = () => {
+    setIsModalOpen(false);
+    onDelete && onDelete(id);
+  }
+  const handleSeeListPostulants = () => onSeeListPostulants && onSeeListPostulants(id);
+  const handleRegister = () => onRegister && onRegister(id, userId);
+  const handleCancelAplication = () => onCancelApplication && onCancelApplication(id);
 
   return (
+    <>
     <Card
       sx={{
         textAlign: "left",
@@ -41,41 +57,71 @@ const OfertaLaboralCard = ({ oferta, onEdit, onDelete }) => {
           </Avatar>
         }
         action={
-          <>
-            <IconButton aria-label="edit" onClick={() => onEdit(oferta)}>
-              <EditIcon />
-            </IconButton>
-            <IconButton aria-label="delete" onClick={handleDelete}>
-              <DeleteIcon />
-            </IconButton>
-            <IconButton aria-label="settings">
-              <MoreVertIcon />
-            </IconButton>
-          </>
+          <div style={{ display: 'flex', gap: '10px' }}>
+            {onSeeListPostulants && <Button startIcon={<VisibilityIcon/>} texto={"Ver postulantes"} onClick={handleSeeListPostulants}></Button>}
+            {onEdit && <Button startIcon={<ModeEditIcon />} texto={"Editar"} onClick={handleEdit}></Button>}
+            {onDelete && <Button startIcon={<DeleteIcon />} texto={"Eliminar"} onClick={handleDelete}></Button>}
+            {onCancelApplication && <Button texto={"Cancelar aplicación"} onClick={handleCancelAplication}></Button>}
+            {isInstitutional && onRegister && <Button texto={"Aplicar"} onClick={handleRegister}></Button>}
+          </div>
         }
         title={companyName}
-        subheader={`${area} | ${nivel} | ${modality}`}
+        subheader={`RUC: ${companyRuc}`}
       />
       <CardContent>
-        <Typography variant="h6" sx={{ marginBottom: "8px" }}>
-          {title}
+        <Typography variant="h6" sx={{ fontSize: '1.2rem' }}>
+          {`${title} (Vacantes: ${vacancies})`}
         </Typography>
-        <Typography variant="body2" sx={{ marginBottom: "8px", color: "text.secondary" }}>
-          {description}
-        </Typography>
-        <Typography variant="body2" color="textSecondary">
-          <strong>Salario:</strong> S/.{minSalary} - S/.{maxSalary}
-        </Typography>
+        <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1, mt: 1 }}>
+          <Typography variant="body2" color="textPrimary">
+          <strong>Area:</strong> {area} | <strong>Nivel:</strong> {nivel} | <strong>Modalidad:</strong> {modality}
+          </Typography>
+          <Grid container spacing={2} sx={{ marginTop: 0 }}>
+            {/* Columna Izquierda */}
+            <Grid item xs={12} md={6}>
+              <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1 }}>
+                <Typography variant="body2" color="textSecondary">
+                  <strong>Fecha de publicación:</strong> {createdAt}
+                </Typography>
+                <Typography variant="body2" color="textSecondary">
+                  <strong>Experiencia:</strong> {experience} año(s)
+                </Typography>
+                <Typography variant="body2" color="textSecondary">
+                  <strong>Salario:</strong> S/.{minSalary} - S/.{maxSalary}
+                </Typography>
+                <Typography variant="body2" color="textSecondary">
+                  <strong>Carga horaria semanal:</strong> {workload} hora(s)
+                </Typography>
+              </Box>
+            </Grid>
+
+            {/* Columna Derecha */}
+            <Grid item xs={12} md={6}>
+              <Typography variant="body2" color="textSecondary">
+                <strong>Descripción:</strong>
+              </Typography>
+              <Typography
+                variant="body2"
+                sx={{ marginBottom: "8px", color: "text.secondary" }}
+              >
+                {description}
+              </Typography>
+            </Grid>
+          </Grid>
+        </Box>
       </CardContent>
       <CardActions disableSpacing>
-        <IconButton aria-label="add to favorites">
-          <FavoriteIcon />
-        </IconButton>
-        <IconButton aria-label="share">
-          <ShareIcon />
-        </IconButton>
+        
       </CardActions>
     </Card>
+    <DeleteConfirmationModal 
+      isOpen={isModalOpen}
+      onClose={() => setIsModalOpen(false)}
+      onConfirm={handleConfirmDelete}
+      title="Confirmar eliminación"
+      message="¿Está seguro de que desea eliminar esta oferta laboral? Esta acción no se puede deshacer."
+    />
+    </>
   );
 };
 
