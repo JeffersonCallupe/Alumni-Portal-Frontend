@@ -137,7 +137,7 @@ const ActividadCard = ({
                   <strong>Tipo de evento:</strong> {eventType}
                 </Typography>
                 <Typography variant="body2" color="textSecondary">
-                  <strong>Fecha:</strong> {startDate} | {endDate}
+                  <strong>Fecha:</strong> {starDate} | {endDate}
                 </Typography>
                 <Typography variant="body2" color="textSecondary">
                   <strong>Ubicación:</strong> {location}
