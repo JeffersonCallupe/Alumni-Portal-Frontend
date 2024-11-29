@@ -1,183 +1,144 @@
 import React, { useState, useEffect, useRef } from "react";
 import OfertaLaboralCard from "../../components/organisms/cards/dashboard/ofertaLaboralCard";
-import OfertaLaboralDialog from "../../components/organisms/dialog/ofertaLaboralDialog";
-import Button from "@mui/material/Button";
 import HomeBase from "../../components/templates/home/home";
+import ConfirmationDialog from "../../components/organisms/dialog/confirmationDialog"; // Modal reutilizable
 import { useUserContext } from "../../contexts/userContext";
 import { useAlert } from "../../contexts/alertContext";
 import useGet from "../../hooks/useGet";
-import useModal from "../../hooks/useModal";
-import usePatch from "../../hooks/usePatch";
 import usePost from "../../hooks/usePost";
-import useDelete from "../../hooks/useDelete";
-import ConBuscador from "../../components/organisms/cards/filtros/ConBuscador";
 import { useSearchParams } from "react-router-dom";
-
+import ConBuscador from "../../components/organisms/cards/filtros/ConBuscador";
 
 function OfertasHistorico() {
-  const { open, handleOpen, handleClose } = useModal();
   const [ofertas, setOfertas] = useState([]);
-  const [selectedJob, setSelectedJob] = useState(null);
+  const [inscripciones, setInscripciones] = useState([]);
+  const [selectedJob, setSelectedJob] = useState(null); // Oferta seleccionada para postulación
   const { userData } = useUserContext();
   const { showAlert } = useAlert();
   const fetchDataRef = useRef(false);
-  let viewActivies = false;
-
-  // useSearchParams para manejar el término de búsqueda en la URL
+  const [openConfirmationDialog, setOpenConfirmationDialog] = useState(false); // Modal de confirmación
   const [searchParams, setSearchParams] = useSearchParams();
-  const searchTerm = searchParams.get("filter") || ""; 
+  const searchTerm = searchParams.get("filter") || "";
   const modalityFilter = searchParams.get("modality") || "";
   const areaFilter = searchParams.get("area") || "";
   const nivelFilter = searchParams.get("nivel") || "";
 
   const apiEndpoints = {
     getAll: `${import.meta.env.VITE_API_URL}/api/job-offer/all`,
-    getById: (id) => `${import.meta.env.VITE_API_URL}/api/job-offer/${id}`,
-    delete: `${import.meta.env.VITE_API_URL}/api/job-offer`,
-    save: (companyId) =>
-      `${import.meta.env.VITE_API_URL}/api/job-offer/save/${companyId}`,
-    update: (id) => `${import.meta.env.VITE_API_URL}/api/job-offer/${id}`,
-    getByCompany: (companyId) =>
-      `${import.meta.env.VITE_API_URL}/api/job-offer/company/${companyId}`,
+    getApplications: `${import.meta.env.VITE_API_URL}/api/application/user/${userData?.id}`,
+    apply: `${import.meta.env.VITE_API_URL}/api/application/save`,
   };
 
-  const { getData } = useGet(apiEndpoints.getAll);
-  const { post } = usePost(apiEndpoints.save(userData?.id || ""));
-  const { patch } = usePatch(apiEndpoints.update(selectedJob?.id || ""));
-  const { deleteData } = useDelete(apiEndpoints.delete);
+  const { getData: getAllJobOffers } = useGet(apiEndpoints.getAll);
+  const { getData: getUserApplications } = useGet(apiEndpoints.getApplications);
+  const { post: applyToJob } = usePost(apiEndpoints.apply);
 
   useEffect(() => {
-    if (!fetchDataRef.current) {
-      const fetchOfertas = async () => {
+    if (userData && apiEndpoints.getAll && apiEndpoints.getApplications && !fetchDataRef.current) {
+      const fetchData = async () => {
         try {
-          const data = await getData();
-          setOfertas(data);
+          const [jobOffers, applications] = await Promise.all([
+            getAllJobOffers(),
+            getUserApplications(),
+          ]);
+
+          setOfertas(jobOffers);
+          setInscripciones(applications.map((app) => app.jobOfferId)); // Obtener IDs de ofertas postuladas
         } catch (error) {
-          showAlert("Error al obtener las ofertas laborales", "error");
+          console.error("Error al cargar los datos:", error);
+          showAlert("No se pudieron cargar las ofertas laborales.", "error");
         }
       };
-      fetchOfertas();
+      fetchData();
       fetchDataRef.current = true;
     }
-  }, [getData]);
+  }, [userData, apiEndpoints, getAllJobOffers, getUserApplications]);
 
-  if (!userData) {
-    return <div>Loading...</div>;
-  }
-
-  const handleCreate = () => {
-    if (userData.role !== "COMPANY") {
-      showAlert("Solo las empresas pueden crear ofertas laborales.", "info");
-      return;
-    }
-    setSelectedJob(null);
-    handleOpen();
-  };
-
-  const handleEdit = (oferta) => {
-    if (userData.role !== "COMPANY") {
-      showAlert("Solo las empresas pueden editar ofertas laborales.", "info");
-      return;
-    }
+  // Maneja la apertura del modal de confirmación
+  const handleOpenConfirmation = (oferta) => {
     setSelectedJob(oferta);
-    handleOpen();
+    setOpenConfirmationDialog(true);
   };
 
-  const handleDelete = async (jobId) => {
-    if (userData.role !== "COMPANY") {
-      showAlert("Solo las empresas pueden eliminar ofertas laborales.", "info");
-      return;
-    }
+  // Cierra el modal de confirmación
+  const handleCloseConfirmation = () => {
+    setSelectedJob(null);
+    setOpenConfirmationDialog(false);
+  };
+
+  // Confirma la postulación a la oferta
+  const handleConfirmApplication = async () => {
+    if (!selectedJob) return;
+
+    const applicationData = {
+      user: { id: userData.id },
+      jobOffer: { id: selectedJob.id },
+    };
+
     try {
-      await deleteData(jobId);
-      setOfertas((prevOfertas) =>
-        prevOfertas.filter((job) => job.id !== jobId)
-      );
+      await applyToJob(applicationData);
+      setInscripciones((prev) => [...prev, selectedJob.id]); // Agrega la oferta a la lista de postulaciones
+      showAlert("Te has postulado exitosamente a la oferta laboral.", "success");
+      handleCloseConfirmation();
     } catch (error) {
-      showAlert("Error al eliminar la oferta laboral:", "error");
+      console.error("Error al postularse a la oferta laboral:", error);
+      showAlert("No se pudo completar la postulación.", "error");
     }
   };
 
-  const handleSaveJob = async (formData) => {
-    try {
-      if (selectedJob && selectedJob.id) {
-        await patch(formData);
-        showAlert("Oferta laboral actualizada correctamente", "success");
-      } else {
-        await post(formData);
-        showAlert("Oferta laboral publicada correctamente", "success");
-      }
-      handleClose();
-      const updatedOfertas = await getData();
-      setOfertas(updatedOfertas);
-    } catch (error) {
-      showAlert("Error al guardar la oferta laboral:", "error");
-    }
-  };
-
-
-   // Filtrado de ofertas
-   const filteredOfertas = ofertas.filter((oferta) => {
+  // Filtrado de ofertas laborales
+  const filteredOfertas = ofertas.filter((oferta) => {
     if (!oferta) return false;
-  
+
     // Filtro por término de búsqueda
     if (searchTerm && oferta.companyName && !oferta.companyName.toLowerCase().includes(searchTerm.toLowerCase())) {
       return false;
     }
-  
+
     // Filtro por modalidad
     if (modalityFilter && (!oferta.modality || oferta.modality.toLowerCase() !== modalityFilter.toLowerCase())) {
       return false;
     }
-  
+
     // Filtro por área
     if (areaFilter && (!oferta.area || oferta.area.toLowerCase() !== areaFilter.toLowerCase())) {
       return false;
     }
-  
+
     // Filtro por nivel
     if (nivelFilter && (!oferta.nivel || oferta.nivel.toLowerCase() !== nivelFilter.toLowerCase())) {
       return false;
     }
-  
+
     return true;
   });
-  
 
-
-
+  if (!userData) {
+    return <div>Cargando...</div>;
+  }
 
   return (
     <HomeBase>
       <div className="flex flex-row gap-8 mt-4 mb-16 lg:mx-12 justify-center">
-        <div className="lg:w-4/12  ">
+        <div className="lg:w-4/12">
           <ConBuscador
-          searchTerm={searchTerm}
-          setSearchParams={setSearchParams}
-          viewActivies={viewActivies}
+            searchTerm={searchTerm}
+            setSearchParams={setSearchParams}
+            viewActivies={false}
           />
         </div>
-
         <div className="flex flex-col w-10/12 lg:w-7/12">
-          {userData.role === "COMPANY" && (
-            <Button variant="contained" color="primary" onClick={handleCreate}>
-              Nueva Oferta
-            </Button>
-          )}
-          <OfertaLaboralDialog
-            open={open}
-            onClose={handleClose}
-            initialData={selectedJob || {}}
-            onSave={handleSaveJob}
-          />
           <div>
             {filteredOfertas.length > 0 ? (
               filteredOfertas.map((oferta) => (
                 <OfertaLaboralCard
                   key={oferta.id}
                   oferta={oferta}
-                  onEdit={() => handleEdit(oferta)}
-                  onDelete={() => handleDelete(oferta.id)}
+                  onApplication={
+                    !inscripciones.includes(oferta.id) // Muestra el botón solo si no está inscrito
+                      ? () => handleOpenConfirmation(oferta)
+                      : null
+                  }
                 />
               ))
             ) : (
@@ -186,6 +147,13 @@ function OfertasHistorico() {
           </div>
         </div>
       </div>
+      <ConfirmationDialog
+        open={openConfirmationDialog}
+        onClose={handleCloseConfirmation}
+        onConfirm={handleConfirmApplication}
+        title="Confirmar Postulación"
+        content={`¿Estás seguro de que deseas postularte a la oferta "${selectedJob?.title}"?`}
+      />
     </HomeBase>
   );
 }

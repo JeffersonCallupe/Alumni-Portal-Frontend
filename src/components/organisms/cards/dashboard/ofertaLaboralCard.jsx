@@ -16,7 +16,7 @@ const OfertaLaboralCard = ({
   onEdit=false, 
   onDelete=false,
   onCancelApplication=false,
-  onRegister=false,
+  onApplication=false,
   onSeeListPostulants=false, 
 }) => {
   const { id, title, description, area, nivel, modality, minSalary, maxSalary, companyId, experience, companyName, vacancies, workload, companyEmail, companyPhone, companyRuc,createdAt } = oferta;
@@ -32,7 +32,7 @@ const OfertaLaboralCard = ({
     onDelete && onDelete(id);
   }
   const handleSeeListPostulants = () => onSeeListPostulants && onSeeListPostulants(id);
-  const handleRegister = () => onRegister && onRegister(id, userId);
+  const handleApplication = () => onApplication && onApplication(id, userId);
   const handleCancelAplication = () => onCancelApplication && onCancelApplication(id);
 
   return (
@@ -62,7 +62,7 @@ const OfertaLaboralCard = ({
             {onEdit && <Button startIcon={<ModeEditIcon />} texto={"Editar"} onClick={handleEdit}></Button>}
             {onDelete && <Button startIcon={<DeleteIcon />} texto={"Eliminar"} onClick={handleDelete}></Button>}
             {onCancelApplication && <Button texto={"Cancelar aplicación"} onClick={handleCancelAplication}></Button>}
-            {isInstitutional && onRegister && <Button texto={"Aplicar"} onClick={handleRegister}></Button>}
+            {isInstitutional && onApplication && <Button texto={"Postular"} onClick={handleApplication}></Button>}
           </div>
         }
         title={companyName}
@@ -74,7 +74,7 @@ const OfertaLaboralCard = ({
         </Typography>
         <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1, mt: 1 }}>
           <Typography variant="body2" color="textPrimary">
-          <strong>Area:</strong> {area} | <strong>Nivel:</strong> {nivel} | <strong>Modalidad:</strong> {modality}
+          <strong>Área:</strong> {area} | <strong>Nivel:</strong> {nivel} | <strong>Modalidad:</strong> {modality}
           </Typography>
           <Grid container spacing={2} sx={{ marginTop: 0 }}>
             {/* Columna Izquierda */}
