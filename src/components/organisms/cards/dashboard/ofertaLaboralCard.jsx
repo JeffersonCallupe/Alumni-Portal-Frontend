@@ -61,7 +61,7 @@ const OfertaLaboralCard = ({
             {onSeeListPostulants && <Button startIcon={<VisibilityIcon/>} texto={"Ver postulantes"} onClick={handleSeeListPostulants}></Button>}
             {onEdit && <Button startIcon={<ModeEditIcon />} texto={"Editar"} onClick={handleEdit}></Button>}
             {onDelete && <Button startIcon={<DeleteIcon />} texto={"Eliminar"} onClick={handleDelete}></Button>}
-            {onCancelApplication && <Button texto={"Cancelar aplicación"} onClick={handleCancelAplication}></Button>}
+            {onCancelApplication && <Button texto={"Cancelar postulación"} onClick={handleCancelAplication}></Button>}
             {isInstitutional && onApplication && <Button texto={"Postular"} onClick={handleApplication}></Button>}
           </div>
         }
