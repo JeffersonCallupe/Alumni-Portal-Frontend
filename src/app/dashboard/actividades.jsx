@@ -108,13 +108,21 @@ function Actividades() {
     }
   };
 
-  const handleViewParticipants = async () => {
-    if (!apiEndpoints.getParticipants) {
+  const handleViewParticipants = async (activityId) => {
+    if (!activityId) {
       showAlert("No se seleccionó una actividad válida.", "warning");
       return;
     }
     try {
-      const data = await getParticipantsData();
+      const getParticipantsEndpoint = `${import.meta.env.VITE_API_URL}/api/enrollment/activity/${activityId}`;
+      
+      // Use fetch directly instead of the useGet hook
+      const response = await fetch(getParticipantsEndpoint);
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
+      }
+      const data = await response.json();
+      
       setParticipants(data);
       handleOpenParticipants();
     } catch (error) {
@@ -246,8 +254,7 @@ function Actividades() {
                   onEdit={handleEdit}
                   onDelete={handleDelete}
                   onSeeListParticipants={() => {
-                    setSelectedActivity(actividad);
-                    handleViewParticipants();
+                    handleViewParticipants(actividad.id);
                   }}
                 />
               ))
