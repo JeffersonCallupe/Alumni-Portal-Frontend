@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Card, CardHeader, CardMedia, CardContent, CardActions, Avatar, Typography, Grid, Box } from '@mui/material';
 import Button from '../../../atoms/buttons/actionButton';
 import DeleteConfirmationModal from "../../dialog/deleteConfirmationDialog";
+import ParticipantsDialog from '../../dialog/participantsDialog';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import ModeEditIcon from '@mui/icons-material/ModeEdit';
 import VisibilityIcon from '@mui/icons-material/VisibilityOutlined';

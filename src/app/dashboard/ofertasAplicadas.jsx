@@ -27,10 +27,10 @@ function OfertasAplicadas() {
   const nivelFilter = searchParams.get("nivel") || "";
 
   const apiEndpoints = {
-    getApplications: `http://178.128.147.224:8080/api/application/user/${userData?.id}`,
+    getApplications: `${import.meta.env.VITE_API_URL}/api/application/user/${userData?.id}`,
     getJobOffer: (jobOfferId) =>
-      `http://178.128.147.224:8080/api/job-offer/${jobOfferId}`,
-    deleteApplication: "http://178.128.147.224:8080/api/application",
+      `${import.meta.env.VITE_API_URL}/api/job-offer/${jobOfferId}`,
+    deleteApplication: `${import.meta.env.VITE_API_URL}/api/application`,
   };
 
   const { getData: getApplications } = useGet(apiEndpoints.getApplications);

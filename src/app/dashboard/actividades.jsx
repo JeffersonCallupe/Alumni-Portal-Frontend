@@ -206,7 +206,7 @@ function Actividades() {
   };
 
   const asideContent = (
-    <div className="sticky top-8 bg-white p-6 lg:mt-2 mx-8 rounded-lg flex flex-col gap-4  ">
+    <div className="sticky top-8 bg-white p-6 lg:mt-2 mx-1 rounded-lg flex flex-col gap-4  ">
       <Button texto={"Publica una actividad"} onClick={handleCreate} />
       <SinBuscador
         eventTypeFilter={eventTypeFilter}
@@ -221,7 +221,7 @@ function Actividades() {
 
   return (
     <HomeBase aside={asideContent}>
-      <div className="flex flex-row  mt-4 mb-16 gap-8 lg:mx-1 justify-center">
+      <div className="flex flex-row  mt-4 mb-16 gap-4 lg:mx-1 justify-center">
           <ActividadDialog
             open={open}
             onClose={handleClose}
