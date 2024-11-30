@@ -8,8 +8,8 @@ import Autocomplete from "@mui/material/Autocomplete";
 import ActionButton from "../../../atoms/buttons/actionButton";
 
 const typeEvent = ["Charla", "Conferencia", "Curso", "Taller", "Seminario", "Otro"];
-const typeModality = ["Presencial", "Remoto", "Hibrido"];
-const typeArea = ["Agricultura", "Banca", "Contruscción", "Educación", "Energía", "Finanzas", "Manufactura", "Retail", "Salud", "Tecnología", "Telecomunucaciones", "Transporte", "Turismo", "Otro" ] ;
+const typeModality = ["Presencial", "Remoto", "Híbrido"];
+const typeArea = ["Agricultura", "Banca", "Construcción", "Educación", "Energía", "Finanzas", "Manufactura", "Retail", "Salud", "Tecnología", "Telecomunucaciones", "Transporte", "Turismo", "Otro" ] ;
 const typeNivel = ["Practicante", "Trainee", "Junior", "Semi-senior", "Senior", "Ejecutivo", "Otro"];
 
 
