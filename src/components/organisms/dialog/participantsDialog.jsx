@@ -5,7 +5,7 @@ const ParticipantsDialog = ({ open, onClose, participants, activityTitle }) => {
   return (
     <Dialog open={open} onClose={onClose} fullWidth maxWidth="md">
       <DialogTitle sx={{backgroundColor: "#6F191C"}}>
-        <Typography variant="subtitle1" sx={{ color: "white" }}>
+        <Typography variant="title" sx={{ color: "white" }}>
         {activityTitle ? `Participantes de ${activityTitle}` : "Participantes"}
         </Typography>
       </DialogTitle>

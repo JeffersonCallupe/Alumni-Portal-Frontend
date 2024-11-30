@@ -24,6 +24,7 @@ function Actividades() {
   const { showAlert } = useAlert();
   const [apiEndpoints, setApiEndpoints] = useState({});
   const fetchDataRef = useRef(false);
+  const token = sessionStorage.getItem("token");
 
   // Estados para los filtros
   const [eventTypeFilter, setEventTypeFilter] = useState("");
@@ -115,16 +116,21 @@ function Actividades() {
     }
     try {
       const getParticipantsEndpoint = `${import.meta.env.VITE_API_URL}/api/enrollment/activity/${activityId}`;
-      
       // Use fetch directly instead of the useGet hook
-      const response = await fetch(getParticipantsEndpoint);
+      const response = await fetch(getParticipantsEndpoint,{
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`
+        }  
+      });
       if (!response.ok) {
         throw new Error('Network response was not ok');
       }
       const data = await response.json();
-      
       setParticipants(data);
       handleOpenParticipants();
+      showAlert(`Se cargaron ${data.length} participantes.`, "success");
     } catch (error) {
       console.error("Error al obtener los participantes:", error);
       showAlert("No se pudo cargar la lista de participantes.", "error");
@@ -241,7 +247,6 @@ function Actividades() {
             open={openParticipantsModal}
             onClose={handleCloseParticipants}
             participants={participants}
-            activityTitle={selectedActivity?.title}
           />
         <div className="flex flex-col w-12/12 lg:w-11/12 ">
           <div>
