@@ -18,6 +18,7 @@ function Actividades() {
     const { open, handleOpen, handleClose } = useModal();
     const { open: openParticipantsModal, handleOpen: handleOpenParticipants, handleClose: handleCloseParticipants } = useModal();
     const [actividades, setActividades] = useState([]);
+    const [filteredActividades, setFilteredActividades] = useState([]); // Nuevo estado para las actividades filtradas
     const [selectedActivity, setSelectedActivity] = useState(null);
     const [participants, setParticipants] = useState([]);
     const { userData, isInstitutional } = useUserContext();
@@ -29,7 +30,6 @@ function Actividades() {
     // Estados para los filtros
     const [eventTypeFilter, setEventTypeFilter] = useState("");
     const [startDateFilter, setStartDateFilter] = useState("");
-    const [filteredActividades, setFilteredActividades] = useState([]);    
 
     // Solo se define userType y URLs dinámicas si userData está disponible
     useEffect(() => {
@@ -64,6 +64,7 @@ function Actividades() {
                 try {
                     const data = await getData();
                     setActividades(data);
+                    setFilteredActividades(data); // Inicializar con todas las actividades
                 } catch (error) {
                     console.error("Error al obtener las actividades:", error);
                 }
@@ -91,6 +92,7 @@ function Actividades() {
         try {
             await deleteData(activityId);
             setActividades((prevActividades) => prevActividades.filter((act) => act.id !== activityId));
+            setFilteredActividades((prevFiltered) => prevFiltered.filter((act) => act.id !== activityId));
             showAlert("Actividad eliminada con éxito.", "success");
         } catch (error) {
             console.error("Error al eliminar la actividad:", error);
@@ -99,43 +101,43 @@ function Actividades() {
 
     const handleViewParticipants = async (activityId) => {
         if (!activityId) {
-          showAlert("No se seleccionó una actividad válida.", "warning");
-          return;
+            showAlert("No se seleccionó una actividad válida.", "warning");
+            return;
         }
         try {
-          const getParticipantsEndpoint = `${import.meta.env.VITE_API_URL}/api/enrollment/activity/${activityId}`;
-          const response = await fetch(getParticipantsEndpoint, {
-            method: 'GET',
-            headers: {
-              'Content-Type': 'application/json',
-              'Authorization': `Bearer ${token}`
-            }  
-          });
-          if (!response.ok) {
-            throw new Error('Network response was not ok');
-          }
-          const data = await response.json();
-          setParticipants(data);
-          handleOpenParticipants();
-          showAlert(`Se cargaron ${data.length} participantes.`, "success");
+            const getParticipantsEndpoint = `${import.meta.env.VITE_API_URL}/api/enrollment/activity/${activityId}`;
+            const response = await fetch(getParticipantsEndpoint, {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}`
+                }
+            });
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            const data = await response.json();
+            setParticipants(data);
+            handleOpenParticipants();
+            showAlert(`Se cargaron ${data.length} participantes.`, "success");
         } catch (error) {
-          console.error("Error al obtener los participantes:", error);
-          showAlert("No se pudo cargar la lista de participantes.", "error");
+            console.error("Error al obtener los participantes:", error);
+            showAlert("No se pudo cargar la lista de participantes.", "error");
         }
-      };
+    };
 
     // Filtrado de actividades
     const applyFilters = () => {
         let filtered = actividades;
         if (eventTypeFilter) {
-        filtered = filtered.filter(
-            (actividad) => actividad.eventType === eventTypeFilter
-        );
+            filtered = filtered.filter(
+                (actividad) => actividad.eventType === eventTypeFilter
+            );
         }
         if (startDateFilter) {
-        filtered = filtered.filter(
-            (actividad) => actividad.startDate >= startDateFilter
-        );
+            filtered = filtered.filter(
+                (actividad) => actividad.startDate >= startDateFilter
+            );
         }
         setFilteredActividades(filtered);
     };
@@ -147,78 +149,73 @@ function Actividades() {
     };
 
     const handleSaveActivity = async (formData) => {
-      const activityData = {
-          title: formData.title,
-          description: formData.description,
-          eventType: formData.eventType,
-          startDate: formData.startDate,
-          endDate: formData.endDate,
-          location: formData.location,
-          url: formData.url,
-          enrollable: formData.enrollable,
-      };
-  
-      try {
-          let activityId;
-  
-          if (selectedActivity) {
-              // Actualización de la actividad
-              await patch(activityData, false);
-              activityId = selectedActivity.id;
-              showAlert(`Actividad actualizada correctamente`, "success");
-  
-              // Actualizar la actividad en el estado
-              setActividades((prevActividades) =>
-                  prevActividades.map((activity) =>
-                      activity.id === activityId ? { ...activity, ...formData } : activity
-                  )
-              );
-          } else {
-              // Creación de la actividad
-              const activityResponse = await post(activityData);
-              const match = activityResponse.match(/: (\d+)/); // Busca el ID en la respuesta
-              activityId = match ? match[1] : null;
-  
-              if (!activityId) {
-                  throw new Error("No se pudo obtener el ID de la actividad de la respuesta.");
-              }
-  
-              showAlert(`Actividad creada correctamente`, "success");
-  
-              // Añadir la nueva actividad al estado
-              setActividades((prevActividades) => [
-                  ...prevActividades,
-                  { id: activityId, ...formData },
-              ]);
-          }
-  
-          // Subir o actualizar multimedia
-          if (formData.multimedia) {
-              await uploadProfilePicture(apiEndpoints.multimedia, activityId, formData.multimedia);
-              showAlert("Multimedia subida o actualizada con éxito.", "success");
-          }
-  
-          handleClose();
-      } catch (error) {
-          console.error("Error al guardar o actualizar la actividad y/o multimedia:", error);
-          showAlert("Error al guardar o actualizar la actividad.", "error");
-      }
-  };
+        const activityData = {
+            title: formData.title,
+            description: formData.description,
+            eventType: formData.eventType,
+            startDate: formData.startDate,
+            endDate: formData.endDate,
+            location: formData.location,
+            url: formData.url,
+            enrollable: formData.enrollable,
+        };
+
+        try {
+            let activityId;
+
+            if (selectedActivity) {
+                await patch(activityData, false);
+                activityId = selectedActivity.id;
+                showAlert(`Actividad actualizada correctamente`, "success");
+                setActividades((prevActividades) =>
+                    prevActividades.map((activity) =>
+                        activity.id === activityId ? { ...activity, ...formData } : activity
+                    )
+                );
+                applyFilters(); // Reaplicar filtros después de la actualización
+            } else {
+                const activityResponse = await post(activityData);
+                const match = activityResponse.match(/: (\d+)/);
+                activityId = match ? match[1] : null;
+
+                if (!activityId) {
+                    throw new Error("No se pudo obtener el ID de la actividad de la respuesta.");
+                }
+
+                showAlert(`Actividad creada correctamente`, "success");
+                setActividades((prevActividades) => [
+                    ...prevActividades,
+                    { id: activityId, ...formData },
+                ]);
+                applyFilters(); // Reaplicar filtros después de la creación
+            }
+
+            if (formData.multimedia) {
+                await uploadProfilePicture(apiEndpoints.multimedia, activityId, formData.multimedia);
+                showAlert("Multimedia subida o actualizada con éxito.", "success");
+            }
+
+            handleClose();
+        } catch (error) {
+            console.error("Error al guardar o actualizar la actividad y/o multimedia:", error);
+            showAlert("Error al guardar o actualizar la actividad.", "error");
+        }
+    };
 
     const asideContent = (
-        <div className="sticky top-8 bg-white p-6 lg:mt-2 mx-1 rounded-lg flex flex-col gap-4  ">
-          <Button texto={"Publica una actividad"} onClick={handleCreate} />
-          <SinBuscador
-            eventTypeFilter={eventTypeFilter}
-            setEventTypeFilter={setEventTypeFilter}
-            startDateFilter={startDateFilter}
-            setStartDateFilter={setStartDateFilter}
-            applyFilters={applyFilters}
-            clearFilters={clearFilters}
-          />
+        <div className="sticky top-8 bg-white p-6 lg:mt-2 mx-1 rounded-lg flex flex-col gap-4">
+            <Button texto={"Publica una actividad"} onClick={handleCreate} />
+            <SinBuscador
+                eventTypeFilter={eventTypeFilter}
+                setEventTypeFilter={setEventTypeFilter}
+                startDateFilter={startDateFilter}
+                setStartDateFilter={setStartDateFilter}
+                applyFilters={applyFilters}
+                clearFilters={clearFilters}
+            />
         </div>
-      );
-    
+    );
+
     return (
         <HomeBase aside={asideContent}>
             <div className="flex flex-row mt-4 mb-16 gap-4 lg:mx-1 justify-center">
@@ -236,8 +233,8 @@ function Actividades() {
                         participants={participants}
                     />
                     <div>
-                        {actividades.length > 0 ? (
-                            actividades.map((actividad) => (
+                        {filteredActividades.length > 0 ? (
+                            filteredActividades.map((actividad) => (
                                 <ActividadCard
                                     key={actividad.id}
                                     actividad={actividad}
@@ -246,7 +243,7 @@ function Actividades() {
                                     onDelete={handleDelete}
                                     onSeeListParticipants={() => {
                                         handleViewParticipants(actividad.id);
-                                      }}
+                                    }}
                                 />
                             ))
                         ) : (
@@ -258,4 +255,6 @@ function Actividades() {
         </HomeBase>
     );
 }
+
 export default Actividades;
+
