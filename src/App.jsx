@@ -9,6 +9,8 @@ import LoginInstitucional from "../src/app/login/LoginInstitucional";
 import LoginEmpresa from '../src/app/login/LoginEmpresa';
 import LoginSUM from "../src/app/login/LoginSUM";
 import OfertasLaborales from "./app/dashboard/ofertasLaborales";
+import OfertasAplicadas from "./app/dashboard/ofertasAplicadas";
+import OfertasHistorico from "./app/dashboard/ofertasHistorico";
 import ProfileEmpresa from "./app/profile/profileEmpresa"
 import ProfileInstitucional from "./app/profile/profileInstitucional"
 import RegistroSUM from "./app/registro/registroSUM";
@@ -31,9 +33,11 @@ function App() {
             <Route path="/profileInstitucional" element={<ProfileInstitucional />} />
             <Route path="/home" element={<Home />} />
             <Route path="/actividades" element={<Actividades />} />
-            <Route path="/ofertasLaborales" element={<OfertasLaborales />} />
             <Route path="/actividadesRegistradas" element={<ActividadesRegistradas />} />
             <Route path="/actividadesHistorico" element={<ActividadesHistorico />} />
+            <Route path="/ofertasLaborales" element={<OfertasLaborales />} />
+            <Route path="/ofertasAplicadas" element={<OfertasAplicadas />} />
+            <Route path="/ofertasHistorico" element={<OfertasHistorico />} />
             <Route path="/settings" element={<Configuraciones />} />
           </Routes>
         </BrowserRouter>

@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import { Card, CardHeader, CardMedia, CardContent, CardActions, Avatar, Typography } from '@mui/material';
+import { Card, CardHeader, CardMedia, CardContent, CardActions, Avatar, Typography, Grid, Box } from '@mui/material';
 import Button from '../../../atoms/buttons/actionButton';
 import DeleteConfirmationModal from "../../dialog/deleteConfirmationDialog";
+import ParticipantsDialog from '../../dialog/participantsDialog';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import ModeEditIcon from '@mui/icons-material/ModeEdit';
 import VisibilityIcon from '@mui/icons-material/VisibilityOutlined';
@@ -101,14 +102,15 @@ const ActividadCard = ({
         }
         action={
           <div style={{ display: 'flex', gap: '10px' }}>
+            {onSeeListParticipants && <Button startIcon={<VisibilityIcon/>} texto={"Ver participantes"} onClick={handleSeeListParticipants}></Button>}
             {onEdit && <Button startIcon={<ModeEditIcon />} texto={"Editar"} onClick={handleEdit}></Button>}
             {onDelete && <Button startIcon={<DeleteIcon />} texto={"Eliminar"} onClick={handleDelete}></Button>}
             {onCancelEnrollment && <Button texto={"Cancelar inscripción"} onClick={handleCancelEnrollment}></Button>}
             {isInstitutional && onRegister && <Button texto={"Registrarse"} onClick={handleRegister}></Button>}
           </div>
         }
-        title={`${title} (${eventType})`}
-        subheader={`${entityName}`}
+        title={`${entityName}`}
+        subheader={isUser ? `Estudiante` : `Empresa`}
       />
       {multimedia && (
         <CardMedia
@@ -122,27 +124,49 @@ const ActividadCard = ({
             justifySelf: 'center',
           }}
         />
-      )}
-      <CardContent>
-      <Typography variant="body2" sx={{ color: 'text.primary' }}>
-        {`Inicio: ${formatDate(startDate)} | Fin: ${formatDate(endDate)}`}
-      </Typography>
-        <Typography variant="body2" sx={{ color: 'text.secondary' }}>
-          {description}
-        </Typography>
-        <Typography variant="body2" color="textSecondary">
-          {location}
-        </Typography>
-        {enrollable && (
-          <Typography variant="body2" color="primary">
-            Inscripciones Abiertas
-          </Typography>
         )}
+      <CardContent>
+      <Typography variant="h6" sx={{ fontSize: '1.2rem' }}>
+        {`${title}`}
+        </Typography>
+        <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1, mt: 1 }}>
+          <Grid container spacing={2} sx={{ marginTop: 0 }}>
+            {/* Columna Izquierda */}
+            <Grid item xs={12} md={6}>
+              <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1 }}>
+                <Typography variant="body2" color="textSecondary">
+                  <strong>Tipo de evento:</strong> {eventType}
+                </Typography>
+                <Typography variant="body2" color="textSecondary">
+                  <strong>Fecha:</strong> {startDate} | {endDate}
+                </Typography>
+                <Typography variant="body2" color="textSecondary">
+                  <strong>Ubicación:</strong> {location}
+                </Typography>
+                {enrollable && (
+                  <Typography variant="body2" color="primary">
+                    Inscripciones Abiertas
+                  </Typography>
+                )}
+              </Box>
+            </Grid>
+
+            {/* Columna Derecha */}
+            <Grid item xs={12} md={6}>
+              <Typography variant="body2" color="textSecondary">
+                <strong>Descripción:</strong>
+              </Typography>
+              <Typography
+                variant="body2"
+                sx={{ marginBottom: "8px", color: "text.secondary" }}
+              >
+                {description}
+              </Typography>
+            </Grid>
+          </Grid>
+        </Box>
       </CardContent>
       <CardActions disableSpacing>
-        <div style={{ display: 'flex', justifyContent: 'flex-end', width: '100%' }}>
-          {onSeeListParticipants && <Button startIcon={<VisibilityIcon/>} texto={"Ver participantes"} onClick={handleSeeListParticipants}></Button>}
-        </div>
       </CardActions>
     </Card>
 
