@@ -26,6 +26,7 @@ function Actividades() {
     const [apiEndpoints, setApiEndpoints] = useState({});
     const fetchDataRef = useRef(false);
     const token = sessionStorage.getItem("token");
+    const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
     // Estados para los filtros
     const [eventTypeFilter, setEventTypeFilter] = useState("");
@@ -63,8 +64,14 @@ function Actividades() {
             const fetchActividades = async () => {
                 try {
                     const data = await getData();
-                    setActividades(data);
-                    setFilteredActividades(data); // Inicializar con todas las actividades
+                    let filtered;
+                    if (userData.role === "USER") {
+                        filtered = data.filter(activity => activity.userId === String(userData.id));
+                    } else if (userData.role === "COMPANY") {
+                        filtered = data.filter(activity => activity.companyId === String(userData.id));
+                    }
+                    setActividades(filtered);
+                    setFilteredActividades(filtered); // Inicializar con todas las actividades
                 } catch (error) {
                     console.error("Error al obtener las actividades:", error);
                 }
@@ -166,36 +173,44 @@ function Actividades() {
             if (selectedActivity) {
                 await patch(activityData, false);
                 activityId = selectedActivity.id;
-                showAlert(`Actividad actualizada correctamente`, "success");
+
+                // Actualizar actividades en el estado local
                 setActividades((prevActividades) =>
                     prevActividades.map((activity) =>
                         activity.id === activityId ? { ...activity, ...formData } : activity
                     )
                 );
+
+                showAlert(`Actividad actualizada correctamente`, "success");
                 applyFilters(); // Reaplicar filtros después de la actualización
             } else {
                 const activityResponse = await post(activityData);
+                // Extraer ID de la actividad desde la respuesta del servidor
                 const match = activityResponse.match(/: (\d+)/);
-                activityId = match ? match[1] : null;
+                activityId = match ? parseInt(match[1], 10) : null;
 
                 if (!activityId) {
                     throw new Error("No se pudo obtener el ID de la actividad de la respuesta.");
                 }
 
-                showAlert(`Actividad creada correctamente`, "success");
+                // Agregar nueva actividad al estado local
                 setActividades((prevActividades) => [
                     ...prevActividades,
                     { id: activityId, ...formData },
                 ]);
-                applyFilters(); // Reaplicar filtros después de la creación
+
+                showAlert(`Actividad creada correctamente`, "success");
+                applyFilters();  // Reaplicar filtros después de la creación
             }
 
             if (formData.multimedia) {
+                await delay(2000);
                 await uploadProfilePicture(apiEndpoints.multimedia, activityId, formData.multimedia);
                 showAlert("Multimedia subida o actualizada con éxito.", "success");
             }
 
             handleClose();
+            window.location.reload();
         } catch (error) {
             console.error("Error al guardar o actualizar la actividad y/o multimedia:", error);
             showAlert("Error al guardar o actualizar la actividad.", "error");

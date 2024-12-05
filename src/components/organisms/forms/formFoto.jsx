@@ -31,7 +31,6 @@ const FormFoto = ({ apiUrl}) => {
 
   const handleUpload = async (e) => {
     e.preventDefault();
-    window.location.reload();
     if (imageFile) {
       try {
         await uploadProfilePicture(`${apiUrl}/upload-${userType}`, userData.id, imageFile);
@@ -42,10 +41,10 @@ const FormFoto = ({ apiUrl}) => {
         showAlert('Error al actualizar la imagen de perfil', "error");
       }
     }
+    window.location.reload();
   };
 
   const handleDelete = async () => {
-    window.location.reload();
     if (userData?.id) {
       try {
         await deleteProfilePicture(`${apiUrl}/delete-image-${userType}`, userData.id);
@@ -55,6 +54,7 @@ const FormFoto = ({ apiUrl}) => {
         showAlert("Error al eliminar la imagen de perfil", "error");
       }
     }
+    window.location.reload();
   };
 
   const handleClose = async () => {
