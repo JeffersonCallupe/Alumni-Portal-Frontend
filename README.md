@@ -90,7 +90,8 @@ El frontend del Portal Alumni está desarrollado utilizando tecnologías moderna
 
 A continuación se presenta la estructura de carpetas del repositorio:
 
-├── public/ # Archivos estáticos
+```bash
+├── public/ # Archivos estático
 ├── src/
 │ ├── app/ # Lógica de la aplicación
 │ ├── assets/ # Recursos como imágenes, íconos, botones.
@@ -109,6 +110,7 @@ A continuación se presenta la estructura de carpetas del repositorio:
 ├── tailwind.config.js # Configuración de Tailwind CSS
 ├── vite.config.js # Configuración de Vite
 └── README.md # Documentación del proyecto
+```
 
 ## 5. Instalación y Configuración
 
