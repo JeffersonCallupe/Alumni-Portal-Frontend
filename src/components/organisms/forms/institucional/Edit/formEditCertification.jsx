@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
-import useUpdateData from "../../../../../hooks/useEditInstitutional"; // Asegúrate de que la ruta sea correcta
+import useUpdateData from "../../../../../hooks/useUpdateData"; // Asegúrate de que la ruta sea correcta
 
 const FormEditCertification = ({ certificationId, initialData, onUpdate, onCancel }) => {
   const [formData, setFormData] = useState({

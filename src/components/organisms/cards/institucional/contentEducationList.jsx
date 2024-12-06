@@ -15,9 +15,9 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import VisibilityIcon from '@mui/icons-material/VisibilityOutlined';
 import DeleteConfirmationModal from "../../dialog/deleteConfirmationDialog"; // Asegúrate de ajustar la ruta
 
-const EducationList = () => {
+const EducationList = ({ educations, setEducations}) => {
   const { userData } = useUserContext();
-  const [educations, setEducations] = useState([]);
+  // const [educations, setEducations] = useState([]);
   const [loading, setLoading] = useState(true);
   const [openModal, setOpenModal] = useState(false); 
   const [selectedEducation, setSelectedEducation] = useState(null);

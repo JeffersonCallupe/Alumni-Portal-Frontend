@@ -5,13 +5,13 @@ import CircularProgress from "@mui/material/CircularProgress";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import FormEditSkill from "../../forms/institucional/Edit/formEditSkill";
-import ActionButton from "../../../atoms/buttons/actionButton"
-import DeleteIcon from '@mui/icons-material/Delete';
+import ActionButton from "../../../atoms/buttons/actionButton";
+import DeleteIcon from "@mui/icons-material/Delete";
 import DeleteConfirmationModal from "../../dialog/deleteConfirmationDialog";
 
-const SkillList = () => {
+const SkillList = ({ skills, setSkills }) => {
   const { userData } = useUserContext();
-  const [skills, setSkills] = useState([]);
+  // const [skills, setSkills] = useState([]);
   const [loading, setLoading] = useState(true);
   const [openModal, setOpenModal] = useState(false);
   const [selectedSkill, setSelectedSkill] = useState(null);
@@ -21,7 +21,9 @@ const SkillList = () => {
   useEffect(() => {
     const fetchSkills = async () => {
       try {
-        const response = await fetch(`${import.meta.env.VITE_API_URL}/api/skill/user/${userData.id}`);
+        const response = await fetch(
+          `${import.meta.env.VITE_API_URL}/api/skill/user/${userData.id}`
+        );
         const data = await response.json();
         setSkills(data);
       } catch (error) {
@@ -30,7 +32,6 @@ const SkillList = () => {
         setLoading(false);
       }
     };
-
     fetchSkills();
   }, [userData]);
 
@@ -66,9 +67,12 @@ const SkillList = () => {
     if (!skillToDelete) return;
 
     try {
-      const response = await fetch(`${import.meta.env.VITE_API_URL}/api/skill/${skillToDelete.id}`, {
-        method: "DELETE",
-      });
+      const response = await fetch(
+        `${import.meta.env.VITE_API_URL}/api/skill/${skillToDelete.id}`,
+        {
+          method: "DELETE",
+        }
+      );
       if (response.ok) {
         setSkills((prevSkills) =>
           prevSkills.filter((skill) => skill.id !== skillToDelete.id)
@@ -97,7 +101,12 @@ const SkillList = () => {
 
   if (loading) {
     return (
-      <Box display="flex" justifyContent="center" alignItems="center" height="100vh">
+      <Box
+        display="flex"
+        justifyContent="center"
+        alignItems="center"
+        height="100vh"
+      >
         <CircularProgress />
       </Box>
     );
@@ -112,19 +121,19 @@ const SkillList = () => {
             title={skill.name}
             sub={true}
             cardContent={
-              <Box 
-                display="flex" 
+              <Box
+                display="flex"
                 justifyContent="space-between"
                 alignItems="center"
               >
-                <Typography variant="subtitle2">Nivel: {skill.level}</Typography>
-                <ActionButton 
-                    texto={"Eliminar"}
-                    startIcon={<DeleteIcon />}
-                    onClick={() => handleDeleteClick(skill)}
-                  >
-                    
-                  </ActionButton>
+                <Typography variant="subtitle2">
+                  Nivel: {skill.level}
+                </Typography>
+                <ActionButton
+                  texto={"Eliminar"}
+                  startIcon={<DeleteIcon />}
+                  onClick={() => handleDeleteClick(skill)}
+                ></ActionButton>
               </Box>
             }
             dialogContent={dialogContent(skill)}

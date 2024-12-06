@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useUserContext } from "../../../../contexts/userContext";
 import InfoBaseCard from "../profileBaseCards/infoBaseCard";
-import CircularProgress from "@mui/material/CircularProgress";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
@@ -10,31 +9,28 @@ import Dialog from "@mui/material/Dialog";
 import DialogTitle from "@mui/material/DialogTitle";
 import DialogContent from "@mui/material/DialogContent";
 import DialogActions from "@mui/material/DialogActions";
-import FormEditProject from "../../forms/institucional/Edit/formEditProject";
+import FormEditProject from "../../forms/institucional/Edit/FormEditProject";
 import DeleteIcon from "@mui/icons-material/Delete";
 import VisibilityIcon from '@mui/icons-material/VisibilityOutlined';
 import DeleteConfirmationModal from "../../dialog/deleteConfirmationDialog";
 
-const ProjectList = () => {
+const ProjectList = ({ projects, setProjects }) => {
   const { userData } = useUserContext();
-  const [projects, setProjects] = useState([]);
-  const [loading, setLoading] = useState(true);
   const [openModal, setOpenModal] = useState(false);
   const [selectedProject, setSelectedProject] = useState(null);
   const [deleteConfirmOpen, setDeleteConfirmOpen] = useState(false);
   const [projectToDelete, setProjectToDelete] = useState(null);
 
+  
   useEffect(() => {
     const fetchProjects = async () => {
       try {
         const response = await fetch(`${import.meta.env.VITE_API_URL}/api/project/user/${userData.id}`);
         const data = await response.json();
-        setProjects(data);
+        setProjects(data); 
       } catch (error) {
         console.error("Error fetching projects:", error);
-      } finally {
-        setLoading(false);
-      }
+      } 
     };
     fetchProjects();
   }, [userData]);
@@ -90,6 +86,7 @@ const ProjectList = () => {
   const dialogContent = (project) => (
     <div>
       <FormEditProject
+        key ={project.id}
         projectId={project.id}
         initialData={project}
         onUpdate={updateProjectList}
@@ -98,22 +95,15 @@ const ProjectList = () => {
     </div>
   );
 
-  if (loading) {
-    return (
-      <Box display="flex" justifyContent="center" alignItems="center" height="100vh">
-        <CircularProgress />
-      </Box>
-    );
-  }
-
-  return (
+  // console.log({projects})
+  return(
     <Box>
       {projects.length > 0 ? (
-        projects.map((project) => (
+        projects.map((project, index) => (
           <InfoBaseCard
             key={project.id}
-            title={project.name}
             sub={true}
+            title={project.name}
             cardContent={
               <div>
                 <Typography variant="subtitle2">Fecha: {project.date}</Typography>

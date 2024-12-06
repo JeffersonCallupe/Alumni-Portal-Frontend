@@ -6,13 +6,13 @@ import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import ActionButton from "../../../atoms/buttons/actionButton";
 import CertificationForm from "../../forms/institucional/Edit/formEditCertification";
-import DeleteIcon from '@mui/icons-material/Delete';
-import VisibilityIcon from '@mui/icons-material/VisibilityOutlined';
+import DeleteIcon from "@mui/icons-material/Delete";
+import VisibilityIcon from "@mui/icons-material/VisibilityOutlined";
 import DeleteConfirmationModal from "../../dialog/deleteConfirmationDialog";
 
-const CertificationList = () => {
+const CertificationList = ({ certifications, setCertifications }) => {
   const { userData } = useUserContext();
-  const [certifications, setCertifications] = useState([]);
+  // const [certifications, setCertifications] = useState([]);
   const [loading, setLoading] = useState(true);
   const [openModal, setOpenModal] = useState(false);
   const [selectedCertification, setSelectedCertification] = useState(null);
@@ -22,7 +22,11 @@ const CertificationList = () => {
   useEffect(() => {
     const fetchCertifications = async () => {
       try {
-        const response = await fetch(`${import.meta.env.VITE_API_URL}/api/certification/user/${userData.id}`);
+        const response = await fetch(
+          `${import.meta.env.VITE_API_URL}/api/certification/user/${
+            userData.id
+          }`
+        );
         const data = await response.json();
         setCertifications(data);
       } catch (error) {
@@ -31,7 +35,6 @@ const CertificationList = () => {
         setLoading(false);
       }
     };
-
     fetchCertifications();
   }, [userData]);
 
@@ -67,12 +70,19 @@ const CertificationList = () => {
     if (!certificationToDelete) return;
 
     try {
-      const response = await fetch(`${import.meta.env.VITE_API_URL}/api/certification/${certificationToDelete.id}`, {
-        method: "DELETE",
-      });
+      const response = await fetch(
+        `${import.meta.env.VITE_API_URL}/api/certification/${
+          certificationToDelete.id
+        }`,
+        {
+          method: "DELETE",
+        }
+      );
       if (response.ok) {
         setCertifications((prevCertifications) =>
-          prevCertifications.filter((cert) => cert.id !== certificationToDelete.id)
+          prevCertifications.filter(
+            (cert) => cert.id !== certificationToDelete.id
+          )
         );
         setDeleteConfirmOpen(false);
         setCertificationToDelete(null);
@@ -104,7 +114,12 @@ const CertificationList = () => {
 
   if (loading) {
     return (
-      <Box display="flex" justifyContent="center" alignItems="center" height="100vh">
+      <Box
+        display="flex"
+        justifyContent="center"
+        alignItems="center"
+        height="100vh"
+      >
         <CircularProgress />
       </Box>
     );
@@ -120,25 +135,28 @@ const CertificationList = () => {
             sub={true}
             cardContent={
               <div>
-                <Typography variant="subtitle2">Institución: {certification.issuingOrganization}</Typography>
+                <Typography variant="subtitle2">
+                  Institución: {certification.issuingOrganization}
+                </Typography>
                 <Typography variant="subtitle2">
                   Fecha de emisión: {certification.issueDate}
-                  {certification.expirationDate && ` - Fecha de expiración: ${certification.expirationDate}`}
+                  {certification.expirationDate &&
+                    ` - Fecha de expiración: ${certification.expirationDate}`}
                 </Typography>
                 <br />
-                <Box 
-                  display="flex" 
-                  justifyContent="space-between" 
-                  flexWrap="wrap" 
+                <Box
+                  display="flex"
+                  justifyContent="space-between"
+                  flexWrap="wrap"
                   gap={2}
                 >
-                  <ActionButton 
+                  <ActionButton
                     texto={"Ver Credencial"}
                     startIcon={<VisibilityIcon />}
                     onClick={() => handleViewCredential(certification)}
-                    disabled={!certification.credentialUrl}  // Deshabilita el botón si no hay URL
+                    disabled={!certification.credentialUrl} // Deshabilita el botón si no hay URL
                   />
-                  <ActionButton 
+                  <ActionButton
                     texto={"Eliminar"}
                     startIcon={<DeleteIcon />}
                     onClick={() => handleDeleteClick(certification)}
@@ -152,7 +170,9 @@ const CertificationList = () => {
           />
         ))
       ) : (
-        <Typography variant="body1">No se encontraron certificaciones.</Typography>
+        <Typography variant="body1">
+          No se encontraron certificaciones.
+        </Typography>
       )}
 
       <DeleteConfirmationModal
@@ -166,7 +186,3 @@ const CertificationList = () => {
 };
 
 export default CertificationList;
-
-
-
-
