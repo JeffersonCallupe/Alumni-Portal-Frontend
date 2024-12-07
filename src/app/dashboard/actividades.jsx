@@ -185,9 +185,8 @@ function Actividades() {
                 applyFilters(); // Reaplicar filtros después de la actualización
             } else {
                 const activityResponse = await post(activityData);
-                // Extraer ID de la actividad desde la respuesta del servidor
-                const match = activityResponse.match(/: (\d+)/);
-                activityId = match ? parseInt(match[1], 10) : null;
+                activityId =  activityResponse.id;
+
 
                 if (!activityId) {
                     throw new Error("No se pudo obtener el ID de la actividad de la respuesta.");
@@ -204,7 +203,6 @@ function Actividades() {
             }
 
             if (formData.multimedia) {
-                await delay(2000);
                 await uploadProfilePicture(apiEndpoints.multimedia, activityId, formData.multimedia);
                 showAlert("Multimedia subida o actualizada con éxito.", "success");
             }
