@@ -4,14 +4,13 @@ import InfoBaseCard from "../profileBaseCards/infoBaseCard";
 import CircularProgress from "@mui/material/CircularProgress";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
-import FormEditSkill from "../../forms/institucional/Edit/formEditSkill";
+import FormEditSkill from "../../forms/institucional/Edit/FormEditSkill";
 import ActionButton from "../../../atoms/buttons/actionButton";
 import DeleteIcon from "@mui/icons-material/Delete";
 import DeleteConfirmationModal from "../../dialog/deleteConfirmationDialog";
 
 const SkillList = ({ skills, setSkills }) => {
   const { userData } = useUserContext();
-  // const [skills, setSkills] = useState([]);
   const [loading, setLoading] = useState(true);
   const [openModal, setOpenModal] = useState(false);
   const [selectedSkill, setSelectedSkill] = useState(null);
@@ -87,18 +86,6 @@ const SkillList = ({ skills, setSkills }) => {
     }
   };
 
-  const dialogContent = (skill) => (
-    <div>
-      <Typography variant="h6">Editar Habilidad: {skill.name}</Typography>
-      <FormEditSkill
-        skillId={skill.id}
-        initialData={skill}
-        onUpdate={updateSkillList}
-        onCancel={handleCloseModal}
-      />
-    </div>
-  );
-
   if (loading) {
     return (
       <Box
@@ -115,32 +102,39 @@ const SkillList = ({ skills, setSkills }) => {
   return (
     <Box>
       {skills.length > 0 ? (
-        skills.map((skill) => (
-          <InfoBaseCard
-            key={skill.id}
-            title={skill.name}
-            sub={true}
-            cardContent={
-              <Box
-                display="flex"
-                justifyContent="space-between"
-                alignItems="center"
-              >
-                <Typography variant="subtitle2">
-                  Nivel: {skill.level}
-                </Typography>
-                <ActionButton
-                  texto={"Eliminar"}
-                  startIcon={<DeleteIcon />}
-                  onClick={() => handleDeleteClick(skill)}
-                ></ActionButton>
-              </Box>
-            }
-            dialogContent={dialogContent(skill)}
-            modalId={`modal-skill-${skill.id}`}
-            className="subcard"
-          />
-        ))
+        skills.map((skill) => {
+          const contentEditSkill = React.cloneElement(<FormEditSkill />, {
+            skillId: skill.id,
+            initialData: skill,
+            onUpdate: updateSkillList,
+          });
+          return (
+            <InfoBaseCard
+              key={skill.id}
+              title={skill.name}
+              sub={true}
+              cardContent={
+                <Box
+                  display="flex"
+                  justifyContent="space-between"
+                  alignItems="center"
+                >
+                  <Typography variant="subtitle2">
+                    Nivel: {skill.level}
+                  </Typography>
+                  <ActionButton
+                    texto={"Eliminar"}
+                    startIcon={<DeleteIcon />}
+                    onClick={() => handleDeleteClick(skill)}
+                  ></ActionButton>
+                </Box>
+              }
+              dialogContent={contentEditSkill}
+              modalId={`modal-skill-${skill.id}`}
+              className="subcard"
+            />
+          );
+        })
       ) : (
         <Typography variant="body1">No se encontraron habilidades.</Typography>
       )}

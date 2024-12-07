@@ -4,7 +4,7 @@ import InfoBaseCard from "../profileBaseCards/infoBaseCard";
 import CircularProgress from "@mui/material/CircularProgress";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
-import WorkExperienceForm from "../../forms/institucional/Edit/WorkExperienceForm";
+import WorkExperienceForm from "../../forms/institucional/Edit/FormWorkExperience";
 import Button from "@mui/material/Button";
 import ActionButton from "../../../atoms/buttons/actionButton";
 import Dialog from "@mui/material/Dialog";
@@ -14,34 +14,31 @@ import DialogActions from "@mui/material/DialogActions";
 import DeleteIcon from "@mui/icons-material/Delete";
 import VisibilityIcon from "@mui/icons-material/VisibilityOutlined";
 import DeleteConfirmationModal from "../../dialog/deleteConfirmationDialog";
-import { useAlert } from "../../../../contexts/alertContext";
-import usePatch from "../../../../hooks/usePatchProfile";
 
 const WorkExperienceList = ({ experiences, setExperiences }) => {
   const { userData } = useUserContext();
   const [openModal, setOpenModal] = useState(false);
+  const [loading, setLoading] = useState(true);
   const [selectedExperience, setSelectedExperience] = useState(null);
   const [deleteConfirmOpen, setDeleteConfirmOpen] = useState(false);
   const [experienceToDelete, setExperienceToDelete] = useState(null);
-  const { showAlert } = useAlert();
 
-  const apiUrl = userData
-    ? `${import.meta.env.VITE_API_URL}/api/work-experience/user/${userData.id}`
-    : null;
-  const { loading: patchLoading, patch } = usePatch(apiUrl);
 
   useEffect(() => {
     const fetchWorkExperiences = async () => {
       try {
-        const response = await fetch(apiUrl);
+        const response = await fetch(`${import.meta.env.VITE_API_URL}/api/work-experience/user/${userData.id}`);
         const data = await response.json();
         setExperiences(data);
       } catch (error) {
         console.error("Error fetching work experiences:", error);
+      } finally {
+        setLoading(false);
       }
     };
-    if (apiUrl) fetchWorkExperiences();
-  }, [apiUrl]);
+
+    fetchWorkExperiences();
+  }, [userData]);
 
   const updateExperienceList = (updatedExperience) => {
     setExperiences((prevExperiences) =>
@@ -50,22 +47,6 @@ const WorkExperienceList = ({ experiences, setExperiences }) => {
       )
     );
   };
-
-  const handleSaveChanges = async (updatedExperience) => {
-    try {
-      const updatedData = await patch(updatedExperience);
-      console.log(updatedData)
-      if (updatedData) {
-        updateExperienceList(updatedData);
-        showAlert("La información se actualizó con éxito", "success");
-      }
-    } catch (error) {
-      showAlert("Error al guardar los cambios", "error");
-    }
-    handleCloseModal(); 
-  };
-
-
 
   const handleOpenModal = (experience) => {
     setSelectedExperience(experience);
@@ -108,6 +89,16 @@ const WorkExperienceList = ({ experiences, setExperiences }) => {
     }
   };
 
+
+  if (loading) {
+    return (
+      <Box display="flex" justifyContent="center" alignItems="center" height="100vh">
+        <CircularProgress />
+      </Box>
+    );
+  }
+
+
   return (
     <Box>
       {experiences.length > 0 ? (
@@ -115,11 +106,9 @@ const WorkExperienceList = ({ experiences, setExperiences }) => {
           const contentEditExperience = React.cloneElement(
             <WorkExperienceForm />,
             {
-              key:experience.id,
               workExperienceId: experience.id,
               initialData: experience,
-              onSubmit: handleSaveChanges,
-              loading: patchLoading,
+              onUpdate: updateExperienceList,
             }
           );
 

@@ -7,7 +7,7 @@ import ProfileBaseCard from "../../components/organisms/cards/profileBaseCards/h
 import ProjectList from "../../components/organisms/cards/institucional/ProjectList";
 import SkillList from "../../components/organisms/cards/institucional/SkillList";
 import CertificationList from "../../components/organisms/cards/institucional/CertificationList";
-import EducationList from "../../components/organisms/cards/institucional/contentEducationList";
+import EducationList from "../../components/organisms/cards/institucional/EducationList";
 import WorkExperienceList from "../../components/organisms/cards/institucional/WorkExperienceList";
 import FormNewEducation from "../../components/organisms/forms/institucional/formEducation";
 import FormNewExperience from "../../components/organisms/forms/institucional/FormNewExperience";
@@ -30,7 +30,6 @@ function ProfileInstitucional() {
   const [skills, setSkills] = useState([]);  
   const [projects, setProjects] = useState([]);
 
-console.log(projects)
 
   const apiUrl = userData
       ? `${import.meta.env.VITE_API_URL}/api/user/${userData.id}`
@@ -81,9 +80,8 @@ console.log(projects)
 
   const handleAddWorkExperience = async (formData) => {
     try {
-        const newExperience = await postWorkExperience(formData);  // Asegúrate de que esto devuelve la experiencia creada
-        // validar
-        setExperiences(prevExperiences => [...prevExperiences, newExperience]);  // Actualiza la lista local
+        const newExperience = await postWorkExperience(formData); 
+        setExperiences(prevExperiences => [...prevExperiences, newExperience]);  
         showAlert("La información se registró con éxito", "success");
     } catch (error) {
         showAlert('Error al agregar la experiencia laboral:', "error");
@@ -115,7 +113,7 @@ console.log(projects)
       try {
           const newSkill = await postSkill(formData);
           showAlert("La información se registró con éxito", "success");
-          setSkillks (prevSkills => [...prevSkills, newSkill])
+          setSkills (prevSkills => [...prevSkills, newSkill])
       } catch (error) {
           showAlert("Error al agregar la habilidad:", "error");
       }

@@ -5,14 +5,13 @@ import CircularProgress from "@mui/material/CircularProgress";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import ActionButton from "../../../atoms/buttons/actionButton";
-import CertificationForm from "../../forms/institucional/Edit/formEditCertification";
+import CertificationForm from "../../forms/institucional/Edit/FormEditCertification";
 import DeleteIcon from "@mui/icons-material/Delete";
 import VisibilityIcon from "@mui/icons-material/VisibilityOutlined";
 import DeleteConfirmationModal from "../../dialog/deleteConfirmationDialog";
 
 const CertificationList = ({ certifications, setCertifications }) => {
   const { userData } = useUserContext();
-  // const [certifications, setCertifications] = useState([]);
   const [loading, setLoading] = useState(true);
   const [openModal, setOpenModal] = useState(false);
   const [selectedCertification, setSelectedCertification] = useState(null);
@@ -102,16 +101,6 @@ const CertificationList = ({ certifications, setCertifications }) => {
     }
   };
 
-  const dialogContent = (certification) => (
-    <div>
-      <CertificationForm
-        certificationId={certification.id}
-        initialData={certification}
-        onUpdate={updateCertificationList}
-      />
-    </div>
-  );
-
   if (loading) {
     return (
       <Box
@@ -128,47 +117,58 @@ const CertificationList = ({ certifications, setCertifications }) => {
   return (
     <Box>
       {certifications.length > 0 ? (
-        certifications.map((certification) => (
-          <InfoBaseCard
-            key={certification.id}
-            title={`Editar ${certification.name}`}
-            sub={true}
-            cardContent={
-              <div>
-                <Typography variant="subtitle2">
-                  Institución: {certification.issuingOrganization}
-                </Typography>
-                <Typography variant="subtitle2">
-                  Fecha de emisión: {certification.issueDate}
-                  {certification.expirationDate &&
-                    ` - Fecha de expiración: ${certification.expirationDate}`}
-                </Typography>
-                <br />
-                <Box
-                  display="flex"
-                  justifyContent="space-between"
-                  flexWrap="wrap"
-                  gap={2}
-                >
-                  <ActionButton
-                    texto={"Ver Credencial"}
-                    startIcon={<VisibilityIcon />}
-                    onClick={() => handleViewCredential(certification)}
-                    disabled={!certification.credentialUrl} // Deshabilita el botón si no hay URL
-                  />
-                  <ActionButton
-                    texto={"Eliminar"}
-                    startIcon={<DeleteIcon />}
-                    onClick={() => handleDeleteClick(certification)}
-                  />
-                </Box>
-              </div>
+        certifications.map((certification) => {
+          const contentEditCertification = React.cloneElement(
+            <CertificationForm />,
+            {
+              certificationId: certification.id,
+              initialData: certification,
+              onUpdate: updateCertificationList,
             }
-            dialogContent={dialogContent(certification)}
-            modalId={`modal-certification-${certification.id}`}
-            className="subcard"
-          />
-        ))
+          );
+
+          return (
+            <InfoBaseCard
+              key={certification.id}
+              title={`Editar ${certification.name}`}
+              sub={true}
+              cardContent={
+                <div>
+                  <Typography variant="subtitle2">
+                    Institución: {certification.issuingOrganization}
+                  </Typography>
+                  <Typography variant="subtitle2">
+                    Fecha de emisión: {certification.issueDate}
+                    {certification.expirationDate &&
+                      ` - Fecha de expiración: ${certification.expirationDate}`}
+                  </Typography>
+                  <br />
+                  <Box
+                    display="flex"
+                    justifyContent="space-between"
+                    flexWrap="wrap"
+                    gap={2}
+                  >
+                    <ActionButton
+                      texto={"Ver Credencial"}
+                      startIcon={<VisibilityIcon />}
+                      onClick={() => handleViewCredential(certification)}
+                      disabled={!certification.credentialUrl} // Deshabilita el botón si no hay URL
+                    />
+                    <ActionButton
+                      texto={"Eliminar"}
+                      startIcon={<DeleteIcon />}
+                      onClick={() => handleDeleteClick(certification)}
+                    />
+                  </Box>
+                </div>
+              }
+              dialogContent={contentEditCertification}
+              modalId={`modal-certification-${certification.id}`}
+              className="subcard"
+            />
+          );
+        })
       ) : (
         <Typography variant="body1">
           No se encontraron certificaciones.

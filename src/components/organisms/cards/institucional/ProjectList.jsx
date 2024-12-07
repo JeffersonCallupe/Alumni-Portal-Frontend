@@ -83,23 +83,20 @@ const ProjectList = ({ projects, setProjects }) => {
     }
   };
 
-  const dialogContent = (project) => (
-    <div>
-      <FormEditProject
-        key ={project.id}
-        projectId={project.id}
-        initialData={project}
-        onUpdate={updateProjectList}
-        onCancel={handleCloseModal}
-      />
-    </div>
-  );
 
-  console.log({projects})
+
+
   return(
     <Box>
       {projects.length > 0 ? (
-        projects.map((project, index) => (
+        projects.map((project) => {
+          const contentEditProject = React.cloneElement(<FormEditProject />, {
+            projectId: project.id,
+            initialData: project,
+            onUpdate: updateProjectList,
+          });
+          
+          return (
           <InfoBaseCard
             key={project.id}
             sub={true}
@@ -130,11 +127,12 @@ const ProjectList = ({ projects, setProjects }) => {
                 </Box>
               </div>
             }
-            dialogContent={dialogContent(project)}
+            dialogContent={contentEditProject}
             modalId={`modal-project-${project.id}`}
             className="subcard"
           />
-        ))
+          );
+      })
       ) : (
         <Typography variant="body1">No se encontraron proyectos.</Typography>
       )}
