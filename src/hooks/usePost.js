@@ -29,9 +29,11 @@ const usePost = (apiUrl) => {
         redirect: "follow",
       });
 
-      if (response.status !== 200) {
-        throw new Error(`Error al enviar los datos: ${response.statusText}`);
-      }
+      if (!response.ok) throw new Error(`Error al enviar los datos: ${response.statusText}`);
+
+      // if (response.status !== 200 || response.status !== 201 || response.status !== 204 ) {
+      //   throw new Error(`Error al enviar los datos: ${response.statusText}`);
+      // }
 
       const contentType = response.headers.get("content-type");
         return contentType && contentType.includes("application/json")

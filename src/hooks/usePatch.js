@@ -29,7 +29,8 @@ const usePatch = (apiUrl) => {
         redirect: "follow",
       });
 
-      if (!response.status !== 200) {
+      // if (!response.status !== 200 ) {
+      if (!response.ok) {
         throw new Error(`Error al enviar los datos: ${response.statusText}`);
       }
 

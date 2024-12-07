@@ -6,19 +6,16 @@ import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import WorkExperienceForm from "../../forms/institucional/Edit/WorkExperienceForm";
 import Button from "@mui/material/Button";
-import ActionButton from "../../../atoms/buttons/actionButton"
+import ActionButton from "../../../atoms/buttons/actionButton";
 import Dialog from "@mui/material/Dialog";
 import DialogTitle from "@mui/material/DialogTitle";
 import DialogContent from "@mui/material/DialogContent";
 import DialogActions from "@mui/material/DialogActions";
-import DeleteIcon from '@mui/icons-material/Delete';
-import VisibilityIcon from '@mui/icons-material/VisibilityOutlined';
+import DeleteIcon from "@mui/icons-material/Delete";
+import VisibilityIcon from "@mui/icons-material/VisibilityOutlined";
 import DeleteConfirmationModal from "../../dialog/deleteConfirmationDialog";
-
-// 
 import { useAlert } from "../../../../contexts/alertContext";
 import usePatch from "../../../../hooks/usePatchProfile";
-// 
 
 const WorkExperienceList = ({ experiences, setExperiences }) => {
   const { userData } = useUserContext();
@@ -26,56 +23,25 @@ const WorkExperienceList = ({ experiences, setExperiences }) => {
   const [selectedExperience, setSelectedExperience] = useState(null);
   const [deleteConfirmOpen, setDeleteConfirmOpen] = useState(false);
   const [experienceToDelete, setExperienceToDelete] = useState(null);
-  const { showAlert } = useAlert(); 
-
-
+  const { showAlert } = useAlert();
 
   const apiUrl = userData
     ? `${import.meta.env.VITE_API_URL}/api/work-experience/user/${userData.id}`
     : null;
-
   const { loading: patchLoading, patch } = usePatch(apiUrl);
-  
-  if (!userData) {
-      return <div>Loading...</div>;
-  }
-
-
-  const handleSaveChanges = async (updatedExperience) => {
-    try {
-
-          // Actualizamos los datos con el patch
-        const updatedData = await patch(updatedExperience);
-        // Actualizamos la lista de experiencias con el nuevo dato
-        if (updatedData) {
-          updateExperienceList(updatedData);
-          showAlert("La información se actualizó con éxito", "success");
-        }
-      // await patch(updatedExperience);
-      // updateExperienceList(updatedExperience); 
-      // showAlert("La información se actualizó con éxito", "success");
-
-    } catch (error) {
-      showAlert("Error al guardar los cambios", "error"); 
-    }
-  };
-
-  // 
-
 
   useEffect(() => {
     const fetchWorkExperiences = async () => {
       try {
-        const response = await fetch(`${import.meta.env.VITE_API_URL}/api/work-experience/user/${userData.id}`);
+        const response = await fetch(apiUrl);
         const data = await response.json();
         setExperiences(data);
       } catch (error) {
         console.error("Error fetching work experiences:", error);
-      } 
+      }
     };
-    fetchWorkExperiences();
-  }, [userData]);
-
+    if (apiUrl) fetchWorkExperiences();
+  }, [apiUrl]);
 
   const updateExperienceList = (updatedExperience) => {
     setExperiences((prevExperiences) =>
@@ -85,6 +51,21 @@ const WorkExperienceList = ({ experiences, setExperiences }) => {
     );
   };
 
+  const handleSaveChanges = async (updatedExperience) => {
+    try {
+      const updatedData = await patch(updatedExperience);
+      console.log(updatedData)
+      if (updatedData) {
+        updateExperienceList(updatedData);
+        showAlert("La información se actualizó con éxito", "success");
+      }
+    } catch (error) {
+      showAlert("Error al guardar los cambios", "error");
+    }
+    handleCloseModal(); 
+  };
+
+
 
   const handleOpenModal = (experience) => {
     setSelectedExperience(experience);
@@ -92,7 +73,6 @@ const WorkExperienceList = ({ experiences, setExperiences }) => {
   };
 
   const handleCloseModal = () => {
-    console.log("Cerrando modal");
     setOpenModal(false);
     setSelectedExperience(null);
   };
@@ -128,87 +108,64 @@ const WorkExperienceList = ({ experiences, setExperiences }) => {
     }
   };
 
-  // const dialogContent = (experience) => (
-  //   <div>
-  //     <Typography variant="h6">Editar Experiencia: {experience.jobTitle}</Typography>
-
-  //     <WorkExperienceForm
-  //       workExperienceId={experience.id}
-  //       initialData={experience}
-  //       onSubmit = {handleSaveChanges}
-  //       onCancel={handleCloseModal}  //a
-  //       loading={loading}
-  //     />
-  //   </div>
-  // );
-
-
-
-
-
   return (
     <Box>
       {experiences.length > 0 ? (
         experiences.map((experience) => {
-
-           // Crear contentEditExperience dentro de cada iteración
           const contentEditExperience = React.cloneElement(
-          <WorkExperienceForm />,
-          {
-            key: experience.id,
-            workExperienceId: experience.id,
-            initialData: experience,
-            onSubmit: handleSaveChanges,
-            loading: patchLoading,
-          }
-        );
-
-        return (
-          <InfoBaseCard
-            key={experience.id}
-            sub={true}
-            title={experience.jobTitle}
-            cardContent={
-              <div>
-                <Typography variant="subtitle2">Empresa: {experience.company}</Typography>
-                <Typography variant="subtitle2">
-                  Fecha inicio: {experience.startDate} - Fecha fin: {experience.endDate}
-                </Typography>
-                <br />
-                <Box 
-                  display="flex" 
-                  justifyContent="space-between" 
-                  flexWrap="wrap" 
-                  gap={2}
-                >
-                  <ActionButton 
-                    texto={"Ver Descripción"}
-                    startIcon={<VisibilityIcon />}
-                    onClick={() => handleOpenModal(experience)}
-                  >
-                  </ActionButton>
-                  <ActionButton 
-                    texto={"Eliminar"}
-                    startIcon={<DeleteIcon />}
-                    onClick={() => handleDeleteClick(experience)}
-                  >
-                  </ActionButton>
-                </Box>
-              </div>
+            <WorkExperienceForm />,
+            {
+              key:experience.id,
+              workExperienceId: experience.id,
+              initialData: experience,
+              onSubmit: handleSaveChanges,
+              loading: patchLoading,
             }
-            // dialogContent={dialogContent(experience)}   
-            dialogContent={contentEditExperience}   // 
-            modalId={`modal-work-experience-${experience.id}`}
-            className="subcard"
-          />
-        );
+          );
+
+          return (
+            <InfoBaseCard
+              key={experience.id}
+              sub={true}
+              title={experience.jobTitle}
+              cardContent={
+                <div>
+                  <Typography variant="subtitle2">Empresa: {experience.company}</Typography>
+                  <Typography variant="subtitle2">
+                    Fecha inicio: {experience.startDate} - Fecha fin: {experience.endDate}
+                  </Typography>
+                  <br />
+                  <Box 
+                    display="flex" 
+                    justifyContent="space-between" 
+                    flexWrap="wrap" 
+                    gap={2}
+                  >
+                    <ActionButton 
+                      texto={"Ver Descripción"}
+                      startIcon={<VisibilityIcon />}
+                      onClick={() => handleOpenModal(experience)}
+                    />
+                    <ActionButton 
+                      texto={"Eliminar"}
+                      startIcon={<DeleteIcon />}
+                      onClick={() => handleDeleteClick(experience)}
+                    />
+                  </Box>
+                </div>
+              }
+              dialogContent={contentEditExperience}
+              modalId={`modal-work-experience-${experience.id}`}
+              className="subcard"
+            />
+          );
         })
       ) : (
         <Typography variant="body1">No se encontraron experiencias laborales.</Typography>
       )}
 
       {/* Description Modal */}
-      <Dialog open={openModal} onClose={handleCloseModal} maxWidth="sm" fullWidth>
+      <Dialog open={openModal} onClose={handleCloseModal} maxWidth="sm" fullWidth  disableEnforceFocus aria-hidden={!openModal} > 
         <DialogTitle>Descripción:</DialogTitle>
         <DialogContent>
           <textarea
@@ -239,11 +196,6 @@ const WorkExperienceList = ({ experiences, setExperiences }) => {
       />
     </Box>
   );
-}
+};
+
 export default WorkExperienceList;
-
-
-
-
-
-

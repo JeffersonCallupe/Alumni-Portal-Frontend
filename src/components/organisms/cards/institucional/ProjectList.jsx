@@ -95,7 +95,7 @@ const ProjectList = ({ projects, setProjects }) => {
     </div>
   );
 
-  // console.log({projects})
+  console.log({projects})
   return(
     <Box>
       {projects.length > 0 ? (

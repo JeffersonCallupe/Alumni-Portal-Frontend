@@ -30,7 +30,7 @@ function ProfileInstitucional() {
   const [skills, setSkills] = useState([]);  
   const [projects, setProjects] = useState([]);
 
-console.log(skills)
+console.log(projects)
 
   const apiUrl = userData
       ? `${import.meta.env.VITE_API_URL}/api/user/${userData.id}`
@@ -82,8 +82,9 @@ console.log(skills)
   const handleAddWorkExperience = async (formData) => {
     try {
         const newExperience = await postWorkExperience(formData);  // Asegúrate de que esto devuelve la experiencia creada
-        showAlert("La información se registró con éxito", "success");
+        // validar
         setExperiences(prevExperiences => [...prevExperiences, newExperience]);  // Actualiza la lista local
+        showAlert("La información se registró con éxito", "success");
     } catch (error) {
         showAlert('Error al agregar la experiencia laboral:', "error");
     }
@@ -130,7 +131,6 @@ console.log(skills)
       }
   };
   
-
 
   const contentFoto = React.cloneElement(<FormFoto />, {
     apiUrl: imageUrl

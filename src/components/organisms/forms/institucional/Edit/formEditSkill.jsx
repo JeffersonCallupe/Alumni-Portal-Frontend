@@ -29,14 +29,15 @@ const FormEditSkill = ({ skillId, initialData, onUpdate, onCancel }) => {
       const updatedSkill = await updateData(formData); // Utilizar el hook para actualizar
       if (updatedSkill) { // Verificar que la actualización fue exitosa
         onUpdate(updatedSkill); // Callback para actualizar la lista de habilidades
-        onCancel(); // Cerrar el formulario
       }
+      onCancel(); // Cerrar el formulario
     } catch (error) {
       console.error(error); // Manejar errores (ya están capturados en el hook)
     }
   };
   const handleCancel = () => {
-    window.location.reload();
+
+    onCancel();
   };
   // Opciones para el nivel de habilidad
   const levelOptions = [
