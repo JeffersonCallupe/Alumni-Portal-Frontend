@@ -16,11 +16,8 @@ function ActividadesRegistradas() {
   const { showAlert } = useAlert();
   const [openConfirmationDialog, setOpenConfirmationDialog] = useState(false); // Estado del modal
 
-<<<<<<< HEAD
   console.log(activities)
 
-=======
->>>>>>> ee4f3b33e3d3acae3f059c70bde5fe72b08d72d1
   const [eventTypeFilter, setEventTypeFilter] = useState("");
   const [startDateFilter, setStartDateFilter] = useState("");
   const [filteredActivities, setFilteredActivities] = useState(activities);
