@@ -6,13 +6,13 @@ const ParticipantsDialog = ({ open, onClose, participants, activityTitle }) => {
     <Dialog open={open} onClose={onClose} fullWidth maxWidth="md">
       <DialogTitle sx={{backgroundColor: "#6F191C"}}>
         <Typography variant="title" sx={{ color: "white" }}>
-        {activityTitle ? `Participantes de ${activityTitle}` : "Participantes"}
+        {activityTitle ? `Postulantes de ${activityTitle}` : "Postulantes"}
         </Typography>
       </DialogTitle>
       <DialogContent>
         <br></br>
         {participants.length > 0 
-        ? `Hay ${participants.length} ${participants.length > 1 ? "participantes registrados" : "participante registrado"}.`
+        ? `Hay ${participants.length} ${participants.length > 1 ? "postulantes que han aplicado" : "postulante que ha aplicado"}.`
         : ""}
         {participants.length > 0 && <br></br>}
         {participants.length > 0 ? (
@@ -41,7 +41,7 @@ const ParticipantsDialog = ({ open, onClose, participants, activityTitle }) => {
             </TableBody>
           </Table>
         ) : (
-          <Typography>No hay participantes registrados.</Typography>
+          <Typography>No hay postulantes que han aplicado.</Typography>
         )}
         <br></br>
         <div className="flex justify-end gap-4 mt-4">

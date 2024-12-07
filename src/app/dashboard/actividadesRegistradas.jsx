@@ -16,12 +16,14 @@ function ActividadesRegistradas() {
   const { showAlert } = useAlert();
   const [openConfirmationDialog, setOpenConfirmationDialog] = useState(false); // Estado del modal
 
+<<<<<<< HEAD
   console.log(activities)
 
+=======
+>>>>>>> ee4f3b33e3d3acae3f059c70bde5fe72b08d72d1
   const [eventTypeFilter, setEventTypeFilter] = useState("");
   const [startDateFilter, setStartDateFilter] = useState("");
   const [filteredActivities, setFilteredActivities] = useState(activities);
-
 
   const enrollmentsEndpoint = `${
     import.meta.env.VITE_API_URL
@@ -33,46 +35,34 @@ function ActividadesRegistradas() {
   }/api/enrollment`;
   const { deleteData: deleteEnrollment } = useDelete(deleteEnrollmentEndpoint);
 
-
   // Fetch user's enrollments
   useEffect(() => {
-    if (!userData) return; 
-  
+    if (!userData) return;
+
     const fetchEnrollments = async () => {
       try {
         const enrollmentData = await getEnrollments();
         setEnrollments(enrollmentData);
-  
+
         const activityPromises = enrollmentData.map((enrollment) =>
           fetch(`${import.meta.env.VITE_API_URL}/api/activity/${enrollment.activityId}`, {
             headers: {
-              'Authorization': `Bearer ${sessionStorage.getItem('token')}`,
+              Authorization: `Bearer ${sessionStorage.getItem("token")}`,
             },
-          }).then(response => response.json())
+          }).then((response) => response.json())
         );
-  
+
         const activityDetails = await Promise.all(activityPromises);
         setActivities(activityDetails);
         setFilteredActivities(activityDetails);
-        // console.log(activityDetails)
-        // console.log(filteredActivities)
-        // console.log(activities)
       } catch (error) {
-        console.error('Error fetching enrollments:', error);
-        // showAlert('No se pudieron cargar las actividades', 'error');
+        console.error("Error fetching enrollments:", error);
+        showAlert("No se pudieron cargar las actividades", "error");   // modificar
       }
     };
-  
+
     fetchEnrollments();
-  }, [userData]);  
-  
-
-
-    // Verifica cuando activities se actualiza
-  useEffect(() => {
-    console.log('Actividades actualizadas:', activities);
-  }, [activities]);
-
+  }, [userData]);
 
   // Open confirmation modal
   const handleOpenConfirmation = (activity) => {
@@ -97,10 +87,10 @@ function ActividadesRegistradas() {
       if (enrollment) {
         await deleteEnrollment(enrollment.id);
 
-        setActivities((prevActivities) =>
-          prevActivities.filter(
-            (activity) => activity.id !== selectedActivity.id
-          )
+        setEnrollments((prev) => prev.filter((e) => e.activityId !== selectedActivity.id));
+        setActivities((prev) => prev.filter((activity) => activity.id !== selectedActivity.id));
+        setFilteredActivities((prev) =>
+          prev.filter((activity) => activity.id !== selectedActivity.id)
         );
 
         showAlert("Inscripción cancelada exitosamente", "success");
@@ -111,9 +101,6 @@ function ActividadesRegistradas() {
       showAlert("No se pudo cancelar la inscripción", "error");
     }
   };
-
-  
-
 
   const applyFilters = () => {
     let filtered = activities;
@@ -127,16 +114,15 @@ function ActividadesRegistradas() {
     const normalizeDate = (dateStr) => new Date(dateStr).setHours(0, 0, 0, 0);
 
     if (startDateFilter) {
-        filtered = filtered.filter((activity) => {
+      filtered = filtered.filter((activity) => {
         const activityDate = normalizeDate(activity.startDate);
         const filterDate = normalizeDate(startDateFilter);
-        return activityDate >= filterDate; 
+        return activityDate >= filterDate;
       });
     }
 
     setFilteredActivities(filtered);
   };
-
 
   const clearFilters = () => {
     setEventTypeFilter("");
@@ -144,11 +130,9 @@ function ActividadesRegistradas() {
     setFilteredActivities(activities); // Restaurar todas las actividades
   };
 
-
   if (!userData) {
     return <div>Cargando...</div>;
   }
-
 
   return (
     <HomeBase>
@@ -200,3 +184,4 @@ function ActividadesRegistradas() {
 }
 
 export default ActividadesRegistradas;
+

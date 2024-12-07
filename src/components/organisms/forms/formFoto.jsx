@@ -41,6 +41,7 @@ const FormFoto = ({ apiUrl}) => {
         showAlert('Error al actualizar la imagen de perfil', "error");
       }
     }
+    window.location.reload();
   };
 
   const handleDelete = async () => {
@@ -53,6 +54,7 @@ const FormFoto = ({ apiUrl}) => {
         showAlert("Error al eliminar la imagen de perfil", "error");
       }
     }
+    window.location.reload();
   };
 
   const handleClose = async () => {
