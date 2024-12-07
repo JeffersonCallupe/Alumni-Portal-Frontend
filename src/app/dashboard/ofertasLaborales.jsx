@@ -152,6 +152,9 @@ function OfertasLaborales() {
 
   const filteredOfertas = ofertas.filter((oferta) => {
     if (!oferta) return false;
+    // Mostrar solo ofertas del usuario actual
+    if (userData.role === "COMPANY" && oferta.companyId !== userData.id) return false;
+    // Filtro por término de búsqueda
     if (searchTerm && !oferta.companyName.toLowerCase().includes(searchTerm.toLowerCase())) return false;
     if (modalityFilter && oferta.modality.toLowerCase() !== modalityFilter.toLowerCase()) return false;
     if (areaFilter && oferta.area.toLowerCase() !== areaFilter.toLowerCase()) return false;

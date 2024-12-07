@@ -117,17 +117,20 @@ function OfertasHistorico() {
     return <div>Cargando...</div>;
   }
 
-  return (
-    <HomeBase>
-      <div className="flex flex-row gap-8 mt-4 mb-16 lg:mx-12 justify-center">
-        <div className="lg:w-4/12">
-          <ConBuscador
+  const asideContent = (
+    <div className="sticky top-8 bg-white p-6 lg:mt-2 mx-1 rounded-lg flex flex-col gap-4">
+      <ConBuscador
             searchTerm={searchTerm}
             setSearchParams={setSearchParams}
             viewActivies={false}
           />
-        </div>
-        <div className="flex flex-col w-10/12 lg:w-7/12">
+    </div>
+  );
+
+  return (
+    <HomeBase aside={asideContent}>
+      <div className="flex flex-row mt-4 mb-16 gap-4 lg:mx-1 justify-center">
+        <div className="flex flex-col w-12/12 lg:w-11/12">
           <div>
             {filteredOfertas.length > 0 ? (
               filteredOfertas.map((oferta) => (
