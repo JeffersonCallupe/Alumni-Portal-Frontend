@@ -20,7 +20,11 @@ const useGet = (apiUrl) => {
       });
 
       if (!response.status===200 && response.status!==404) {
+<<<<<<< HEAD
           throw new Error(`Error al obtener los datos: ${response.statusText}`);
+=======
+        throw new Error(`Error al obtener los datos: ${response.statusText}`);
+>>>>>>> Jefferson
       }
 
 

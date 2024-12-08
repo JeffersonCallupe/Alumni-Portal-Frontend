@@ -4,26 +4,33 @@ import FormAbout from "../../components/organisms/forms/institucional/formAbout"
 import InfoBaseCard from "../../components/organisms/cards/profileBaseCards/infoBaseCard";
 import InfoBaseCardContent from "../../components/organisms/cards/profileBaseCards/infoBaseCard";
 import ProfileBaseCard from "../../components/organisms/cards/profileBaseCards/headerBaseCard";
-import ProjectList from "../../components/organisms/cards/institucional/contentProjectList";
-import SkillList from "../../components/organisms/cards/institucional/contentSkillList";
-import CertificationList from "../../components/organisms/cards/institucional/contentCertificationList";
-import EducationList from "../../components/organisms/cards/institucional/contentEducationList";
-import WorkExperienceList from "../../components/organisms/cards/institucional/contentWorkExperienceList";
+import ProjectList from "../../components/organisms/cards/institucional/ProjectList";
+import SkillList from "../../components/organisms/cards/institucional/SkillList";
+import CertificationList from "../../components/organisms/cards/institucional/CertificationList";
+import EducationList from "../../components/organisms/cards/institucional/EducationList";
+import WorkExperienceList from "../../components/organisms/cards/institucional/WorkExperienceList";
 import FormNewEducation from "../../components/organisms/forms/institucional/formEducation";
-import FormNewExperience from "../../components/organisms/forms/institucional/formWorkExperience";
-import FormNewCertification from "../../components/organisms/forms/institucional/formCertification";
-import FormNewSkill from "../../components/organisms/forms/institucional/formSkill";
-import FormNewProject from "../../components/organisms/forms/institucional/formProject";
+import FormNewExperience from "../../components/organisms/forms/institucional/FormNewExperience";
+import FormNewCertification from "../../components/organisms/forms/institucional/FormNewCertification";
+import FormNewSkill from "../../components/organisms/forms/institucional/FormNewSkill";
+import FormNewProject from "../../components/organisms/forms/institucional/FormNewProject";
 import FormFoto from "../../components/organisms/forms/formFoto";
 import { useAlert } from "../../contexts/alertContext";
 import { useUserContext } from "../../contexts/userContext";
 import usePatch from "../../hooks/usePatchProfile";
 import usePost from "../../hooks/usePost";
+import { useState } from "react";
 
 function ProfileInstitucional() {
-    
   const { userData } = useUserContext();
   const { showAlert } = useAlert();
+  const [experiences, setExperiences] = useState([]);
+  const [educations, setEducations] = useState([]);
+  const [certifications, setCertifications] = useState([]);
+  const [skills, setSkills] = useState([]);  
+  const [projects, setProjects] = useState([]);
+
+
   const apiUrl = userData
       ? `${import.meta.env.VITE_API_URL}/api/user/${userData.id}`
       : null;
@@ -70,19 +77,23 @@ function ProfileInstitucional() {
       }
   };
 
+
   const handleAddWorkExperience = async (formData) => {
-      try {
-          await postWorkExperience(formData);
-          showAlert("La información se registró con éxito", "success");
-      } catch (error) {
-            showAlert('Error al agregar la experiencia laboral:', "error");
-      }
-  };
+    try {
+        const newExperience = await postWorkExperience(formData); 
+        setExperiences(prevExperiences => [...prevExperiences, newExperience]);  
+        showAlert("La información se registró con éxito", "success");
+    } catch (error) {
+        showAlert('Error al agregar la experiencia laboral:', "error");
+    }
+};
+
 
   const handleAddEducation = async (formData) => {
       try {
-          await postEducation(formData);
+          const newEducation =  await postEducation(formData);
           showAlert("La información se registró con éxito", "success");
+          setEducations(prevEducations => [...prevEducations, newEducation]);
       } catch (error) {
           showAlert("Error al agregar la educación", "error");
       }
@@ -90,8 +101,9 @@ function ProfileInstitucional() {
 
   const handleAddCertification = async (formData) => {
       try {
-          await postCertification(formData);
+          const newCertification = await postCertification(formData);
           showAlert("La información se registró con éxito", "success");
+          setCertifications(prevCertifications => [...prevCertifications, newCertification])
       } catch (error) {
           showAlert("Error al agregar la certificación:", "error");
       }
@@ -99,8 +111,9 @@ function ProfileInstitucional() {
 
   const handleAddSkill = async (formData) => {
       try {
-          await postSkill(formData);
+          const newSkill = await postSkill(formData);
           showAlert("La información se registró con éxito", "success");
+          setSkills (prevSkills => [...prevSkills, newSkill])
       } catch (error) {
           showAlert("Error al agregar la habilidad:", "error");
       }
@@ -108,13 +121,15 @@ function ProfileInstitucional() {
 
   const handleAddProject = async (formData) => {
       try {
-          await postProject(formData);
+          const newProject = await postProject(formData);
+          setProjects (prevProjects => [...prevProjects, newProject])
           showAlert("La información se registró con éxito", "success");
       } catch (error) {
           showAlert("Error al agregar el proyecto:", "error");
       }
   };
   
+
   const contentFoto = React.cloneElement(<FormFoto />, {
     apiUrl: imageUrl
   });
@@ -182,37 +197,37 @@ function ProfileInstitucional() {
               <InfoBaseCardContent
                   title="Experiencia Laboral"
                   content={true}
-                  cardContent={<WorkExperienceList />}
+                  cardContent={<WorkExperienceList experiences={experiences} setExperiences={setExperiences}  />}
                   dialogContent={contentWorkExperience}
                   modalId="modal-work-experience"
               />
               <InfoBaseCardContent
                   title="Educación"
                   content={true}
-                  cardContent={<EducationList />}
+                  cardContent={<EducationList  educations={educations}  setEducations={setEducations}  />}
                   dialogContent={contentEducation}
                   modalId="modal-education"
               />
               <InfoBaseCardContent
                   title="Certificaciones"
                   content={true}
-                  cardContent={<CertificationList />}
+                  cardContent={<CertificationList  certifications={certifications}  setCertifications={setCertifications} />}
                   dialogContent={contentCertification}
                   modalId="modal-certifications"
               />
               <InfoBaseCardContent
                   title="Habilidades Claves"
                   content={true}
-                  cardContent={<SkillList />}
+                  cardContent={<SkillList  skills={skills} setSkills={setSkills}  />}
                   dialogContent={contentSkills}
                   modalId="modal-skills"
               />
               <InfoBaseCardContent
                   title="Proyectos"
                   content={true}
-                  cardContent={<ProjectList />}
+                  cardContent={<ProjectList projects={projects}  setProjects={setProjects} />}
                   dialogContent={contentProject}
-                  modalId="modal-projects"
+                  modalId="modal-project"
               />
           </div>
       </HomeBase>
