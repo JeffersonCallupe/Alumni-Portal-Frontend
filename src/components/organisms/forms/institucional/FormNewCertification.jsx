@@ -4,30 +4,29 @@ import Button from "@mui/material/Button";
 import TextInput from "../../../atoms/inputs/TextInput";
 import useForm from "../../../../hooks/useForm";
 
-const FormNewExperience = ({ onCancel, onSubmit, loading, error }) => {
+const FormNewCertification = ({ onCancel, onSubmit, loading, error }) => {
     const { formData, errors, handleChange, handleSubmit } = useForm(
         {
-            company: "",
-            jobTitle: "",
-            startDate: "",
-            endDate: "",
-            description: "",
+            name: "",
+            issuingOrganization: "",
+            issueDate: "",
+            expirationDate: "",
+            credentialUrl: "",
         },
         async (formData) => {
             await onSubmit(formData);
             if (!error) {
-                window.location.reload();
                 onCancel();
             }
         }
     );
 
     const formFields = [
-        { label: "Empresa", name: "company", value: formData.company },
-        { label: "Título del puesto", name: "jobTitle", value: formData.jobTitle },
-        { label: "Fecha de inicio", name: "startDate", value: formData.startDate, type: "date" },
-        { label: "Fecha de fin", name: "endDate", value: formData.endDate, type: "date" },
-        { label: "Descripción", name: "description", value: formData.description, multiline: true },
+        { label: "Nombre de la Certificación", name: "name", value: formData.name },
+        { label: "Organización Emisora", name: "issuingOrganization", value: formData.issuingOrganization },
+        { label: "Fecha de Emisión", name: "issueDate", value: formData.issueDate, type: "date" },
+        { label: "Fecha de Expiración", name: "expirationDate", value: formData.expirationDate, type: "date" },
+        { label: "URL de la Credencial", name: "credentialUrl", value: formData.credentialUrl },
     ];
 
     return (
@@ -41,23 +40,18 @@ const FormNewExperience = ({ onCancel, onSubmit, loading, error }) => {
                 width: "100%",
             }}
         >
-            {formFields.map(({ label, name, value, type, multiline }) => (
+            {formFields.map(({ label, name, value, type }) => (
                 <div key={name} className="flex flex-col sm:flex-row gap-2 sm:gap-4">
-                    {/* <label className="text-l font-bold text-black sm:w-1/4 lg:w-1/6">
-                        {label}:
-                    </label> */}
                     <TextInput
                         name={name}
                         label={label}
                         value={value}
+                        required={name !== "expirationDate" && name !== "credentialUrl"} // Campo opcional si es "expirationDate"
                         onChange={handleChange}
                         error={errors[name]}
-                        required={true}
                         helperText={errors[name]}
                         disabled={loading}
                         type={type || "text"}
-                        multiline={multiline || false}
-                        rows={multiline ? 4 : 1}
                     />
                 </div>
             ))}
@@ -74,4 +68,4 @@ const FormNewExperience = ({ onCancel, onSubmit, loading, error }) => {
     );
 };
 
-export default FormNewExperience;
+export default FormNewCertification;
