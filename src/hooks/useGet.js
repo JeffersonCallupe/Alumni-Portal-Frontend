@@ -19,14 +19,9 @@ const useGet = (apiUrl) => {
         redirect: "follow",
       });
 
-      if (!response.status===200 && response.status!==404) {
-<<<<<<< HEAD
-          throw new Error(`Error al obtener los datos: ${response.statusText}`);
-=======
+      if (!response.ok) {
         throw new Error(`Error al obtener los datos: ${response.statusText}`);
->>>>>>> Jefferson
       }
-
 
       const data = await response.json();
       return data;

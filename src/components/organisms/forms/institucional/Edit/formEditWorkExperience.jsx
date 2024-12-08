@@ -2,12 +2,10 @@ import React, { useState } from "react";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
-import useUpdateData from "../../../../../hooks/useUpdateData";
-import { useAlert } from "../../../../../contexts/alertContext";
+import useUpdateData from '../../../../../hooks/useEditInstitutional';
 
-
-const FormWorkExperience = ({ workExperienceId, initialData, onUpdate, onCancel }) => {
-  const { showAlert } = useAlert();
+const FormWorkExperience = ({ workExperienceId, initialData, onUpdate }) => {
+  const [isEditing, setIsEditing] = useState(true);
   const [formData, setFormData] = useState({
     company: initialData?.company || "",
     jobTitle: initialData?.jobTitle || "",
@@ -28,21 +26,22 @@ const FormWorkExperience = ({ workExperienceId, initialData, onUpdate, onCancel 
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    try {
     const updatedExperience = await updateData(formData);
     if (updatedExperience) {
+      if (onUpdate) {
         onUpdate(updatedExperience);
       }
-      showAlert("La información se actualizó con éxito", "success");
-      onCancel();
-    }catch (error) {
-      showAlert("Error al guardar los cambios", "error");
+      setIsEditing(false);
     }
-    
   };
 
- 
+  const handleCancel = () => {
+    window.location.reload();
+  };
 
+  if (!isEditing) {
+    return null; // O podrías mostrar un mensaje o redirigir
+  }
 
   return (
     <Box
@@ -98,7 +97,7 @@ const FormWorkExperience = ({ workExperienceId, initialData, onUpdate, onCancel 
         rows={4}
       />
       <Box sx={{ display: "flex", justifyContent: "flex-end", gap: 2 }}>
-        <Button variant="outlined" type="button" onClick={onCancel} disabled={loading}>
+        <Button variant="outlined" type="button" onClick={handleCancel} disabled={loading}>
           Cancelar
         </Button>
         <Button variant="contained" type="submit" disabled={loading}>

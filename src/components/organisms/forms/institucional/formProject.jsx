@@ -4,15 +4,11 @@ import Button from "@mui/material/Button";
 import TextInput from "../../../atoms/inputs/TextInput";
 import useForm from "../../../../hooks/useForm";
 
-// Removemos usePost y useUserContext ya que las props vendrán del componente padre
-const FormNewEducation = ({ onCancel, onSubmit, loading, error }) => {
+const FormNewProject = ({ onCancel, onSubmit, loading, error }) => {
     const { formData, errors, handleChange, handleSubmit } = useForm(
         {
-            institution: "",
-            degree: "",
-            fieldOfStudy: "",
-            startDate: "",
-            endDate: "",
+            name: "",
+            date: "",
             description: "",
         },
         async (formData) => {
@@ -25,12 +21,24 @@ const FormNewEducation = ({ onCancel, onSubmit, loading, error }) => {
     );
 
     const formFields = [
-        { label: "Institución", name: "institution", value: formData.institution },
-        { label: "Grado", name: "degree", value: formData.degree },
-        { label: "Campo de estudio", name: "fieldOfStudy", value: formData.fieldOfStudy },
-        { label: "Fecha de inicio", name: "startDate", value: formData.startDate, type: "date" },
-        { label: "Fecha de fin", name: "endDate", value: formData.endDate, type: "date" },
-        { label: "Descripción", name: "description", value: formData.description, multiline: true },
+        { 
+            label: "Nombre del Proyecto", 
+            name: "name", 
+            value: formData.name 
+        },
+        { 
+            label: "Fecha", 
+            name: "date", 
+            value: formData.date, 
+            type: "date" 
+        },
+        { 
+            label: "Descripción", 
+            name: "description", 
+            value: formData.description, 
+            type: "textarea",
+            rows: 4
+        },
     ];
 
     return (
@@ -44,7 +52,7 @@ const FormNewEducation = ({ onCancel, onSubmit, loading, error }) => {
                 width: "100%",
             }}
         >
-            {formFields.map(({ label, name, value, type, multiline }) => (
+            {formFields.map(({ label, name, value, type, rows }) => (
                 <div key={name} className="flex flex-col sm:flex-row gap-2 sm:gap-4">
                     {/* <label className="text-l font-bold text-black sm:w-1/4 lg:w-1/6">
                         {label}:
@@ -53,22 +61,34 @@ const FormNewEducation = ({ onCancel, onSubmit, loading, error }) => {
                         name={name}
                         label={label}
                         value={value}
-                        required={true}
                         onChange={handleChange}
                         error={errors[name]}
                         helperText={errors[name]}
+                        required={true}
                         disabled={loading}
-                        type={type || "text"}
-                        multiline={multiline || false}
-                        rows={multiline ? 4 : 1}
+                        type={type === "textarea" ? "text" : type || "text"}
+                        multiline={type === "textarea"}
+                        rows={rows}
+                        fullWidth
+                        className="sm:w-3/4 lg:w-5/6"
                     />
                 </div>
             ))}
+
             <div className="flex justify-end gap-4 mt-4">
-                <Button variant="outlined" type="button" onClick={onCancel} disabled={loading}>
+                <Button 
+                    variant="outlined" 
+                    type="button" 
+                    onClick={onCancel} 
+                    disabled={loading}
+                >
                     Cancelar
                 </Button>
-                <Button variant="contained" type="submit" disabled={loading}>
+                <Button 
+                    variant="contained" 
+                    type="submit" 
+                    disabled={loading}
+                >
                     {loading ? "Guardando..." : "Añadir"}
                 </Button>
             </div>
@@ -76,4 +96,4 @@ const FormNewEducation = ({ onCancel, onSubmit, loading, error }) => {
     );
 };
 
-export default FormNewEducation;
+export default FormNewProject;

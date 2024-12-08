@@ -42,7 +42,6 @@ const usePatch = (apiUrl) => {
 
       const updatedData = await getResponse.json();
       updateUserData(updatedData);
-      return updatedData; 
 
     } catch (error) {
       setError(error.message);

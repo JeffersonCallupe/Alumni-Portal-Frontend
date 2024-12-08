@@ -16,8 +16,6 @@ function ActividadesRegistradas() {
   const { showAlert } = useAlert();
   const [openConfirmationDialog, setOpenConfirmationDialog] = useState(false); // Estado del modal
 
-  console.log(activities)
-
   const [eventTypeFilter, setEventTypeFilter] = useState("");
   const [startDateFilter, setStartDateFilter] = useState("");
   const [filteredActivities, setFilteredActivities] = useState(activities);
@@ -54,7 +52,7 @@ function ActividadesRegistradas() {
         setFilteredActivities(activityDetails);
       } catch (error) {
         console.error("Error fetching enrollments:", error);
-        showAlert("No se pudieron cargar las actividades", "error");   // modificar
+        showAlert("No se pudieron cargar las actividades", "error");
       }
     };
 
