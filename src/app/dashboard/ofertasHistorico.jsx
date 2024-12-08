@@ -46,7 +46,6 @@ function OfertasHistorico() {
           setInscripciones(applications.map((app) => app.jobOfferId)); // Obtener IDs de ofertas postuladas
         } catch (error) {
           console.error("Error al cargar los datos:", error);
-          showAlert("No se pudieron cargar las ofertas laborales.", "error");
         }
       };
       fetchData();
