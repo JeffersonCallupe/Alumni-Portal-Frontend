@@ -1,10 +1,10 @@
 import React, { useState } from "react"; // Agregar useState
 import Box from "@mui/material/Box";
 import EditButton from "../../../atoms/buttons/editButton";
-import DialogBase from "../../dialog/profileBaseDialog";
+import DialogBase from "../../dialog/DialogBase";
 import FormHeader from "../../forms/empresa/formHeader";
 import Typography from "@mui/material/Typography";
-import ActionButton from "../../../atoms/buttons/actionButton";
+import ActionButton from "../../../atoms/buttons/ActionButton";
 import FormPassword from "../../forms/empresa/formPassword"; // Importar el formulario de contraseña
 import { useUserContext } from "../../../../contexts/userContext";
 import useModal from "../../../../hooks/useModal";

@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { useUserContext } from "../../../../contexts/userContext";
-import InfoBaseCard from "../profileBaseCards/infoBaseCard";
+import InfoBaseCard from "../profileBaseCards/InfoBaseCard";
 import CircularProgress from "@mui/material/CircularProgress";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import FormEditSkill from "../../forms/institucional/Edit/FormEditSkill";
-import ActionButton from "../../../atoms/buttons/actionButton";
+import ActionButton from "../../../atoms/buttons/ActionButton";
 import DeleteIcon from "@mui/icons-material/Delete";
-import DeleteConfirmationModal from "../../dialog/deleteConfirmationDialog";
+import DeleteConfirmationModal from "../../dialog/DeleteConfirmationModal";
 
 const SkillList = ({ skills, setSkills }) => {
   const { userData } = useUserContext();

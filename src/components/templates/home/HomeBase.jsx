@@ -1,5 +1,5 @@
 import Navbar from '../../atoms/navbar/Navbar';
-import Footer from "../../atoms/footer/footer";
+import Footer from "../../atoms/footer/Footer";
 import PropTypes from 'prop-types';
 import Alert from '../../atoms/alert/alert';
 

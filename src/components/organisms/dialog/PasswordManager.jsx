@@ -1,7 +1,7 @@
 import React, { useState } from "react";
-import DialogBase from "./profileBaseDialog";
-import ActionButton from "../../atoms/buttons/actionButton";
-import FormPassword from "../forms/empresa/formPassword";
+import DialogBase from "./DialogBase";
+import ActionButton from "../../atoms/buttons/ActionButton";
+import FormPassword from "../forms/empresa/FormPassword";
 
 const PasswordManager = ({ userId }) => {
   const [openPasswordModal, setOpenPasswordModal] = useState(false);
