@@ -12,11 +12,7 @@ export const uploadProfilePicture = async (apiUrl, id, imageFile) => {
       body: formData,
     });
     
-<<<<<<< HEAD
     if (!response.ok) {
-=======
-    if (!response.status.ok) {
->>>>>>> Jefferson
       throw new Error(`Error al enviar los datos: ${response.statusText}`);
     }
 
