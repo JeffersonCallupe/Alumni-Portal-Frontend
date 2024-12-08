@@ -32,6 +32,7 @@ function Actividades() {
     const [eventTypeFilter, setEventTypeFilter] = useState("");
     const [startDateFilter, setStartDateFilter] = useState("");
 
+    
     // Solo se define userType y URLs dinámicas si userData está disponible
     useEffect(() => {
         if (userData) {
