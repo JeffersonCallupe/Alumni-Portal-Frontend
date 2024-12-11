@@ -198,5 +198,3 @@ function OfertasAplicadas() {
 }
 
 export default OfertasAplicadas;
-
-
