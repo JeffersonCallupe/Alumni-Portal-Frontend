@@ -14,7 +14,7 @@ import FormNewExperience from "../../components/organisms/forms/institucional/Fo
 import FormNewCertification from "../../components/organisms/forms/institucional/FormNewCertification";
 import FormNewSkill from "../../components/organisms/forms/institucional/FormNewSkill";
 import FormNewProject from "../../components/organisms/forms/institucional/FormNewProject";
-import FormFoto from "../../components/organisms/forms/formFoto";
+import FormFoto from "../../components/organisms/forms/FormFoto";
 import { useAlert } from "../../contexts/alertContext";
 import { useUserContext } from "../../contexts/userContext";
 import usePatch from "../../hooks/usePatchProfile";
