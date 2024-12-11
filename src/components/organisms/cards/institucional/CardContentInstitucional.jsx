@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import Box from "@mui/material/Box";
 import EditButton from "../../../atoms/buttons/EditButton";
-import DialogBase from "../../dialog/DialogBase";
+import DialogBase from "../../dialog/dialogBase";
 import FormHeader from "../../forms/institucional/FormHeader";
 import Typography from "@mui/material/Typography";
 import ActionButton from "../../../atoms/buttons/ActionButton";

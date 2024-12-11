@@ -1,9 +1,9 @@
 import React, { useState, useEffect, useRef } from "react";
 import OfertaLaboralCard from "../../components/organisms/cards/dashboard/OfertaLaboralCard";
 import OfertaLaboralDialog from "../../components/organisms/dialog/OfertaLaboralDialog";
-import ParticipantsDialog from "../../components/organisms/dialog/ParticipantsDialogs";
+import ParticipantsDialog from "../../components/organisms/dialog/participantsDialogs";
 import Button from "../../components/atoms/buttons/ActionButton";
-import HomeBase from "../../components/templates/home/HomeBase";
+import HomeBase from "../../components/templates/home/homeBase";
 import { useUserContext } from "../../contexts/userContext";
 import { useAlert } from "../../contexts/alertContext";
 import useGet from "../../hooks/useGet";

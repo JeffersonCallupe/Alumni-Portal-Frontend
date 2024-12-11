@@ -1,12 +1,12 @@
 import React, { useState } from "react";
-import ActionButton from "../../components/atoms/buttons/ActionButton";
-import DeleteConfirmationModal from "../../components/organisms/dialog/DeleteConfirmationModal";
-import HomeBase from "../../components/templates/home/HomeBase";
+import ActionButton from "../../components/atoms/buttons/actionButton";
+import DeleteConfirmationModal from "../../components/organisms/dialog/deleteConfirmationModal";
+import HomeBase from "../../components/templates/home/homeBase";
 import { useAlert } from "../../contexts/alertContext";
 import { useNavigate } from "react-router-dom";
 import { useUserContext } from "../../contexts/userContext";
 import useDelete from "../../hooks/useDelete";
-import PasswordManager from "../../components/organisms/dialog/PasswordManager"; // Importar el componente
+import PasswordManager from "../../components/organisms/dialog/passwordManager"; // Importar el componente
 
 function Configuraciones() {
   const [isModalOpen, setIsModalOpen] = useState(false);

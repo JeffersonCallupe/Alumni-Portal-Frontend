@@ -1,7 +1,7 @@
 import React  from "react"; // Agregar useState
 import Box from "@mui/material/Box";
 import EditButton from "../../../atoms/buttons/EditButton";
-import DialogBase from "../../dialog/DialogBase";
+import DialogBase from "../../dialog/dialogBase";
 import FormHeader from "../../forms/empresa/FormHeader";
 import Typography from "@mui/material/Typography";
 import { useUserContext } from "../../../../contexts/userContext";

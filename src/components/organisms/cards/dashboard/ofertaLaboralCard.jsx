@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Card, CardHeader, CardContent, CardActions, Avatar, IconButton, Typography, Box, Grid } from "@mui/material";
 import Button from '../../../atoms/buttons/ActionButton';
-import DeleteConfirmationModal from "../../dialog/DeleteConfirmationModal";
+import DeleteConfirmationModal from "../../dialog/deleteConfirmationModal";
 import BusinessIcon from "@mui/icons-material/Business";
 import ModeEditIcon from '@mui/icons-material/ModeEdit';
 import VisibilityIcon from '@mui/icons-material/VisibilityOutlined';
