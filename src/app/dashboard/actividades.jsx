@@ -127,10 +127,9 @@ function Actividades() {
             const data = await response.json();
             setParticipants(data);
             handleOpenParticipants();
-            showAlert(`Se cargaron ${data.length} participantes.`, "success");
         } catch (error) {
             console.error("Error al obtener los participantes:", error);
-            showAlert("No se pudo cargar la lista de participantes.", "error");
+            showAlert("No hay participantes registrados en la actividad", "error");
         }
     };
 

@@ -139,14 +139,12 @@ function OfertasLaborales() {
       if (!response.ok) {
         throw new Error('No se pudo obtener la lista de postulantes');
       }
-  
       const data = await response.json();
       setParticipants(data);
       handleOpenParticipants();
-      showAlert(`Se cargaron ${data.length} postulantes`, "success");
     } catch (error) {
       console.error("Error al cargar la lista de postulantes:", error);
-      showAlert("Error al cargar la lista de postulantes", "error");
+      showAlert("No hay postulantes que han aplicado a la oferta laboral", "error");
     }
   };
 

@@ -13,7 +13,6 @@ export const uploadProfilePicture = async (apiUrl, id, imageFile) => {
     });
     
     if (!response.ok) {
-
       throw new Error(`Error al enviar los datos: ${response.statusText}`);
     }
 
