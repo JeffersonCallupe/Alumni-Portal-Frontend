@@ -1,7 +1,7 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import "./App.css";
-import ActividadesRegistradas from "./app/dashboard/ActividadesRegistradas";
-import ActividadesHistorico from "./app/dashboard/ActividadesHistorico";
+import ActividadesRegistradas from "./app/dashboard/actividadesRegistradas";
+import ActividadesHistorico from "./app/dashboard/actividadesHistorico";
 import Actividades from "./app/dashboard/Actividades";
 import Configuraciones from "./app/profile/Configuraciones";
 import Home from "./app/dashboard/Home";
