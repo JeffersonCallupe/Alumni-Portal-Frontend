@@ -5,7 +5,7 @@ import DialogBase from "../../dialog/DialogBase";
 import FormHeader from "../../forms/empresa/FormHeader";
 import Typography from "@mui/material/Typography";
 import ActionButton from "../../../atoms/buttons/ActionButton";
-import FormPassword from "../../forms/empresa/formPassword"; // Importar el formulario de contraseña
+import FormPassword from "../../forms/empresa/FormPassword"; // Importar el formulario de contraseña
 import { useUserContext } from "../../../../contexts/userContext";
 import useModal from "../../../../hooks/useModal";
 

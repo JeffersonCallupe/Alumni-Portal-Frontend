@@ -59,7 +59,7 @@ const FormFoto = ({ apiUrl}) => {
 
   const handleClose = async () => {
     setImageFile(null);
-    // window.location.reload();
+    window.location.reload();
   };
 
   return (

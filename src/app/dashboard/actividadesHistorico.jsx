@@ -54,7 +54,7 @@ function ActividadesHistorico() {
         try {
           const [activities, enrollments] = await Promise.all([
             getAllActivities(),
-            // getUserEnrollments(),
+            getUserEnrollments(),
           ]);
           setActividades(activities);
           setInscripciones(enrollments.map((e) => e.activityId)); // Obtener solo los IDs de actividades inscritas

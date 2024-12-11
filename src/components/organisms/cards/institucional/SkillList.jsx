@@ -9,8 +9,9 @@ import ActionButton from "../../../atoms/buttons/ActionButton";
 import DeleteIcon from "@mui/icons-material/Delete";
 import DeleteConfirmationModal from "../../dialog/DeleteConfirmationModal";
 
-const SkillList = ({ skills, setSkills }) => {
+const SkillList = () => {
   const { userData } = useUserContext();
+  const [skills, setSkills] = useState([]);
   const [loading, setLoading] = useState(true);
   const [openModal, setOpenModal] = useState(false);
   const [selectedSkill, setSelectedSkill] = useState(null);
@@ -20,9 +21,7 @@ const SkillList = ({ skills, setSkills }) => {
   useEffect(() => {
     const fetchSkills = async () => {
       try {
-        const response = await fetch(
-          `${import.meta.env.VITE_API_URL}/api/skill/user/${userData.id}`
-        );
+        const response = await fetch(`${import.meta.env.VITE_API_URL}/api/skill/user/${userData.id}`);
         const data = await response.json();
         setSkills(data);
       } catch (error) {
@@ -31,6 +30,7 @@ const SkillList = ({ skills, setSkills }) => {
         setLoading(false);
       }
     };
+
     fetchSkills();
   }, [userData]);
 
@@ -66,12 +66,9 @@ const SkillList = ({ skills, setSkills }) => {
     if (!skillToDelete) return;
 
     try {
-      const response = await fetch(
-        `${import.meta.env.VITE_API_URL}/api/skill/${skillToDelete.id}`,
-        {
-          method: "DELETE",
-        }
-      );
+      const response = await fetch(`${import.meta.env.VITE_API_URL}/api/skill/${skillToDelete.id}`, {
+        method: "DELETE",
+      });
       if (response.ok) {
         setSkills((prevSkills) =>
           prevSkills.filter((skill) => skill.id !== skillToDelete.id)
@@ -86,14 +83,21 @@ const SkillList = ({ skills, setSkills }) => {
     }
   };
 
+  const dialogContent = (skill) => (
+    <div>
+      <Typography variant="h6">Editar Habilidad: {skill.name}</Typography>
+      <FormEditSkill
+        skillId={skill.id}
+        initialData={skill}
+        onUpdate={updateSkillList}
+        onCancel={handleCloseModal}
+      />
+    </div>
+  );
+
   if (loading) {
     return (
-      <Box
-        display="flex"
-        justifyContent="center"
-        alignItems="center"
-        height="100vh"
-      >
+      <Box display="flex" justifyContent="center" alignItems="center" height="100vh">
         <CircularProgress />
       </Box>
     );
@@ -102,39 +106,32 @@ const SkillList = ({ skills, setSkills }) => {
   return (
     <Box>
       {skills.length > 0 ? (
-        skills.map((skill) => {
-          const contentEditSkill = React.cloneElement(<FormEditSkill />, {
-            skillId: skill.id,
-            initialData: skill,
-            onUpdate: updateSkillList,
-          });
-          return (
-            <InfoBaseCard
-              key={skill.id}
-              title={skill.name}
-              sub={true}
-              cardContent={
-                <Box
-                  display="flex"
-                  justifyContent="space-between"
-                  alignItems="center"
-                >
-                  <Typography variant="subtitle2">
-                    Nivel: {skill.level}
-                  </Typography>
-                  <ActionButton
+        skills.map((skill) => (
+          <InfoBaseCard
+            key={skill.id}
+            title={skill.name}
+            sub={true}
+            cardContent={
+              <Box 
+                display="flex" 
+                justifyContent="space-between"
+                alignItems="center"
+              >
+                <Typography variant="subtitle2">Nivel: {skill.level}</Typography>
+                <ActionButton 
                     texto={"Eliminar"}
                     startIcon={<DeleteIcon />}
                     onClick={() => handleDeleteClick(skill)}
-                  ></ActionButton>
-                </Box>
-              }
-              dialogContent={contentEditSkill}
-              modalId={`modal-skill-${skill.id}`}
-              className="subcard"
-            />
-          );
-        })
+                  >
+                    
+                  </ActionButton>
+              </Box>
+            }
+            dialogContent={dialogContent(skill)}
+            modalId={`modal-skill-${skill.id}`}
+            className="subcard"
+          />
+        ))
       ) : (
         <Typography variant="body1">No se encontraron habilidades.</Typography>
       )}

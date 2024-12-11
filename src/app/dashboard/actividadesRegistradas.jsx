@@ -181,4 +181,3 @@ function ActividadesRegistradas() {
 }
 
 export default ActividadesRegistradas;
-

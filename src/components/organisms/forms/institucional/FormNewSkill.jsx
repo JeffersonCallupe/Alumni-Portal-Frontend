@@ -14,6 +14,7 @@ const FormNewSkill = ({ onCancel, onSubmit, loading, error }) => {
         async (formData) => {
             await onSubmit(formData);
             if (!error) {
+                window.location.reload();
                 onCancel();
             }
         }

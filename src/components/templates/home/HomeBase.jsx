@@ -1,12 +1,8 @@
 import Navbar from '../../atoms/navbar/Navbar';
 import Footer from "../../atoms/footer/Footer";
 import PropTypes from 'prop-types';
-import Alert from '../../atoms/alert/alert';
+import Alert from '../../atoms/alert/Alert';
 
-HomeBase.propTypes = {
-  children: PropTypes.node.isRequired,
-  aside: PropTypes.node, // Añadido prop aside
-};
 
 function HomeBase({ children, aside }) {
   return (

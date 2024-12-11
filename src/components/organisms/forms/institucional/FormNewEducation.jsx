@@ -16,18 +16,11 @@ const FormNewEducation = ({ onCancel, onSubmit, loading, error }) => {
             description: "",
         },
         async (formData) => {
-            
-            try {
-                await onSubmit(formData);
-                onCancel(); // Cerrar el formulario si no hay errores
-            } catch (error) {
-                console.error("Error al enviar el formulario:", error);
+            await onSubmit(formData);
+            if (!error) {
+                window.location.reload();
+                onCancel();
             }
-            
-            // await onSubmit(formData);
-            // if (!error) {
-            //     onCancel();
-            // }
         }
     );
 

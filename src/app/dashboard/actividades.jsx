@@ -26,7 +26,7 @@ function Actividades() {
     const [apiEndpoints, setApiEndpoints] = useState({});
     const fetchDataRef = useRef(false);
     const token = sessionStorage.getItem("token");
-    const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
+
 
     // Estados para los filtros
     const [eventTypeFilter, setEventTypeFilter] = useState("");
@@ -186,8 +186,6 @@ function Actividades() {
             } else {
                 const activityResponse = await post(activityData);
                 activityId =  activityResponse.id;
-
-
                 if (!activityId) {
                     throw new Error("No se pudo obtener el ID de la actividad de la respuesta.");
                 }
