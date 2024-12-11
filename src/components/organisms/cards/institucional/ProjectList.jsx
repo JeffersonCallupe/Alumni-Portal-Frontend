@@ -9,7 +9,7 @@ import Dialog from "@mui/material/Dialog";
 import DialogTitle from "@mui/material/DialogTitle";
 import DialogContent from "@mui/material/DialogContent";
 import DialogActions from "@mui/material/DialogActions";
-import FormEditProject from "../../forms/institucional/Edit/formEditProject";
+import FormEditProject from "../../forms/institucional/Edit/FormEditProject";
 import DeleteIcon from "@mui/icons-material/Delete";
 import VisibilityIcon from '@mui/icons-material/VisibilityOutlined';
 import DeleteConfirmationModal from "../../dialog/DeleteConfirmationModal";
@@ -97,13 +97,6 @@ const ProjectList = () => {
     </div>
   );
 
-  if (loading) {
-    return (
-      <Box display="flex" justifyContent="center" alignItems="center" height="100vh">
-        <CircularProgress />
-      </Box>
-    );
-  }
 
   return (
     <Box>
