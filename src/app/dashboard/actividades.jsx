@@ -204,8 +204,9 @@ function Actividades() {
                 await uploadProfilePicture(apiEndpoints.multimedia, activityId, formData.multimedia);
                 showAlert("Multimedia subida o actualizada con éxito.", "success");
             }
-            
+
             handleClose();
+            window.location.reload();
         } catch (error) {
             console.error("Error al guardar o actualizar la actividad y/o multimedia:", error);
             showAlert("Error al guardar o actualizar la actividad.", "error");
