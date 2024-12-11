@@ -52,7 +52,6 @@ function ActividadesRegistradas() {
         setFilteredActivities(activityDetails);
       } catch (error) {
         console.error("Error fetching enrollments:", error);
-        showAlert("No se pudieron cargar las actividades", "error");
       }
     };
 
