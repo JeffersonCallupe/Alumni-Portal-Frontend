@@ -1,4 +1,4 @@
-import Alert from "../../atoms/alert/alert";
+import Alert from "../../atoms/alert/Alert";
 import LoginForm from "../../organisms/forms/login/loginForm";
 import LoginSUMForm from "../../organisms/forms/login/loginSUMForm";
 import Typography from "@mui/material/Typography";

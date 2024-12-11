@@ -4,7 +4,7 @@ import InfoBaseCard from "../profileBaseCards/InfoBaseCard";
 import CircularProgress from "@mui/material/CircularProgress";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
-import WorkExperienceForm from "../../forms/institucional/Edit/formEditWorkExperience";
+import WorkExperienceForm from "../../forms/institucional/Edit/FormWorkExperience";
 import Button from "@mui/material/Button";
 import ActionButton from "../../../atoms/buttons/ActionButton";
 import Dialog from "@mui/material/Dialog";
