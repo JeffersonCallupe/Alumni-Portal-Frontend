@@ -19,8 +19,8 @@ const useGet = (apiUrl) => {
         redirect: "follow",
       });
 
-      if (!response.ok) {
-        throw new Error(`Error al obtener los datos: ${response.statusText}`);
+      if (!response.status===200 && response.status!==404) {
+          throw new Error(`Error al obtener los datos: ${response.statusText}`);
       }
 
       const data = await response.json();

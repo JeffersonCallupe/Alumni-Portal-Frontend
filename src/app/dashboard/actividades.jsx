@@ -1,9 +1,9 @@
 import React, { useState, useEffect, useRef } from "react";
-import ActividadCard from "../../components/organisms/cards/dashboard/actividadCard";
-import ActividadDialog from "../../components/organisms/dialog/actividadDialog";
-import ParticipantsDialog from "../../components/organisms/dialog/participantsDialog";
-import Button from "../../components/atoms/buttons/actionButton";
-import HomeBase from "../../components/templates/home/home";
+import ActividadCard from "../../components/organisms/cards/dashboard/ActividadCard";
+import ActividadDialog from "../../components/organisms/dialog/ActividadDialog";
+import ParticipantsDialog from "../../components/organisms/dialog/ParticipantsDialog";
+import Button from "../../components/atoms/buttons/ActionButton";
+import HomeBase from "../../components/templates/home/HomeBase";
 import { useUserContext } from "../../contexts/userContext";
 import { useAlert } from "../../contexts/alertContext";
 import useGet from "../../hooks/useGet";
@@ -127,10 +127,9 @@ function Actividades() {
             const data = await response.json();
             setParticipants(data);
             handleOpenParticipants();
-            showAlert(`Se cargaron ${data.length} participantes.`, "success");
         } catch (error) {
             console.error("Error al obtener los participantes:", error);
-            showAlert("No se pudo cargar la lista de participantes.", "error");
+            showAlert("No hay participantes registrados en la actividad", "error");
         }
     };
 
