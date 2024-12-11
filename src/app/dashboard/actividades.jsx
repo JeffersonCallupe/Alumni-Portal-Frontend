@@ -26,7 +26,7 @@ function Actividades() {
     const [apiEndpoints, setApiEndpoints] = useState({});
     const fetchDataRef = useRef(false);
     const token = sessionStorage.getItem("token");
-    const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
+
 
     // Estados para los filtros
     const [eventTypeFilter, setEventTypeFilter] = useState("");
@@ -185,10 +185,7 @@ function Actividades() {
                 applyFilters(); // Reaplicar filtros después de la actualización
             } else {
                 const activityResponse = await post(activityData);
-                // Extraer ID de la actividad desde la respuesta del servidor
-                const match = activityResponse.match(/: (\d+)/);
-                activityId = match ? parseInt(match[1], 10) : null;
-
+                activityId =  activityResponse.id;
                 if (!activityId) {
                     throw new Error("No se pudo obtener el ID de la actividad de la respuesta.");
                 }
@@ -204,13 +201,11 @@ function Actividades() {
             }
 
             if (formData.multimedia) {
-                await delay(2000);
                 await uploadProfilePicture(apiEndpoints.multimedia, activityId, formData.multimedia);
                 showAlert("Multimedia subida o actualizada con éxito.", "success");
             }
-
+            
             handleClose();
-            window.location.reload();
         } catch (error) {
             console.error("Error al guardar o actualizar la actividad y/o multimedia:", error);
             showAlert("Error al guardar o actualizar la actividad.", "error");
