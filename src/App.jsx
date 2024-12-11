@@ -3,18 +3,18 @@ import "./App.css";
 import ActividadesRegistradas from "./app/dashboard/actividadesRegistradas";
 import ActividadesHistorico from "./app/dashboard/actividadesHistorico";
 import Actividades from "./app/dashboard/actividades";
-import Configuraciones from "./app/profile/Configuraciones";
-import Home from "./app/dashboard/Home";
-import LoginInstitucional from "../src/app/login/LoginInstitucional";
-import LoginEmpresa from '../src/app/login/LoginEmpresa';
-import LoginSUM from "../src/app/login/LoginSUM";
-import OfertasLaborales from "./app/dashboard/OfertasLaborales";
-import OfertasAplicadas from "./app/dashboard/OfertasAplicadas";
-import OfertasHistorico from "./app/dashboard/OfertasHistorico";
-import ProfileEmpresa from "./app/profile/ProfileEmpresa"
-import ProfileInstitucional from "./app/profile/ProfileInstitucional";
-import RegistroSUM from "./app/registro/RegistroSUM";
-import RegistroEmpresa from "./app/registro/RegistroEmpresa";
+import Configuraciones from "./app/profile/configuraciones";
+import Home from "./app/dashboard/home";
+import LoginInstitucional from "../src/app/login/loginInstitucional";
+import LoginEmpresa from '../src/app/login/loginEmpresa';
+import LoginSUM from "../src/app/login/loginSUM";
+import OfertasLaborales from "./app/dashboard/ofertasLaborales";
+import OfertasAplicadas from "./app/dashboard/ofertasAplicadas";
+import OfertasHistorico from "./app/dashboard/ofertasHistorico";
+import ProfileEmpresa from "./app/profile/profileEmpresa"
+import ProfileInstitucional from "./app/profile/profileInstitucional";
+import RegistroSUM from "./app/registro/registroSUM";
+import RegistroEmpresa from "./app/registro/registroEmpresa";
 import { UserProvider } from "./contexts/userContext";
 import { AlertProvider } from "./contexts/alertContext";
 
