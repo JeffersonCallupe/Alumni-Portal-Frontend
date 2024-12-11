@@ -1,9 +1,5 @@
 import Navbar from '../../atoms/navbar/Navbar';
-<<<<<<< HEAD:src/components/templates/home/home.jsx
-import Footer from "../../atoms/footer/footer";
-=======
 import Footer from "../../atoms/footer/Footer";
->>>>>>> Jefferson:src/components/templates/home/HomeBase.jsx
 import PropTypes from 'prop-types';
 import Alert from '../../atoms/alert/alert';
 

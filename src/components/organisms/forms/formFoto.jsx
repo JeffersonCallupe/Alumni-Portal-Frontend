@@ -31,10 +31,6 @@ const FormFoto = ({ apiUrl}) => {
 
   const handleUpload = async (e) => {
     e.preventDefault();
-<<<<<<< HEAD
-=======
-    // window.location.reload();
->>>>>>> Jefferson
     if (imageFile) {
       try {
         await uploadProfilePicture(`${apiUrl}/upload-${userType}`, userData.id, imageFile);
@@ -49,10 +45,6 @@ const FormFoto = ({ apiUrl}) => {
   };
 
   const handleDelete = async () => {
-<<<<<<< HEAD
-=======
-    // window.location.reload();
->>>>>>> Jefferson
     if (userData?.id) {
       try {
         await deleteProfilePicture(`${apiUrl}/delete-image-${userType}`, userData.id);
