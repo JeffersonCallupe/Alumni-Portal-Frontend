@@ -1,27 +1,15 @@
 import React from "react";
-<<<<<<< HEAD
-import HomeBase from "../../components/templates/home/home";
-import FormAbout from "../../components/organisms/forms/institucional/formAbout";
-import InfoBaseCard from "../../components/organisms/cards/profileBaseCards/infoBaseCard";
-import InfoBaseCardContent from "../../components/organisms/cards/profileBaseCards/infoBaseCard";
-import ProfileBaseCard from "../../components/organisms/cards/profileBaseCards/headerBaseCard";
-=======
 import HomeBase from "../../components/templates/home/HomeBase";
 import FormAbout from "../../components/organisms/forms/institucional/FormAbout";
 import InfoBaseCard from "../../components/organisms/cards/profileBaseCards/InfoBaseCard";
 import InfoBaseCardContent from "../../components/organisms/cards/profileBaseCards/InfoBaseCard";
 import ProfileBaseCard from "../../components/organisms/cards/profileBaseCards/ProfileBaseCard";
->>>>>>> Jefferson
 import ProjectList from "../../components/organisms/cards/institucional/ProjectList";
 import SkillList from "../../components/organisms/cards/institucional/SkillList";
 import CertificationList from "../../components/organisms/cards/institucional/CertificationList";
 import EducationList from "../../components/organisms/cards/institucional/EducationList";
 import WorkExperienceList from "../../components/organisms/cards/institucional/WorkExperienceList";
-<<<<<<< HEAD
-import FormNewEducation from "../../components/organisms/forms/institucional/formEducation";
-=======
 import FormNewEducation from "../../components/organisms/forms/institucional/FormNewEducation";
->>>>>>> Jefferson
 import FormNewExperience from "../../components/organisms/forms/institucional/FormNewExperience";
 import FormNewCertification from "../../components/organisms/forms/institucional/FormNewCertification";
 import FormNewSkill from "../../components/organisms/forms/institucional/FormNewSkill";

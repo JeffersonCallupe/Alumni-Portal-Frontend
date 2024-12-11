@@ -1,8 +1,8 @@
 import React, { useState } from "react"; // Agregar useState
 import Box from "@mui/material/Box";
-import EditButton from "../../../atoms/buttons/editButton";
+import EditButton from "../../../atoms/buttons/EditButton";
 import DialogBase from "../../dialog/DialogBase";
-import FormHeader from "../../forms/empresa/formHeader";
+import FormHeader from "../../forms/empresa/FormHeader";
 import Typography from "@mui/material/Typography";
 import ActionButton from "../../../atoms/buttons/ActionButton";
 import FormPassword from "../../forms/empresa/formPassword"; // Importar el formulario de contraseña

@@ -1,10 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useUserContext } from "../../../../contexts/userContext";
-<<<<<<< HEAD
-import InfoBaseCard from "../profileBaseCards/infoBaseCard";
-=======
 import InfoBaseCard from "../profileBaseCards/InfoBaseCard";
->>>>>>> Jefferson
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";

@@ -1,16 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { useUserContext } from "../../../../contexts/userContext";
-<<<<<<< HEAD
-import InfoBaseCard from "../profileBaseCards/infoBaseCard";
-import CircularProgress from "@mui/material/CircularProgress";
-import Box from "@mui/material/Box";
-import Typography from "@mui/material/Typography";
-import ActionButton from "../../../atoms/buttons/actionButton";
-import CertificationForm from "../../forms/institucional/Edit/FormEditCertification";
-import DeleteIcon from "@mui/icons-material/Delete";
-import VisibilityIcon from "@mui/icons-material/VisibilityOutlined";
-import DeleteConfirmationModal from "../../dialog/deleteConfirmationDialog";
-=======
 import InfoBaseCard from "../profileBaseCards/InfoBaseCard";
 import CircularProgress from "@mui/material/CircularProgress";
 import Box from "@mui/material/Box";
@@ -20,7 +9,6 @@ import CertificationForm from "../../forms/institucional/Edit/FormEditCertificat
 import DeleteIcon from "@mui/icons-material/Delete";
 import VisibilityIcon from "@mui/icons-material/VisibilityOutlined";
 import DeleteConfirmationModal from "../../dialog/DeleteConfirmationModal";
->>>>>>> Jefferson
 
 const CertificationList = ({ certifications, setCertifications }) => {
   const { userData } = useUserContext();

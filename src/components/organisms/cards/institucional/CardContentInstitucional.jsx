@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import Box from "@mui/material/Box";
 import EditButton from "../../../atoms/buttons/EditButton";
 import DialogBase from "../../dialog/DialogBase";
-import FormHeader from "../../forms/institucional/formHeader";
+import FormHeader from "../../forms/institucional/FormHeader";
 import Typography from "@mui/material/Typography";
 import ActionButton from "../../../atoms/buttons/ActionButton";
 import { useUserContext } from "../../../../contexts/userContext";
