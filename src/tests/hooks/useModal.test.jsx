@@ -1,6 +1,4 @@
 import { render, screen, fireEvent } from '@testing-library/react';
-import { vi } from 'vitest';
-import { useState } from 'react';
 import useModal from '../../hooks/useModal'; // Ajusta la ruta según corresponda
 
 // Crear un componente que use el hook useModal

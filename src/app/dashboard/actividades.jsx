@@ -26,7 +26,7 @@ function Actividades() {
     const [apiEndpoints, setApiEndpoints] = useState({});
     const fetchDataRef = useRef(false);
     const token = sessionStorage.getItem("token");
-    const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
+
 
     // Estados para los filtros
     const [eventTypeFilter, setEventTypeFilter] = useState("");

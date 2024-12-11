@@ -65,7 +65,7 @@ const FormFoto = ({ apiUrl}) => {
   return (
     <Box component="form" onSubmit={handleUpload} sx={{ display: "flex", flexDirection: "column", gap: 2, width: "100%" }}>
       <div style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
-        <img src={currentImage} style={{ width: "100px", height: "100px",  borderRadius: "50%", objectFit: "cover", marginBottom: "16px" }} />
+        <img src={currentImage} alt="currentImage" style={{ width: "100px", height: "100px",  borderRadius: "50%", objectFit: "cover", marginBottom: "16px" }} />
         <input type="file" accept="image/*" onChange={handleImageChange} style={{ display: "none" }} id="upload-photo" />
         <label htmlFor="upload-photo">
           <Button variant="contained" component="span">

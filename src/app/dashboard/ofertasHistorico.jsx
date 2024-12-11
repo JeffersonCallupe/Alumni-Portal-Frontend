@@ -86,30 +86,14 @@ function OfertasHistorico() {
   };
 
   // Filtrado de ofertas laborales
+
   const filteredOfertas = ofertas.filter((oferta) => {
-    if (!oferta) return false;
-
-    // Filtro por término de búsqueda
-    if (searchTerm && oferta.companyName && !oferta.companyName.toLowerCase().includes(searchTerm.toLowerCase())) {
-      return false;
-    }
-
-    // Filtro por modalidad
-    if (modalityFilter && (!oferta.modality || oferta.modality.toLowerCase() !== modalityFilter.toLowerCase())) {
-      return false;
-    }
-
-    // Filtro por área
-    if (areaFilter && (!oferta.area || oferta.area.toLowerCase() !== areaFilter.toLowerCase())) {
-      return false;
-    }
-
-    // Filtro por nivel
-    if (nivelFilter && (!oferta.nivel || oferta.nivel.toLowerCase() !== nivelFilter.toLowerCase())) {
-      return false;
-    }
-
-    return true;
+    return (
+      (!searchTerm || oferta.companyName?.toLowerCase().includes(searchTerm.toLowerCase())) &&
+      (!modalityFilter || oferta.modality?.toLowerCase() === modalityFilter.toLowerCase()) &&
+      (!areaFilter || oferta.area?.toLowerCase() === areaFilter.toLowerCase()) &&
+      (!nivelFilter || oferta.nivel?.toLowerCase() === nivelFilter.toLowerCase())
+    );
   });
 
   if (!userData) {

@@ -1,0 +1,6 @@
+projectKey=Alumni-Portal-Frontend
+serverUrl=http://localhost:9000
+serverVersion=10.7.0.96327
+dashboardUrl=http://localhost:9000/dashboard?id=Alumni-Portal-Frontend
+ceTaskId=4e390949-bdb8-4381-9cf8-05f5a3c02bbe
+ceTaskUrl=http://localhost:9000/api/ce/task?id=4e390949-bdb8-4381-9cf8-05f5a3c02bbe

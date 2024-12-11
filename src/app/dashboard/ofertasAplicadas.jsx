@@ -70,42 +70,12 @@ function OfertasAplicadas() {
   // Filtrado dinámico
   useEffect(() => {
     const filtered = offers.filter((offer) => {
-      if (!offer) return false;
-
-      // Filtro por término de búsqueda
-      if (
-        searchTerm &&
-        offer.companyName &&
-        !offer.companyName.toLowerCase().includes(searchTerm.toLowerCase())
-      ) {
-        return false;
-      }
-
-      // Filtro por modalidad
-      if (
-        modalityFilter &&
-        (!offer.modality || offer.modality.toLowerCase() !== modalityFilter.toLowerCase())
-      ) {
-        return false;
-      }
-
-      // Filtro por área
-      if (
-        areaFilter &&
-        (!offer.area || offer.area.toLowerCase() !== areaFilter.toLowerCase())
-      ) {
-        return false;
-      }
-
-      // Filtro por nivel
-      if (
-        nivelFilter &&
-        (!offer.nivel || offer.nivel.toLowerCase() !== nivelFilter.toLowerCase())
-      ) {
-        return false;
-      }
-
-      return true;
+      return (
+        (!searchTerm || offer.companyName.toLowerCase().includes(searchTerm.toLowerCase())) &&
+        (!modalityFilter || offer.modality?.toLowerCase() === modalityFilter.toLowerCase()) &&
+        (!areaFilter || offer.area?.toLowerCase() === areaFilter.toLowerCase()) &&
+        (!nivelFilter || offer.nivel?.toLowerCase() === nivelFilter.toLowerCase())
+      );
     });
 
     setFilteredOffers(filtered);

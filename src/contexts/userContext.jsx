@@ -2,6 +2,7 @@ import React, { createContext, useContext, useState, useEffect } from "react";
 import { getProfilePicture } from "../hooks/manageImageUser";
 import DefaultProfile from "../assets/logoPerfil.png";
 
+
 // Creación del contexto para los usuarios
 const UserContext = createContext();
 
@@ -75,3 +76,6 @@ export const UserProvider = ({ children }) => {
     </UserContext.Provider>
   );
 };
+
+
+

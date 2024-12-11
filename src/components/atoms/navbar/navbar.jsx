@@ -211,7 +211,7 @@ function Navbar() {
                 sx={{ p: 0 }}
               >
               <Avatar aria-label="profile-pic">
-                <img src={profilePicture}></img>
+                <img src={profilePicture} alt="imgProfile" ></img>
               </Avatar>
               </IconButton>
             </Tooltip>

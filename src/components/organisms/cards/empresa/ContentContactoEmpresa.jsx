@@ -16,12 +16,10 @@ const ContentContactoEmpresa = () => {
       <br></br>
       <Typography variant="body2" sx={{ mb: 1 }}>
         Sitio Web:
-        <a 
-            href={userData.website || "#"} 
+        <a href={userData.website || "#"} 
             target="_blank" 
             rel="noopener noreferrer" 
-            style={{ color: "darkblue"}}
-        >
+            style={{ color: "darkblue"}}>
             {" "+userData.website || "No especificado"}
         </a>
     </Typography>
