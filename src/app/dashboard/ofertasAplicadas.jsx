@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
-import OfertaLaboralCard from "../../components/organisms/cards/dashboard/ofertaLaboralCard";
-import HomeBase from "../../components/templates/home/home";
-import ConfirmationDialog from "../../components/organisms/dialog/confirmationDialog"; // Modal reutilizable
+import OfertaLaboralCard from "../../components/organisms/cards/dashboard/OfertaLaboralCard";
+import HomeBase from "../../components/templates/home/HomeBase";
+import ConfirmationDialog from "../../components/organisms/dialog/ConfirmationDialog"; // Modal reutilizable
 import { useUserContext } from "../../contexts/userContext";
 import { useAlert } from "../../contexts/alertContext";
 import useGet from "../../hooks/useGet";
@@ -58,7 +58,7 @@ function OfertasAplicadas() {
           setFilteredOffers(offerDetails); // Inicializa las ofertas filtradas
         } catch (error) {
           console.error("Error al cargar las aplicaciones y ofertas:", error);
-          showAlert("No se pudieron cargar las postulaciones.", "error");
+          showAlert("No se ha postulado a ninguna oferta laboral", "success");
         }
       };
 

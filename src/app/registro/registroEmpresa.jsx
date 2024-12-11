@@ -1,13 +1,13 @@
 import Typography from "@mui/material/Typography";
-import Footer from "../../components/atoms/footer/footer";
+import Footer from "../../components/atoms/footer/Footer";
 import imgLogo from "../../assets/logoUNMSM.png";
 import imgFondo from "../../assets/fondoRectorado.png";
-import RegisterEmpresaForm from "../../components/organisms/forms/login/registerEmpresaForm";
+import RegisterEmpresaForm from "../../components/organisms/forms/login/RegisterEmpresaForm";
 import useLogin from "../../hooks/useLogin";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { validateRegistroEmpresa } from "../../hooks/validateLogin"; 
-import Alert from "../../components/atoms/alert/alert";
+import Alert from "../../components/atoms/alert/Alert";
 import { useAlert } from "../../contexts/alertContext";
 
 function RegistroEmpresa() {
