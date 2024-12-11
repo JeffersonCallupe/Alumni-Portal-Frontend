@@ -6,9 +6,9 @@ import Actividades from "./app/dashboard/actividades";
 import Configuraciones from "./app/profile/configuraciones";
 import Home from "./app/dashboard/home";
 import LoginInstitucional from "../src/app/login/loginInstitucional";
-import LoginEmpresa from '../src/app/login/loginEmpresa';
+import LoginEmpresa from './app/login/loginEmpresa';
 
-import LoginSUM from "../src/app/login/loginSUM";
+import LoginSUM from "./app/login/loginSUM";
 import OfertasLaborales from "./app/dashboard/ofertasLaborales";
 import OfertasAplicadas from "./app/dashboard/ofertasAplicadas";
 import OfertasHistorico from "./app/dashboard/ofertasHistorico";

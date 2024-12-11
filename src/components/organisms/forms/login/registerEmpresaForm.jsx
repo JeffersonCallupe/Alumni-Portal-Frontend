@@ -5,7 +5,7 @@ import FormControl from "@mui/material/FormControl";
 import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import Select from "@mui/material/Select";
-import TextInput from "../../../atoms/inputs/TextInput";
+import TextInput from "../../../atoms/inputs/textInput";
 import useForm from "../../../../hooks/useForm";
 
 const RegisterEmpresaForm = ({ onSubmit, disabled, validate }) => {

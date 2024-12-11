@@ -4,7 +4,7 @@ import Avatar from "@mui/material/Avatar";
 import Box from "@mui/material/Box";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
-import CardContentEmpresa from "../empresa/CardContentEmpresa";
+import CardContentEmpresa from "../empresa/cardContentEmpresa";
 import CardContentInstitucional from "../institucional/CardContentInstitucional";
 import CardMedia from "@mui/material/CardMedia";
 import DefaultHeader from "../../../../assets/headerDefault.jpg";

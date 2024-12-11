@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import TextInput from "../../../atoms/inputs/TextInput";
+import TextInput from "../../../atoms/inputs/textInput";
 import Button from "@mui/material/Button";
 import Box from "@mui/material/Box";
 import useForm from "../../../../hooks/useForm";

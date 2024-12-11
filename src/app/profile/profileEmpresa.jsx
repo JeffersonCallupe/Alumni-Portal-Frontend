@@ -1,5 +1,5 @@
 import React from "react";
-import ContentContactoEmpresa from "../../components/organisms/cards/empresa/ContentContactoEmpresa";
+import ContentContactoEmpresa from "../../components/organisms/cards/empresa/contentContactoEmpresa";
 import FormContacto from "../../components/organisms/forms/empresa/FormContacto";
 import FormDescripcion from "../../components/organisms/forms/empresa/FormDescripcion";
 import FormFoto from "../../components/organisms/forms/FormFoto";

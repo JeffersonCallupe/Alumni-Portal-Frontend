@@ -1,7 +1,7 @@
 import React from "react";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
-import TextInput from "../../../atoms/inputs/TextInput";
+import TextInput from "../../../atoms/inputs/textInput";
 import useForm from "../../../../hooks/useForm";
 
 const FormNewExperience = ({ onCancel, onSubmit, loading, error }) => {
