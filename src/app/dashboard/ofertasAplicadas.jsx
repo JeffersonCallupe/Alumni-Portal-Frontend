@@ -58,7 +58,7 @@ function OfertasAplicadas() {
           setFilteredOffers(offerDetails); // Inicializa las ofertas filtradas
         } catch (error) {
           console.error("Error al cargar las aplicaciones y ofertas:", error);
-          showAlert("No se pudieron cargar las postulaciones.", "error");
+          showAlert("No se ha postulado a ninguna oferta laboral", "success");
         }
       };
 

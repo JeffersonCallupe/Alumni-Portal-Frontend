@@ -116,7 +116,7 @@ const CertificationList = () => {
         certifications.map((certification) => (
           <InfoBaseCard
             key={certification.id}
-            title={`Editar ${certification.name}`}
+            title={`${certification.name}`}
             sub={true}
             cardContent={
               <div>

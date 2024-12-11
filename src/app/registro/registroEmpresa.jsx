@@ -7,7 +7,7 @@ import useLogin from "../../hooks/useLogin";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { validateRegistroEmpresa } from "../../hooks/validateLogin"; 
-import Alert from "../../components/atoms/alert/alert";
+import Alert from "../../components/atoms/alert/Alert";
 import { useAlert } from "../../contexts/alertContext";
 
 function RegistroEmpresa() {

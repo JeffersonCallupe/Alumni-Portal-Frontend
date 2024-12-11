@@ -8,10 +8,12 @@ import ActionButton from "../../../atoms/buttons/ActionButton";
 import { useUserContext } from "../../../../contexts/userContext";
 import useModal from "../../../../hooks/useModal";
 import DownloadForOfflineOutlinedIcon from '@mui/icons-material/DownloadForOfflineOutlined';
+import { useAlert } from "../../../../contexts/alertContext";
 
 const CardContentInstitucional = ({ loading, onSubmit }) => {
   const { open, handleOpen, handleClose } = useModal();
   const { userData } = useUserContext();  // Desestructuramos solo userData
+  const { showAlert } = useAlert();
 
   const handleDownloadCV = async () => {
     const userId = userData.id;
@@ -19,11 +21,6 @@ const CardContentInstitucional = ({ loading, onSubmit }) => {
     
     // Obtener el token desde sessionStorage
     const token = sessionStorage.getItem("token");  // Asumiendo que el token se guarda con la clave 'token'
-
-    if (!token) {
-      alert("No se pudo obtener el token. Por favor, inicie sesión nuevamente.");
-      return;
-    }
 
     try {
       const response = await fetch(url, {
@@ -43,12 +40,12 @@ const CardContentInstitucional = ({ loading, onSubmit }) => {
         document.body.appendChild(link);
         link.click();
         document.body.removeChild(link);
-        alert(`¡Descarga exitosa! El CV de ${userData.name} ha sido descargado.`);
+        showAlert("¡Descarga exitosa! El CV ha sido descargado.", "success");
       } else {
         throw new Error("Error al descargar el CV");
       }
     } catch (error) {
-      alert("Hubo un error al intentar descargar el CV. Por favor, inténtalo de nuevo.");
+      showAlert("Error al descargar el CV", "error");
     }
   };
 
