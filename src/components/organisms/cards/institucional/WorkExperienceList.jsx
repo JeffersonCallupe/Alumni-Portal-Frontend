@@ -1,19 +1,27 @@
 import React, { useEffect, useState } from "react";
 import { useUserContext } from "../../../../contexts/userContext";
-import InfoBaseCard from "../profileBaseCards/infoBaseCard";
+import InfoBaseCard from "../profileBaseCards/InfoBaseCard";
 import CircularProgress from "@mui/material/CircularProgress";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import WorkExperienceForm from "../../forms/institucional/Edit/FormWorkExperience";
 import Button from "@mui/material/Button";
+<<<<<<< HEAD
 import ActionButton from "../../../atoms/buttons/actionButton";
+=======
+import ActionButton from "../../../atoms/buttons/ActionButton";
+>>>>>>> Jefferson
 import Dialog from "@mui/material/Dialog";
 import DialogTitle from "@mui/material/DialogTitle";
 import DialogContent from "@mui/material/DialogContent";
 import DialogActions from "@mui/material/DialogActions";
 import DeleteIcon from "@mui/icons-material/Delete";
 import VisibilityIcon from "@mui/icons-material/VisibilityOutlined";
+<<<<<<< HEAD
 import DeleteConfirmationModal from "../../dialog/deleteConfirmationDialog";
+=======
+import DeleteConfirmationModal from "../../dialog/DeleteConfirmationModal";
+>>>>>>> Jefferson
 
 const WorkExperienceList = ({ experiences, setExperiences }) => {
   const { userData } = useUserContext();

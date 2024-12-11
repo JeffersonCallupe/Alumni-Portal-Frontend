@@ -4,7 +4,7 @@ import Card from "@mui/material/Card";
 import { TextField } from "@mui/material";
 import FilterAltIcon from "@mui/icons-material/FilterAlt";
 import Autocomplete from "@mui/material/Autocomplete";
-import ActionButton from "../../../atoms/buttons/actionButton";
+import ActionButton from "../../../atoms/buttons/ActionButton";
 
 const options = ["Charla", "Conferencia", "Curso", "Taller", "Seminario", "Otro"];
 

@@ -1,19 +1,34 @@
 import React, { useEffect, useState } from "react";
 import { useUserContext } from "../../../../contexts/userContext";
+<<<<<<< HEAD
 import InfoBaseCard from "../profileBaseCards/infoBaseCard";
+=======
+import InfoBaseCard from "../profileBaseCards/InfoBaseCard";
+>>>>>>> Jefferson
 import CircularProgress from "@mui/material/CircularProgress";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
+<<<<<<< HEAD
 import ActionButton from "../../../atoms/buttons/actionButton";
+=======
+import ActionButton from "../../../atoms/buttons/ActionButton";
+>>>>>>> Jefferson
 import Dialog from "@mui/material/Dialog";
 import DialogTitle from "@mui/material/DialogTitle";
 import DialogContent from "@mui/material/DialogContent";
 import DialogActions from "@mui/material/DialogActions";
+<<<<<<< HEAD
 import FormEditEducation from "../../forms/institucional/Edit/formEditEducation";
 import DeleteIcon from "@mui/icons-material/Delete";
 import VisibilityIcon from "@mui/icons-material/VisibilityOutlined";
 import DeleteConfirmationModal from "../../dialog/deleteConfirmationDialog"; // Asegúrate de ajustar la ruta
+=======
+import FormEditEducation from "../../forms/institucional/Edit/FormEditEducation";
+import DeleteIcon from "@mui/icons-material/Delete";
+import VisibilityIcon from "@mui/icons-material/VisibilityOutlined";
+import DeleteConfirmationModal from "../../dialog/DeleteConfirmationModal"; // Asegúrate de ajustar la ruta
+>>>>>>> Jefferson
 
 const EducationList = ({ educations, setEducations }) => {
   const { userData } = useUserContext();

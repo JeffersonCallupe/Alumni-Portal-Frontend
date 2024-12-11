@@ -1,10 +1,10 @@
 import React, { useState } from "react";
 import Box from "@mui/material/Box";
-import EditButton from "../../../atoms/buttons/editButton";
-import DialogBase from "../../dialog/profileBaseDialog";
+import EditButton from "../../../atoms/buttons/EditButton";
+import DialogBase from "../../dialog/DialogBase";
 import FormHeader from "../../forms/institucional/formHeader";
 import Typography from "@mui/material/Typography";
-import ActionButton from "../../../atoms/buttons/actionButton";
+import ActionButton from "../../../atoms/buttons/ActionButton";
 import { useUserContext } from "../../../../contexts/userContext";
 import useModal from "../../../../hooks/useModal";
 import DownloadForOfflineOutlinedIcon from '@mui/icons-material/DownloadForOfflineOutlined';

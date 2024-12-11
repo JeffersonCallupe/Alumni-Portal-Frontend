@@ -1,5 +1,5 @@
 import Typography from "@mui/material/Typography";
-import Footer from "../../components/atoms/footer/footer";
+import Footer from "../../components/atoms/footer/Footer";
 import imgLogo from "../../assets/logoUNMSM.png";
 import imgFondo from "../../assets/fondoRectorado.png";
 import RegisterEmpresaForm from "../../components/organisms/forms/login/registerEmpresaForm";

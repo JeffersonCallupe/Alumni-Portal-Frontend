@@ -1,4 +1,4 @@
-import HomeBase from "../../components/templates/home/home";
+import HomeBase from "../../components/templates/home/HomeBase";
 
 function Home() {
   return (
