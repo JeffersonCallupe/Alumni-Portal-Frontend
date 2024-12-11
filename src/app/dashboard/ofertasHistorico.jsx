@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
-import OfertaLaboralCard from "../../components/organisms/cards/dashboard/OfertaLaboralCard";
-import HomeBase from "../../components/templates/home/HomeBase";
-import ConfirmationDialog from "../../components/organisms/dialog/ConfirmationDialog"; // Modal reutilizable
+import OfertaLaboralCard from "../../components/organisms/cards/dashboard/ofertaLaboralCard";
+import HomeBase from "../../components/templates/home/home";
+import ConfirmationDialog from "../../components/organisms/dialog/confirmationDialog"; // Modal reutilizable
 import { useUserContext } from "../../contexts/userContext";
 import { useAlert } from "../../contexts/alertContext";
 import useGet from "../../hooks/useGet";
@@ -46,6 +46,7 @@ function OfertasHistorico() {
           setInscripciones(applications.map((app) => app.jobOfferId)); // Obtener IDs de ofertas postuladas
         } catch (error) {
           console.error("Error al cargar los datos:", error);
+          showAlert("No se pudieron cargar las ofertas laborales.", "error");
         }
       };
       fetchData();

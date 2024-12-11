@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
-import ActividadCard from "../../components/organisms/cards/dashboard/ActividadCard";
-import HomeBase from "../../components/templates/home/HomeBase";
-import ConfirmationDialog from "../../components/organisms/dialog/ConfirmationDialog"; // Modal reutilizable
+import ActividadCard from "../../components/organisms/cards/dashboard/actividadCard";
+import HomeBase from "../../components/templates/home/home";
+import ConfirmationDialog from "../../components/organisms/dialog/confirmationDialog"; // Modal reutilizable
 import { useUserContext } from "../../contexts/userContext";
 import { useAlert } from "../../contexts/alertContext";
 import useGet from "../../hooks/useGet";
@@ -15,8 +15,6 @@ function ActividadesRegistradas() {
   const { userData } = useUserContext();
   const { showAlert } = useAlert();
   const [openConfirmationDialog, setOpenConfirmationDialog] = useState(false); // Estado del modal
-
-  console.log(activities)
 
   const [eventTypeFilter, setEventTypeFilter] = useState("");
   const [startDateFilter, setStartDateFilter] = useState("");
@@ -54,7 +52,7 @@ function ActividadesRegistradas() {
         setFilteredActivities(activityDetails);
       } catch (error) {
         console.error("Error fetching enrollments:", error);
-        showAlert("No se pudieron cargar las actividades", "error");   // modificar
+        showAlert("No se pudieron cargar las actividades", "error");
       }
     };
 

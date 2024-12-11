@@ -1,7 +1,7 @@
 import React from "react";
 import { Dialog, DialogTitle, DialogContent, Table, TableBody, TableCell, TableHead, TableRow, Typography, Button } from "@mui/material";
 
-const ParticipantsDialogs = ({ open, onClose, participants, activityTitle }) => {
+const ParticipantsDialog = ({ open, onClose, participants, activityTitle }) => {
   return (
     <Dialog open={open} onClose={onClose} fullWidth maxWidth="md">
       <DialogTitle sx={{backgroundColor: "#6F191C"}}>
@@ -54,4 +54,4 @@ const ParticipantsDialogs = ({ open, onClose, participants, activityTitle }) => 
   );
 };
 
-export default ParticipantsDialogs;
+export default ParticipantsDialog;

@@ -4,7 +4,7 @@ import Button from "@mui/material/Button";
 import Box from "@mui/material/Box";
 import useForm from "../../../../hooks/useForm";
 
-const LoginSumForm = ({ onSubmit, disabled, validate}) => {
+const LoginForm = ({ onSubmit, disabled, validate}) => {
   const { formData, errors, handleChange, handleSubmit } = useForm(
     { usuario: "", clave: "" },
     onSubmit,
@@ -46,4 +46,4 @@ const LoginSumForm = ({ onSubmit, disabled, validate}) => {
   );
 };
 
-export default LoginSumForm;
+export default LoginForm;

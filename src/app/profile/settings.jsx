@@ -1,12 +1,12 @@
 import React, { useState } from "react";
-import ActionButton from "../../components/atoms/buttons/ActionButton";
-import DeleteConfirmationModal from "../../components/organisms/dialog/DeleteConfirmationModal";
-import HomeBase from "../../components/templates/home/HomeBase";
+import Button from "../../components/atoms/buttons/actionButton";
+import DeleteConfirmationModal from "../../components/organisms/dialog/deleteConfirmationDialog";
+import HomeBase from "../../components/templates/home/home";
 import { useAlert } from "../../contexts/alertContext";
 import { useNavigate } from "react-router-dom";
 import { useUserContext } from "../../contexts/userContext";
 import useDelete from "../../hooks/useDelete";
-import PasswordManager from "../../components/organisms/dialog/PasswordManager"; // Importar el componente
+import PasswordManager from "../../components/organisms/dialog/passwordManagerDialog"; // Importar el componente
 
 function Configuraciones() {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -52,7 +52,7 @@ function Configuraciones() {
             <h2 className="text-xl font-bold">Eliminar Cuenta</h2>
             <p className="text-lg text-gray-500">Si eliminas tu cuenta, no podrás recuperarla. Todos tus datos serán eliminados permanentemente.</p>
             <div>
-              <ActionButton texto={"Eliminar cuenta"} onClick={() => setIsModalOpen(true)} />
+              <Button texto={"Eliminar cuenta"} onClick={() => setIsModalOpen(true)} />
             </div>
             <DeleteConfirmationModal
               isOpen={isModalOpen}

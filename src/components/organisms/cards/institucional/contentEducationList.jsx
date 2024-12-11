@@ -1,24 +1,25 @@
 import React, { useEffect, useState } from "react";
 import { useUserContext } from "../../../../contexts/userContext";
-import InfoBaseCard from "../profileBaseCards/InfoBaseCard";
+import InfoBaseCard from "../profileBaseCards/infoBaseCard"; 
 import CircularProgress from "@mui/material/CircularProgress";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
-import ActionButton from "../../../atoms/buttons/ActionButton";
+import ActionButton from "../../../atoms/buttons/actionButton"
 import Dialog from "@mui/material/Dialog";
 import DialogTitle from "@mui/material/DialogTitle";
 import DialogContent from "@mui/material/DialogContent";
 import DialogActions from "@mui/material/DialogActions";
-import FormEditEducation from "../../forms/institucional/Edit/FormEditEducation";
-import DeleteIcon from "@mui/icons-material/Delete";
-import VisibilityIcon from "@mui/icons-material/VisibilityOutlined";
-import DeleteConfirmationModal from "../../dialog/DeleteConfirmationModal"; // Asegúrate de ajustar la ruta
+import FormEditEducation from "../../forms/institucional/Edit/formEditEducation";
+import DeleteIcon from '@mui/icons-material/Delete';
+import VisibilityIcon from '@mui/icons-material/VisibilityOutlined';
+import DeleteConfirmationModal from "../../dialog/deleteConfirmationDialog"; // Asegúrate de ajustar la ruta
 
-const EducationList = ({ educations, setEducations }) => {
+const EducationList = () => {
   const { userData } = useUserContext();
+  const [educations, setEducations] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [openModal, setOpenModal] = useState(false);
+  const [openModal, setOpenModal] = useState(false); 
   const [selectedEducation, setSelectedEducation] = useState(null);
   // Nuevos estados para el modal de confirmación de eliminación
   const [deleteConfirmOpen, setDeleteConfirmOpen] = useState(false);
@@ -27,9 +28,7 @@ const EducationList = ({ educations, setEducations }) => {
   useEffect(() => {
     const fetchEducationData = async () => {
       try {
-        const response = await fetch(
-          `${import.meta.env.VITE_API_URL}/api/education/user/${userData.id}`
-        );
+        const response = await fetch(`${import.meta.env.VITE_API_URL}/api/education/user/${userData.id}`);
         const data = await response.json();
         setEducations(data);
       } catch (error) {
@@ -56,7 +55,6 @@ const EducationList = ({ educations, setEducations }) => {
   };
 
   const handleCloseModal = () => {
-    console.log("para");
     setOpenModal(false);
     setSelectedEducation(null);
   };
@@ -76,12 +74,9 @@ const EducationList = ({ educations, setEducations }) => {
     if (!educationToDelete) return;
 
     try {
-      const response = await fetch(
-        `${import.meta.env.VITE_API_URL}/api/education/${educationToDelete.id}`,
-        {
-          method: "DELETE",
-        }
-      );
+      const response = await fetch(`${import.meta.env.VITE_API_URL}/api/education/${educationToDelete.id}`, {
+        method: "DELETE",
+      });
       if (response.ok) {
         setEducations((prevEducations) =>
           prevEducations.filter((edu) => edu.id !== educationToDelete.id)
@@ -96,14 +91,21 @@ const EducationList = ({ educations, setEducations }) => {
     }
   };
 
+  const dialogContent = (education) => (
+    <div>
+      <Typography variant="h6">Editar Educación: {education.degree} en {education.institution}</Typography>
+      <FormEditEducation
+        educationId={education.id}
+        initialData={education}
+        onUpdate={updateEducationList}
+        onCancel={handleCloseModal}
+      />
+    </div>
+  );
+
   if (loading) {
     return (
-      <Box
-        display="flex"
-        justifyContent="center"
-        alignItems="center"
-        height="100vh"
-      >
+      <Box display="flex" justifyContent="center" alignItems="center" height="100vh">
         <CircularProgress />
       </Box>
     );
@@ -112,66 +114,51 @@ const EducationList = ({ educations, setEducations }) => {
   return (
     <Box>
       {educations.length > 0 ? (
-        educations.map((education) => {
-          const contentEditEducation = React.cloneElement(<FormEditEducation />, {
-            educationId: education.id,
-            initialData: education,
-            onUpdate: updateEducationList,
-          });
-
-          return (
-            <InfoBaseCard
-              key={education.id}
-              title={education.degree + " en " + education.fieldOfStudy}
-              sub={true}
-              cardContent={
-                <div>
-                  <Typography variant="subtitle2">
-                    Institución: {education.institution}
-                  </Typography>
-                  <Typography variant="subtitle2">
-                    Fecha inicio: {education.startDate} - Fecha fin:{" "}
-                    {education.endDate}
-                  </Typography>
-                  <br />
-                  <Box
-                    display="flex"
-                    justifyContent="space-between"
-                    flexWrap="wrap"
-                    gap={2}
+        educations.map((education) => (
+          <InfoBaseCard
+            key={education.id}
+            title={education.degree + " en " + education.fieldOfStudy}
+            sub={true}
+            cardContent={
+              <div>
+                <Typography variant="subtitle2">Institución: {education.institution}</Typography>
+                <Typography variant="subtitle2">
+                  Fecha inicio: {education.startDate} - Fecha fin: {education.endDate}
+                </Typography>
+                <br />
+                <Box 
+                  display="flex" 
+                  justifyContent="space-between" 
+                  flexWrap="wrap" 
+                  gap={2}
+                >
+                  <ActionButton 
+                    texto={"Ver Descripción"}
+                    startIcon={<VisibilityIcon />}
+                    onClick={() => handleOpenModal(education)}
                   >
-                    <ActionButton
-                      texto={"Ver Descripción"}
-                      startIcon={<VisibilityIcon />}
-                      onClick={() => handleOpenModal(education)}
-                    ></ActionButton>
-                    <ActionButton
-                      texto={"Eliminar"}
-                      startIcon={<DeleteIcon />}
-                      onClick={() => handleDeleteClick(education)}
-                    ></ActionButton>
-                  </Box>
-                </div>
-              }
-              dialogContent={contentEditEducation }
-              modalId={`modal-education-${education.id}`}
-              className="subcard"
-            />
-          );
-        })
+                  </ActionButton>
+                  <ActionButton 
+                    texto={"Eliminar"}
+                    startIcon={<DeleteIcon />}
+                    onClick={() => handleDeleteClick(education)}
+                  >
+                    
+                  </ActionButton>
+                </Box>
+              </div>
+            }
+            dialogContent={dialogContent(education)} 
+            modalId={`modal-education-${education.id}`} 
+            className="subcard" 
+          />
+        ))
       ) : (
-        <Typography variant="body1">
-          No se encontraron registros educativos.
-        </Typography>
+        <Typography variant="body1">No se encontraron registros educativos.</Typography>
       )}
 
       {/* Modal de descripción */}
-      <Dialog
-        open={openModal}
-        onClose={handleCloseModal}
-        maxWidth="sm"
-        fullWidth
-      >
+      <Dialog open={openModal} onClose={handleCloseModal} maxWidth="sm" fullWidth>
         <DialogTitle>Descripción:</DialogTitle>
         <DialogContent>
           <textarea
@@ -205,3 +192,5 @@ const EducationList = ({ educations, setEducations }) => {
 };
 
 export default EducationList;
+
+

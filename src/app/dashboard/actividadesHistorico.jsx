@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
-import ActividadCard from "../../components/organisms/cards/dashboard/ActividadCard";
-import HomeBase from "../../components/templates/home/HomeBase";
-import ConfirmationDialog from "../../components/organisms/dialog/ConfirmationDialog"; // Modal de confirmación
+import ActividadCard from "../../components/organisms/cards/dashboard/actividadCard";
+import HomeBase from "../../components/templates/home/home";
+import ConfirmationDialog from "../../components/organisms/dialog/confirmationDialog"; // Modal de confirmación
 import { useUserContext } from "../../contexts/userContext";
 import { useAlert } from "../../contexts/alertContext";
 import useGet from "../../hooks/useGet";
@@ -54,7 +54,7 @@ function ActividadesHistorico() {
         try {
           const [activities, enrollments] = await Promise.all([
             getAllActivities(),
-            // getUserEnrollments(),
+            getUserEnrollments(),
           ]);
           setActividades(activities);
           setInscripciones(enrollments.map((e) => e.activityId)); // Obtener solo los IDs de actividades inscritas

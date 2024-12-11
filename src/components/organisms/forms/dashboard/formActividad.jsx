@@ -9,7 +9,7 @@ import MenuItem from "@mui/material/MenuItem";
 import Select from "@mui/material/Select";
 import Stack from "@mui/material/Stack";
 import Switch from "@mui/material/Switch";
-import Textarea from "../../../atoms/inputs/Textarea";
+import Textarea from "../../../atoms/inputs/TextareaAutosize";
 import TextInput from "../../../atoms/inputs/TextInput";
 import Typography from "@mui/material/Typography";
 import useForm from "../../../../hooks/useForm";

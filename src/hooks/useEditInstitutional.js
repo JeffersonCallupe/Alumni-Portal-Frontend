@@ -22,13 +22,8 @@ const useUpdateData = (updateUrl) => {
       if (!response.ok) {
         throw new Error('Error al actualizar los datos.');
       }
-
-      const updatedExperience = await response.json();
-      if (!updatedExperience || !updatedExperience.id) {
-      throw new Error('Datos de la experiencia laboral no válidos.');
-     }
-    
-      return updatedExperience;  // Devuelve la experiencia actualizada      
+      window.location.reload();
+      return await response.json();
     } catch (error) {
       setError(error.message);
     } finally {

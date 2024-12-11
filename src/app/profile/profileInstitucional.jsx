@@ -1,36 +1,29 @@
 import React from "react";
-import HomeBase from "../../components/templates/home/HomeBase";
-import FormAbout from "../../components/organisms/forms/institucional/FormAbout";
-import InfoBaseCard from "../../components/organisms/cards/profileBaseCards/InfoBaseCard";
-import InfoBaseCardContent from "../../components/organisms/cards/profileBaseCards/InfoBaseCard";
-import ProfileBaseCard from "../../components/organisms/cards/profileBaseCards/ProfileBaseCard";
-import ProjectList from "../../components/organisms/cards/institucional/ProjectList";
-import SkillList from "../../components/organisms/cards/institucional/SkillList";
-import CertificationList from "../../components/organisms/cards/institucional/CertificationList";
-import EducationList from "../../components/organisms/cards/institucional/EducationList";
-import WorkExperienceList from "../../components/organisms/cards/institucional/WorkExperienceList";
-import FormNewEducation from "../../components/organisms/forms/institucional/FormNewEducation";
-import FormNewExperience from "../../components/organisms/forms/institucional/FormNewExperience";
-import FormNewCertification from "../../components/organisms/forms/institucional/FormNewCertification";
-import FormNewSkill from "../../components/organisms/forms/institucional/FormNewSkill";
-import FormNewProject from "../../components/organisms/forms/institucional/FormNewProject";
+import HomeBase from "../../components/templates/home/home";
+import FormAbout from "../../components/organisms/forms/institucional/formAbout";
+import InfoBaseCard from "../../components/organisms/cards/profileBaseCards/infoBaseCard";
+import InfoBaseCardContent from "../../components/organisms/cards/profileBaseCards/infoBaseCard";
+import ProfileBaseCard from "../../components/organisms/cards/profileBaseCards/headerBaseCard";
+import ProjectList from "../../components/organisms/cards/institucional/contentProjectList";
+import SkillList from "../../components/organisms/cards/institucional/contentSkillList";
+import CertificationList from "../../components/organisms/cards/institucional/contentCertificationList";
+import EducationList from "../../components/organisms/cards/institucional/contentEducationList";
+import WorkExperienceList from "../../components/organisms/cards/institucional/contentWorkExperienceList";
+import FormNewEducation from "../../components/organisms/forms/institucional/formEducation";
+import FormNewExperience from "../../components/organisms/forms/institucional/formWorkExperience";
+import FormNewCertification from "../../components/organisms/forms/institucional/formCertification";
+import FormNewSkill from "../../components/organisms/forms/institucional/formSkill";
+import FormNewProject from "../../components/organisms/forms/institucional/formProject";
 import FormFoto from "../../components/organisms/forms/formFoto";
 import { useAlert } from "../../contexts/alertContext";
 import { useUserContext } from "../../contexts/userContext";
 import usePatch from "../../hooks/usePatchProfile";
 import usePost from "../../hooks/usePost";
-import { useState } from "react";
 
 function ProfileInstitucional() {
+    
   const { userData } = useUserContext();
   const { showAlert } = useAlert();
-  const [experiences, setExperiences] = useState([]);
-  const [educations, setEducations] = useState([]);
-  const [certifications, setCertifications] = useState([]);
-  const [skills, setSkills] = useState([]);  
-  const [projects, setProjects] = useState([]);
-
-
   const apiUrl = userData
       ? `${import.meta.env.VITE_API_URL}/api/user/${userData.id}`
       : null;
@@ -77,23 +70,19 @@ function ProfileInstitucional() {
       }
   };
 
-
   const handleAddWorkExperience = async (formData) => {
-    try {
-        const newExperience = await postWorkExperience(formData); 
-        setExperiences(prevExperiences => [...prevExperiences, newExperience]);  
-        showAlert("La información se registró con éxito", "success");
-    } catch (error) {
-        showAlert('Error al agregar la experiencia laboral:', "error");
-    }
-};
-
+      try {
+          await postWorkExperience(formData);
+          showAlert("La información se registró con éxito", "success");
+      } catch (error) {
+            showAlert('Error al agregar la experiencia laboral:', "error");
+      }
+  };
 
   const handleAddEducation = async (formData) => {
       try {
-          const newEducation =  await postEducation(formData);
+          await postEducation(formData);
           showAlert("La información se registró con éxito", "success");
-          setEducations(prevEducations => [...prevEducations, newEducation]);
       } catch (error) {
           showAlert("Error al agregar la educación", "error");
       }
@@ -101,9 +90,8 @@ function ProfileInstitucional() {
 
   const handleAddCertification = async (formData) => {
       try {
-          const newCertification = await postCertification(formData);
+          await postCertification(formData);
           showAlert("La información se registró con éxito", "success");
-          setCertifications(prevCertifications => [...prevCertifications, newCertification])
       } catch (error) {
           showAlert("Error al agregar la certificación:", "error");
       }
@@ -111,9 +99,8 @@ function ProfileInstitucional() {
 
   const handleAddSkill = async (formData) => {
       try {
-          const newSkill = await postSkill(formData);
+          await postSkill(formData);
           showAlert("La información se registró con éxito", "success");
-          setSkills (prevSkills => [...prevSkills, newSkill])
       } catch (error) {
           showAlert("Error al agregar la habilidad:", "error");
       }
@@ -121,15 +108,13 @@ function ProfileInstitucional() {
 
   const handleAddProject = async (formData) => {
       try {
-          const newProject = await postProject(formData);
-          setProjects (prevProjects => [...prevProjects, newProject])
+          await postProject(formData);
           showAlert("La información se registró con éxito", "success");
       } catch (error) {
           showAlert("Error al agregar el proyecto:", "error");
       }
   };
   
-
   const contentFoto = React.cloneElement(<FormFoto />, {
     apiUrl: imageUrl
   });
@@ -197,37 +182,37 @@ function ProfileInstitucional() {
               <InfoBaseCardContent
                   title="Experiencia Laboral"
                   content={true}
-                  cardContent={<WorkExperienceList experiences={experiences} setExperiences={setExperiences}  />}
+                  cardContent={<WorkExperienceList />}
                   dialogContent={contentWorkExperience}
                   modalId="modal-work-experience"
               />
               <InfoBaseCardContent
                   title="Educación"
                   content={true}
-                  cardContent={<EducationList  educations={educations}  setEducations={setEducations}  />}
+                  cardContent={<EducationList />}
                   dialogContent={contentEducation}
                   modalId="modal-education"
               />
               <InfoBaseCardContent
                   title="Certificaciones"
                   content={true}
-                  cardContent={<CertificationList  certifications={certifications}  setCertifications={setCertifications} />}
+                  cardContent={<CertificationList />}
                   dialogContent={contentCertification}
                   modalId="modal-certifications"
               />
               <InfoBaseCardContent
                   title="Habilidades Claves"
                   content={true}
-                  cardContent={<SkillList  skills={skills} setSkills={setSkills}  />}
+                  cardContent={<SkillList />}
                   dialogContent={contentSkills}
                   modalId="modal-skills"
               />
               <InfoBaseCardContent
                   title="Proyectos"
                   content={true}
-                  cardContent={<ProjectList projects={projects}  setProjects={setProjects} />}
+                  cardContent={<ProjectList />}
                   dialogContent={contentProject}
-                  modalId="modal-project"
+                  modalId="modal-projects"
               />
           </div>
       </HomeBase>

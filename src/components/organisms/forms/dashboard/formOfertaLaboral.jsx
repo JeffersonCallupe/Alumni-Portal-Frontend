@@ -5,7 +5,7 @@ import FormControl from "@mui/material/FormControl";
 import InputLabel from '@mui/material/InputLabel';
 import MenuItem from "@mui/material/MenuItem";
 import Select from "@mui/material/Select";
-import Textarea from "../../../atoms/inputs/Textarea";
+import Textarea from "../../../atoms/inputs/TextareaAutosize";
 import TextInput from "../../../atoms/inputs/TextInput";
 import useForm from "../../../../hooks/useForm";
 

@@ -4,37 +4,27 @@ import Button from "@mui/material/Button";
 import TextInput from "../../../atoms/inputs/TextInput";
 import useForm from "../../../../hooks/useForm";
 
-// Removemos usePost y useUserContext ya que las props vendrán del componente padre
-const FormNewEducation = ({ onCancel, onSubmit, loading, error }) => {
+const FormNewExperience = ({ onCancel, onSubmit, loading, error }) => {
     const { formData, errors, handleChange, handleSubmit } = useForm(
         {
-            institution: "",
-            degree: "",
-            fieldOfStudy: "",
+            company: "",
+            jobTitle: "",
             startDate: "",
             endDate: "",
             description: "",
         },
         async (formData) => {
-            
-            try {
-                await onSubmit(formData);
-                onCancel(); // Cerrar el formulario si no hay errores
-            } catch (error) {
-                console.error("Error al enviar el formulario:", error);
+            await onSubmit(formData);
+            if (!error) {
+                window.location.reload();
+                onCancel();
             }
-            
-            // await onSubmit(formData);
-            // if (!error) {
-            //     onCancel();
-            // }
         }
     );
 
     const formFields = [
-        { label: "Institución", name: "institution", value: formData.institution },
-        { label: "Grado", name: "degree", value: formData.degree },
-        { label: "Campo de estudio", name: "fieldOfStudy", value: formData.fieldOfStudy },
+        { label: "Empresa", name: "company", value: formData.company },
+        { label: "Título del puesto", name: "jobTitle", value: formData.jobTitle },
         { label: "Fecha de inicio", name: "startDate", value: formData.startDate, type: "date" },
         { label: "Fecha de fin", name: "endDate", value: formData.endDate, type: "date" },
         { label: "Descripción", name: "description", value: formData.description, multiline: true },
@@ -60,9 +50,9 @@ const FormNewEducation = ({ onCancel, onSubmit, loading, error }) => {
                         name={name}
                         label={label}
                         value={value}
-                        required={true}
                         onChange={handleChange}
                         error={errors[name]}
+                        required={true}
                         helperText={errors[name]}
                         disabled={loading}
                         type={type || "text"}
@@ -79,8 +69,9 @@ const FormNewEducation = ({ onCancel, onSubmit, loading, error }) => {
                     {loading ? "Guardando..." : "Añadir"}
                 </Button>
             </div>
+            {error && <p className="text-red-500">{error}</p>}
         </Box>
     );
 };
 
-export default FormNewEducation;
+export default FormNewExperience;

@@ -5,11 +5,11 @@ import { TextField } from "@mui/material";
 import { useState, useEffect } from "react";
 import FilterAltIcon from "@mui/icons-material/FilterAlt";
 import Autocomplete from "@mui/material/Autocomplete";
-import ActionButton from "../../../atoms/buttons/ActionButton";
+import ActionButton from "../../../atoms/buttons/actionButton";
 
 const typeEvent = ["Charla", "Conferencia", "Curso", "Taller", "Seminario", "Otro"];
 const typeModality = ["Presencial", "Remoto", "Híbrido"];
-const typeArea = ["Agricultura", "Banca", "Construcción", "Educación", "Energía", "Finanzas", "Manufactura", "Retail", "Salud", "Tecnología", "Telecomunicaciones", "Transporte", "Turismo", "Otro" ] ;
+const typeArea = ["Agricultura", "Banca", "Construcción", "Educación", "Energía", "Finanzas", "Manufactura", "Retail", "Salud", "Tecnología", "Telecomunucaciones", "Transporte", "Turismo", "Otro" ] ;
 const typeNivel = ["Practicante", "Trainee", "Junior", "Semi-senior", "Senior", "Ejecutivo", "Otro"];
 
 

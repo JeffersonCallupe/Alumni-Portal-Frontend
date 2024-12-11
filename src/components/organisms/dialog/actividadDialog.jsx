@@ -1,7 +1,7 @@
 // src/components/ActivityDialog.js
 import React from "react";
 import { Dialog, DialogTitle, DialogContent } from "@mui/material";
-import FormActividad from "../forms/dashboard/FormActividad";
+import FormActividad from "../forms/dashboard/formActividad";
 
 const ActividadDialog = ({ open, onClose, initialData, onSave, multimediaApi, loading, error }) => (
     <Dialog open={open} onClose={onClose} fullWidth maxWidth="sm">
