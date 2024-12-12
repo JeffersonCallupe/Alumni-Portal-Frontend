@@ -1,4 +1,4 @@
-# Alumni Portal - Frontend
+# Portal Alumni UNMSM
 
 ![Javascript](https://img.shields.io/badge/Javascript-ES6-green)
 ![Styled Components](https://img.shields.io/badge/Styled%20Components-CSS/TailwindCSS-skyblue)
@@ -6,6 +6,16 @@
 ![Component Library](https://img.shields.io/badge/Component%20Library-MaterialUI-darkblue)
 ![Build Tool](https://img.shields.io/badge/Build%20Tool-Vite-gold)
 ![Testing](https://img.shields.io/badge/Functional%20Testing-Pytest-orange)
+![Java](https://img.shields.io/badge/Java-22-blue)
+![Spring Boot](https://img.shields.io/badge/Framework-Spring%20Boot-brightgreen)
+![MySQL](https://img.shields.io/badge/Database-MySQL-orange)
+![Hibernate](https://img.shields.io/badge/ORM-Hibernate-orange)
+![REST API](https://img.shields.io/badge/API-REST-green)
+![API Documentation](https://img.shields.io/badge/API%20Docs-Swagger-green)
+![JWT](https://img.shields.io/badge/Authentication-JWT-blue)
+![Testing](https://img.shields.io/badge/Testing-JUnit-orange)
+
+### Versión: 1.5
 
 ## Integrantes:
 
@@ -22,16 +32,18 @@
 - [🎯 Propósito del Proyecto](#-propósito-del-proyecto)
 - [✨ Funcionalidades Principales](#-funcionalidades-principales)
 - [🛠 Tecnologías Utilizadas](#-tecnologías-utilizadas)
-- [🗂 Estructura del Proyecto](#-estructura-del-proyecto)
-- [📋 Requisitos del Sistema](#-requisitos-del-sistema)
-- [🚀 Cómo Ejecutar el Proyecto](#-cómo-ejecutar-el-proyecto)
+- [🗂 Estructura del Proyecto (Frontend)](#-estructura-del-proyecto-frontend)
 - [:sparkle: Pruebas Funcionales](#sparkle-pruebas-funcionales)
-  - [Casos de Prueba del Módulo de Gestión de Acceso](#casos-de-pruebas-del-módulo-de-gestión-de-acceso)
-  - [Casos de Prueba del Módulo de Gestión de Perfil](#casos-de-pruebas-del-módulo-de-gestión-de-perfil)
-  - [Casos de Prueba del Módulo de Gestión de Actividades](#casos-de-pruebas-del-módulo-de-gestión-de-actividades)
-  - [Casos de Prueba del Módulo de Gestión de Empleabilidad](#casos-de-pruebas-del-módulo-de-gestión-de-empleabilidad)
-  - [Integración de las Pruebas Funcionales](#integración-de-las-pruebas-funcionales)
-  - [Ejecución de las Pruebas Funcionales](#ejecución-de-las-pruebas-funcionales)
+- [🚀 Cómo ejecutar el proyecto (Frontend)](#-cómo-ejecutar-el-proyecto-frontend)
+- [🗂 Estructura del Proyecto (Backend)](#-estructura-del-proyecto-backend)
+- [📦 Construyendo un Backend Sólido: Principios y Patrones](#-construyendo-un-backend-sólido-principios-y-patrones)
+- [🚀 Cómo ejecutar el proyecto (Backend)](#-cómo-ejecutar-el-proyecto-backend)
+- [📜 Jenkins Pipeline](#-jenkins-pipeline)
+- [🔧 Configuración de Plugins](#-configuración-de-plugins)
+- [🌍 Variables de Entorno](#-variables-de-entorno)
+- [🛠️ Stages del Pipeline](#-stages-del-pipeline)
+- [📊 Finalización del Pipeline](#-finalización-del-pipeline)
+- [🚀 Timings del Pipeline](#timings-del-pipeline)
 
 ## 📖 Descripción del Proyecto
 
@@ -108,32 +120,66 @@ El **Portal Alumni UNMSM** es una solución tecnológica diseñada para impulsar
 
 ## 🛠 Tecnologías Utilizadas
 
-El frontend del Portal Alumni está desarrollado utilizando tecnologías modernas y herramientas colaborativas que garantizan un diseño eficiente, una experiencia de usuario óptima y una gestión de código organizada.
-
 ### Diseño UI/UX
 
-- **Figma:** Herramienta colaborativa en línea para el diseño de interfaces de usuario y experiencias de usuario (UI/UX). Permite la creación de prototipos interactivos y facilita la comunicación entre desarrolladores y diseñadores.
-
-### Frontend
-
-- **JavaScript (ES6+):** Lenguaje de programación utilizado para implementar la lógica del frontend. La versión ES6+ ofrece características avanzadas como destructuración, funciones flecha, módulos y promesas, lo que mejora la eficiencia y legibilidad del código.
-- **CSS y Tailwind CSS:** El diseño de la interfaz se realiza principalmente utilizando CSS, lo que permite un control completo sobre los estilos y una personalización detallada. Además, Tailwind CSS se emplea como complemento para acelerar el desarrollo mediante sus clases utilitarias predefinidas, optimizando la creación de estilos consistentes y responsivos en secciones específicas de la aplicación.
-- **React 18:** Biblioteca de JavaScript utilizada para construir interfaces de usuario dinámicas y basadas en componentes. Facilita el desarrollo de aplicaciones modulares y escalables.
-- **Material UI 6:** Librería de componentes de interfaz de usuario basada en las pautas de diseño de Google Material Design. Proporciona una colección de elementos predefinidos y personalizables que permiten crear interfaces modernas, accesibles y atractivas.
-- **Vite:** Herramienta utilizada para el desarrollo y construcción del proyecto, destacando por su rapidez en el servidor de desarrollo, recarga en caliente (HMR) y optimización en la generación del paquete final. Su integración con React permite un flujo de trabajo eficiente y moderno.
+- **Figma:** Herramienta colaborativa en línea para el diseño de interfaces de usuario y experiencias de usuario (UI/UX).
 
 ### Herramientas de Desarrollo y Colaboración
 
 - **Git:** Sistema de control de versiones distribuido, utilizado para gestionar el historial de cambios del proyecto y facilitar el trabajo en equipo.
 - **GitHub:** Plataforma basada en la web para almacenar el repositorio del proyecto, colaborar en equipo y gestionar tareas mediante issues y pull requests.
 
+### Frontend
+
+- **JavaScript (ES6+):** Lenguaje de programación utilizado para implementar la lógica del frontend. La versión ES6+ ofrece características avanzadas como destructuración, funciones flecha, módulos y promesas.
+- **CSS y Tailwind CSS:** El diseño de la interfaz se realiza principalmente utilizando CSS. Además, Tailwind CSS se emplea como complemento para acelerar el desarrollo mediante sus clases utilitarias predefinidas, optimizando la creación de estilos consistentes y responsivos en secciones específicas de la aplicación.
+- **React 18:** Biblioteca de JavaScript utilizada para construir interfaces de usuario dinámicas y basadas en componentes.
+- **Material UI 6:** Librería de componentes de interfaz de usuario basada en las pautas de diseño de Google Material Design. Proporciona una colección de elementos predefinidos y personalizables que permiten crear interfaces modernas, accesibles y atractivas.
+- **Vite:** Herramienta utilizada para el desarrollo y construcción del proyecto, destacando por su rapidez en el servidor de desarrollo, recarga en caliente (HMR) y optimización en la generación del paquete final. Su integración con React permite un flujo de trabajo eficiente y moderno.
+
 ### Calidad del Código Frontend
 
 - **ESLint 9:** Herramienta para analizar y reportar patrones en el código JavaScript, ayudando a mantener estándares de calidad y detectar errores durante el desarrollo.
 
+### Backend
+
+- **Java 22**: Lenguaje de programación.
+- **Spring Boot 3**: Framework principal.
+- **Spring Security (JWT)**: Autenticación y autorización.
+- **Maven**: Gestión de dependencias.
+- **ModelMapper**: Mapeo de DTOs a entidades.
+- **Lombok**: Reducción de código repetitivo.
+
+### API REST
+
+- **API REST**: Protocolo de comunicación que permite realizar operaciones de consulta sobre los datos almacenados.
+
+### Base de Datos
+
+- **MySQL**: Gestión de datos persistentes.
+
+### Servicios Cloud
+
+- **AWS Lambda**: Procesamiento asíncrono de correos.
+- **AWS S3**: Almacenamiento de imágenes.
+
+### Seguridad
+
+- **JWT**: Biblioteca que permite trabajar con tokens JWT (JSON Web Tokens) para la autenticación y
+  autorización de usuarios.
+
+### Pruebas y Documentación
+
+- **Swagger**: Generación de documentación de API.
+- **JUnit**: Framework para pruebas unitarias.
+- **Mockito**: Simulación de comportamientos en pruebas unitarias.
+- **JaCoCo**: Cobertura de pruebas.
+- **Selenium:** Una herramienta poderosa y ampliamente utilizada para la automatización de pruebas en aplicaciones web. Utilizado para la pruebas funcionales.
+- **PyTest:** Un marco de pruebas unitarias y funcionales para Python que facilita la creación, ejecución y validación de pruebas de manera eficiente. Utilizado para la pruebas funcionales.
+
 ---
 
-## 🗂 Estructura del Proyecto
+## 🗂 Estructura del Proyecto (Frontend)
 
 A continuación se presenta la estructura de carpetas del repositorio:
 
@@ -159,65 +205,13 @@ A continuación se presenta la estructura de carpetas del repositorio:
 └── README.md # Documentación del proyecto
 ```
 
----
-
-## 📋 Requisitos del Sistema
-
-Asegúrate de tener instalados los siguientes programas en tu sistema para configurar y ejecutar el proyecto correctamente:
-
-- **Node.js (versión 14 o superior):** Necesario para ejecutar JavaScript en el entorno del servidor y gestionar dependencias.
-- **npm (Node Package Manager):** Incluido con Node.js, permite instalar y gestionar las bibliotecas y paquetes requeridos para el proyecto.
-- **Git:** Utilizado para clonar el repositorio del proyecto y gestionar el control de versiones.
-- **Editor de código (opcional):** Se recomienda Visual Studio Code para una experiencia de desarrollo optimizada.
-
-### Verifica tu instalación
-
-Puedes verificar que estos programas están instalados y configurados correctamente ejecutando los siguientes comandos en la terminal:
-
-```bash
-node -v    # Verifica la versión de Node.js
-npm -v     # Verifica la versión de npm
-git --version  # Verifica la versión de Git
-```
-
----
-
-## 🚀 Cómo Ejecutar el Proyecto
-
-Sigue estos pasos para clonar, configurar e iniciar el proyecto en tu entorno local:
-
-```bash
-# Clonar el repositorio
-git clone https://github.com/JeffersonCallupe/Alumni-Portal-Frontend.git
-
-# Entrar en el directorio
-cd Alumni-Portal-Frontend
-
-# Instalar dependencias
-npm install
-
-# Ejecutar el proyecto en desarrollo
-npm run dev
-```
-
-Una vez ejecutado el comando npm run dev, el proyecto estará disponible en un servidor local (por defecto en http://localhost:3000). Cualquier cambio realizado en el código se reflejará automáticamente gracias a la recarga en tiempo real (hot reload).
-
-¡Listo! Ahora puedes explorar y contribuir al desarrollo del Portal Alumni.
+### :eight_pointed_black_star: Descripción de los Componentes (Frontend)
 
 ---
 
 ## :sparkle: Pruebas Funcionales
 
-Las pruebas funcionales del proyecto fueron realizadas utilizando:
-
-- **Selenium:** Una herramienta poderosa y ampliamente utilizada para la automatización de pruebas en aplicaciones web. Selenium permite interactuar con los navegadores de forma programática, simulando acciones de los usuarios, como clics, ingreso de texto y navegación entre páginas, para verificar el comportamiento esperado de la aplicación.
-- **PyTest:** Un marco de pruebas unitarias y funcionales para Python que facilita la creación, ejecución y validación de pruebas de manera eficiente. PyTest es fácil de usar, permite realizar pruebas de forma modular y proporciona un informe claro de los resultados, lo que ayuda a identificar rápidamente posibles errores en el código.
-
-Ambas herramientas fueron fundamentales para asegurar que las funcionalidades implementadas se comportaran según lo esperado, identificar errores y validar el correcto funcionamiento de la aplicación en distintos escenarios de prueba.
-
 Puedes consultar el conjunto completo de casos de prueba realizados para los cuatro módulos principales del sistema en el siguiente enlace: **[Documento de las Pruebas Funcionales](https://docs.google.com/document/d/1a2TGmC_4OK0q_k6shNnAHwwevH3NsHHVU5FT96Q2qvQ/edit?tab=t.0#heading=h.9hfndujfitx)**
-
----
 
 ### Casos de Pruebas del Módulo de Gestión de Acceso
 
@@ -225,7 +219,7 @@ Puedes consultar el conjunto completo de casos de prueba realizados para los cua
 
   ```python
   // ...
-  def test_alumniloginwrongcredentials(self):
+  def test_alumni_login_wrong_credentials(self):
     self.driver.get("http://localhost:5173/")
     self.driver.find_element(By.ID, ":r1:").send_keys(
       "alumno.institucional@unmsm.edu.pe")
@@ -249,7 +243,7 @@ Puedes consultar el conjunto completo de casos de prueba realizados para los cua
 
   ```python
   // ...
-  def test_companyloginwrongcredentials(self):
+  def test_company_login_wrong_credentials(self):
     # Navegar a la página principal
     self.driver.get("http://localhost:5173/")
     # Iniciar sesión
@@ -281,7 +275,7 @@ Puedes consultar el conjunto completo de casos de prueba realizados para los cua
 
   ```python
   // ...
-  def test_contacto(self):
+  def test_edit_description_user(self):
     // ...
     # Ir a la sección de editar contacto
     self.driver.find_element(
@@ -322,7 +316,7 @@ Puedes consultar el conjunto completo de casos de prueba realizados para los cua
 
   ```python
   // ...
-  def test_editar_descripcion_empresa(self):
+  def test_edit_description_company(self):
     //...
     # Ir a la sección de editar descripción
     self.driver.find_element(
@@ -362,7 +356,7 @@ Puedes consultar el conjunto completo de casos de prueba realizados para los cua
 
   ```python
   // ...
-  def test_actividadtestUser(self):
+  def test_activity_user(self):
     //...
     # Registrase en una actividad
     self.driver.find_element(
@@ -405,7 +399,7 @@ Puedes consultar el conjunto completo de casos de prueba realizados para los cua
 
   ```python
   // ...
-  def test_actividadtestCompany(self):
+  def test_activivity_company(self):
     //...
     # Editar actividad con datos válidos
     self.driver.find_element(
@@ -447,7 +441,7 @@ Puedes consultar el conjunto completo de casos de prueba realizados para los cua
 
   ```python
   // ...
-  def test_testUser(self):
+  def test_job_offer_user(self):
     //...
     # Aplicar a oferta laboral
     actions = ActionChains(self.driver)
@@ -503,7 +497,7 @@ Puedes consultar el conjunto completo de casos de prueba realizados para los cua
 
   ```python
   // ...
-  def test_testCompany(self):
+  def test_job_offer_company(self):
     //...
     # Validar y hacer clic en "Mis ofertas publicadas"
     mis_ofertas = self.driver.find_element(
@@ -563,50 +557,55 @@ Puedes consultar el conjunto completo de casos de prueba realizados para los cua
 ### Integración de las Pruebas Funcionales
 
 ```bash
-from test_editarInformacionPersonalEmpresa import TestEditarInformacionPersonalEmpresa
-from test_editarInfoContacto import TestContacto
-from test_editarDescripcionEmpresa import TestEditarDescripcionEmpresa
-from test_actividadtestUser import TestActividadtestUser
-from test_actividadtestCompany import TestActividadtesCompany
-from test_Company import TestTestCompany
-from test_User import TestTestUser
+from test_employability_module_user import TestEmployabilityModuleUser
+from test_employability_module_company import TestEmployabilityModuleCompany
+from test_activity_module_user import TestActivityModuleUser
+from test_activity_module_company import TestActivityModuleCompany
+from test_profile_module_company import TestProfileModuleCompany
+# from test_profile_module_user import TestProfileModuleUser
+from test_access_module_user import TestAccessModuleUser
+from test_access_module_company import TestAccessModuleCompany
 import pytest
 import sys
 import os
-from test_loginempresa import TestLoginEmpresa
-from test_logininstitucional import TestLogininstitucional
 
-# Añadir el directorio actual al path para importar los módulos de prueba
+# Ensure the current directory is in the Python path
 sys.path.append(os.path.dirname(os.path.abspath(__file__)))
 
-# Importar las clases de prueba
 class TestMainWorkflow:
-    def setup_method(self, method):
-        # Configuración inicial que se ejecutará antes de todos los tests
-        pass
-
-    def teardown_method(self, method):
-        # Limpieza que se ejecutará después de todos los tests
-        pass
-
     def test_sequential_workflow(self):
-        # Ejecutar los tests en el orden deseado
-        # Prueba de empresa
-        TestTestCompany()
-        TestTestUser()
-        # Prueba de usuario
-        TestActividadtesCompany()
-        TestActividadtestUser()
-        TestEditarDescripcionEmpresa()
-        TestContacto()
-        TestEditarInformacionPersonalEmpresa()
-        TestLoginEmpresa()
-        TestLogininstitucional()
+        """
+        Run all test classes sequentially and ensure comprehensive testing
+        """
+        # List of test classes to run
+        test_classes = [
+            TestAccessModuleCompany,
+            TestAccessModuleUser,
+            TestProfileModuleCompany,
+            # TestProfileModuleUser,
+            TestActivityModuleCompany,
+            TestActivityModuleUser,
+            TestEmployabilityModuleCompany,
+            TestEmployabilityModuleUser
+        ]
+
+        # Run each test class
+        for test_class in test_classes:
+            pytest.main(
+                ["-v", f"{test_class.__module__}::{test_class.__name__}"])
+
+
+def main():
+    pytest.main(["-v", "main_test.py"])
+
 
 if __name__ == "__main__":
-    # Ejecutar los tests usando pytest
-    pytest.main([__file__])
+    main()
 ```
+
+### Reporte de la Pruebas Funcionales
+
+![image](https://github.com/user-attachments/assets/dfcaa735-00e7-4292-8a64-761521992e81)
 
 ---
 
@@ -635,3 +634,700 @@ pytest -v .\main_test.py
 - **.\main_test.py:** Es el archivo principal donde están definidos los casos de prueba funcionales.
 
 Una vez ejecutado, Pytest mostrará un resumen con el número total de pruebas realizadas, cuántas pasaron y, en caso de fallas, detalles sobre los errores encontrados.
+
+---
+
+## 🚀 Cómo Ejecutar el Proyecto (Frontend)
+
+Sigue estos pasos para clonar, configurar e iniciar el proyecto en tu entorno local:
+
+```bash
+# Clonar el repositorio
+git clone https://github.com/JeffersonCallupe/Alumni-Portal-Frontend.git
+
+# Entrar en el directorio
+cd Alumni-Portal-Frontend
+
+# Instalar dependencias
+npm install
+
+# Ejecutar el proyecto en desarrollo
+npm run dev
+```
+
+Una vez ejecutado el comando npm run dev, el proyecto estará disponible en un servidor local (por defecto en http://localhost:3000). Cualquier cambio realizado en el código se reflejará automáticamente gracias a la recarga en tiempo real (hot reload).
+
+¡Listo! Ahora puedes explorar y contribuir al desarrollo del Portal Alumni.
+
+### 📋 Requisitos del Sistema (Frontend)
+
+Asegúrate de tener instalados los siguientes programas en tu sistema para configurar y ejecutar el proyecto correctamente:
+
+- **Node.js (versión 14 o superior):** Necesario para ejecutar JavaScript en el entorno del servidor y gestionar dependencias.
+- **npm (Node Package Manager):** Incluido con Node.js, permite instalar y gestionar las bibliotecas y paquetes requeridos para el proyecto.
+- **Git:** Utilizado para clonar el repositorio del proyecto y gestionar el control de versiones.
+- **Editor de código (opcional):** Se recomienda Visual Studio Code para una experiencia de desarrollo optimizada.
+
+---
+
+## 🗂 Estructura del Proyecto (Backend)
+
+```
+Alumni-Portal-Backend/
+├───.mvn
+│   └───wrapper
+├───src
+│   ├───main
+│   │   ├───java
+│   │   │   └───com
+│   │   │       └───alumniportal
+│   │   │           └───unmsm
+│   │   │               ├───config
+│   │   │               │   ├───awsConfig
+│   │   │               │   └───SpringSecurity
+│   │   │               ├───controller
+│   │   │               ├───dto
+│   │   │               │   ├───RequestDTO
+│   │   │               │   └───ResponseDTO
+│   │   │               ├───exception
+│   │   │               ├───mapper
+│   │   │               ├───model
+│   │   │               ├───persistence
+│   │   │               │   ├───impl
+│   │   │               │   └───interfaces
+│   │   │               ├───repository
+│   │   │               ├───service
+│   │   │               │   ├───impl
+│   │   │               │   └───interfaces
+│   │   │               └───util
+│   │   └───resources
+│           ├───application.properties
+│           ├───application-dev.properties
+│           ├───application-stg.properties
+│           └───application-prod.properties
+│   └───test
+│       ├───java
+│       │   └───com
+│       │       └───alumniportal
+│       │           └───unmsm
+│       │               ├───controller
+│       │               ├───Data
+│       │               ├───persistence
+│       │               │   └───impl
+│       │               └───service
+│       │                   └───impl
+│       └───resources
+│           ├───application.properties
+│
+├── .gitignore
+├── mvnw
+├── mvnw.cmd
+├── pom.xml
+└── README.md
+```
+
+### :eight_pointed_black_star: Descripción de los Componentes (Backend)
+
+#### **`config`**
+
+Contiene configuraciones de la aplicación:
+
+- **`awsConfig`**: Configuración para la interacción con servicios de AWS (S3, Lambda).
+- **`SpringSecurity`**: Configuración de autenticación y autorización basada en JWT.
+
+#### **`controller`**
+
+Responsable de manejar las solicitudes HTTP y coordinar las respuestas utilizando los servicios.
+
+#### **`dto`**
+
+Define los objetos de transferencia de datos:
+
+- **`RequestDTO`**: Estructuras para recibir datos de las solicitudes.
+- **`ResponseDTO`**: Estructuras para devolver datos en las respuestas.
+
+#### **`exception`**
+
+Gestión centralizada de excepciones personalizadas para un manejo consistente de errores.
+
+#### **`mapper`**
+
+Define mapeos automáticos entre entidades y DTOs utilizando la biblioteca ModelMapper.
+
+#### **`model`**
+
+Contiene las clases que representan las entidades del dominio y reflejan la estructura de la base de datos.
+
+#### **`persistence`**
+
+Gestiona la interacción con los datos:
+
+- **`impl`**: Implementaciones de lógica para la persistencia de datos.
+- **`interfaces`**: Contratos que definen cómo interactuar con la capa de persistencia.
+
+#### **`repository`**
+
+Define los repositorios para interactuar con la base de datos mediante Spring Data JPA.
+
+#### **`service`**
+
+Gestiona la lógica de negocio:
+
+- **`impl`**: Implementaciones concretas de los servicios de negocio.
+- **`interfaces`**: Contratos para los servicios utilizados por los controladores.
+
+#### **`util`**
+
+Proporciona utilidades y clases auxiliares reutilizables para tareas comunes como validaciones, formatos, etc.
+
+---
+
+## 📦 Construyendo un Backend Sólido: Principios y Patrones
+
+### 1. Arquitectura en Capas (Backend)
+
+Se separan las responsabilidades del sistema en capas distintas (como controller, service, persistence, repository,
+model).
+
+**Impacto:** Mejora la modularidad, facilita el mantenimiento y permite cambios en una capa sin afectar a las demás.
+
+**Ejemplo:**
+
+```java
+
+@RestController
+@RequiredArgsConstructor
+@RequestMapping("/api/application")
+public class ApplicationController {
+    private final IApplicationService applicationService;
+
+    @GetMapping("/all")
+    public ResponseEntity<List<ApplicationResponseDTO>> findAll() {
+        List<ApplicationResponseDTO> applicationResponseDTOList = applicationService.findAll();
+        return ResponseEntity.ok(applicationResponseDTOList);
+    }
+}
+
+// ...
+
+```
+
+### 2. Implementación de Spring Security (Backend)
+
+Se usó Spring Security para la implementación de autenticación/autorización basada en roles.
+
+**Impacto:** Protege el acceso a los distintos endpoints de la aplicación.
+
+**Ejemplo:**
+
+```java
+
+@Configuration
+@EnableMethodSecurity
+@EnableWebSecurity
+public class SecurityConfig {
+
+    @Autowired
+    private JwtFilter jwtFilter;
+
+    @Autowired
+    private AuthenticationProvider authenticationProvider;
+
+    @Bean
+    public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
+//    ...
+    }
+}
+```
+
+### 3. Implementación de Roles (Backend)
+
+Se definen roles para permitir un control de acceso granular a diferentes endpoints de la aplicación.
+
+**Ejemplo:**
+
+```java
+public enum Role {
+    USER,
+    COMPANY
+}
+```
+
+### 4. Uso de DTOs (Data Transfer Objects) (Backend)
+
+Para mover la información entre las distintas capas, en lugar de usar la entidad directamente se implementa un DTO, que
+es un objeto simple que se usa netamente para transferir datos.
+
+**Impacto:** Mejora la seguridad al no exponer cualquier información innecesaria.
+
+**Ejemplo:**
+
+```java
+
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
+@Builder
+public class UserRequestDTO {
+
+    private Long id;
+    private String email;
+    private String password;
+    private String paternalSurname;
+//    ...
+}
+```
+
+### 5. Manejo de Excepciones Centralizado (Backend)
+
+Se usa un @RestControllerAdvice , que proporciona un punto central para manejar las excepciones.
+
+**Impacto:** Mejora la consistencia en las respuestas de error y facilita el mantenimiento.
+
+**Ejemplo:**
+
+```java
+
+@RestControllerAdvice
+public class GlobalExceptionHandler {
+    @ExceptionHandler(AppException.class)
+    public ResponseEntity<ErrorResponse> handleAppException(AppException ex) {
+//      ...
+    }
+}
+```
+
+### 6. Implementación de Interfaces para Servicios (Backend)
+
+Se crean interfaces para los servicios, lo que mejora abstracción y facilita futuras pruebas unitarias.
+
+**Impacto:** Mejora la mantenibilidad y permite cambiar implementaciones fácilmente.
+
+**Ejemplo:**
+
+```java
+public interface IAuthService {
+    AuthUserResponseDTO loginAcademic(LoginRequestDTO loginRequestDTO);
+    //...
+}
+
+@Service
+@RequiredArgsConstructor
+public class AuthServiceImpl implements IAuthService {
+    @Override
+    public AuthUserResponseDTO loginAcademic(LoginRequestDTO loginRequestDTO) {
+        //...
+    }
+}
+```
+
+### 7. Uso de Lombok (Backend)
+
+Es una libreria usada para reducir código repetitivo, propociona notaciones para getters, setters, constructores, etc.
+
+**Impacto:** Mejora la legibilidad del código, reduce la probabilidad de errores y superficie de ataque.
+
+**Ejemplo:**
+
+```java
+
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
+@Builder
+public class CompanyRequestDTO {
+    private String name;
+    private String password;
+//  ...
+}
+```
+
+### 8. Uso de ModelMapper (Backend)
+
+Simplifica el mapeo entre objetos de diferentes capas.
+
+**Impacto:** Reduce el código repetitivo y mejora la mantenibilidad.
+
+**Ejemplo:**
+
+```java
+public ActivityResponseDTO entityToDTO(Activity activity) {
+    return modelMapper.map(activity, ActivityResponseDTO.class);
+}
+```
+
+### 9. Uso de Swagger (Backend)
+
+Se usa swagger para documentar de manera automatizada los endpoints del proyecto.
+
+**Impacto:** Facilita la documentación del proyecto.
+
+**Ejemplo:**
+
+```xml
+
+<dependency>
+    <groupId>org.springdoc</groupId>
+    <artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
+    <version>2.6.0</version>
+</dependency>
+```
+
+### 9. Uso de Servicios AWS (Backend)
+
+Se utilizan servicios de AWS como S3 y Lambda para almacenar imágenes y procesar correos de manera asíncrona.
+
+```java
+
+@Bean
+public LambdaClient lambdaClient() {
+    AwsBasicCredentials credentials = AwsBasicCredentials.create(accessKey, secretKey);
+    return LambdaClient.builder()
+            .region(Region.of(region))
+            .credentialsProvider(StaticCredentialsProvider.create(credentials))
+            .build();
+}
+
+@Bean
+public S3Client s3Client() {
+    AwsBasicCredentials awsCredentials = AwsBasicCredentials.create(accessKey, secretKey);
+    return S3Client.builder()
+            .region(Region.of(region))
+            .credentialsProvider(StaticCredentialsProvider.create(awsCredentials))
+            .build();
+}
+```
+
+### 10. Aplicación de Principios de Clean Code (Backend)
+
+Se implementan principios de Clean Code a lo largo del proyecto, especialmente en la capa de servicio. Esto incluye
+métodos con responsabilidad única, nombres descriptivos, y una estructura clara y lógica del código.
+
+**Impacto:** Mejora significativamente la legibilidad, mantenibilidad y escalabilidad del código.
+
+**Ejemplo:**
+
+```java
+
+@Service
+@RequiredArgsConstructor
+public class CertificationServiceImpl implements ICertificationService {
+
+    private final ICertificationDAO certificationDAO;
+    private final IUserDAO userDAO;
+    private final CertificationMapper certificationMapper;
+
+    @Override
+    public List<CertificationResponseDTO> findAll() {
+        List<Certification> certificationList = certificationDAO.findAll();
+        if (certificationList.isEmpty()) {
+            throw new AppException("No certifications found!", "NOT_FOUND");
+        }
+        return certificationMapper.entityListToDTOList(certificationList);
+    }
+
+    @Override
+    public CertificationResponseDTO findById(Long id) {
+        Certification certification = certificationDAO.findById(id);
+        if (certification == null) {
+            throw new AppException("Certification with id " + id + " not found!", "NOT_FOUND");
+        }
+
+        return certificationMapper.entityToDTO(certification);
+    }
+//    ...
+}
+
+```
+
+---
+
+## 🚀 Cómo Ejecutar el Proyecto
+
+1. **Clonar el Repositorio**
+
+   ```bash
+   git clone https://github.com/LuisBDev/Alumni-Portal-Backend.git
+   cd Alumni-Portal-Backend
+
+   ```
+
+2. **Configura el archivo application.properties según tu ambiente**
+
+   ```properties
+   spring.datasource.url=jdbc:mysql://localhost:3306/alumniportal
+   spring.datasource.username=youruser
+   spring.datasource.password=yourpassword
+   spring.datasource.driver-class-name=com.mysql.cj.jdbc.Driver
+   spring.jpa.properties.hibernate.dialect=org.hibernate.dialect.MySQL8Dialect
+   spring.jpa.hibernate.ddl-auto=update
+
+   ```
+
+3. **Agrega las variables de entorno**:  
+   A continuación, agrega las siguientes variables de entorno directamente en la configuración de tu sistema operativo o
+   IDE.
+
+   ```dotenv
+   AWS_ACCESS_KEY_ID=your_access_key
+   AWS_SECRET_ACCESS_KEY=your_secret_key
+   AWS_S3_REGION=your_region
+   ```
+
+   Reemplaza los valores de ejemplo con los detalles de tu configuración real.
+
+4. **Construir y Ejecutar el Proyecto**
+
+   ```bash
+   mvn clean install
+   mvn spring-boot:run
+   ```
+
+5. **Acceder a la Aplicación**
+
+   - La aplicación estará disponible en `http://localhost:8080`.
+
+6. **Documentación de la API**
+   - La documentación de la API estará disponible en `http://localhost:8080/swagger-ui.html`.
+
+### 📋 Requisitos del Sistema
+
+- **Java 22** instalado.
+- **Maven 3.8+** configurado.
+- **MySQL 8.0+** con una base de datos configurada.
+- **IntelliJ IDEA** (o cualquier otro IDE compatible con Java)
+- Configuración de credenciales para AWS S3 y Lambda.
+
+---
+
+# 📜 Jenkins Pipeline
+
+Este pipeline está diseñado para automatizar el ciclo de vida de desarrollo de la aplicación **Alumni Portal**. Incluye
+pasos para la construcción, pruebas, análisis de calidad, empaquetado, despliegue, pruebas de rendimiento y
+notificaciones.
+
+## 🔧 Configuración de Plugins
+
+- **JDK**: `JDK22`
+- **Maven**: Herramienta para la gestión de dependencias y la construcción.
+- **SonarQube Scanner**: Análisis estático del código fuente.
+
+## 🌍 Variables de Entorno
+
+- **AWS_ACCESS_KEY_ID** / **AWS_SECRET_ACCESS_KEY**: Credenciales de AWS para interactuar con S3.
+- **AWS_S3_BUCKET_NAME** / **AWS_S3_REGION**: Configuración del bucket S3.
+- **SLACK_WEBHOOK_URL**: URL para notificaciones en Slack.
+- **SLACK_CHANNEL**: Canal de Slack donde se envían notificaciones.
+- **SPRING_BOOT_APP_JAR**: Ubicación del archivo JAR generado.
+- **SPRING_BOOT_APP_URL**: URL de la aplicación Spring Boot para verificar su estado.
+
+## 🛠️ Stages del Pipeline
+
+## Ejecución de Etapas
+
+![image](https://github.com/user-attachments/assets/573f5bd2-59bc-4488-b138-338fbeef1f85)
+
+### 1. **Git Checkout**
+
+Clona el repositorio desde GitHub en la rama `master`.
+
+```bash
+stage("Git Checkout") {
+    steps {
+        git branch: 'master', url: 'https://github.com/LuisBDev/Alumni-Portal-Backend.git'
+    }
+}
+```
+
+![image](https://github.com/user-attachments/assets/795635f1-6667-4a11-a749-77219fa422e8)
+
+### 2. **Build with Maven**
+
+Compila el proyecto utilizando Maven.
+
+```bash
+stage("Build with Maven") {
+    steps {
+        sh "mvn clean compile"
+    }
+}
+```
+
+![image](https://github.com/user-attachments/assets/74b2d4ec-bb5f-4142-bc2b-24f2a929330b)
+
+### 3. **Run Tests**
+
+Ejecuta las pruebas unitarias definidas con **JUnit** y utiliza **Mockito** para los mocks.
+
+```bash
+stage("Run Tests") {
+    steps {
+        sh "mvn clean test"
+    }
+}
+```
+
+![image](https://github.com/user-attachments/assets/25fab42d-f963-489e-b068-3de07946dc31)
+
+### 4. **SonarQube Analysis**
+
+Realiza un análisis estático del código fuente utilizando **SonarQube**, excluyendo las pruebas.
+
+```bash
+stage("SonarQube Analysis") {
+    steps {
+        script {
+            def scannerHome = tool 'sonar-scanner'
+            withEnv(["PATH+SONAR_SCANNER=${scannerHome}/bin"]) {
+                sh """
+                sonar-scanner \
+                -Dsonar.projectKey=test-alumni-cicd \
+                -Dsonar.sources=. \
+                -Dsonar.java.binaries=target/classes \
+                -Dsonar.host.url=http://sonarqube:9000 \
+                -Dsonar.login=yourtoken \
+                -Dsonar.exclusions=**/test/**
+                """
+            }
+        }
+    }
+}
+```
+
+![image](https://github.com/user-attachments/assets/9c0dc849-1473-4989-96a9-80ab87291d48)
+
+### 5. **Package**
+
+Genera un archivo JAR ejecutable, omitiendo las pruebas.
+
+```bash
+stage("Package") {
+    steps {
+        sh "mvn clean package -DskipTests"
+    }
+}
+```
+
+![image](https://github.com/user-attachments/assets/cf4c5c59-7607-4107-8975-c386ba8a6ca5)
+
+### 6. **Deploy (Publish)**
+
+Despliega la aplicación Spring Boot y las variables necesarias.
+
+```bash
+stage("Deploy (Publish)") {
+    steps {
+        sh """
+        java -jar ${SPRING_BOOT_APP_JAR} \
+        --server.port=8083 \
+        --spring.datasource.url=jdbc:mysql://alumni-mysql:3306/alumniportal \
+        --AWS_ACCESS_KEY_ID=${env.AWS_ACCESS_KEY_ID} \
+        --AWS_SECRET_ACCESS_KEY=${env.AWS_SECRET_ACCESS_KEY} \
+        --AWS_S3_BUCKET_NAME=${env.AWS_S3_BUCKET_NAME} \
+        --AWS_S3_REGION=${env.AWS_S3_REGION} &
+        """
+    }
+}
+```
+
+![image](https://github.com/user-attachments/assets/d8a5ddd1-cd4d-4bc4-8ee9-d59b88437730)
+
+### 7. **Health Check (Actuator)**
+
+Verifica que la aplicación esté corriendo correctamente utilizando el endpoint `/actuator/health`.
+
+```bash
+stage("Health Check (Actuator)") {
+    steps {
+        script {
+            sleep(time: 30, unit: "SECONDS")
+            def healthCheckUrl = "${env.SPRING_BOOT_APP_URL}/actuator/health"
+            def result = sh(script: "curl -s -o /dev/null -w '%{http_code}' ${healthCheckUrl}", returnStdout: true).trim()
+            if (result == "200") {
+                echo "Application health check passed"
+            } else {
+                error "Application health check failed with status ${result}"
+            }
+        }
+    }
+}
+```
+
+![image](https://github.com/user-attachments/assets/9f8a2b2b-8d20-465c-b6f6-d89dcb0e0690)
+
+### 8. **Performance Testing with JMeter**
+
+Ejecuta pruebas de rendimiento utilizando un archivo JMX de JMeter preconfigurado.
+
+```bash
+stage("Performance Testing with JMeter") {
+    steps {
+        script {
+            def jmeterHome = '/opt/jmeter'
+            def jmxFile = '/var/jenkins_home/TestingPlanAlumniPortal.jmx'
+            def jmeterLog = '/var/jenkins_home/jmeter.log'
+            def jmeterCommand = "${jmeterHome}/bin/jmeter -n -t ${jmxFile} -j ${jmeterLog} -Dserver_port=8090"
+            // Ejecutar JMeter
+            sh """
+            ${jmeterCommand}
+            """
+        }
+    }
+}
+```
+
+![image](https://github.com/user-attachments/assets/2b85c978-eee7-41a1-9315-eba34925765a)
+
+### 9. **Send Slack Notification**
+
+Notifica en Slack el estado exitoso o fallido del pipeline con detalles del trabajo.
+
+```bash
+stage("Send Slack Notification") {
+    steps {
+        script {
+            def message = "✅*Build and Performance Testing Success* \n*Job:* ${env.JOB_NAME} \n*Build Number:* ${env.BUILD_NUMBER} \n*URL:* ${env.BUILD_URL} \nApp passed all tests."
+            sh """
+            curl -X POST -H 'Content-type: application/json' \
+            --data '{"channel": "${env.SLACK_CHANNEL}", "text": "${message}"}' \
+            ${env.SLACK_WEBHOOK_URL}
+            """
+        }
+    }
+}
+```
+
+![image](https://github.com/user-attachments/assets/f0d94620-2b47-4887-9374-e66a6d0fd6b6)
+
+## 📤 Comportamiento de Post-Ejecución
+
+- **`failure`**: Si algún paso falla, envía una notificación a Slack indicando el error.
+- **`always`**: Muestra un mensaje de finalización en la consola.
+
+```bash
+post {
+    failure {
+        script {
+            def message = "❌ *Build or Performance Testing Failed* \n*Job:* ${env.JOB_NAME} \n*Build Number:* ${env.BUILD_NUMBER} \n*URL:* ${env.BUILD_URL}"
+            sh """
+            curl -X POST -H 'Content-type: application/json' \
+            --data '{"channel": "${env.SLACK_CHANNEL}", "text": "${message}"}' \
+            ${env.SLACK_WEBHOOK_URL}
+            """
+        }
+    }
+    always {
+        echo 'Pipeline complete.'
+    }
+}
+```
+
+## 📊 Finalización del Pipeline
+
+![image](https://github.com/user-attachments/assets/18067bb1-aedc-4e7a-b21a-85f19037fdd4)
+
+## Timings del Pipeline
+
+![image](https://github.com/user-attachments/assets/11a814ab-be29-4cb1-8238-ec8bc8f05371)
