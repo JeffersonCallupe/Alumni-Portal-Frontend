@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
-import SelectInput from "../../../../atoms/inputs/selectInput";
+import SelectInput from "../../../../atoms/inputs/SelectInput";
 import useUpdateData from "../../../../../hooks/useUpdateData"; // Asegúrate de que la ruta sea correcta
 import { useAlert } from "../../../../../contexts/alertContext";
 

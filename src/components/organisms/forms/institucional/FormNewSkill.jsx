@@ -2,7 +2,7 @@ import React from "react";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import TextInput from "../../../atoms/inputs/TextInput";
-import SelectInput from "../../../atoms/inputs/selectInput"; // Asegúrate de tener un componente de SelectInput
+import SelectInput from "../../../atoms/inputs/SelectInput"; // Asegúrate de tener un componente de SelectInput
 import useForm from "../../../../hooks/useForm";
 
 const FormNewSkill = ({ onCancel, onSubmit, loading, error }) => {

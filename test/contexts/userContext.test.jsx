@@ -1,16 +1,18 @@
 import React from "react";
 import { render, screen, fireEvent } from "@testing-library/react";
 import { vi } from "vitest";
-import { UserProvider, useUserContext } from "../../contexts/userContext";
-import { getProfilePicture } from "../../hooks/manageImageUser";
+import { UserProvider, useUserContext } from "../../src/contexts/userContext";
+import { getProfilePicture } from "../../src/hooks/manageImageUser";
+
+
 
 // Mockear importación de la imagen predeterminada
-vi.mock("../../assets/logoPerfil.png", () => ({
+vi.mock("../../src/assets/logoPerfil.png", () => ({
   default: "default-profile.png",
 }));
 
 // Mockear `getProfilePicture`
-vi.mock("../../hooks/manageImageUser", () => ({
+vi.mock("../../src/hooks/manageImageUser", () => ({
   getProfilePicture: vi.fn(),
 }));
 
