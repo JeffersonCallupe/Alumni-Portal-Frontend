@@ -3,7 +3,6 @@ import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import TextInput from "../../../atoms/inputs/TextInput";
 import useForm from "../../../../hooks/useForm";
-
 const FormNewCertification = ({ onCancel, onSubmit, loading, error }) => {
     const { formData, errors, handleChange, handleSubmit } = useForm(
         {
@@ -16,7 +15,6 @@ const FormNewCertification = ({ onCancel, onSubmit, loading, error }) => {
         async (formData) => {
             await onSubmit(formData);
             if (!error) {
-                window.location.reload();
                 onCancel();
             }
         }

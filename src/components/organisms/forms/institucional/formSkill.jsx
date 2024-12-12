@@ -5,6 +5,7 @@ import TextInput from "../../../atoms/inputs/TextInput";
 import SelectInput from "../../../atoms/inputs/SelectInput"; // Asegúrate de tener un componente de SelectInput
 import useForm from "../../../../hooks/useForm";
 
+
 const FormNewSkill = ({ onCancel, onSubmit, loading, error }) => {
     const { formData, errors, handleChange, handleSubmit } = useForm(
         {
@@ -14,7 +15,6 @@ const FormNewSkill = ({ onCancel, onSubmit, loading, error }) => {
         async (formData) => {
             await onSubmit(formData);
             if (!error) {
-                window.location.reload();
                 onCancel();
             }
         }
