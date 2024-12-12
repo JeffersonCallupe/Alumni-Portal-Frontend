@@ -184,45 +184,51 @@ El **Portal Alumni UNMSM** es una solución tecnológica diseñada para impulsar
 A continuación se presenta la estructura de carpetas del repositorio:
 
 ```bash
-├── public/ # Archivos estáticos públicos accesibles directamente, como imágenes
+├── config/
+| ├── default.conf
+├── public/
 ├── src/
-│ ├── app/ # Contiene la lógica principal de la aplicación, como servicios o configuración
-│ ├── assets/ # Almacena recursos estáticos como imágenes, íconos, fuentes, y botones
-│ ├── components/ # Contiene los componentes reutilizables de la interfaz de usuario (UI)
-│ │  ├── atoms/ # Componentes básicos y reutilizables, como botones o inputs
-│ │  ├── organisms/ # Componentes más complejos compuestos por cards, dialog, forms
-│ │  └── templates/ # Plantillas que definen la estructura de páginas como home o login
-│ ├── contexts/ # Proveedores de contexto para la gestión de estado global con React Context API
-│ │  ├── alertContext.jsx # Contexto para gestionar alertas o notificaciones en la aplicación
-│ │  └── userContext.jsx # Contexto para la gestión del estado del usuario
-│ ├── hooks/ # Hooks personalizados para encapsular lógica reutilizable
-│ ├── tests/
-│ │  ├── components/ # Pruebas unitarias de los componentes de la UI
-│ │  │  ├── atoms/ # Pruebas unitarias de componentes básicos
-│ │  │  ├── organisms/ # Pruebas unitarias de componentes complejos
-│ │  │  └── templates/ # Pruebas unitarias de las plantillas de la aplicación
-│ │  ├── context/ # Pruebas unitarias relacionadas con los contextos
-│ │  │  ├── alertContext.jsx # Pruebas del contexto de alertas
-│ │  │  └── userContext.jsx # Pruebas del contexto del usuario
-│ │  ├── hooks/ # Pruebas unitarias para los hooks personalizados
-│ │  └── functional testing/ # Pruebas funcionales de la aplicación
-│ ├── utils/ # Funciones auxiliares o herramientas que no pertenecen a ninguna categoría específica
-│ ├── App.css # Archivo de estilos globales para la aplicación
-│ ├── App.jsx # Componente principal que define la estructura básica de la aplicación
-│ ├── index.css # Archivo de estilos de inicialización, generalmente para normalizar o reiniciar CSS
-│ └── main.jsx # Punto de entrada de la aplicación, donde se monta el componente principal en el DOM
-├── .env # Archivo de configuración para variables de entorno
-├── README.md # Archivo de documentación del proyecto que incluye la descripción del proyecto, instrucciones de uso y configuración
-├── eslint.config.js # Configuración para las reglas de ESLint para mantener un código consistente
-├── index.html # Archivo HTML principal que sirve como contenedor para la aplicación
-├── package-lock.json # Archivo de bloqueo para asegurar versiones específicas de las dependencias
-└── package.json # Archivo de configuración de Node.js que define dependencias y scripts del proyecto
+│ ├── app/
+│ ├── assets/
+│ ├── components/
+│ │  ├── atoms/
+│ │  ├── organisms/
+│ │  └── templates/
+│ ├── contexts/
+│ │  ├── alertContext.jsx
+│ │  └── userContext.jsx
+│ ├── hooks/
+│ ├── utils/
+│ ├── App.css
+│ ├── App.jsx
+│ ├── index.css
+│ └── main.jsx
+├── tests/
+│ ├── components/
+│ │  ├── atoms/
+│ │  ├── organisms/
+│ │  └── templates/
+│ ├── context/
+│ │  ├── alertContext.jsx
+│ │  └── userContext.jsx
+│ ├── hooks/
+│ └── functional testing/
+├── Dockerfile
+├── .env
+├── README.md
+├── eslint.config.js
+├── index.html
+├── package-lock.json
+└── package.json
+
+
+
 ```
 
 ### :eight_pointed_black_star: Descripción de los Componentes (Frontend)
 
 #### **`Raíz del proyecto:`**
-
+- **`config/:`** Contiene archivo para la configuración con Docker.
 - **`public/:`** Contiene archivos estáticos accesibles directamente desde el navegador.
 - **`.env:`** Archivo que almacena variables de entorno para la configuración del proyecto, como claves API o URLs.
 - **`README.md:`** Archivo de documentación que describe el proyecto, cómo configurarlo, ejecutarlo y cualquier detalle relevante para desarrolladores y usuarios.
@@ -230,19 +236,27 @@ A continuación se presenta la estructura de carpetas del repositorio:
 - **`index.html:`** Archivo HTML principal donde se monta la aplicación React. Es el contenedor de todos los componentes.
 - **`package-lock.json:`** Archivo de bloqueo que asegura versiones específicas de las dependencias instaladas, garantizando la replicabilidad.
 - **`package.json:`** Archivo de configuración que define las dependencias, scripts, y metadatos del proyecto.
-
-#### **`Directorio src/:`**
-
 - **`app/:`** Contiene la lógica central de la aplicación, como servicios, configuración, y lógica de negocio.
-- **`assets/:`** Almacena recursos estáticos como imágenes, íconos, fuentes y botones que se utilizan en toda la aplicación.
-- **`components/:`** Agrupa los componentes reutilizables de la UI.
-  - **`atoms/:`** Componentes básicos y autónomos, como botones, inputs o etiquetas.
-  - **`organisms/:`** Componentes más complejos que combinan átomos, como cards, diálogos o formularios.
-  - **`templates/:`** Plantillas que estructuran páginas completas o secciones principales como "Home" o "Login".
-- **`contexts/:`** Contiene los proveedores de React Context para gestionar el estado global.
-  - **`alertContext.jsx:`** Proveedor de contexto para manejar alertas o notificaciones.
-  - **`userContext.jsx:`** Proveedor de contexto para gestionar la información y el estado del usuario.
-- **`hooks/:`** Almacena hooks personalizados para encapsular y reutilizar lógica específica en varios componentes.
+
+#### **Directorio principal del proyecto**
+
+- **`src/:`** Contiene todos los archivos fuente de la aplicación React.
+  - **`app/:`** Contiene la lógica central de la aplicación, como servicios, configuración y lógica de negocio.
+  - **`assets/:`** Almacena recursos estáticos como imágenes, íconos, fuentes y botones que se utilizan en toda la aplicación.
+  - **`components/:`** Agrupa los componentes reutilizables de la UI.
+    - **`atoms/:`** Componentes básicos y autónomos, como botones, inputs o etiquetas.
+    - **`organisms/:`** Componentes más complejos que combinan átomos, como cards, diálogos o formularios.
+    - **`templates/:`** Plantillas que estructuran páginas completas o secciones principales como "Home" o "Login".
+  - **`contexts/:`** Contiene los proveedores de React Context para gestionar el estado global.
+    - **`alertContext.jsx:`** Proveedor de contexto para manejar alertas o notificaciones.
+    - **`userContext.jsx:`** Proveedor de contexto para gestionar la información y el estado del usuario.
+  - **`hooks/:`** Almacena hooks personalizados para encapsular y reutilizar lógica específica en varios componentes.
+  - **`utils/:`** Contiene funciones auxiliares y herramientas reutilizables, como manipuladores de datos, validaciones o transformadores.
+  - **`App.css:`** Archivo de estilos globales aplicados a toda la aplicación.
+  - **`App.jsx:`** Componente principal que define la estructura básica de la aplicación React.
+  - **`index.css:`** Archivo de estilos para inicializar y normalizar CSS en la aplicación.
+  - **`main.jsx:`** Punto de entrada donde se inicializa y monta el componente principal (`App.jsx`) en el DOM.
+    
 - **`tests/:`** Agrupa las pruebas del proyecto.
   - **`components/:`** Pruebas unitarias de los componentes de la UI.
     - **`atoms/:`** Pruebas de componentes básicos.
@@ -251,11 +265,7 @@ A continuación se presenta la estructura de carpetas del repositorio:
   - **`context/:`** Pruebas unitarias para los contextos, como `alertContext.jsx` y `userContext.jsx`.
   - **`hooks/:`** Pruebas de los hooks personalizados.
   - **`functional testing/:`** Pruebas funcionales que validan el comportamiento de la aplicación completa.
-- **`utils/:`** Contiene funciones auxiliares y herramientas reutilizables, como manipuladores de datos, validaciones o transformadores.
-- **`App.css:`** Archivo de estilos globales aplicados a toda la aplicación.
-- **`App.jsx:`** Componente principal que define la estructura básica de la aplicación React.
-- **`index.css:`** Archivo de estilos para inicializar y normalizar CSS en la aplicación.
-- **`main.jsx:`** Punto de entrada donde se inicializa y monta el componente principal (`App.jsx`) en el DOM.
+
 
 ---
 
