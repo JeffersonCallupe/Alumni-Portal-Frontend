@@ -2,10 +2,12 @@ import React, { useState } from "react";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
-import useUpdateData from '../../../../../hooks/useEditInstitutional';
+import useUpdateData from "../../../../../hooks/useUpdateData"; 
+import { useAlert } from "../../../../../contexts/alertContext";
 
-const FormWorkExperience = ({ workExperienceId, initialData, onUpdate }) => {
-  const [isEditing, setIsEditing] = useState(true);
+
+const FormWorkExperience = ({ workExperienceId, initialData, onUpdate, onCancel }) => {
+  const { showAlert } = useAlert();
   const [formData, setFormData] = useState({
     company: initialData?.company || "",
     jobTitle: initialData?.jobTitle || "",
@@ -26,22 +28,21 @@ const FormWorkExperience = ({ workExperienceId, initialData, onUpdate }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    try {
     const updatedExperience = await updateData(formData);
     if (updatedExperience) {
-      if (onUpdate) {
         onUpdate(updatedExperience);
       }
-      setIsEditing(false);
+      showAlert("La información se actualizó con éxito", "success");
+      onCancel();
+    }catch (error) {
+      showAlert("Error al guardar los cambios", "error");
     }
+    
   };
 
-  const handleCancel = () => {
-    window.location.reload();
-  };
+ 
 
-  if (!isEditing) {
-    return null; // O podrías mostrar un mensaje o redirigir
-  }
 
   return (
     <Box
@@ -97,7 +98,7 @@ const FormWorkExperience = ({ workExperienceId, initialData, onUpdate }) => {
         rows={4}
       />
       <Box sx={{ display: "flex", justifyContent: "flex-end", gap: 2 }}>
-        <Button variant="outlined" type="button" onClick={handleCancel} disabled={loading}>
+        <Button variant="outlined" type="button" onClick={onCancel} disabled={loading}>
           Cancelar
         </Button>
         <Button variant="contained" type="submit" disabled={loading}>
@@ -114,4 +115,3 @@ const FormWorkExperience = ({ workExperienceId, initialData, onUpdate }) => {
 };
 
 export default FormWorkExperience;
-

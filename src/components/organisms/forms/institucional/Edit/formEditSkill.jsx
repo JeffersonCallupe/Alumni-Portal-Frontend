@@ -2,10 +2,12 @@ import React, { useState } from "react";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
-import SelectInput from "../../../../atoms/inputs/SelectInput";
-import useUpdateData from "../../../../../hooks/useEditInstitutional"; // Asegúrate de que la ruta sea correcta
+import SelectInput from "../../../../atoms/inputs/selectInput";
+import useUpdateData from "../../../../../hooks/useUpdateData"; // Asegúrate de que la ruta sea correcta
+import { useAlert } from "../../../../../contexts/alertContext";
 
 const FormEditSkill = ({ skillId, initialData, onUpdate, onCancel }) => {
+  const { showAlert } = useAlert();
   const [formData, setFormData] = useState({
     name: initialData?.name || "",
     level: initialData?.level || "",
@@ -24,21 +26,19 @@ const FormEditSkill = ({ skillId, initialData, onUpdate, onCancel }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
     try {
-      const updatedSkill = await updateData(formData); // Utilizar el hook para actualizar
-      if (updatedSkill) { // Verificar que la actualización fue exitosa
-        onUpdate(updatedSkill); // Callback para actualizar la lista de habilidades
-        onCancel(); // Cerrar el formulario
+      const updatedSkill = await updateData(formData); 
+      if (updatedSkill) { 
+        onUpdate(updatedSkill); 
       }
+      showAlert("La información se actualizó con éxito", "success");
+      onCancel(); 
     } catch (error) {
-      console.error(error); // Manejar errores (ya están capturados en el hook)
+      showAlert("Error al guardar los cambios", "error");
     }
   };
-  const handleCancel = () => {
-    window.location.reload();
-  };
-  // Opciones para el nivel de habilidad
+
+
   const levelOptions = [
     { value: "", label: "Selecciona un nivel" },
     { value: "Beginner", label: "Beginner" },
@@ -76,7 +76,7 @@ const FormEditSkill = ({ skillId, initialData, onUpdate, onCancel }) => {
         required={true}
       />
       <Box sx={{ display: "flex", justifyContent: "flex-end", gap: 2 }}>
-        <Button variant="outlined" onClick={handleCancel} disabled={loading}>
+        <Button variant="outlined" onClick={onCancel} disabled={loading}>
           Cancelar
         </Button>
         <Button variant="contained" type="submit" disabled={loading}>
@@ -89,5 +89,3 @@ const FormEditSkill = ({ skillId, initialData, onUpdate, onCancel }) => {
 };
 
 export default FormEditSkill;
-
-
