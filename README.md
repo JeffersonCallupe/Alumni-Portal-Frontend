@@ -15,7 +15,7 @@
 ![JWT](https://img.shields.io/badge/Authentication-JWT-blue)
 ![Testing](https://img.shields.io/badge/Testing-JUnit-orange)
 
-### Versión: 1.5
+### Versión: 2.0
 
 ## Integrantes:
 
@@ -184,28 +184,78 @@ El **Portal Alumni UNMSM** es una solución tecnológica diseñada para impulsar
 A continuación se presenta la estructura de carpetas del repositorio:
 
 ```bash
-├── public/ # Archivos estático
+├── public/ # Archivos estáticos públicos accesibles directamente, como imágenes
 ├── src/
-│ ├── app/ # Lógica de la aplicación
-│ ├── assets/ # Recursos como imágenes, íconos, botones.
-│ ├── components/ # Componentes reutilizables de la UI
-│ ├── contexts/ # Contextos para la gestión de estado global
-│ ├── hooks/ # Custom hooks para reutilización de lógica
-│ ├── utils/ # Funciones auxiliares y utilitarias
-│ ├── App.css # Estilos globales
-│ ├── App.jsx # Componente principal de la aplicación
-│ ├── index.css # Estilos de inicialización
-│ └── main.jsx # Punto de entrada de la aplicación
-├── eslint.config.js # Configuración de ESLint
-├── index.html # Archivo HTML principal
-├── package.json # Dependencias y scripts de Node.js
-├── postcss.config.js # Configuración de PostCSS
-├── tailwind.config.js # Configuración de Tailwind CSS
-├── vite.config.js # Configuración de Vite
-└── README.md # Documentación del proyecto
+│ ├── app/ # Contiene la lógica principal de la aplicación, como servicios o configuración
+│ ├── assets/ # Almacena recursos estáticos como imágenes, íconos, fuentes, y botones
+│ ├── components/ # Contiene los componentes reutilizables de la interfaz de usuario (UI)
+│ │  ├── atoms/ # Componentes básicos y reutilizables, como botones o inputs
+│ │  ├── organisms/ # Componentes más complejos compuestos por cards, dialog, forms
+│ │  └── templates/ # Plantillas que definen la estructura de páginas como home o login
+│ ├── contexts/ # Proveedores de contexto para la gestión de estado global con React Context API
+│ │  ├── alertContext.jsx # Contexto para gestionar alertas o notificaciones en la aplicación
+│ │  └── userContext.jsx # Contexto para la gestión del estado del usuario
+│ ├── hooks/ # Hooks personalizados para encapsular lógica reutilizable
+│ ├── tests/
+│ │  ├── components/ # Pruebas unitarias de los componentes de la UI
+│ │  │  ├── atoms/ # Pruebas unitarias de componentes básicos
+│ │  │  ├── organisms/ # Pruebas unitarias de componentes complejos
+│ │  │  └── templates/ # Pruebas unitarias de las plantillas de la aplicación
+│ │  ├── context/ # Pruebas unitarias relacionadas con los contextos
+│ │  │  ├── alertContext.jsx # Pruebas del contexto de alertas
+│ │  │  └── userContext.jsx # Pruebas del contexto del usuario
+│ │  ├── hooks/ # Pruebas unitarias para los hooks personalizados
+│ │  └── functional testing/ # Pruebas funcionales de la aplicación
+│ ├── utils/ # Funciones auxiliares o herramientas que no pertenecen a ninguna categoría específica
+│ ├── App.css # Archivo de estilos globales para la aplicación
+│ ├── App.jsx # Componente principal que define la estructura básica de la aplicación
+│ ├── index.css # Archivo de estilos de inicialización, generalmente para normalizar o reiniciar CSS
+│ └── main.jsx # Punto de entrada de la aplicación, donde se monta el componente principal en el DOM
+├── .env # Archivo de configuración para variables de entorno
+├── README.md # Archivo de documentación del proyecto que incluye la descripción del proyecto, instrucciones de uso y configuración
+├── eslint.config.js # Configuración para las reglas de ESLint para mantener un código consistente
+├── index.html # Archivo HTML principal que sirve como contenedor para la aplicación
+├── package-lock.json # Archivo de bloqueo para asegurar versiones específicas de las dependencias
+└── package.json # Archivo de configuración de Node.js que define dependencias y scripts del proyecto
 ```
 
 ### :eight_pointed_black_star: Descripción de los Componentes (Frontend)
+
+#### **`Raíz del proyecto:`**
+
+- **`public/:`** Contiene archivos estáticos accesibles directamente desde el navegador.
+- **`.env:`** Archivo que almacena variables de entorno para la configuración del proyecto, como claves API o URLs.
+- **`README.md:`** Archivo de documentación que describe el proyecto, cómo configurarlo, ejecutarlo y cualquier detalle relevante para desarrolladores y usuarios.
+- **`eslint.config.js:`** Archivo de configuración de ESLint que define reglas para mantener un estilo de código consistente y detectar errores.
+- **`index.html:`** Archivo HTML principal donde se monta la aplicación React. Es el contenedor de todos los componentes.
+- **`package-lock.json:`** Archivo de bloqueo que asegura versiones específicas de las dependencias instaladas, garantizando la replicabilidad.
+- **`package.json:`** Archivo de configuración que define las dependencias, scripts, y metadatos del proyecto.
+
+#### **`Directorio src/:`**
+
+- **`app/:`** Contiene la lógica central de la aplicación, como servicios, configuración, y lógica de negocio.
+- **`assets/:`** Almacena recursos estáticos como imágenes, íconos, fuentes y botones que se utilizan en toda la aplicación.
+- **`components/:`** Agrupa los componentes reutilizables de la UI.
+  - **`atoms/:`** Componentes básicos y autónomos, como botones, inputs o etiquetas.
+  - **`organisms/:`** Componentes más complejos que combinan átomos, como cards, diálogos o formularios.
+  - **`templates/:`** Plantillas que estructuran páginas completas o secciones principales como "Home" o "Login".
+- **`contexts/:`** Contiene los proveedores de React Context para gestionar el estado global.
+  - **`alertContext.jsx:`** Proveedor de contexto para manejar alertas o notificaciones.
+  - **`userContext.jsx:`** Proveedor de contexto para gestionar la información y el estado del usuario.
+- **`hooks/:`** Almacena hooks personalizados para encapsular y reutilizar lógica específica en varios componentes.
+- **`tests/:`** Agrupa las pruebas del proyecto.
+  - **`components/:`** Pruebas unitarias de los componentes de la UI.
+    - **`atoms/:`** Pruebas de componentes básicos.
+    - **`organisms/:`** Pruebas de componentes complejos.
+    - **`templates/:`** Pruebas de plantillas.
+  - **`context/:`** Pruebas unitarias para los contextos, como `alertContext.jsx` y `userContext.jsx`.
+  - **`hooks/:`** Pruebas de los hooks personalizados.
+  - **`functional testing/:`** Pruebas funcionales que validan el comportamiento de la aplicación completa.
+- **`utils/:`** Contiene funciones auxiliares y herramientas reutilizables, como manipuladores de datos, validaciones o transformadores.
+- **`App.css:`** Archivo de estilos globales aplicados a toda la aplicación.
+- **`App.jsx:`** Componente principal que define la estructura básica de la aplicación React.
+- **`index.css:`** Archivo de estilos para inicializar y normalizar CSS en la aplicación.
+- **`main.jsx:`** Punto de entrada donde se inicializa y monta el componente principal (`App.jsx`) en el DOM.
 
 ---
 
@@ -275,35 +325,29 @@ Puedes consultar el conjunto completo de casos de prueba realizados para los cua
 
   ```python
   // ...
-  def test_edit_description_user(self):
+  def test_agregar_experiencia_laboralr(self):
     // ...
-    # Ir a la sección de editar contacto
-    self.driver.find_element(
-        By.CSS_SELECTOR, ".MuiPaper-root:nth-child(3) path").click()
-    # Editar el teléfono usando Ctrl+A y Backspace
-    phone_input = self.driver.find_element(By.XPATH, "//input[@id=':rf:']")
-    phone_input.click()
-    phone_input.send_keys(Keys.CONTROL + "a")  # Seleccionar todo el texto
-    # Borrar el texto seleccionado
-    phone_input.send_keys(Keys.BACKSPACE)
-    phone_input.send_keys("987456321")          # Escribir el nuevo valor
-    # Editar el correo usando la misma técnica
-    email_input = self.driver.find_element(By.XPATH, "//input[@id=':rh:']")
-    email_input.click()
-    email_input.send_keys(Keys.CONTROL + "a")   # Seleccionar todo el texto
-    # Borrar el texto seleccionado
-    email_input.send_keys(Keys.BACKSPACE)
-    email_input.send_keys("estudiante1.com")       # Escribir el nuevo valor
-    # Hacer clic en el botón de submit para guardar los cambios
-    self.driver.find_element(By.XPATH, "//button[@type='submit']").click()
-    WebDriverWait(self.driver, 10).until(
-      EC.visibility_of_element_located(
-        (By.XPATH, "//div[@id='root']/div/div/div/div/div[2]/p"))
-    )
-    mensaje_actualizado = self.driver.find_element(
-      By.XPATH, "//div[@id='root']/div/div/div/div/div[2]/p").text
-    print(f"Texto encontrado: '{mensaje_actualizado}'")
-      assert mensaje_actualizado == "La información se actualizó con éxito"
+     # Editar campos usando Ctrl+A y Backspace
+      campos = {
+          "name": "LUIS JESUS",
+          "paternalSurname": "BALAREZO 1",
+          "maternalSurname": "RAMOS 1",
+          "headline": "Software Engineer 1",
+          "contactNumber": "987654322"
+      }
+      for field_name, value in campos.items():
+          campo = self.driver.find_element(By.NAME, field_name)
+          campo.click()
+          campo.send_keys(Keys.CONTROL + "a")  # Seleccionar todo el texto
+          campo.send_keys(Keys.BACKSPACE)  # Borrar el texto
+          campo.send_keys(value)  # Escribir el nuevo valor
+        # Guardar los cambios
+      self.driver.find_element(By.XPATH, "//button[@type='submit']").click()
+      # Esperar a que el mensaje de confirmación de actualización aparezca
+      WebDriverWait(self.driver, 15).until(
+          EC.text_to_be_present_in_element((By.XPATH, "//div[@id='root']/div/div/div/div/div[2]/p"), "La información se actualizó con éxito")
+      )
+    // ...
   // ...
   ```
 
@@ -340,6 +384,7 @@ Puedes consultar el conjunto completo de casos de prueba realizados para los cua
         By.XPATH, "//div[@id='root']/div/div/div").text
     print(f"Texto encontrado: '{mensaje_actualizado}'")
     assert mensaje_actualizado == "La información se actualizó con éxito"
+    // ...
   // ...
   ```
 
@@ -387,6 +432,7 @@ Puedes consultar el conjunto completo de casos de prueba realizados para los cua
     time.sleep(3)
     assert self.driver.find_element(
         By.XPATH, "//div[@id=\'root\']/div/div/main/div/div[2]/div/div[2]/h6").text == "Taller Prueba 0102"
+    // ...
   // ...
   ```
 
@@ -425,6 +471,7 @@ Puedes consultar el conjunto completo de casos de prueba realizados para los cua
     // ...
     assert self.driver.find_element(
         By.XPATH, "//*[@id='root']/div/div/main/div/div/div/div/div[2]/h6").text == "Taller Prueba 0102"
+    // ...
   // ...
   ```
 
@@ -605,7 +652,7 @@ if __name__ == "__main__":
 
 ### Reporte de la Pruebas Funcionales
 
-![image](https://github.com/user-attachments/assets/dfcaa735-00e7-4292-8a64-761521992e81)
+![image](https://github.com/user-attachments/assets/5dee169e-1d0b-4e57-82df-6821f5dee689)
 
 ---
 
@@ -624,14 +671,14 @@ pip install pytest
 3. Ejecuta el siguiente comando en la terminal desde el directorio del proyecto, asegurándote de que los archivos de prueba estén correctamente configurados:
 
 ```bash
-pytest -v .\main_test.py
+pytest -v .\main.py
 ```
 
 **Detalles del Comando**
 
 - **pytest:** Es el comando que inicializa el marco de pruebas Pytest.
 - **-v:** Activa el modo "verbose", proporcionando un nivel de detalle más alto en los resultados, como el estado de cada prueba ejecutada.
-- **.\main_test.py:** Es el archivo principal donde están definidos los casos de prueba funcionales.
+- **.\main.py:** Es el archivo principal donde están definidos los casos de prueba funcionales.
 
 Una vez ejecutado, Pytest mostrará un resumen con el número total de pruebas realizadas, cuántas pasaron y, en caso de fallas, detalles sobre los errores encontrados.
 
