@@ -26,13 +26,12 @@ function Actividades() {
     const [apiEndpoints, setApiEndpoints] = useState({});
     const fetchDataRef = useRef(false);
     const token = sessionStorage.getItem("token");
-
+    const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
     // Estados para los filtros
     const [eventTypeFilter, setEventTypeFilter] = useState("");
     const [startDateFilter, setStartDateFilter] = useState("");
 
-    
     // Solo se define userType y URLs dinámicas si userData está disponible
     useEffect(() => {
         if (userData) {
@@ -127,9 +126,10 @@ function Actividades() {
             const data = await response.json();
             setParticipants(data);
             handleOpenParticipants();
+            showAlert(`Se cargaron ${data.length} participantes.`, "success");
         } catch (error) {
             console.error("Error al obtener los participantes:", error);
-            showAlert("No hay participantes registrados en la actividad", "error");
+            showAlert("No se pudo cargar la lista de participantes.", "error");
         }
     };
 
@@ -185,7 +185,10 @@ function Actividades() {
                 applyFilters(); // Reaplicar filtros después de la actualización
             } else {
                 const activityResponse = await post(activityData);
-                activityId =  activityResponse.id;
+                // Extraer ID de la actividad desde la respuesta del servidor
+                const match = activityResponse.match(/: (\d+)/);
+                activityId = match ? parseInt(match[1], 10) : null;
+
                 if (!activityId) {
                     throw new Error("No se pudo obtener el ID de la actividad de la respuesta.");
                 }
@@ -201,6 +204,7 @@ function Actividades() {
             }
 
             if (formData.multimedia) {
+                await delay(2000);
                 await uploadProfilePicture(apiEndpoints.multimedia, activityId, formData.multimedia);
                 showAlert("Multimedia subida o actualizada con éxito.", "success");
             }
@@ -268,4 +272,3 @@ function Actividades() {
 }
 
 export default Actividades;
-
