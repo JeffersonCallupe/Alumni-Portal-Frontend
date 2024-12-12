@@ -1,9 +1,9 @@
 import { renderHook, act } from "@testing-library/react";
 import { vi } from "vitest";
-import useLogin from "../../hooks/useLogin";
-import { useUserContext } from "../../contexts/userContext";
+import useLogin from "../../src/hooks/useLogin";
+import { useUserContext } from "../../src/contexts/userContext";
 
-vi.mock("../../contexts/userContext", () => ({
+vi.mock("../../src/contexts/userContext", () => ({
   useUserContext: vi.fn(),
 }));
 

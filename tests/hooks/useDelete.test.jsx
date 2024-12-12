@@ -1,6 +1,6 @@
 import { renderHook, act } from "@testing-library/react";
 import { vi } from "vitest";
-import useDelete from "../../hooks/useDelete";
+import useDelete from "../../src/hooks/useDelete";
 
 // Mock para sessionStorage
 const mockFetch = vi.fn();

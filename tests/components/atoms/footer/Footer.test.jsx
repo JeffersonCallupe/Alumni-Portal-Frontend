@@ -1,5 +1,6 @@
 import { render, screen } from '@testing-library/react';
-import Footer from '../../../../components/atoms/footer/footer';
+import Footer from '../../../../src/components/atoms/footer/footer';
+
 
 describe('Footer', () => {
   it('renders footer content correctly', () => {
