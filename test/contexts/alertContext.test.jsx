@@ -1,6 +1,6 @@
 import { render, screen, act } from "@testing-library/react";
 import { describe, it, expect } from "vitest";
-import { AlertProvider, useAlert } from "../../contexts/alertContext";
+import { AlertProvider, useAlert } from "../../src/contexts/alertContext";
 import React from "react";
 
 // Un componente de prueba que usa el contexto de alerta

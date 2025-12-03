@@ -89,5 +89,3 @@ const FormEditSkill = ({ skillId, initialData, onUpdate, onCancel }) => {
 };
 
 export default FormEditSkill;
-
-

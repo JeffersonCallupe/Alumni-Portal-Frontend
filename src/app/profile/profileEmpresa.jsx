@@ -9,7 +9,7 @@ import ProfileBaseCard from "../../components/organisms/cards/profileBaseCards/P
 import { useUserContext } from "../../contexts/userContext";
 import { useAlert } from "../../contexts/alertContext";
 import usePatch from "../../hooks/usePatchProfile";
-// Test init 
+
 function ProfileEmpresa() {
   const { userData } = useUserContext();
   const { showAlert } = useAlert();

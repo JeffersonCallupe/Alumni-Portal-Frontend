@@ -186,8 +186,6 @@ function Actividades() {
             } else {
                 const activityResponse = await post(activityData);
                 activityId =  activityResponse.id;
-
-
                 if (!activityId) {
                     throw new Error("No se pudo obtener el ID de la actividad de la respuesta.");
                 }

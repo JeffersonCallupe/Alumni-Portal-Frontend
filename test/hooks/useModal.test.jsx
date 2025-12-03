@@ -1,6 +1,10 @@
 import { render, screen, fireEvent } from '@testing-library/react';
+<<<<<<< HEAD:src/tests/hooks/useModal.test.jsx
 import useModal from '../../hooks/useModal'; // Ajusta la ruta según corresponda
 
+=======
+import useModal from '../../src/hooks/useModal';
+>>>>>>> origin/main:test/hooks/useModal.test.jsx
 // Crear un componente que use el hook useModal
 const TestComponent = () => {
   const { open, handleOpen, handleClose } = useModal();

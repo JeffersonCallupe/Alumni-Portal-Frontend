@@ -4,6 +4,11 @@ import EditButton from "../../../atoms/buttons/EditButton";
 import DialogBase from "../../dialog/dialogBase";
 import FormHeader from "../../forms/empresa/FormHeader";
 import Typography from "@mui/material/Typography";
+<<<<<<< HEAD
+=======
+import ActionButton from "../../../atoms/buttons/ActionButton";
+import FormPassword from "../../forms/empresa/FormPassword"; // Importar el formulario de contraseña
+>>>>>>> origin/main
 import { useUserContext } from "../../../../contexts/userContext";
 import useModal from "../../../../hooks/useModal";
 

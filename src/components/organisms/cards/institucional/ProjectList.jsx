@@ -14,6 +14,7 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import VisibilityIcon from '@mui/icons-material/VisibilityOutlined';
 import DeleteConfirmationModal from "../../dialog/deleteConfirmationModal";
 
+
 const ProjectList = ({ projects, setProjects }) => {
   const { userData } = useUserContext();
   const [openModal, setOpenModal] = useState(false);

@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
-import useUpdateData from "../../../../../hooks/useUpdateData"; // Importa el hook
+import useUpdateData from "../../../../../hooks/useUpdateData";  // Importa el hook
 import { useAlert } from "../../../../../contexts/alertContext";
 
 const FormEditEducation = ({educationId, initialData, onUpdate, onCancel,}) => {

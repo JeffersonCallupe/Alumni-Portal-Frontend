@@ -1,8 +1,8 @@
-import Alert from "../../atoms/alert/alert";
-import LoginForm from "../../organisms/forms/login/loginForm";
-import LoginSUMForm from "../../organisms/forms/login/loginSUMForm";
+import Alert from "../../atoms/alert/Alert";
+import LoginForm from "../../organisms/forms/login/LoginForm";
+import LoginSUMForm from "../../organisms/forms/login/LoginSUMForm";
 import Typography from "@mui/material/Typography";
-import Footer from "../../atoms/footer/footer";
+import Footer from "../../atoms/footer/Footer";
 import imgFondo from "../../../assets/fondoRectorado.png";
 import { React, useEffect } from "react";
 import { useAlert } from "../../../contexts/alertContext";

@@ -10,6 +10,7 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import VisibilityIcon from "@mui/icons-material/VisibilityOutlined";
 import DeleteConfirmationModal from "../../dialog/deleteConfirmationModal";
 
+
 const CertificationList = ({ certifications, setCertifications }) => {
   const { userData } = useUserContext();
   const [loading, setLoading] = useState(true);
@@ -186,3 +187,7 @@ const CertificationList = ({ certifications, setCertifications }) => {
 };
 
 export default CertificationList;
+
+
+
+

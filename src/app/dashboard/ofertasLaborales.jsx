@@ -56,7 +56,7 @@ function OfertasLaborales() {
           const data = await getData();
           setOfertas(data);
         } catch (error) {
-          showAlert("Error al obtener las ofertas laborales", "error");
+          console.error("Error al cargar las ofertas laborales:", error);
         }
       };
       fetchOfertas();
