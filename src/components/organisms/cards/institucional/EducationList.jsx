@@ -13,7 +13,7 @@ import DialogActions from "@mui/material/DialogActions";
 import FormEditEducation from "../../forms/institucional/Edit/FormEditEducation";
 import DeleteIcon from "@mui/icons-material/Delete";
 import VisibilityIcon from "@mui/icons-material/VisibilityOutlined";
-import DeleteConfirmationModal from "../../dialog/deleteConfirmationModal"; // Asegúrate de ajustar la ruta
+import DeleteConfirmationModal from "../../dialog/DeleteConfirmationModal"; // Asegúrate de ajustar la ruta
 
 const EducationList = ({ educations, setEducations }) => {
   const { userData } = useUserContext();

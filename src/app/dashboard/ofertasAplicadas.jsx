@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import OfertaLaboralCard from "../../components/organisms/cards/dashboard/OfertaLaboralCard";
-import HomeBase from "../../components/templates/home/homeBase";
-import ConfirmationDialog from "../../components/organisms/dialog/confirmationDialog"; // Modal reutilizable
+import HomeBase from "../../components/templates/home/HomeBase";
+import ConfirmationDialog from "../../components/organisms/dialog/ConfirmationDialog"; // Modal reutilizable
 import { useUserContext } from "../../contexts/userContext";
 import { useAlert } from "../../contexts/alertContext";
 import useGet from "../../hooks/useGet";
@@ -70,12 +70,42 @@ function OfertasAplicadas() {
   // Filtrado dinámico
   useEffect(() => {
     const filtered = offers.filter((offer) => {
-      return (
-        (!searchTerm || offer.companyName.toLowerCase().includes(searchTerm.toLowerCase())) &&
-        (!modalityFilter || offer.modality?.toLowerCase() === modalityFilter.toLowerCase()) &&
-        (!areaFilter || offer.area?.toLowerCase() === areaFilter.toLowerCase()) &&
-        (!nivelFilter || offer.nivel?.toLowerCase() === nivelFilter.toLowerCase())
-      );
+      if (!offer) return false;
+
+      // Filtro por término de búsqueda
+      if (
+        searchTerm &&
+        offer.companyName &&
+        !offer.companyName.toLowerCase().includes(searchTerm.toLowerCase())
+      ) {
+        return false;
+      }
+
+      // Filtro por modalidad
+      if (
+        modalityFilter &&
+        (!offer.modality || offer.modality.toLowerCase() !== modalityFilter.toLowerCase())
+      ) {
+        return false;
+      }
+
+      // Filtro por área
+      if (
+        areaFilter &&
+        (!offer.area || offer.area.toLowerCase() !== areaFilter.toLowerCase())
+      ) {
+        return false;
+      }
+
+      // Filtro por nivel
+      if (
+        nivelFilter &&
+        (!offer.nivel || offer.nivel.toLowerCase() !== nivelFilter.toLowerCase())
+      ) {
+        return false;
+      }
+
+      return true;
     });
 
     setFilteredOffers(filtered);

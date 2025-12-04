@@ -8,7 +8,7 @@ import ActionButton from "../../../atoms/buttons/ActionButton";
 import CertificationForm from "../../forms/institucional/Edit/FormEditCertification";
 import DeleteIcon from "@mui/icons-material/Delete";
 import VisibilityIcon from "@mui/icons-material/VisibilityOutlined";
-import DeleteConfirmationModal from "../../dialog/deleteConfirmationModal";
+import DeleteConfirmationModal from "../../dialog/DeleteConfirmationModal";
 
 
 const CertificationList = ({ certifications, setCertifications }) => {

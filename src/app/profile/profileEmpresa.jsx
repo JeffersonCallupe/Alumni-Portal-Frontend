@@ -1,9 +1,9 @@
 import React from "react";
-import ContentContactoEmpresa from "../../components/organisms/cards/empresa/contentContactoEmpresa";
+import ContentContactoEmpresa from "../../components/organisms/cards/empresa/ContentContactoEmpresa";
 import FormContacto from "../../components/organisms/forms/empresa/FormContacto";
 import FormDescripcion from "../../components/organisms/forms/empresa/FormDescripcion";
 import FormFoto from "../../components/organisms/forms/FormFoto";
-import HomeBase from "../../components/templates/home/homeBase";
+import HomeBase from "../../components/templates/home/HomeBase";
 import InfoBaseCard from "../../components/organisms/cards/profileBaseCards/InfoBaseCard";
 import ProfileBaseCard from "../../components/organisms/cards/profileBaseCards/ProfileBaseCard";
 import { useUserContext } from "../../contexts/userContext";

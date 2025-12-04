@@ -1,26 +1,27 @@
-import React  from "react"; // Agregar useState
+import React from "react";
 import Box from "@mui/material/Box";
 import EditButton from "../../../atoms/buttons/EditButton";
-import DialogBase from "../../dialog/dialogBase";
+import DialogBase from "../../dialog/DialogBase";
 import FormHeader from "../../forms/empresa/FormHeader";
 import Typography from "@mui/material/Typography";
-<<<<<<< HEAD
-=======
-import ActionButton from "../../../atoms/buttons/ActionButton";
-import FormPassword from "../../forms/empresa/FormPassword"; // Importar el formulario de contraseña
->>>>>>> origin/main
 import { useUserContext } from "../../../../contexts/userContext";
 import useModal from "../../../../hooks/useModal";
 
+/**
+ * Componente que muestra el contenido de la tarjeta de perfil de empresa
+ * @param {Object} props - Propiedades del componente
+ * @param {boolean} props.loading - Estado de carga
+ * @param {Function} props.onSubmit - Función a ejecutar al enviar el formulario
+ */
 const CardContentEmpresa = ({ loading, onSubmit }) => {
   const { open, handleOpen, handleClose } = useModal();
   const { userData } = useUserContext();
 
   const contentHeader = (
-    <FormHeader 
-      onSubmit={onSubmit} 
-      onCancel={handleClose} 
-      loading={loading} 
+    <FormHeader
+      onSubmit={onSubmit}
+      onCancel={handleClose}
+      loading={loading}
     />
   );
 
@@ -61,7 +62,7 @@ const CardContentEmpresa = ({ loading, onSubmit }) => {
         content={contentHeader}
         modalId="modal-profile"
       />
-      
+
     </div>
   );
 };

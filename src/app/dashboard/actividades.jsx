@@ -1,9 +1,9 @@
 import React, { useState, useEffect, useRef } from "react";
-import ActividadCard from "../../components/organisms/cards/dashboard/actividadCard";
-import ActividadDialog from "../../components/organisms/dialog/actividadDialog";
-import ParticipantsDialog from "../../components/organisms/dialog/participantsDialog";
-import Button from "../../components/atoms/buttons/actionButton";
-import HomeBase from "../../components/templates/home/homeBase";
+import ActividadCard from "../../components/organisms/cards/dashboard/ActividadCard";
+import ActividadDialog from "../../components/organisms/dialog/ActividadDialog";
+import ParticipantsDialog from "../../components/organisms/dialog/ParticipantsDialog";
+import Button from "../../components/atoms/buttons/ActionButton";
+import HomeBase from "../../components/templates/home/HomeBase";
 import { useUserContext } from "../../contexts/userContext";
 import { useAlert } from "../../contexts/alertContext";
 import useGet from "../../hooks/useGet";

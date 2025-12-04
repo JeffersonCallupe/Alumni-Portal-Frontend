@@ -1,7 +1,7 @@
 import React from "react";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
-import TextInput from "../../../atoms/inputs/textInput";
+import TextInput from "../../../atoms/inputs/TextInput";
 import useForm from "../../../../hooks/useForm";
 
 // Removemos usePost y useUserContext ya que las props vendrán del componente padre

@@ -13,7 +13,7 @@ import DialogContent from "@mui/material/DialogContent";
 import DialogActions from "@mui/material/DialogActions";
 import DeleteIcon from "@mui/icons-material/Delete";
 import VisibilityIcon from "@mui/icons-material/VisibilityOutlined";
-import DeleteConfirmationModal from "../../dialog/deleteConfirmationModal";
+import DeleteConfirmationModal from "../../dialog/DeleteConfirmationModal";
 
 const WorkExperienceList = ({ experiences, setExperiences }) => {
   const { userData } = useUserContext();

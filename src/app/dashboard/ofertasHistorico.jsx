@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import OfertaLaboralCard from "../../components/organisms/cards/dashboard/OfertaLaboralCard";
-import HomeBase from "../../components/templates/home/homeBase";
-import ConfirmationDialog from "../../components/organisms/dialog/confirmationDialog"; // Modal reutilizable
+import HomeBase from "../../components/templates/home/HomeBase";
+import ConfirmationDialog from "../../components/organisms/dialog/ConfirmationDialog"; // Modal reutilizable
 import { useUserContext } from "../../contexts/userContext";
 import { useAlert } from "../../contexts/alertContext";
 import useGet from "../../hooks/useGet";
@@ -86,14 +86,30 @@ function OfertasHistorico() {
   };
 
   // Filtrado de ofertas laborales
-
   const filteredOfertas = ofertas.filter((oferta) => {
-    return (
-      (!searchTerm || oferta.companyName?.toLowerCase().includes(searchTerm.toLowerCase())) &&
-      (!modalityFilter || oferta.modality?.toLowerCase() === modalityFilter.toLowerCase()) &&
-      (!areaFilter || oferta.area?.toLowerCase() === areaFilter.toLowerCase()) &&
-      (!nivelFilter || oferta.nivel?.toLowerCase() === nivelFilter.toLowerCase())
-    );
+    if (!oferta) return false;
+
+    // Filtro por término de búsqueda
+    if (searchTerm && oferta.companyName && !oferta.companyName.toLowerCase().includes(searchTerm.toLowerCase())) {
+      return false;
+    }
+
+    // Filtro por modalidad
+    if (modalityFilter && (!oferta.modality || oferta.modality.toLowerCase() !== modalityFilter.toLowerCase())) {
+      return false;
+    }
+
+    // Filtro por área
+    if (areaFilter && (!oferta.area || oferta.area.toLowerCase() !== areaFilter.toLowerCase())) {
+      return false;
+    }
+
+    // Filtro por nivel
+    if (nivelFilter && (!oferta.nivel || oferta.nivel.toLowerCase() !== nivelFilter.toLowerCase())) {
+      return false;
+    }
+
+    return true;
   });
 
   if (!userData) {

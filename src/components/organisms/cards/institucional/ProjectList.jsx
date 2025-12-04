@@ -12,7 +12,7 @@ import DialogActions from "@mui/material/DialogActions";
 import FormEditProject from "../../forms/institucional/Edit/FormEditProject";
 import DeleteIcon from "@mui/icons-material/Delete";
 import VisibilityIcon from '@mui/icons-material/VisibilityOutlined';
-import DeleteConfirmationModal from "../../dialog/deleteConfirmationModal";
+import DeleteConfirmationModal from "../../dialog/DeleteConfirmationModal";
 
 
 const ProjectList = ({ projects, setProjects }) => {

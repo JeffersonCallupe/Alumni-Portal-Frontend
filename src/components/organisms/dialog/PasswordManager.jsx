@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import DialogBase from "./dialogBase";
+import DialogBase from "./DialogBase";
 import ActionButton from "../../atoms/buttons/ActionButton";
 import FormPassword from "../forms/empresa/FormPassword";
 

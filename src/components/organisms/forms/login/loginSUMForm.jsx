@@ -1,5 +1,5 @@
 import React from "react";
-import TextInput from "../../../atoms/inputs/textInput";
+import TextInput from "../../../atoms/inputs/TextInput";
 import Button from "@mui/material/Button";
 import Box from "@mui/material/Box";
 import useForm from "../../../../hooks/useForm";

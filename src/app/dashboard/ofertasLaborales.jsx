@@ -1,9 +1,9 @@
 import React, { useState, useEffect, useRef } from "react";
 import OfertaLaboralCard from "../../components/organisms/cards/dashboard/OfertaLaboralCard";
 import OfertaLaboralDialog from "../../components/organisms/dialog/OfertaLaboralDialog";
-import ParticipantsDialog from "../../components/organisms/dialog/participantsDialogs";
+import ParticipantsDialog from "../../components/organisms/dialog/ParticipantsDialogs";
 import Button from "../../components/atoms/buttons/ActionButton";
-import HomeBase from "../../components/templates/home/homeBase";
+import HomeBase from "../../components/templates/home/HomeBase";
 import { useUserContext } from "../../contexts/userContext";
 import { useAlert } from "../../contexts/alertContext";
 import useGet from "../../hooks/useGet";
@@ -13,6 +13,7 @@ import usePost from "../../hooks/usePost";
 import useDelete from "../../hooks/useDelete";
 import ConBuscador from "../../components/organisms/cards/filtros/ConBuscador";
 import { useSearchParams } from "react-router-dom";
+import { MESSAGES, USER_ROLES } from "../../constants/app.constants";
 
 function OfertasLaborales() {
   const { open, handleOpen, handleClose } = useModal();
@@ -69,8 +70,8 @@ function OfertasLaborales() {
   }
 
   const handleCreate = () => {
-    if (userData.role !== "COMPANY") {
-      showAlert("Solo las empresas pueden crear ofertas laborales.", "info");
+    if (userData.role !== USER_ROLES.COMPANY) {
+      showAlert(MESSAGES.PERMISSIONS.COMPANY_ONLY_CREATE_JOB, "info");
       return;
     }
     setSelectedJob(null);
@@ -78,8 +79,8 @@ function OfertasLaborales() {
   };
 
   const handleEdit = (oferta) => {
-    if (userData.role !== "COMPANY") {
-      showAlert("Solo las empresas pueden editar ofertas laborales.", "info");
+    if (userData.role !== USER_ROLES.COMPANY) {
+      showAlert(MESSAGES.PERMISSIONS.COMPANY_ONLY_EDIT_JOB, "info");
       return;
     }
     setSelectedJob(oferta);
@@ -87,8 +88,8 @@ function OfertasLaborales() {
   };
 
   const handleDelete = async (jobId) => {
-    if (userData.role !== "COMPANY") {
-      showAlert("Solo las empresas pueden eliminar ofertas laborales.", "info");
+    if (userData.role !== USER_ROLES.COMPANY) {
+      showAlert(MESSAGES.PERMISSIONS.COMPANY_ONLY_DELETE_JOB, "info");
       return;
     }
     try {
@@ -96,9 +97,9 @@ function OfertasLaborales() {
       setOfertas((prevOfertas) =>
         prevOfertas.filter((job) => job.id !== jobId)
       );
-      showAlert("Oferta laboral eliminada correctamente", "success");
+      showAlert(MESSAGES.SUCCESS.JOB_DELETED, "success");
     } catch (error) {
-      showAlert("Error al eliminar la oferta laboral:", "error");
+      showAlert(MESSAGES.ERROR.JOB_DELETE, "error");
     }
   };
 
@@ -106,28 +107,28 @@ function OfertasLaborales() {
     try {
       if (selectedJob && selectedJob.id) {
         await patch(formData);
-        showAlert("Oferta laboral actualizada correctamente", "success");
+        showAlert(MESSAGES.SUCCESS.JOB_UPDATED, "success");
       } else {
         await post(formData);
-        showAlert("Oferta laboral publicada correctamente", "success");
+        showAlert(MESSAGES.SUCCESS.JOB_CREATED, "success");
       }
       handleClose();
       const updatedOfertas = await getData();
       setOfertas(updatedOfertas);
     } catch (error) {
-      showAlert("Error al guardar la oferta laboral:", "error");
+      showAlert(MESSAGES.ERROR.JOB_SAVE, "error");
     }
   };
 
   const handleViewParticipants = async (jobId) => {
     if (!jobId) {
-      showAlert("No se seleccionó una oferta de trabajo válida.", "warning");
+      showAlert(MESSAGES.WARNING.NO_JOB_SELECTED, "warning");
       return;
     }
-    
+
     try {
-      const endpoint = `http://178.128.147.224:8080/api/application/job-offer/${jobId}`;
-      
+      const endpoint = `${import.meta.env.VITE_API_URL}/api/application/job-offer/${jobId}`;
+
       const response = await fetch(endpoint, {
         method: 'GET',
         headers: {
@@ -135,7 +136,7 @@ function OfertasLaborales() {
           'Authorization': `Bearer ${token}`
         }
       });
-  
+
       if (!response.ok) {
         throw new Error('No se pudo obtener la lista de postulantes');
       }
@@ -144,14 +145,14 @@ function OfertasLaborales() {
       handleOpenParticipants();
     } catch (error) {
       console.error("Error al cargar la lista de postulantes:", error);
-      showAlert("No hay postulantes que han aplicado a la oferta laboral", "error");
+      showAlert(MESSAGES.ERROR.NO_APPLICANTS, "error");
     }
   };
 
   const filteredOfertas = ofertas.filter((oferta) => {
     if (!oferta) return false;
     // Mostrar solo ofertas del usuario actual
-    if (userData.role === "COMPANY" && oferta.companyId !== userData.id) return false;
+    if (userData.role === USER_ROLES.COMPANY && oferta.companyId !== userData.id) return false;
     // Filtro por término de búsqueda
     if (searchTerm && !oferta.companyName.toLowerCase().includes(searchTerm.toLowerCase())) return false;
     if (modalityFilter && oferta.modality.toLowerCase() !== modalityFilter.toLowerCase()) return false;
@@ -162,7 +163,7 @@ function OfertasLaborales() {
 
   const asideContent = (
     <div className="sticky top-8 bg-white p-6 lg:mt-2 mx-1 rounded-lg flex flex-col gap-4">
-      {userData.role === "COMPANY" && (
+      {userData.role === USER_ROLES.COMPANY && (
         <Button texto={"Publica una oferta"} onClick={handleCreate} />
       )}
       <ConBuscador searchTerm={searchTerm} setSearchParams={setSearchParams} />

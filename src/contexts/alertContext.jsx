@@ -1,4 +1,5 @@
 import React, { createContext, useState, useContext } from 'react';
+import { ALERT_AUTO_HIDE_DURATION } from '../constants/app.constants';
 
 const AlertContext = createContext(undefined);
 
@@ -10,8 +11,8 @@ export const AlertProvider = ({ children }) => {
         setAlertMessage(message);
         setAlertType(type);
         setTimeout(() => {
-        setAlertMessage(null);
-        }, 3000);
+            setAlertMessage(null);
+        }, ALERT_AUTO_HIDE_DURATION);
     };
 
     const hideAlert = () => {
@@ -20,10 +21,10 @@ export const AlertProvider = ({ children }) => {
 
     return (
         <AlertContext.Provider value={{ alertMessage, alertType, showAlert, hideAlert }}>
-        {children}
+            {children}
         </AlertContext.Provider>
     );
-    };
+};
 
 export const useAlert = () => {
     const context = useContext(AlertContext);
@@ -31,4 +32,4 @@ export const useAlert = () => {
         throw new Error('useAlert must be used within an AlertProvider');
     }
     return context;
-    };
+};

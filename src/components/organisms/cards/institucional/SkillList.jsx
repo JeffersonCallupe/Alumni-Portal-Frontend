@@ -7,7 +7,7 @@ import Typography from "@mui/material/Typography";
 import FormEditSkill from "../../forms/institucional/Edit/FormEditSkill";
 import ActionButton from "../../../atoms/buttons/ActionButton";
 import DeleteIcon from "@mui/icons-material/Delete";
-import DeleteConfirmationModal from "../../dialog/deleteConfirmationModal";
+import DeleteConfirmationModal from "../../dialog/DeleteConfirmationModal";
 
 const SkillList = ({ skills, setSkills }) => {
   const { userData } = useUserContext();
