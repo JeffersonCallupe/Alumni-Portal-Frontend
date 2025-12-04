@@ -1,7 +1,7 @@
-import Navbar from '../../atoms/navbar/Navbar';
+import Navbar from '../../atoms/navbar/navbar';
 import Footer from "../../atoms/footer/Footer";
 import PropTypes from 'prop-types';
-import Alert from '../../atoms/alert/Alert';
+import Alert from '../../atoms/alert/alert';
 
 
 function HomeBase({ children, aside }) {
