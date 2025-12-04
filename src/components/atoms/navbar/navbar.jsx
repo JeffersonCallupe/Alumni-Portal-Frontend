@@ -142,6 +142,7 @@ function Navbar() {
               flexGrow: 1,
               display: { xs: "none", md: "flex" },
               justifyContent: "flex-end",
+              alignItems: "center",
               gap: "1rem",
               padding: "0 2rem",
             }}
@@ -208,20 +209,20 @@ function Navbar() {
           </Box>
 
           {/* Campana de notificaciones */}
-          <Box sx={{ flexGrow: 0, display: "flex", flexDirection: "column", alignItems: "center", marginRight: 4 }}>
+          <Box sx={{ flexGrow: 0, display: "flex", flexDirection: "column", alignItems: "center", marginRight: 4, padding: "6px 8px", borderRadius: "4px", cursor: "pointer", '&:hover': { backgroundColor: 'rgba(255, 255, 255, 0.08)' } }}>
             <NotificationBell />
             <Typography variant="caption" sx={{ color: "#FFFFFF", marginTop: "-2px" }}>Notificaciones</Typography>
           </Box>
 
           {/* Perfil de usuario */}
-          <Box sx={{ flexGrow: 0, display: "flex", flexDirection: "column" }}>
+          <Box sx={{ flexGrow: 0, display: "flex", flexDirection: "column", alignItems: "center", padding: "6px 8px", borderRadius: "4px", cursor: "pointer", '&:hover': { backgroundColor: 'rgba(255, 255, 255, 0.08)' } }}>
             <Tooltip title="Open settings">
               <IconButton
                 onClick={handleOpenMenu(setAnchorElUser)}
                 sx={{ p: 0 }}
               >
-                <Avatar aria-label="profile-pic">
-                  <img src={profilePicture}></img>
+                <Avatar aria-label="profile-pic" sx={{ width: 32, height: 32 }}>
+                  <img src={profilePicture} style={{ width: '100%', height: '100%', objectFit: 'cover' }}></img>
                 </Avatar>
               </IconButton>
             </Tooltip>

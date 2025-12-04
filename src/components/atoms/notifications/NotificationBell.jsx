@@ -117,7 +117,7 @@ const NotificationBell = () => {
                 onClick={handleClick}
                 sx={{
                     color: 'white',
-                    padding: '8px',
+                    padding: 0,
                     '&:hover': {
                         backgroundColor: 'rgba(255, 255, 255, 0.1)',
                     },
