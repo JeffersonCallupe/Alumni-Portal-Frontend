@@ -9,7 +9,7 @@ import AddButton from "../../../atoms/buttons/AddButton";
 import Typography from "@mui/material/Typography";
 import useModal from "../../../../hooks/useModal";
 
-const InfoBaseCard = ({ title, cardContent, dialogContent, modalId,sub=false,content=false}) => {
+const InfoBaseCard = ({ title, cardContent, dialogContent, modalId, sub = false, content = false }) => {
   const { open, handleOpen, handleClose } = useModal();
 
   return (
@@ -17,14 +17,30 @@ const InfoBaseCard = ({ title, cardContent, dialogContent, modalId,sub=false,con
       className="profile-base-card"
       sx={{
         width: sub
-        ? { xs: "65vw", md: "50vw" }
-        : { xs: "70vw", md: "55vw" },
-        padding: "0.75rem 0.75rem 0 0.75rem",
+          ? { xs: "65vw", md: "50vw" }
+          : { xs: "70vw", md: "55vw" },
+        padding: "1.5rem",
+        borderRadius: '12px',
+        boxShadow: '0 1px 3px rgba(0,0,0,0.08)',
+        border: '1px solid #E5E7EB',
+        marginBottom: '1rem',
+        '&:hover': {
+          boxShadow: '0 2px 8px rgba(0,0,0,0.12)',
+        },
+        transition: 'box-shadow 0.2s',
       }}
     >
-      <CardContent>
-        <div className="flex flex-row justify-between">
-          <Typography variant="h5" align="left">
+      <CardContent sx={{ padding: 0 }}>
+        <div className="flex flex-row justify-between items-center mb-4">
+          <Typography
+            variant="h5"
+            align="left"
+            sx={{
+              fontWeight: 600,
+              fontSize: '1.25rem',
+              color: '#111827',
+            }}
+          >
             {title}
           </Typography>
           <CardActions sx={{ padding: "0" }}>
@@ -35,11 +51,12 @@ const InfoBaseCard = ({ title, cardContent, dialogContent, modalId,sub=false,con
         <Card
           align="left"
           sx={{
-            border: sub || content ? "none" : "1px solid #e5e5e5", // Condicional para la propiedad 'border'
-            borderRadius: sub ? "0px" : "8px",          // Condicional para la propiedad 'borderRadius'
+            border: sub || content ? "none" : "1px solid #F3F4F6",
+            borderRadius: sub ? "0px" : "8px",
             boxShadow: "none",
-            padding: sub ? "0.03remx" : "0.75rem 0.60rem 0.60rem 0.60rem",
-            margin: sub ? "0.3rem 0" : "0.5rem 0",
+            padding: sub ? "0.03rem" : "1rem",
+            margin: sub ? "0.3rem 0" : "0",
+            backgroundColor: sub || content ? 'transparent' : '#FAFAFA',
           }}
         >
           {cardContent}
@@ -49,7 +66,7 @@ const InfoBaseCard = ({ title, cardContent, dialogContent, modalId,sub=false,con
       <DialogBase
         open={open}
         handleClose={handleClose}
-        title={sub ? false : content ? `Añadir ${title}`:`Editar ${title}`} // Condicional para la propiedad 'title'
+        title={sub ? false : content ? `Añadir ${title}` : `Editar ${title}`}
         content={dialogContent}
         modalId={modalId}
       />

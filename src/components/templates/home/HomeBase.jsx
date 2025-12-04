@@ -6,10 +6,10 @@ import Alert from '../../atoms/alert/Alert';
 
 function HomeBase({ children, aside }) {
   return (
-    <div className="h-auto w-full flex flex-col bg-neutral-100">
+    <div className="min-h-screen w-full flex flex-col bg-neutral-100">
       <Navbar />
       <Alert />
-      <div className="flex flex-col lg:flex-row justify-center">
+      <div className="flex flex-col lg:flex-row justify-center flex-1">
         {aside && (
           <aside className="w-full lg:w-4/12 mt-4 sticky top-8">
             {aside}

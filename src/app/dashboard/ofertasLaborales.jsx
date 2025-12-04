@@ -186,7 +186,7 @@ function OfertasLaborales() {
         />
         <div className="flex flex-col w-12/12 lg:w-11/12">
           {filteredOfertas.length > 0 ? (
-            filteredOfertas.map((oferta) => (
+            filteredOfertas.slice().reverse().map((oferta) => (
               <OfertaLaboralCard
                 key={oferta.id}
                 oferta={oferta}

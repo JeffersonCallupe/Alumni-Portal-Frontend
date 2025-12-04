@@ -12,14 +12,12 @@ const StyledButton = styled(Button)(({ theme, buttonvariant = 'secondary' }) => 
       backgroundColor: '#6F191C',
       color: 'white',
       border: 'none',
-      boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)',
+      boxShadow: '0 1px 3px rgba(0, 0, 0, 0.12)',
       '&:hover': {
         backgroundColor: '#8F2428',
-        boxShadow: '0 4px 8px rgba(0, 0, 0, 0.15)',
-        transform: 'translateY(-2px)',
+        boxShadow: '0 2px 6px rgba(0, 0, 0, 0.16)',
       },
       '&:active': {
-        transform: 'translateY(0)',
         boxShadow: '0 1px 2px rgba(0, 0, 0, 0.1)',
       },
     },
@@ -27,15 +25,13 @@ const StyledButton = styled(Button)(({ theme, buttonvariant = 'secondary' }) => 
       backgroundColor: 'white',
       color: '#6F191C',
       border: '2px solid #6F191C',
-      boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)',
+      boxShadow: '0 1px 3px rgba(0, 0, 0, 0.08)',
       '&:hover': {
         backgroundColor: '#6F191C',
         color: 'white',
-        boxShadow: '0 4px 8px rgba(0, 0, 0, 0.15)',
-        transform: 'translateY(-2px)',
+        boxShadow: '0 2px 6px rgba(0, 0, 0, 0.12)',
       },
       '&:active': {
-        transform: 'translateY(0)',
         boxShadow: '0 1px 2px rgba(0, 0, 0, 0.1)',
       },
     },
@@ -47,10 +43,8 @@ const StyledButton = styled(Button)(({ theme, buttonvariant = 'secondary' }) => 
       '&:hover': {
         backgroundColor: '#F3F4F6',
         borderColor: '#9CA3AF',
-        transform: 'translateY(-1px)',
       },
       '&:active': {
-        transform: 'translateY(0)',
         backgroundColor: '#E5E7EB',
       },
     },
@@ -59,12 +53,12 @@ const StyledButton = styled(Button)(({ theme, buttonvariant = 'secondary' }) => 
   return {
     ...variants[buttonvariant],
     borderRadius: '8px',
-    padding: '8px 20px',
+    padding: '5px 14px',
     textTransform: 'none',
     fontWeight: 500,
-    fontSize: '0.875rem',
+    fontSize: '0.75rem',
     fontFamily: 'Inter, system-ui, sans-serif',
-    transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
+    transition: 'all 0.2s cubic-bezier(0.4, 0, 0.2, 1)',
     '&:disabled': {
       opacity: 0.5,
       cursor: 'not-allowed',

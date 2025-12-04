@@ -32,7 +32,7 @@ function Actividades() {
     const [eventTypeFilter, setEventTypeFilter] = useState("");
     const [startDateFilter, setStartDateFilter] = useState("");
 
-    
+
     // Solo se define userType y URLs dinámicas si userData está disponible
     useEffect(() => {
         if (userData) {
@@ -185,7 +185,7 @@ function Actividades() {
                 applyFilters(); // Reaplicar filtros después de la actualización
             } else {
                 const activityResponse = await post(activityData);
-                activityId =  activityResponse.id;
+                activityId = activityResponse.id;
                 if (!activityId) {
                     throw new Error("No se pudo obtener el ID de la actividad de la respuesta.");
                 }
@@ -245,7 +245,7 @@ function Actividades() {
                     />
                     <div>
                         {filteredActividades.length > 0 ? (
-                            filteredActividades.map((actividad) => (
+                            filteredActividades.slice().reverse().map((actividad) => (
                                 <ActividadCard
                                     key={actividad.id}
                                     actividad={actividad}

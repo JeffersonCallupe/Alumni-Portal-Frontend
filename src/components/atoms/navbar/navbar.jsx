@@ -16,6 +16,7 @@ import Tooltip from "@mui/material/Tooltip";
 import Typography from "@mui/material/Typography";
 import { useUserContext } from "../../../contexts/userContext";
 import { useNavigate } from "react-router-dom";
+import NotificationBell from "../notifications/NotificationBell";
 
 function Navbar() {
   const { isInstitutional, logout, profilePicture } = useUserContext();
@@ -42,10 +43,10 @@ function Navbar() {
     <AppBar
       position="sticky"
       sx={{
-        backgroundColor: "#FFFFFF",
-        color: "#000000",
-        boxShadow: "0 1px 2px rgba(0, 0, 0, 0.08)",
-        borderBottom: "1px solid #E0DFDC",
+        backgroundColor: "#6F191C",
+        color: "#FFFFFF",
+        boxShadow: "0 2px 4px rgba(0, 0, 0, 0.15)",
+        borderBottom: "none",
         height: "4rem",
         padding: { xs: "none", md: "0 20rem 0 15rem" },
       }}
@@ -147,14 +148,14 @@ function Navbar() {
           >
             <Button
               onClick={handleOpenMenu(setAnchorElActividades)}
-              sx={{ color: "white", display: "flex", flexDirection: "column", textTransform: "capitalize" }}
+              sx={{ color: "#FFFFFF", display: "flex", flexDirection: "column", textTransform: "capitalize" }}
             >
               <img
                 src={LogoActividades}
                 alt="Logo"
-                style={{ height: "2rem" }}
+                style={{ height: "32px" }}
               />
-              <Typography variant="caption">Actividades</Typography>
+              <Typography variant="caption" sx={{ marginTop: "-2px" }}>Actividades</Typography>
             </Button>
             <Menu
               anchorEl={anchorElActividades}
@@ -176,14 +177,14 @@ function Navbar() {
 
             <Button
               onClick={handleOpenMenu(setAnchorElOfertas)}
-              sx={{ color: "white", display: "flex", flexDirection: "column", textTransform: "capitalize" }}
+              sx={{ color: "#FFFFFF", display: "flex", flexDirection: "column", textTransform: "capitalize" }}
             >
               <img
                 src={LogoOfertasLaborales}
                 alt="Logo"
-                style={{ height: "2rem" }}
+                style={{ height: "32px" }}
               />
-              <Typography variant="caption">Ofertas Laborales</Typography>
+              <Typography variant="caption" sx={{ marginTop: "-2px" }}>Ofertas Laborales</Typography>
             </Button>
 
             <Menu
@@ -206,6 +207,12 @@ function Navbar() {
             </Menu>
           </Box>
 
+          {/* Campana de notificaciones */}
+          <Box sx={{ flexGrow: 0, display: "flex", flexDirection: "column", alignItems: "center", marginRight: 4 }}>
+            <NotificationBell />
+            <Typography variant="caption" sx={{ color: "#FFFFFF", marginTop: "-2px" }}>Notificaciones</Typography>
+          </Box>
+
           {/* Perfil de usuario */}
           <Box sx={{ flexGrow: 0, display: "flex", flexDirection: "column" }}>
             <Tooltip title="Open settings">
@@ -218,7 +225,7 @@ function Navbar() {
                 </Avatar>
               </IconButton>
             </Tooltip>
-            <Typography variant="caption">Yo</Typography>
+            <Typography variant="caption" sx={{ marginTop: "-2px" }}>Yo</Typography>
             <Menu
               sx={{ mt: "45px" }}
               id="menu-appbar"

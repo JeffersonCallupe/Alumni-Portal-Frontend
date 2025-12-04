@@ -119,10 +119,10 @@ function OfertasHistorico() {
   const asideContent = (
     <div className="sticky top-8 bg-white p-6 lg:mt-2 mx-1 rounded-lg flex flex-col gap-4">
       <ConBuscador
-            searchTerm={searchTerm}
-            setSearchParams={setSearchParams}
-            viewActivies={false}
-          />
+        searchTerm={searchTerm}
+        setSearchParams={setSearchParams}
+        viewActivies={false}
+      />
     </div>
   );
 
@@ -132,7 +132,7 @@ function OfertasHistorico() {
         <div className="flex flex-col w-12/12 lg:w-11/12">
           <div>
             {filteredOfertas.length > 0 ? (
-              filteredOfertas.map((oferta) => (
+              filteredOfertas.slice().reverse().map((oferta) => (
                 <OfertaLaboralCard
                   key={oferta.id}
                   oferta={oferta}

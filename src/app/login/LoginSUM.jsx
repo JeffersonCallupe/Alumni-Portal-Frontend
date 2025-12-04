@@ -6,7 +6,7 @@ import { useNavigate } from "react-router-dom";
 import { validateLoginSUM } from "../../hooks/validateLogin";
 
 function LoginSUM() {
-  const apiUrl = `${import.meta.env.VITE_SUM_API_URL}/loguearse`;
+  const apiUrl = `${import.meta.env.VITE_SUM_API_URL}/login`;
   const { data, loading, error, login } = useLogin(apiUrl);
   const navigate = useNavigate();
   const userData = data

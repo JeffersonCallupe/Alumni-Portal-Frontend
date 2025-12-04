@@ -15,6 +15,7 @@ import ProfileEmpresa from "./app/profile/ProfileEmpresa"
 import ProfileInstitucional from "./app/profile/ProfileInstitucional"
 import RegistroSUM from "./app/registro/RegistroSUM";
 import RegistroEmpresa from "./app/registro/RegistroEmpresa";
+import Notifications from "./app/notifications/Notifications";
 import { UserProvider } from "./contexts/userContext";
 import { AlertProvider } from "./contexts/alertContext";
 
@@ -24,11 +25,11 @@ function App() {
       <UserProvider>
         <BrowserRouter future={{ v7_startTransition: true, v7_relativeSplatPath: true }}>
           <Routes>
-            <Route path="/" element={<LoginInstitucional />} /> 
-            <Route path="/loginEmpresa" element={<LoginEmpresa/>} />
+            <Route path="/" element={<LoginInstitucional />} />
+            <Route path="/loginEmpresa" element={<LoginEmpresa />} />
             <Route path="/loginSUM" element={<LoginSUM />} />
             <Route path="/validacionSUM" element={<RegistroSUM />} />
-            <Route path="/crearCuentaEmpresa" element={<RegistroEmpresa/>} />
+            <Route path="/crearCuentaEmpresa" element={<RegistroEmpresa />} />
             <Route path="/profile" element={<ProfileEmpresa />} />
             <Route path="/profileInstitucional" element={<ProfileInstitucional />} />
             <Route path="/home" element={<Home />} />
@@ -39,6 +40,8 @@ function App() {
             <Route path="/ofertasAplicadas" element={<OfertasAplicadas />} />
             <Route path="/ofertasHistorico" element={<OfertasHistorico />} />
             <Route path="/configuraciones" element={<Configuraciones />} />
+            <Route path="/settings" element={<Configuraciones />} />
+            <Route path="/notifications" element={<Notifications />} />
           </Routes>
         </BrowserRouter>
       </UserProvider>

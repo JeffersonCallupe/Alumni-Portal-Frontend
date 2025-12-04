@@ -8,6 +8,10 @@ import ActionButton from "../../../atoms/buttons/ActionButton";
 import { useUserContext } from "../../../../contexts/userContext";
 import useModal from "../../../../hooks/useModal";
 import DownloadForOfflineOutlinedIcon from '@mui/icons-material/DownloadForOfflineOutlined';
+import EmailIcon from '@mui/icons-material/Email';
+import PhoneIcon from '@mui/icons-material/Phone';
+import SchoolIcon from '@mui/icons-material/School';
+import WorkIcon from '@mui/icons-material/Work';
 import { useAlert } from "../../../../contexts/alertContext";
 
 const CardContentInstitucional = ({ loading, onSubmit }) => {
@@ -18,7 +22,7 @@ const CardContentInstitucional = ({ loading, onSubmit }) => {
   const handleDownloadCV = async () => {
     const userId = userData.id;
     const url = `${import.meta.env.VITE_API_URL}/api/user/cv/download/${userId}`;
-    
+
     // Obtener el token desde sessionStorage
     const token = sessionStorage.getItem("token");  // Asumiendo que el token se guarda con la clave 'token'
 
@@ -50,44 +54,120 @@ const CardContentInstitucional = ({ loading, onSubmit }) => {
   };
 
   return (
-    <div className="flex flex-row justify-between">
-      <div className="flex flex-col w-3/5 gap-1">
-        <Typography variant="h5" align="left">
+    <div className="flex flex-col md:flex-row justify-between gap-4">
+      <div className="flex flex-col flex-1 gap-3">
+        {/* Nombre completo */}
+        <Typography
+          variant="h4"
+          align="left"
+          sx={{
+            fontWeight: 700,
+            color: '#111827',
+            fontSize: { xs: '1.5rem', md: '2rem' },
+          }}
+        >
           {`${userData.name} ${userData.paternalSurname} ${userData.maternalSurname}` || "Nombre del estudiante"}
         </Typography>
-        <Typography variant="body2" align="left">
-          {userData.headline || "No especificado"}
-        </Typography>
-        <Typography variant="body2" align="left">
-          {userData.faculty || "No especificado"}
-        </Typography>
-        <Typography variant="body2" align="left">
-          Correo Electrónico: {userData.email || "No especificado"}
-        </Typography>
-        <Typography variant="body2" align="left">
-          Número de contacto: {userData.contactNumber || "No especificado"}
-        </Typography>
+
+        {/* Headline/Título profesional */}
+        {userData.headline && (
+          <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+            <WorkIcon sx={{ fontSize: 20, color: '#6B7280' }} />
+            <Typography
+              variant="h6"
+              align="left"
+              sx={{
+                fontWeight: 500,
+                color: '#374151',
+                fontSize: '1.125rem',
+              }}
+            >
+              {userData.headline}
+            </Typography>
+          </Box>
+        )}
+
+        {/* Facultad */}
+        {userData.faculty && (
+          <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+            <SchoolIcon sx={{ fontSize: 20, color: '#6F191C' }} />
+            <Typography
+              variant="body1"
+              align="left"
+              sx={{
+                color: '#4B5563',
+                fontSize: '0.9375rem',
+              }}
+            >
+              {userData.faculty}
+            </Typography>
+          </Box>
+        )}
+
+        {/* Divider */}
+        <Box sx={{ borderTop: '1px solid #E5E7EB', my: 1 }} />
+
+        {/* Información de contacto */}
+        <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1.5 }}>
+          <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+            <EmailIcon sx={{ fontSize: 18, color: '#6B7280' }} />
+            <Typography
+              variant="body2"
+              align="left"
+              sx={{
+                color: '#6B7280',
+                fontSize: '0.875rem',
+              }}
+            >
+              {userData.email || "No especificado"}
+            </Typography>
+          </Box>
+
+          {userData.contactNumber && (
+            <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+              <PhoneIcon sx={{ fontSize: 18, color: '#6B7280' }} />
+              <Typography
+                variant="body2"
+                align="left"
+                sx={{
+                  color: '#6B7280',
+                  fontSize: '0.875rem',
+                }}
+              >
+                {userData.contactNumber}
+              </Typography>
+            </Box>
+          )}
+        </Box>
       </div>
-      <div className="flex flex-col items-end">
+
+      {/* Botones de acción */}
+      <div className="flex flex-col items-end gap-3">
         <Box
           sx={{
             zIndex: 1,
             position: "relative",
-            bottom: "1rem",
-            marginRight: "0.3rem",
           }}
         >
           <EditButton onClick={handleOpen} />
         </Box>
-        <div className="flex flex-col gap-2 items-center" style={{ marginTop: "3.5rem", marginRight: "0.5rem" }}>
-          <div className="flex-shrink-0">
-            <ActionButton texto={"Descargar CV"} startIcon={<DownloadForOfflineOutlinedIcon />} onClick={handleDownloadCV} />
-          </div>
+        <div className="flex-shrink-0">
+          <ActionButton
+            texto={"Descargar CV"}
+            startIcon={<DownloadForOfflineOutlinedIcon />}
+            onClick={handleDownloadCV}
+          />
         </div>
       </div>
 
       {/* Modal para editar perfil */}
-      <DialogBase open={open} handleClose={handleClose} title="Información Personal" content={<FormHeader onSubmit={onSubmit} onCancel={handleClose} loading={loading} />} modalId="modal-profile" />
+      <DialogBase
+        open={open}
+        handleClose={handleClose}
+        title="Información Personal"
+        content={<FormHeader onSubmit={onSubmit} onCancel={handleClose} loading={loading} />}
+        modalId="modal-profile"
+      />
     </div>
   );
 };

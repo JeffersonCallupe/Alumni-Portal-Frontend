@@ -1,74 +1,112 @@
-import React, { useState } from "react";
-import ActionButton from "../../components/atoms/buttons/ActionButton";
-import DeleteConfirmationModal from "../../components/organisms/dialog/DeleteConfirmationModal";
+import React from "react";
+import { Box, Card, Typography, Divider } from "@mui/material";
+import LockIcon from '@mui/icons-material/Lock';
+import FormPassword from "../../components/organisms/forms/empresa/FormPassword";
 import HomeBase from "../../components/templates/home/HomeBase";
-import { useAlert } from "../../contexts/alertContext";
-import { useNavigate } from "react-router-dom";
 import { useUserContext } from "../../contexts/userContext";
-import useDelete from "../../hooks/useDelete";
-import PasswordManager from "../../components/organisms/dialog/PasswordManager"; // Importar el componente
 
 function Configuraciones() {
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const { userData, isInstitutional, logout } = useUserContext();
-  const { showAlert } = useAlert();
-  const navigate = useNavigate();
-  const userType = isInstitutional ? "user" : "company";
-  const apiUrl = userData ? `${import.meta.env.VITE_API_URL}/api/${userType}` : null;
-  const { error, deleteData } = useDelete(apiUrl);
+  const { userData } = useUserContext();
 
   if (!userData) {
     return <div>Loading...</div>;
   }
 
-  const handleSaveChanges = async () => {
-    try {
-      await deleteData(userData.id);
-      if (!error) showAlert("La cuenta se eliminó con éxito", "success");
-      setIsModalOpen(false);
-      logout();
-      navigate("/");
-    } catch (error) {
-      showAlert("Error al guardar los cambios", "error");
-    }
-  };
-
   return (
     <HomeBase>
-      <div className="w-full h-screen flex flex-col md:flex-row justify-around py-16 mb-24 gap-4">
-        <div className="flex flex-col bg-white rounded-lg p-12 md:w-1/3 mx-8 h-fit">
-          <h1 className="text-2xl font-bold">Configuración de Cuenta</h1>
-          <p className="text-lg text-gray-500">Administra tu cuenta y preferencias</p>
-        </div>
-        <div className="flex flex-col gap-4 md:w-2/3 mx-8">
-          <div className="flex flex-col wrap-row bg-white rounded-lg p-12 mx-8 gap-2">
-            <h2 className="text-xl font-bold">Cambiar Contraseña</h2>
-            <p className="text-lg text-gray-500">Puedes cambiar tu contraseña utilizando el formulario a continuación.</p>
-            <div>
-              <PasswordManager userId={userData.id} />
-            </div>
-          </div>
-          <div className="flex flex-col wrap-row bg-white rounded-lg p-12 mx-8 gap-2">
-            <h2 className="text-xl font-bold">Eliminar Cuenta</h2>
-            <p className="text-lg text-gray-500">Si eliminas tu cuenta, no podrás recuperarla. Todos tus datos serán eliminados permanentemente.</p>
-            <div>
-              <ActionButton texto={"Eliminar cuenta"} onClick={() => setIsModalOpen(true)} />
-            </div>
-            <DeleteConfirmationModal
-              isOpen={isModalOpen}
-              onClose={() => setIsModalOpen(false)}
-              onConfirm={handleSaveChanges}
-              title="Eliminar cuenta"
-              message="¿Estás seguro que deseas eliminar tu cuenta? Esta acción no se puede deshacer."
-              cancelButtonText="Cancelar"
-              confirmButtonText="Eliminar"
-            />
-          </div>
-        </div>
-      </div>
+      <Box
+        sx={{
+          maxWidth: '900px',
+          margin: '0 auto',
+          padding: { xs: '1.5rem', md: '3rem' },
+          minHeight: 'calc(100vh - 200px)',
+        }}
+      >
+        {/* Header */}
+        <Box sx={{ mb: 4 }}>
+          <Typography
+            variant="h4"
+            sx={{
+              fontWeight: 700,
+              color: '#000',
+              mb: 1,
+              fontSize: { xs: '1.75rem', md: '2rem' },
+            }}
+          >
+            Configuración de Cuenta
+          </Typography>
+          <Typography
+            variant="body1"
+            sx={{
+              color: '#6B7280',
+              fontSize: '1rem',
+            }}
+          >
+            Administra tu seguridad y preferencias de cuenta
+          </Typography>
+        </Box>
+
+        {/* Password Change Section */}
+        <Card
+          sx={{
+            mb: 3,
+            borderRadius: '12px',
+            border: '1px solid #E5E7EB',
+            boxShadow: 'none',
+            '&:hover': {
+              boxShadow: '0 2px 8px rgba(0,0,0,0.08)',
+            },
+            transition: 'box-shadow 0.2s',
+          }}
+        >
+          <Box sx={{ p: 3 }}>
+            {/* Section Header */}
+            <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.5, mb: 2 }}>
+              <Box
+                sx={{
+                  width: 40,
+                  height: 40,
+                  borderRadius: '8px',
+                  backgroundColor: '#FEF2F2',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                }}
+              >
+                <LockIcon sx={{ color: '#6F191C', fontSize: 20 }} />
+              </Box>
+              <Box>
+                <Typography
+                  variant="h6"
+                  sx={{
+                    fontWeight: 600,
+                    fontSize: '1.125rem',
+                    color: '#111827',
+                  }}
+                >
+                  Cambiar Contraseña
+                </Typography>
+                <Typography
+                  variant="body2"
+                  sx={{
+                    color: '#6B7280',
+                    fontSize: '0.875rem',
+                  }}
+                >
+                  Actualiza tu contraseña para mantener tu cuenta segura
+                </Typography>
+              </Box>
+            </Box>
+
+            <Divider sx={{ my: 2 }} />
+
+            {/* Password Form */}
+            <FormPassword userId={userData.id} onCancel={() => { }} />
+          </Box>
+        </Card>
+      </Box>
     </HomeBase>
   );
 }
 
 export default Configuraciones;
-

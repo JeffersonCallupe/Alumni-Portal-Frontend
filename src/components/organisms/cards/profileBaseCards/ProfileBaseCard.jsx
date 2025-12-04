@@ -51,14 +51,14 @@ const ProfileBaseCard = ({ handleSaveChanges, loading, dialogContent, modalId })
               backgroundColor: "black",
               position: "relative",
               zIndex: 2,
-              cursor: "pointer", // Indica que es clickeable
-              transition: "transform 0.2s, box-shadow 0.2s", // Animación suave
+              cursor: "pointer",
+              transition: "transform 0.2s, box-shadow 0.2s",
               '&:hover': {
-                transform: "scale(1.02)", // Ligero efecto de zoom al hover
-                boxShadow: "0 0 10px rgba(0,0,0,0.2)", // Sombra al hover
+                transform: "scale(1.02)",
+                boxShadow: "0 2px 8px rgba(0,0,0,0.15)",
               },
               '&:active': {
-                transform: "scale(0.98)", // Efecto de presión al hacer click
+                transform: "scale(0.98)",
               }
             }}
             onClick={handleOpen}

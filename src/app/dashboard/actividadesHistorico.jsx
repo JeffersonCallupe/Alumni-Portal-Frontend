@@ -19,11 +19,11 @@ function ActividadesHistorico() {
   const { showAlert } = useAlert();
   const [apiEndpoints, setApiEndpoints] = useState({});
   const fetchDataRef = useRef(false);
-  let viewActivies= true;
+  let viewActivies = true;
 
   // useSearchParams para manejar el término de búsqueda en la URL
   const [searchParams, setSearchParams] = useSearchParams();
-  const searchTerm = searchParams.get("filter") || ""; 
+  const searchTerm = searchParams.get("filter") || "";
   const eventTypeFilter = searchParams.get("eventType") || "";
   const startDateFilter = searchParams.get("startDate") || "";
 
@@ -31,9 +31,8 @@ function ActividadesHistorico() {
     if (userData) {
       setApiEndpoints({
         getAll: `${import.meta.env.VITE_API_URL}/api/activity/all`,
-        getEnrollment: `${import.meta.env.VITE_API_URL}/api/enrollment/user/${
-          userData.id
-        }`,
+        getEnrollment: `${import.meta.env.VITE_API_URL}/api/enrollment/user/${userData.id
+          }`,
         register: `${import.meta.env.VITE_API_URL}/api/enrollment/save`,
       });
     }
@@ -105,7 +104,7 @@ function ActividadesHistorico() {
   const filteredActivities = actividades.filter((actividad) => {
     if (!searchTerm && !eventTypeFilter && !startDateFilter) return true; // Sin filtro por defecto
     if (!actividad) return false;
-  
+
     if (searchTerm) { // Filtro por el nombre de la empresa 
       if (
         !actividad.companyName ||
@@ -114,22 +113,22 @@ function ActividadesHistorico() {
         return false;
       }
     }
-  
+
     if (eventTypeFilter) { // Filtro del tipo de evento
       if (!actividad.eventType || actividad.eventType !== eventTypeFilter) {
         return false;
       }
     }
-  
+
     if (startDateFilter) { // Filtrar por fecha de inicio
       const actividadStartDate = normalizeDate(actividad.startDate);
       const filterStartDate = normalizeDate(startDateFilter);
-  
+
       if (actividadStartDate < filterStartDate) { // Comparación ajustada
         return false;
       }
     }
-  
+
     return true;
   });
 
@@ -146,13 +145,12 @@ function ActividadesHistorico() {
         <div className="flex flex-col w-10/12 lg:w-7/12">
           <div>
             {filteredActivities.length > 0 ? (
-              filteredActivities.map((actividad) => (
+              filteredActivities.slice().reverse().map((actividad) => (
                 <ActividadCard
                   key={actividad.id}
                   actividad={actividad}
-                  multimediaApi={`${
-                    import.meta.env.VITE_API_URL
-                  }/api/activity/activity-image`}
+                  multimediaApi={`${import.meta.env.VITE_API_URL
+                    }/api/activity/activity-image`}
                   onRegister={
                     !inscripciones.includes(actividad.id) // Verifica si el usuario no está inscrito
                       ? () => handleRegisterClick(actividad)
