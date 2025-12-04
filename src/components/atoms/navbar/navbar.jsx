@@ -40,9 +40,12 @@ function Navbar() {
 
   return (
     <AppBar
-      position="static"
+      position="sticky"
       sx={{
-        backgroundColor: "#6F191C",
+        backgroundColor: "#FFFFFF",
+        color: "#000000",
+        boxShadow: "0 1px 2px rgba(0, 0, 0, 0.08)",
+        borderBottom: "1px solid #E0DFDC",
         height: "4rem",
         padding: { xs: "none", md: "0 20rem 0 15rem" },
       }}
@@ -96,10 +99,10 @@ function Navbar() {
                 onClose={handleCloseMenu(setAnchorElActividades)}
               >
                 <MenuItem onClick={handleCloseMenu(setAnchorElActividades)}>
-                <a href="/actividadesHistorico">Ver actividades</a>
+                  <a href="/actividadesHistorico">Ver actividades</a>
                 </MenuItem>
                 <MenuItem onClick={handleCloseMenu(setAnchorElActividades)}>
-                <a href="/actividades">Mis actividades publicadas</a>
+                  <a href="/actividades">Mis actividades publicadas</a>
                 </MenuItem>
                 {isInstitutional && (
                   <MenuItem onClick={handleCloseMenu(setAnchorElActividades)}>
@@ -117,7 +120,7 @@ function Navbar() {
                 onClose={handleCloseMenu(setAnchorElOfertas)}
               >
                 <MenuItem onClick={handleCloseMenu(setAnchorElOfertas)}>
-                <a href="/ofertasHistorico">Ver ofertas</a>
+                  <a href="/ofertasHistorico">Ver ofertas</a>
                 </MenuItem>
                 {isInstitutional && (
                   <MenuItem onClick={handleCloseMenu(setAnchorElOfertas)}>
@@ -125,9 +128,9 @@ function Navbar() {
                   </MenuItem>
                 )}
                 {!isInstitutional && (<MenuItem onClick={handleCloseMenu(setAnchorElOfertas)}>
-                <a href="/ofertasLaborales">Mis ofertas publicadas</a>
+                  <a href="/ofertasLaborales">Mis ofertas publicadas</a>
                 </MenuItem>
-                )}  
+                )}
               </Menu>
             </Menu>
           </Box>
@@ -149,7 +152,7 @@ function Navbar() {
               <img
                 src={LogoActividades}
                 alt="Logo"
-                style={{ height: "2rem"}}
+                style={{ height: "2rem" }}
               />
               <Typography variant="caption">Actividades</Typography>
             </Button>
@@ -159,10 +162,10 @@ function Navbar() {
               onClose={handleCloseMenu(setAnchorElActividades)}
             >
               <MenuItem onClick={handleCloseMenu(setAnchorElActividades)}>
-              <a href="/actividadesHistorico">Ver actividades</a>
+                <a href="/actividadesHistorico">Ver actividades</a>
               </MenuItem>
               <MenuItem onClick={handleCloseMenu(setAnchorElActividades)}>
-              <a href="/actividades">Mis actividades publicadas</a>
+                <a href="/actividades">Mis actividades publicadas</a>
               </MenuItem>
               {isInstitutional && (
                 <MenuItem onClick={handleCloseMenu(setAnchorElActividades)}>
@@ -178,7 +181,7 @@ function Navbar() {
               <img
                 src={LogoOfertasLaborales}
                 alt="Logo"
-                style={{ height: "2rem"}}
+                style={{ height: "2rem" }}
               />
               <Typography variant="caption">Ofertas Laborales</Typography>
             </Button>
@@ -189,7 +192,7 @@ function Navbar() {
               onClose={handleCloseMenu(setAnchorElOfertas)}
             >
               <MenuItem onClick={handleCloseMenu(setAnchorElOfertas)}>
-              <a href="/ofertasHistorico">Ver ofertas</a>
+                <a href="/ofertasHistorico">Ver ofertas</a>
               </MenuItem>
               {isInstitutional && (
                 <MenuItem onClick={handleCloseMenu(setAnchorElOfertas)}>
@@ -197,9 +200,9 @@ function Navbar() {
                 </MenuItem>
               )}
               {!isInstitutional && (<MenuItem onClick={handleCloseMenu(setAnchorElOfertas)}>
-              <a href="/ofertasLaborales">Mis ofertas publicadas</a>
+                <a href="/ofertasLaborales">Mis ofertas publicadas</a>
               </MenuItem>
-              )}  
+              )}
             </Menu>
           </Box>
 
@@ -210,9 +213,9 @@ function Navbar() {
                 onClick={handleOpenMenu(setAnchorElUser)}
                 sx={{ p: 0 }}
               >
-              <Avatar aria-label="profile-pic">
-                <img src={profilePicture}></img>
-              </Avatar>
+                <Avatar aria-label="profile-pic">
+                  <img src={profilePicture}></img>
+                </Avatar>
               </IconButton>
             </Tooltip>
             <Typography variant="caption">Yo</Typography>
