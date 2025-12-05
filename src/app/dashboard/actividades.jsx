@@ -2,7 +2,8 @@ import React, { useState, useEffect, useRef } from "react";
 import ActividadCard from "../../components/organisms/cards/dashboard/actividadCard";
 import ActividadDialog from "../../components/organisms/dialog/actividadDialog";
 import ParticipantsDialog from "../../components/organisms/dialog/participantsDialog";
-import Button from "../../components/atoms/buttons/actionButton";
+import FilterBar from "../../components/organisms/filters/FilterBar";
+import FilterDrawer from "../../components/organisms/filters/FilterDrawer";
 import HomeBase from "../../components/templates/home/HomeBase";
 import { useUserContext } from "../../contexts/userContext";
 import { useAlert } from "../../contexts/alertContext";
@@ -12,13 +13,14 @@ import usePatch from "../../hooks/usePatch";
 import usePost from "../../hooks/usePost";
 import useDelete from "../../hooks/useDelete";
 import { uploadProfilePicture } from "../../hooks/manageImageUser";
-import SinBuscador from "../../components/organisms/cards/filtros/SinBuscador";
+import { Fab, Tooltip } from "@mui/material";
+import AddIcon from "@mui/icons-material/Add";
 
 function Actividades() {
     const { open, handleOpen, handleClose } = useModal();
     const { open: openParticipantsModal, handleOpen: handleOpenParticipants, handleClose: handleCloseParticipants } = useModal();
     const [actividades, setActividades] = useState([]);
-    const [filteredActividades, setFilteredActividades] = useState([]); // Nuevo estado para las actividades filtradas
+    const [filteredActividades, setFilteredActividades] = useState([]);
     const [selectedActivity, setSelectedActivity] = useState(null);
     const [participants, setParticipants] = useState([]);
     const { userData, isInstitutional } = useUserContext();
@@ -26,14 +28,17 @@ function Actividades() {
     const [apiEndpoints, setApiEndpoints] = useState({});
     const fetchDataRef = useRef(false);
     const token = sessionStorage.getItem("token");
+    const [filterDrawerOpen, setFilterDrawerOpen] = useState(false);
 
+    const [tempFilters, setTempFilters] = useState({
+        eventType: "",
+        startDate: "",
+    });
+    const [activeFilters, setActiveFilters] = useState({
+        eventType: "",
+        startDate: "",
+    });
 
-    // Estados para los filtros
-    const [eventTypeFilter, setEventTypeFilter] = useState("");
-    const [startDateFilter, setStartDateFilter] = useState("");
-
-
-    // Solo se define userType y URLs dinámicas si userData está disponible
     useEffect(() => {
         if (userData) {
             let userType;
@@ -54,7 +59,6 @@ function Actividades() {
         }
     }, [userData, isInstitutional, selectedActivity]);
 
-    // Hooks de API solo se inicializan cuando los endpoints están definidos
     const { getData } = useGet(apiEndpoints.getAll);
     const { post } = usePost(apiEndpoints.save);
     const { patch } = usePatch(apiEndpoints.update);
@@ -72,7 +76,7 @@ function Actividades() {
                         filtered = data.filter(activity => activity.companyId === String(userData.id));
                     }
                     setActividades(filtered);
-                    setFilteredActividades(filtered); // Inicializar con todas las actividades
+                    setFilteredActividades(filtered);
                 } catch (error) {
                     console.error("Error al obtener las actividades:", error);
                 }
@@ -81,6 +85,26 @@ function Actividades() {
             fetchDataRef.current = true;
         }
     }, [userData, apiEndpoints.getAll, getData]);
+
+    useEffect(() => {
+        if (actividades.length === 0) {
+            setFilteredActividades([]);
+            return;
+        }
+
+        let filtered = actividades;
+        if (activeFilters.eventType) {
+            filtered = filtered.filter(
+                (actividad) => actividad.eventType === activeFilters.eventType
+            );
+        }
+        if (activeFilters.startDate) {
+            filtered = filtered.filter(
+                (actividad) => actividad.startDate >= activeFilters.startDate
+            );
+        }
+        setFilteredActividades(filtered);
+    }, [activeFilters, actividades]);
 
     if (!userData) {
         return <div>Loading...</div>;
@@ -133,26 +157,37 @@ function Actividades() {
         }
     };
 
-    // Filtrado de actividades
-    const applyFilters = () => {
-        let filtered = actividades;
-        if (eventTypeFilter) {
-            filtered = filtered.filter(
-                (actividad) => actividad.eventType === eventTypeFilter
-            );
-        }
-        if (startDateFilter) {
-            filtered = filtered.filter(
-                (actividad) => actividad.startDate >= startDateFilter
-            );
-        }
-        setFilteredActividades(filtered);
+    const handleFilterChange = (filterName, value) => {
+        setTempFilters(prev => ({
+            ...prev,
+            [filterName]: value
+        }));
     };
 
-    const clearFilters = () => {
-        setEventTypeFilter("");
-        setStartDateFilter("");
-        setFilteredActividades(actividades);
+    const handleApplyFilters = () => {
+        setActiveFilters(tempFilters);
+    };
+
+    const handleClearFilters = () => {
+        setTempFilters({
+            eventType: '',
+            startDate: '',
+        });
+        setActiveFilters({
+            eventType: '',
+            startDate: '',
+        });
+    };
+
+    const handleRemoveFilter = (filterName) => {
+        setTempFilters(prev => ({
+            ...prev,
+            [filterName]: ''
+        }));
+        setActiveFilters(prev => ({
+            ...prev,
+            [filterName]: ''
+        }));
     };
 
     const handleSaveActivity = async (formData) => {
@@ -174,7 +209,6 @@ function Actividades() {
                 await patch(activityData, false);
                 activityId = selectedActivity.id;
 
-                // Actualizar actividades en el estado local
                 setActividades((prevActividades) =>
                     prevActividades.map((activity) =>
                         activity.id === activityId ? { ...activity, ...formData } : activity
@@ -182,7 +216,6 @@ function Actividades() {
                 );
 
                 showAlert(`Actividad actualizada correctamente`, "success");
-                applyFilters(); // Reaplicar filtros después de la actualización
             } else {
                 const activityResponse = await post(activityData);
                 activityId = activityResponse.id;
@@ -190,14 +223,12 @@ function Actividades() {
                     throw new Error("No se pudo obtener el ID de la actividad de la respuesta.");
                 }
 
-                // Agregar nueva actividad al estado local
                 setActividades((prevActividades) => [
                     ...prevActividades,
                     { id: activityId, ...formData },
                 ]);
 
                 showAlert(`Actividad creada correctamente`, "success");
-                applyFilters();  // Reaplicar filtros después de la creación
             }
 
             if (formData.multimedia) {
@@ -213,59 +244,87 @@ function Actividades() {
         }
     };
 
-    const asideContent = (
-        <div className="sticky top-8 bg-white p-6 lg:mt-2 mx-1 rounded-lg flex flex-col gap-4">
-            <Button texto={"Publica una actividad"} onClick={handleCreate} />
-            <SinBuscador
-                eventTypeFilter={eventTypeFilter}
-                setEventTypeFilter={setEventTypeFilter}
-                startDateFilter={startDateFilter}
-                setStartDateFilter={setStartDateFilter}
-                applyFilters={applyFilters}
-                clearFilters={clearFilters}
-            />
-        </div>
-    );
-
     return (
-        <HomeBase aside={asideContent}>
-            <div className="flex flex-row mt-4 mb-16 gap-4 lg:mx-1 justify-center">
-                <div className="flex flex-col w-12/12 lg:w-11/12">
-                    <ActividadDialog
-                        open={open}
-                        onClose={handleClose}
-                        initialData={selectedActivity || {}}
-                        onSave={handleSaveActivity}
-                        multimediaApi={apiEndpoints.multimedia}
-                    />
-                    <ParticipantsDialog
-                        open={openParticipantsModal}
-                        onClose={handleCloseParticipants}
-                        participants={participants}
-                    />
-                    <div>
-                        {filteredActividades.length > 0 ? (
-                            filteredActividades.slice().reverse().map((actividad) => (
-                                <ActividadCard
-                                    key={actividad.id}
-                                    actividad={actividad}
-                                    multimediaApi={apiEndpoints.multimedia}
-                                    onEdit={handleEdit}
-                                    onDelete={handleDelete}
-                                    onSeeListParticipants={() => {
-                                        handleViewParticipants(actividad.id);
-                                    }}
-                                />
-                            ))
-                        ) : (
-                            <div>No hay actividades disponibles</div>
-                        )}
-                    </div>
+        <HomeBase>
+            <FilterBar
+                searchTerm=""
+                onSearchChange={() => { }}
+                activeFilters={activeFilters}
+                onRemoveFilter={handleRemoveFilter}
+                onOpenFilterDrawer={() => setFilterDrawerOpen(true)}
+            />
+
+            <div className="max-w-3xl mx-auto px-4">
+                <ActividadDialog
+                    open={open}
+                    onClose={handleClose}
+                    initialData={selectedActivity || {}}
+                    onSave={handleSaveActivity}
+                    multimediaApi={apiEndpoints.multimedia}
+                />
+                <ParticipantsDialog
+                    open={openParticipantsModal}
+                    onClose={handleCloseParticipants}
+                    participants={participants}
+                />
+                <div>
+                    {filteredActividades.length > 0 ? (
+                        filteredActividades.slice().reverse().map((actividad) => (
+                            <ActividadCard
+                                key={actividad.id}
+                                actividad={actividad}
+                                multimediaApi={apiEndpoints.multimedia}
+                                onEdit={handleEdit}
+                                onDelete={handleDelete}
+                                onSeeListParticipants={() => {
+                                    handleViewParticipants(actividad.id);
+                                }}
+                            />
+                        ))
+                    ) : (
+                        <div style={{ textAlign: 'center', padding: '3rem', color: '#6B7280' }}>
+                            No hay actividades disponibles
+                        </div>
+                    )}
                 </div>
             </div>
+
+            {/* Floating Action Button */}
+            <Tooltip title="Publicar nueva actividad" placement="left" arrow>
+                <Fab
+                    aria-label="add"
+                    onClick={handleCreate}
+                    sx={{
+                        position: 'fixed',
+                        bottom: '2rem',
+                        right: '2rem',
+                        zIndex: 1000,
+                        backgroundColor: '#6F191C',
+                        color: '#FFFFFF',
+                        boxShadow: '0 4px 12px rgba(111, 25, 28, 0.4)',
+                        '&:hover': {
+                            backgroundColor: '#8B1F23',
+                            boxShadow: '0 6px 20px rgba(111, 25, 28, 0.6)',
+                            transform: 'scale(1.1)',
+                        },
+                        transition: 'all 0.2s ease-in-out',
+                    }}
+                >
+                    <AddIcon />
+                </Fab>
+            </Tooltip>
+
+            <FilterDrawer
+                open={filterDrawerOpen}
+                onClose={() => setFilterDrawerOpen(false)}
+                viewActivies={true}
+                filters={tempFilters}
+                onFilterChange={handleFilterChange}
+                onApplyFilters={handleApplyFilters}
+                onClearFilters={handleClearFilters}
+            />
         </HomeBase>
     );
 }
 
 export default Actividades;
-

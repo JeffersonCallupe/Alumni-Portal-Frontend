@@ -47,7 +47,10 @@ function ProfileEmpresa() {
 
   return (
     <HomeBase>
-      <div className="w-full flex flex-col mb-16">
+      <div className="w-full flex flex-col mb-16" style={{
+        maxWidth: '100%',
+        padding: '0 1rem',
+      }}>
         <ProfileBaseCard
           apiUrl={imageUrl}
           handleSaveChanges={handleSaveChanges}

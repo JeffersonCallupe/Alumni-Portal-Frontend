@@ -2,7 +2,8 @@ import React, { useState, useEffect, useRef } from "react";
 import OfertaLaboralCard from "../../components/organisms/cards/dashboard/ofertaLaboralCard";
 import OfertaLaboralDialog from "../../components/organisms/dialog/ofertaLaboralDialog";
 import ParticipantsDialog from "../../components/organisms/dialog/ParticipantsDialogs";
-import Button from "../../components/atoms/buttons/actionButton";
+import FilterBar from "../../components/organisms/filters/FilterBar";
+import FilterDrawer from "../../components/organisms/filters/FilterDrawer";
 import HomeBase from "../../components/templates/home/HomeBase";
 import { useUserContext } from "../../contexts/userContext";
 import { useAlert } from "../../contexts/alertContext";
@@ -11,8 +12,8 @@ import useModal from "../../hooks/useModal";
 import usePatch from "../../hooks/usePatch";
 import usePost from "../../hooks/usePost";
 import useDelete from "../../hooks/useDelete";
-import ConBuscador from "../../components/organisms/cards/filtros/ConBuscador";
-import { useSearchParams } from "react-router-dom";
+import { Fab, Tooltip } from "@mui/material";
+import AddIcon from "@mui/icons-material/Add";
 import { MESSAGES, USER_ROLES } from "../../constants/app.constants";
 
 function OfertasLaborales() {
@@ -23,19 +24,26 @@ function OfertasLaborales() {
     handleClose: handleCloseParticipants,
   } = useModal();
   const [ofertas, setOfertas] = useState([]);
+  const [filteredOfertas, setFilteredOfertas] = useState([]);
   const [participants, setParticipants] = useState([]);
   const [selectedJob, setSelectedJob] = useState(null);
   const { userData } = useUserContext();
   const { showAlert } = useAlert();
   const fetchDataRef = useRef(false);
   const token = sessionStorage.getItem("token");
+  const [filterDrawerOpen, setFilterDrawerOpen] = useState(false);
+  const [searchTerm, setSearchTerm] = useState("");
 
-  // useSearchParams para manejar el término de búsqueda en la URL
-  const [searchParams, setSearchParams] = useSearchParams();
-  const searchTerm = searchParams.get("filter") || "";
-  const modalityFilter = searchParams.get("modality") || "";
-  const areaFilter = searchParams.get("area") || "";
-  const nivelFilter = searchParams.get("nivel") || "";
+  const [tempFilters, setTempFilters] = useState({
+    modality: "",
+    area: "",
+    nivel: "",
+  });
+  const [activeFilters, setActiveFilters] = useState({
+    modality: "",
+    area: "",
+    nivel: "",
+  });
 
   const apiEndpoints = {
     getAll: `${import.meta.env.VITE_API_URL}/api/job-offer/all`,
@@ -64,6 +72,47 @@ function OfertasLaborales() {
       fetchDataRef.current = true;
     }
   }, [getData]);
+
+  useEffect(() => {
+    if (ofertas.length === 0) {
+      setFilteredOfertas([]);
+      return;
+    }
+
+    let filtered = ofertas;
+
+    if (userData.role === USER_ROLES.COMPANY) {
+      filtered = filtered.filter((oferta) => oferta.companyId === userData.id);
+    }
+
+    if (searchTerm) {
+      filtered = filtered.filter((oferta) =>
+        oferta.companyName?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        oferta.title?.toLowerCase().includes(searchTerm.toLowerCase())
+      );
+    }
+
+    if (activeFilters.modality) {
+      filtered = filtered.filter(
+        (oferta) => oferta.modality === activeFilters.modality
+      );
+    }
+
+    if (activeFilters.area) {
+      filtered = filtered.filter(
+        (oferta) => oferta.area === activeFilters.area
+      );
+    }
+
+    if (activeFilters.nivel) {
+      filtered = filtered.filter(
+        (oferta) => oferta.nivel === activeFilters.nivel
+      );
+    }
+
+    setFilteredOfertas(filtered);
+  }, [searchTerm, activeFilters, ofertas, userData]);
+
 
   if (!userData) {
     return <div>Loading...</div>;
@@ -149,30 +198,52 @@ function OfertasLaborales() {
     }
   };
 
-  const filteredOfertas = ofertas.filter((oferta) => {
-    if (!oferta) return false;
-    // Mostrar solo ofertas del usuario actual
-    if (userData.role === USER_ROLES.COMPANY && oferta.companyId !== userData.id) return false;
-    // Filtro por término de búsqueda
-    if (searchTerm && !oferta.companyName.toLowerCase().includes(searchTerm.toLowerCase())) return false;
-    if (modalityFilter && oferta.modality.toLowerCase() !== modalityFilter.toLowerCase()) return false;
-    if (areaFilter && oferta.area.toLowerCase() !== areaFilter.toLowerCase()) return false;
-    if (nivelFilter && oferta.nivel.toLowerCase() !== nivelFilter.toLowerCase()) return false;
-    return true;
-  });
+  const handleFilterChange = (filterName, value) => {
+    setTempFilters(prev => ({
+      ...prev,
+      [filterName]: value
+    }));
+  };
 
-  const asideContent = (
-    <div className="sticky top-8 bg-white p-6 lg:mt-2 mx-1 rounded-lg flex flex-col gap-4">
-      {userData.role === USER_ROLES.COMPANY && (
-        <Button texto={"Publica una oferta"} onClick={handleCreate} />
-      )}
-      <ConBuscador searchTerm={searchTerm} setSearchParams={setSearchParams} />
-    </div>
-  );
+  const handleApplyFilters = () => {
+    setActiveFilters(tempFilters);
+  };
+
+  const handleClearFilters = () => {
+    setTempFilters({
+      modality: '',
+      area: '',
+      nivel: '',
+    });
+    setActiveFilters({
+      modality: '',
+      area: '',
+      nivel: '',
+    });
+  };
+
+  const handleRemoveFilter = (filterName) => {
+    setTempFilters(prev => ({
+      ...prev,
+      [filterName]: ''
+    }));
+    setActiveFilters(prev => ({
+      ...prev,
+      [filterName]: ''
+    }));
+  };
 
   return (
-    <HomeBase aside={asideContent}>
-      <div className="flex flex-row mt-4 mb-16 gap-4 lg:mx-1 justify-center">
+    <HomeBase>
+      <FilterBar
+        searchTerm={searchTerm}
+        onSearchChange={setSearchTerm}
+        activeFilters={activeFilters}
+        onRemoveFilter={handleRemoveFilter}
+        onOpenFilterDrawer={() => setFilterDrawerOpen(true)}
+      />
+
+      <div className="max-w-3xl mx-auto px-4">
         <OfertaLaboralDialog
           open={open}
           onClose={handleClose}
@@ -184,7 +255,7 @@ function OfertasLaborales() {
           onClose={handleCloseParticipants}
           participants={participants}
         />
-        <div className="flex flex-col w-12/12 lg:w-11/12">
+        <div>
           {filteredOfertas.length > 0 ? (
             filteredOfertas.slice().reverse().map((oferta) => (
               <OfertaLaboralCard
@@ -196,14 +267,51 @@ function OfertasLaborales() {
               />
             ))
           ) : (
-            <div>No hay ofertas laborales disponibles</div>
+            <div style={{ textAlign: 'center', padding: '3rem', color: '#6B7280' }}>
+              No hay ofertas laborales disponibles
+            </div>
           )}
         </div>
       </div>
+
+      {/* Floating Action Button - Only for companies */}
+      {userData.role === USER_ROLES.COMPANY && (
+        <Tooltip title="Publicar nueva oferta" placement="left" arrow>
+          <Fab
+            aria-label="add"
+            onClick={handleCreate}
+            sx={{
+              position: 'fixed',
+              bottom: '2rem',
+              right: '2rem',
+              zIndex: 1000,
+              backgroundColor: '#6F191C',
+              color: '#FFFFFF',
+              boxShadow: '0 4px 12px rgba(111, 25, 28, 0.4)',
+              '&:hover': {
+                backgroundColor: '#8B1F23',
+                boxShadow: '0 6px 20px rgba(111, 25, 28, 0.6)',
+                transform: 'scale(1.1)',
+              },
+              transition: 'all 0.2s ease-in-out',
+            }}
+          >
+            <AddIcon />
+          </Fab>
+        </Tooltip>
+      )}
+
+      <FilterDrawer
+        open={filterDrawerOpen}
+        onClose={() => setFilterDrawerOpen(false)}
+        viewActivies={false}
+        filters={tempFilters}
+        onFilterChange={handleFilterChange}
+        onApplyFilters={handleApplyFilters}
+        onClearFilters={handleClearFilters}
+      />
     </HomeBase>
   );
 }
 
 export default OfertasLaborales;
-
-

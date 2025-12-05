@@ -1,36 +1,39 @@
 import React, { useState, useEffect } from "react";
 import ActividadCard from "../../components/organisms/cards/dashboard/actividadCard";
 import HomeBase from "../../components/templates/home/HomeBase";
-import ConfirmationDialog from "../../components/organisms/dialog/confirmationDialog"; // Modal reutilizable
+import ConfirmationDialog from "../../components/organisms/dialog/confirmationDialog";
+import FilterBar from "../../components/organisms/filters/FilterBar";
+import FilterDrawer from "../../components/organisms/filters/FilterDrawer";
 import { useUserContext } from "../../contexts/userContext";
 import { useAlert } from "../../contexts/alertContext";
 import useGet from "../../hooks/useGet";
 import useDelete from "../../hooks/useDelete";
-import SinBuscador from "../../components/organisms/cards/filtros/SinBuscador";
 
 function ActividadesRegistradas() {
   const [enrollments, setEnrollments] = useState([]);
   const [activities, setActivities] = useState([]);
-  const [selectedActivity, setSelectedActivity] = useState(null); // Actividad seleccionada para cancelar inscripción
+  const [selectedActivity, setSelectedActivity] = useState(null);
   const { userData } = useUserContext();
   const { showAlert } = useAlert();
-  const [openConfirmationDialog, setOpenConfirmationDialog] = useState(false); // Estado del modal
+  const [openConfirmationDialog, setOpenConfirmationDialog] = useState(false);
+  const [filterDrawerOpen, setFilterDrawerOpen] = useState(false);
 
-  console.log(activities)
+  const [tempFilters, setTempFilters] = useState({
+    eventType: "",
+    startDate: "",
+  });
+  const [activeFilters, setActiveFilters] = useState({
+    eventType: "",
+    startDate: "",
+  });
+  const [filteredActivities, setFilteredActivities] = useState([]);
 
-  const [eventTypeFilter, setEventTypeFilter] = useState("");
-  const [startDateFilter, setStartDateFilter] = useState("");
-  const [filteredActivities, setFilteredActivities] = useState(activities);
-
-  const enrollmentsEndpoint = `${import.meta.env.VITE_API_URL
-    }/api/enrollment/user/${userData?.id}`;
+  const enrollmentsEndpoint = `${import.meta.env.VITE_API_URL}/api/enrollment/user/${userData?.id}`;
   const { getData: getEnrollments } = useGet(enrollmentsEndpoint);
 
-  const deleteEnrollmentEndpoint = `${import.meta.env.VITE_API_URL
-    }/api/enrollment`;
+  const deleteEnrollmentEndpoint = `${import.meta.env.VITE_API_URL}/api/enrollment`;
   const { deleteData: deleteEnrollment } = useDelete(deleteEnrollmentEndpoint);
 
-  // Fetch user's enrollments
   useEffect(() => {
     if (!userData) return;
 
@@ -49,29 +52,25 @@ function ActividadesRegistradas() {
 
         const activityDetails = await Promise.all(activityPromises);
         setActivities(activityDetails);
-        setFilteredActivities(activityDetails);
       } catch (error) {
         console.error("Error fetching enrollments:", error);
-        showAlert("No se pudieron cargar las actividades", "error");   // modificar
+        showAlert("No se pudieron cargar las actividades", "error");
       }
     };
 
     fetchEnrollments();
   }, [userData]);
 
-  // Open confirmation modal
   const handleOpenConfirmation = (activity) => {
-    setSelectedActivity(activity); // Guarda la actividad seleccionada
+    setSelectedActivity(activity);
     setOpenConfirmationDialog(true);
   };
 
-  // Close confirmation modal
   const handleCloseConfirmation = () => {
     setSelectedActivity(null);
     setOpenConfirmationDialog(false);
   };
 
-  // Handle canceling enrollment
   const handleConfirmCancelEnrollment = async () => {
     if (!selectedActivity) return;
 
@@ -84,12 +83,9 @@ function ActividadesRegistradas() {
 
         setEnrollments((prev) => prev.filter((e) => e.activityId !== selectedActivity.id));
         setActivities((prev) => prev.filter((activity) => activity.id !== selectedActivity.id));
-        setFilteredActivities((prev) =>
-          prev.filter((activity) => activity.id !== selectedActivity.id)
-        );
 
         showAlert("Inscripción cancelada exitosamente", "success");
-        handleCloseConfirmation(); // Cierra el modal
+        handleCloseConfirmation();
       }
     } catch (error) {
       console.error("Error canceling enrollment:", error);
@@ -97,81 +93,104 @@ function ActividadesRegistradas() {
     }
   };
 
-  const applyFilters = () => {
+  useEffect(() => {
     let filtered = activities;
-
-    if (eventTypeFilter) {
+    if (activeFilters.eventType) {
       filtered = filtered.filter(
-        (activity) => activity.eventType === eventTypeFilter
+        (activity) => activity.eventType === activeFilters.eventType
       );
     }
-
-    const normalizeDate = (dateStr) => new Date(dateStr).setHours(0, 0, 0, 0);
-
-    if (startDateFilter) {
-      filtered = filtered.filter((activity) => {
-        const activityDate = normalizeDate(activity.startDate);
-        const filterDate = normalizeDate(startDateFilter);
-        return activityDate >= filterDate;
-      });
+    if (activeFilters.startDate) {
+      filtered = filtered.filter(
+        (activity) => activity.startDate >= activeFilters.startDate
+      );
     }
-
     setFilteredActivities(filtered);
+  }, [activeFilters, activities]);
+
+
+  const handleFilterChange = (filterName, value) => {
+    setTempFilters(prev => ({
+      ...prev,
+      [filterName]: value
+    }));
   };
 
-  const clearFilters = () => {
-    setEventTypeFilter("");
-    setStartDateFilter("");
-    setFilteredActivities(activities); // Restaurar todas las actividades
+  const handleApplyFilters = () => {
+    setActiveFilters(tempFilters);
+  };
+
+  const handleClearFilters = () => {
+    setTempFilters({
+      eventType: '',
+      startDate: '',
+    });
+    setActiveFilters({
+      eventType: '',
+      startDate: '',
+    });
+  };
+
+  const handleRemoveFilter = (filterName) => {
+    setTempFilters(prev => ({
+      ...prev,
+      [filterName]: ''
+    }));
+    setActiveFilters(prev => ({
+      ...prev,
+      [filterName]: ''
+    }));
   };
 
   if (!userData) {
-    return <div>Cargando...</div>;
+    return <div>Loading...</div>;
   }
 
   return (
     <HomeBase>
-      <div className="flex flex-row gap-8 mt-4 mb-16 lg:mx-12 justify-center">
-        <div className="lg:w-4/12">
-          <SinBuscador
-            eventTypeFilter={eventTypeFilter}
-            setEventTypeFilter={setEventTypeFilter}
-            startDateFilter={startDateFilter}
-            setStartDateFilter={setStartDateFilter}
-            applyFilters={applyFilters}
-            clearFilters={clearFilters}
-          />
-        </div>
-        <div className="flex flex-col w-10/12 lg:w-7/12">
+      <FilterBar
+        searchTerm=""
+        onSearchChange={() => { }}
+        activeFilters={activeFilters}
+        onRemoveFilter={handleRemoveFilter}
+        onOpenFilterDrawer={() => setFilterDrawerOpen(true)}
+      />
+
+      <div className="max-w-3xl mx-auto px-4">
+        <div>
           {filteredActivities.length > 0 ? (
-            filteredActivities.map((activity) => (
+            filteredActivities.slice().reverse().map((activity) => (
               <ActividadCard
                 key={activity.id}
-                actividad={{
-                  ...activity,
-                  userId: userData.id,
-                  userName: userData.name,
-                  userPaternalSurname: userData.paternalSurname,
-                  userMaternalSurname: userData.maternalSurname,
-                }}
-                multimediaApi={`${import.meta.env.VITE_API_URL
-                  }/api/activity/activity-image`}
+                actividad={activity}
+                multimediaApi={`${import.meta.env.VITE_API_URL}/api/activity/activity-image`}
                 onCancelEnrollment={() => handleOpenConfirmation(activity)}
               />
             ))
           ) : (
-            <div className="text-center text-gray-500">
-              No se encontraron actividades con los filtros aplicados
+            <div style={{ textAlign: 'center', padding: '3rem', color: '#6B7280' }}>
+              No tienes actividades registradas
             </div>
           )}
         </div>
+
+        <ConfirmationDialog
+          open={openConfirmationDialog}
+          onClose={handleCloseConfirmation}
+          onConfirm={handleConfirmCancelEnrollment}
+          title="Confirmar Cancelación"
+          content={`¿Estás seguro de que deseas cancelar tu inscripción en "${selectedActivity?.title}"?`}
+        />
       </div>
-      <ConfirmationDialog
-        open={openConfirmationDialog}
-        onClose={handleCloseConfirmation}
-        onConfirm={handleConfirmCancelEnrollment}
-        title="Cancelar Inscripción"
-        content={`¿Estás seguro de que deseas cancelar tu inscripción en la actividad "${selectedActivity?.title}"?`}
+
+      <FilterDrawer
+        open={filterDrawerOpen}
+        onClose={() => setFilterDrawerOpen(false)}
+        viewActivies={true}
+        filters={tempFilters}
+        onFilterChange={handleFilterChange}
+        onApplyFilters={handleApplyFilters}
+        onClearFilters={handleClearFilters}
       />
     </HomeBase>
   );

@@ -53,11 +53,16 @@ const OfertaLaboralCard = ({
       <Card
         sx={{
           textAlign: "left",
-          borderRadius: "8px",
-          boxShadow: "none",
-          padding: "0.75rem",
-          margin: "0.5rem 0",
-          marginBottom: "1rem"
+          borderRadius: "12px",
+          boxShadow: "0 1px 3px rgba(0,0,0,0.08)",
+          padding: "1.5rem",
+          margin: "0 0 1.25rem 0",
+          border: '1px solid #E5E7EB',
+          transition: 'all 0.2s ease-in-out',
+          '&:hover': {
+            boxShadow: '0 4px 12px rgba(0,0,0,0.12)',
+            transform: 'translateY(-2px)',
+          },
         }}
       >
         <CardHeader

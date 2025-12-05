@@ -16,14 +16,13 @@ const InfoBaseCard = ({ title, cardContent, dialogContent, modalId, sub = false,
     <Card
       className="profile-base-card"
       sx={{
-        width: sub
-          ? { xs: "65vw", md: "50vw" }
-          : { xs: "70vw", md: "55vw" },
-        padding: "1.5rem",
-        borderRadius: '12px',
+        width: '100%',
+        maxWidth: { xs: '100%', sm: '600px', md: '900px', lg: '1000px' },
+        margin: { xs: '0.5rem 0', sm: '1rem auto' },
+        padding: { xs: '1rem', sm: '1.25rem', md: '1.5rem' },
+        borderRadius: { xs: '8px', sm: '12px' },
         boxShadow: '0 1px 3px rgba(0,0,0,0.08)',
         border: '1px solid #E5E7EB',
-        marginBottom: '1rem',
         '&:hover': {
           boxShadow: '0 2px 8px rgba(0,0,0,0.12)',
         },
@@ -37,7 +36,7 @@ const InfoBaseCard = ({ title, cardContent, dialogContent, modalId, sub = false,
             align="left"
             sx={{
               fontWeight: 600,
-              fontSize: '1.25rem',
+              fontSize: { xs: '1.1rem', sm: '1.25rem', md: '1.5rem' },
               color: '#111827',
             }}
           >
@@ -54,7 +53,7 @@ const InfoBaseCard = ({ title, cardContent, dialogContent, modalId, sub = false,
             border: sub || content ? "none" : "1px solid #F3F4F6",
             borderRadius: sub ? "0px" : "8px",
             boxShadow: "none",
-            padding: sub ? "0.03rem" : "1rem",
+            padding: sub ? "0.03rem" : { xs: '0.75rem', sm: '1rem' },
             margin: sub ? "0.3rem 0" : "0",
             backgroundColor: sub || content ? 'transparent' : '#FAFAFA',
           }}
