@@ -1,4 +1,4 @@
-export function validateLoginSM(formData){
+export function validateLoginSM(formData) {
   let errors = {};
   const emailPattern = /^[a-zA-Z0-9._%+-]+@unmsm\.edu\.pe$/;
   if (!emailPattern.test(formData.email)) {
@@ -10,19 +10,19 @@ export function validateLoginSM(formData){
   return errors;
 };
 
-export function validateLoginSUM(formData){
+export function validateLoginSUM(formData) {
   let errors = {};
-  if (!formData.usuario) {
-    errors.usuario = "El usuario de SUM es requerido";
+  if (!formData.username) {
+    errors.username = "El usuario de SUM es requerido";
   }
 
-  if(!formData.clave) {
-    errors.clave = "La contraseña es requerida";
+  if (!formData.password) {
+    errors.password = "La contraseña es requerida";
   }
   return errors;
 }
 
-export function validateRegistroSM(formData){
+export function validateRegistroSM(formData) {
   let errors = {};
 
   if (formData.password !== formData.confirmPassword) {
@@ -33,7 +33,7 @@ export function validateRegistroSM(formData){
 };
 
 
-export function validateLoginEmpresa(formData){
+export function validateLoginEmpresa(formData) {
   let errors = {};
 
   return errors;
@@ -49,7 +49,7 @@ export function validateRegistroEmpresa(formData) {
   if (formData.password !== formData.confirmPassword) errors.confirmPassword = "Las contraseñas no coinciden";
   if (!formData.name) errors.name = "El nombre de la empresa es requerido";
   if (!formData.ruc) errors.ruc = "El RUC es requerido";
-  if(!formData.sector) errors.sector = "Debe seleccionar una opción";
+  if (!formData.sector) errors.sector = "Debe seleccionar una opción";
 
   return errors;
 }
