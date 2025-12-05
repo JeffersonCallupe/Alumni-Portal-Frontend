@@ -29,7 +29,7 @@ const NotificationBell = () => {
         notifications,
         unreadCount,
         loading,
-        fetchNotifications,
+        refreshNotifications,
         markAsRead,
         markAllAsRead,
     } = useNotifications();
@@ -38,15 +38,15 @@ const NotificationBell = () => {
 
     useEffect(() => {
         if (userData?.id) {
-            fetchNotifications(userData.id);
+            refreshNotifications(userData.id);
 
             const interval = setInterval(() => {
-                fetchNotifications(userData.id);
+                refreshNotifications(userData.id);
             }, 30000);
 
             return () => clearInterval(interval);
         }
-    }, [userData, fetchNotifications]);
+    }, [userData, refreshNotifications]);
 
     const handleClick = (event) => {
         setAnchorEl(event.currentTarget);
@@ -59,7 +59,7 @@ const NotificationBell = () => {
     const handleMarkAllAsRead = async () => {
         if (userData?.id) {
             await markAllAsRead(userData.id);
-            fetchNotifications(userData.id);
+            refreshNotifications(userData.id);
         }
     };
 
@@ -127,6 +127,16 @@ const NotificationBell = () => {
                     badgeContent={unreadCount}
                     color="error"
                     max={99}
+                    sx={{
+                        '& .MuiBadge-badge': {
+                            fontSize: '0.6rem',
+                            height: '16px',
+                            minWidth: '16px',
+                            padding: '0 4px',
+                            top: '6px',
+                            right: '2px',
+                        },
+                    }}
                 >
                     <NotificationsIcon sx={{ fontSize: 32 }} />
                 </Badge>
