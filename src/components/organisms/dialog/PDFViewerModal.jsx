@@ -51,10 +51,11 @@ const PDFViewerModal = ({ open, onClose, pdfUrl, fileName = 'documento.pdf' }) =
                 }}
             >
                 <Typography
-                    variant="h6"
+                    variant="body1"
                     sx={{
-                        fontSize: { xs: '0.9rem', sm: '1rem', md: '1.25rem' },
-                        fontWeight: 600,
+                        fontSize: { xs: '0.75rem', sm: '0.875rem' },
+                        fontWeight: 500,
+                        color: 'white',
                         overflow: 'hidden',
                         textOverflow: 'ellipsis',
                         whiteSpace: { xs: 'nowrap', sm: 'normal' },
