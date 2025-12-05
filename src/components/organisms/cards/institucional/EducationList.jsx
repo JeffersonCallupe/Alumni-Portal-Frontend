@@ -1,16 +1,16 @@
 import React, { useEffect, useState } from "react";
 import { useUserContext } from "../../../../contexts/userContext";
-import InfoBaseCard from "../profileBaseCards/InfoBaseCard";
+import InfoBaseCard from "../profileBaseCards/infoBaseCard";
 import CircularProgress from "@mui/material/CircularProgress";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
-import ActionButton from "../../../atoms/buttons/ActionButton";
+import ActionButton from "../../../atoms/buttons/actionButton";
 import Dialog from "@mui/material/Dialog";
 import DialogTitle from "@mui/material/DialogTitle";
 import DialogContent from "@mui/material/DialogContent";
 import DialogActions from "@mui/material/DialogActions";
-import FormEditEducation from "../../forms/institucional/Edit/FormEditEducation";
+import FormEditEducation from "../../forms/institucional/Edit/formEditEducation";
 import DeleteIcon from "@mui/icons-material/Delete";
 import VisibilityIcon from "@mui/icons-material/VisibilityOutlined";
 import DeleteConfirmationModal from "../../dialog/DeleteConfirmationModal"; // Asegúrate de ajustar la ruta
@@ -153,7 +153,7 @@ const EducationList = ({ educations, setEducations }) => {
                   </Box>
                 </div>
               }
-              dialogContent={contentEditEducation }
+              dialogContent={contentEditEducation}
               modalId={`modal-education-${education.id}`}
               className="subcard"
             />

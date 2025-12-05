@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
-import OfertaLaboralCard from "../../components/organisms/cards/dashboard/OfertaLaboralCard";
+import OfertaLaboralCard from "../../components/organisms/cards/dashboard/ofertaLaboralCard";
 import HomeBase from "../../components/templates/home/HomeBase";
-import ConfirmationDialog from "../../components/organisms/dialog/ConfirmationDialog"; // Modal reutilizable
+import ConfirmationDialog from "../../components/organisms/dialog/confirmationDialog"; // Modal reutilizable
 import { useUserContext } from "../../contexts/userContext";
 import { useAlert } from "../../contexts/alertContext";
 import useGet from "../../hooks/useGet";

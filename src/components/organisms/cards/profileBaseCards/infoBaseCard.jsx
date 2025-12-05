@@ -4,8 +4,8 @@ import Card from "@mui/material/Card";
 import CardActions from "@mui/material/CardActions";
 import CardContent from "@mui/material/CardContent";
 import DialogBase from "../../dialog/DialogBase";
-import EditButton from "../../../atoms/buttons/EditButton";
-import AddButton from "../../../atoms/buttons/AddButton";
+import EditButton from "../../../atoms/buttons/editButton";
+import AddButton from "../../../atoms/buttons/addButton";
 import Typography from "@mui/material/Typography";
 import useModal from "../../../../hooks/useModal";
 

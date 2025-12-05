@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
-import ActividadCard from "../../components/organisms/cards/dashboard/ActividadCard";
+import ActividadCard from "../../components/organisms/cards/dashboard/actividadCard";
 import HomeBase from "../../components/templates/home/HomeBase";
-import ConfirmationDialog from "../../components/organisms/dialog/ConfirmationDialog"; // Modal de confirmación
+import ConfirmationDialog from "../../components/organisms/dialog/confirmationDialog"; // Modal de confirmación
 import { useUserContext } from "../../contexts/userContext";
 import { useAlert } from "../../contexts/alertContext";
 import useGet from "../../hooks/useGet";

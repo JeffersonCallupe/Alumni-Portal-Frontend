@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
-import OfertaLaboralCard from "../../components/organisms/cards/dashboard/OfertaLaboralCard";
+import OfertaLaboralCard from "../../components/organisms/cards/dashboard/ofertaLaboralCard";
 import HomeBase from "../../components/templates/home/HomeBase";
-import ConfirmationDialog from "../../components/organisms/dialog/ConfirmationDialog"; // Modal reutilizable
+import ConfirmationDialog from "../../components/organisms/dialog/confirmationDialog"; // Modal reutilizable
 import { useUserContext } from "../../contexts/userContext";
 import { useAlert } from "../../contexts/alertContext";
 import useGet from "../../hooks/useGet";
@@ -153,10 +153,10 @@ function OfertasAplicadas() {
   const asideContent = (
     <div className="sticky top-8 bg-white p-6 lg:mt-2 mx-1 rounded-lg flex flex-col gap-4">
       <ConBuscador
-            searchTerm={searchTerm}
-            setSearchParams={setSearchParams}
-            viewActivies={false}
-          />
+        searchTerm={searchTerm}
+        setSearchParams={setSearchParams}
+        viewActivies={false}
+      />
     </div>
   );
 

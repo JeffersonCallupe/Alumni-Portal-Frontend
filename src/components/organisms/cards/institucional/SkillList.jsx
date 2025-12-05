@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { useUserContext } from "../../../../contexts/userContext";
-import InfoBaseCard from "../profileBaseCards/InfoBaseCard";
+import InfoBaseCard from "../profileBaseCards/infoBaseCard";
 import CircularProgress from "@mui/material/CircularProgress";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
-import FormEditSkill from "../../forms/institucional/Edit/FormEditSkill";
-import ActionButton from "../../../atoms/buttons/ActionButton";
+import FormEditSkill from "../../forms/institucional/Edit/formEditSkill";
+import ActionButton from "../../../atoms/buttons/actionButton";
 import DeleteIcon from "@mui/icons-material/Delete";
 import DeleteConfirmationModal from "../../dialog/DeleteConfirmationModal";
 

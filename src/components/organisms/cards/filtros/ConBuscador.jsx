@@ -5,11 +5,11 @@ import { TextField } from "@mui/material";
 import { useState, useEffect } from "react";
 import FilterAltIcon from "@mui/icons-material/FilterAlt";
 import Autocomplete from "@mui/material/Autocomplete";
-import ActionButton from "../../../atoms/buttons/ActionButton";
+import ActionButton from "../../../atoms/buttons/actionButton";
 
 const typeEvent = ["Charla", "Conferencia", "Curso", "Taller", "Seminario", "Otro"];
 const typeModality = ["Presencial", "Remoto", "Híbrido"];
-const typeArea = ["Agricultura", "Banca", "Construcción", "Educación", "Energía", "Finanzas", "Manufactura", "Retail", "Salud", "Tecnología", "Telecomunicaciones", "Transporte", "Turismo", "Otro" ] ;
+const typeArea = ["Agricultura", "Banca", "Construcción", "Educación", "Energía", "Finanzas", "Manufactura", "Retail", "Salud", "Tecnología", "Telecomunicaciones", "Transporte", "Turismo", "Otro"];
 const typeNivel = ["Practicante", "Trainee", "Junior", "Semi-senior", "Senior", "Ejecutivo", "Otro"];
 
 
@@ -32,16 +32,16 @@ const ConBuscador = ({ searchTerm, setSearchParams, viewActivies }) => {
   const handleApplyFilters = () => {
     const params = {};
     if (inputValue.trim()) params.filter = inputValue;
-    if(viewActivies){
+    if (viewActivies) {
       if (selectedEventType) params.eventType = selectedEventType;
       if (selectedStartDate) params.startDate = selectedStartDate;
-    }else{
+    } else {
       if (selectedModality) params.modality = selectedModality;
       if (selectedArea) params.area = selectedArea;
       if (selectedNivel) params.nivel = selectedNivel;
     }
     setSearchParams(params);
-}
+  }
 
 
   const handleClearFilters = () => {
@@ -52,7 +52,7 @@ const ConBuscador = ({ searchTerm, setSearchParams, viewActivies }) => {
     setSelectedModality("");
     setSelectedArea("");
     setSelectedNivel("");
-    
+
     setSearchParams({});
   };
 
@@ -84,7 +84,7 @@ const ConBuscador = ({ searchTerm, setSearchParams, viewActivies }) => {
         </Box>
 
         <Box sx={{ display: "flex", flexDirection: "column", width: "70%", margin: "0 auto", paddingTop: "20px", gap: "20px" }}>
-          
+
           {/* Renderizado por condicional */}
 
           {viewActivies ? (

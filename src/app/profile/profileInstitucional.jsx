@@ -1,8 +1,8 @@
 import React from "react";
 import HomeBase from "../../components/templates/home/HomeBase";
-import FormAbout from "../../components/organisms/forms/institucional/FormAbout";
-import InfoBaseCard from "../../components/organisms/cards/profileBaseCards/InfoBaseCard";
-import InfoBaseCardContent from "../../components/organisms/cards/profileBaseCards/InfoBaseCard";
+import FormAbout from "../../components/organisms/forms/institucional/formAbout";
+import InfoBaseCard from "../../components/organisms/cards/profileBaseCards/infoBaseCard";
+import InfoBaseCardContent from "../../components/organisms/cards/profileBaseCards/infoBaseCard";
 import ProfileBaseCard from "../../components/organisms/cards/profileBaseCards/ProfileBaseCard";
 import ProjectList from "../../components/organisms/cards/institucional/ProjectList";
 import SkillList from "../../components/organisms/cards/institucional/SkillList";
@@ -14,7 +14,7 @@ import FormNewExperience from "../../components/organisms/forms/institucional/Fo
 import FormNewCertification from "../../components/organisms/forms/institucional/FormNewCertification";
 import FormNewSkill from "../../components/organisms/forms/institucional/FormNewSkill";
 import FormNewProject from "../../components/organisms/forms/institucional/FormNewProject";
-import FormFoto from "../../components/organisms/forms/FormFoto";
+import FormFoto from "../../components/organisms/forms/formFoto";
 import { useAlert } from "../../contexts/alertContext";
 import { useUserContext } from "../../contexts/userContext";
 import usePatch from "../../hooks/usePatchProfile";

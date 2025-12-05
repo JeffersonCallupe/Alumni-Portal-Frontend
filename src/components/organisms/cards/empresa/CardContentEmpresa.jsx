@@ -1,8 +1,8 @@
 import React from "react";
 import Box from "@mui/material/Box";
-import EditButton from "../../../atoms/buttons/EditButton";
+import EditButton from "../../../atoms/buttons/editButton";
 import DialogBase from "../../dialog/DialogBase";
-import FormHeader from "../../forms/empresa/FormHeader";
+import FormHeader from "../../forms/empresa/formHeader";
 import Typography from "@mui/material/Typography";
 import { useUserContext } from "../../../../contexts/userContext";
 import useModal from "../../../../hooks/useModal";

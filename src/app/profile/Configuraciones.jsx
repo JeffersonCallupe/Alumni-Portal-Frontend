@@ -1,7 +1,7 @@
 import React from "react";
 import { Box, Card, Typography, Divider } from "@mui/material";
 import LockIcon from '@mui/icons-material/Lock';
-import FormPassword from "../../components/organisms/forms/empresa/FormPassword";
+import FormPassword from "../../components/organisms/forms/empresa/formPassword";
 import HomeBase from "../../components/templates/home/HomeBase";
 import { useUserContext } from "../../contexts/userContext";
 

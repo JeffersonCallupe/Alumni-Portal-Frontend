@@ -1,10 +1,10 @@
 import React from "react";
 import ContentContactoEmpresa from "../../components/organisms/cards/empresa/ContentContactoEmpresa";
-import FormContacto from "../../components/organisms/forms/empresa/FormContacto";
-import FormDescripcion from "../../components/organisms/forms/empresa/FormDescripcion";
-import FormFoto from "../../components/organisms/forms/FormFoto";
+import FormContacto from "../../components/organisms/forms/empresa/formContacto";
+import FormDescripcion from "../../components/organisms/forms/empresa/formDescripcion";
+import FormFoto from "../../components/organisms/forms/formFoto";
 import HomeBase from "../../components/templates/home/HomeBase";
-import InfoBaseCard from "../../components/organisms/cards/profileBaseCards/InfoBaseCard";
+import InfoBaseCard from "../../components/organisms/cards/profileBaseCards/infoBaseCard";
 import ProfileBaseCard from "../../components/organisms/cards/profileBaseCards/ProfileBaseCard";
 import { useUserContext } from "../../contexts/userContext";
 import { useAlert } from "../../contexts/alertContext";
@@ -21,7 +21,7 @@ function ProfileEmpresa() {
   if (!userData) {
     return <div>Loading...</div>;
   }
-  
+
   const handleSaveChanges = async (formData) => {
     try {
       await patch(formData);
@@ -62,13 +62,13 @@ function ProfileEmpresa() {
               value={userData.description || "No especificado."}
               readOnly
               style={{
-                  width: '100%',
-                  height: 'auto',
-                  overflow: 'auto',
-                  resize: 'vertical',
-                  lineHeight: '1.5',
-                  minHeight: '100px',
-                  maxHeight: '200px',
+                width: '100%',
+                height: 'auto',
+                overflow: 'auto',
+                resize: 'vertical',
+                lineHeight: '1.5',
+                minHeight: '100px',
+                maxHeight: '200px',
               }}
             />
           }

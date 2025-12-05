@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { useUserContext } from "../../../../contexts/userContext";
-import InfoBaseCard from "../profileBaseCards/InfoBaseCard";
+import InfoBaseCard from "../profileBaseCards/infoBaseCard";
 import CircularProgress from "@mui/material/CircularProgress";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
-import ActionButton from "../../../atoms/buttons/ActionButton";
-import CertificationForm from "../../forms/institucional/Edit/FormEditCertification";
+import ActionButton from "../../../atoms/buttons/actionButton";
+import CertificationForm from "../../forms/institucional/Edit/formEditCertification";
 import DeleteIcon from "@mui/icons-material/Delete";
 import VisibilityIcon from "@mui/icons-material/VisibilityOutlined";
 import DeleteConfirmationModal from "../../dialog/DeleteConfirmationModal";
@@ -23,8 +23,7 @@ const CertificationList = ({ certifications, setCertifications }) => {
     const fetchCertifications = async () => {
       try {
         const response = await fetch(
-          `${import.meta.env.VITE_API_URL}/api/certification/user/${
-            userData.id
+          `${import.meta.env.VITE_API_URL}/api/certification/user/${userData.id
           }`
         );
         const data = await response.json();
@@ -71,8 +70,7 @@ const CertificationList = ({ certifications, setCertifications }) => {
 
     try {
       const response = await fetch(
-        `${import.meta.env.VITE_API_URL}/api/certification/${
-          certificationToDelete.id
+        `${import.meta.env.VITE_API_URL}/api/certification/${certificationToDelete.id
         }`,
         {
           method: "DELETE",

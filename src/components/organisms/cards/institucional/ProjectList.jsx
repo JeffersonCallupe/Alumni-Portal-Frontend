@@ -1,15 +1,15 @@
 import React, { useEffect, useState } from "react";
 import { useUserContext } from "../../../../contexts/userContext";
-import InfoBaseCard from "../profileBaseCards/InfoBaseCard";
+import InfoBaseCard from "../profileBaseCards/infoBaseCard";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
-import ActionButton from "../../../atoms/buttons/ActionButton"
+import ActionButton from "../../../atoms/buttons/actionButton"
 import Dialog from "@mui/material/Dialog";
 import DialogTitle from "@mui/material/DialogTitle";
 import DialogContent from "@mui/material/DialogContent";
 import DialogActions from "@mui/material/DialogActions";
-import FormEditProject from "../../forms/institucional/Edit/FormEditProject";
+import FormEditProject from "../../forms/institucional/Edit/formEditProject";
 import DeleteIcon from "@mui/icons-material/Delete";
 import VisibilityIcon from '@mui/icons-material/VisibilityOutlined';
 import DeleteConfirmationModal from "../../dialog/DeleteConfirmationModal";
@@ -22,16 +22,16 @@ const ProjectList = ({ projects, setProjects }) => {
   const [deleteConfirmOpen, setDeleteConfirmOpen] = useState(false);
   const [projectToDelete, setProjectToDelete] = useState(null);
 
-  
+
   useEffect(() => {
     const fetchProjects = async () => {
       try {
         const response = await fetch(`${import.meta.env.VITE_API_URL}/api/project/user/${userData.id}`);
         const data = await response.json();
-        setProjects(data); 
+        setProjects(data);
       } catch (error) {
         console.error("Error fetching projects:", error);
-      } 
+      }
     };
     fetchProjects();
   }, [userData]);
@@ -87,7 +87,7 @@ const ProjectList = ({ projects, setProjects }) => {
 
 
 
-  return(
+  return (
     <Box>
       {projects.length > 0 ? (
         projects.map((project) => {
@@ -96,44 +96,44 @@ const ProjectList = ({ projects, setProjects }) => {
             initialData: project,
             onUpdate: updateProjectList,
           });
-          
+
           return (
-          <InfoBaseCard
-            key={project.id}
-            sub={true}
-            title={project.name}
-            cardContent={
-              <div>
-                <Typography variant="subtitle2">Fecha: {project.date}</Typography>
-                <br/>
-                <Box 
-                  display="flex" 
-                  justifyContent="space-between" 
-                  flexWrap="wrap" 
-                  gap={2}
-                >
-                  <ActionButton 
-                    texto={"Ver Descripción"}
-                    startIcon={<VisibilityIcon />}
-                    onClick={() => handleOpenModal(project)}
+            <InfoBaseCard
+              key={project.id}
+              sub={true}
+              title={project.name}
+              cardContent={
+                <div>
+                  <Typography variant="subtitle2">Fecha: {project.date}</Typography>
+                  <br />
+                  <Box
+                    display="flex"
+                    justifyContent="space-between"
+                    flexWrap="wrap"
+                    gap={2}
                   >
-                  </ActionButton>
-                  <ActionButton 
-                    texto={"Eliminar"}
-                    startIcon={<DeleteIcon />}
-                    onClick={() => handleDeleteClick(project)}
-                  >
-                    
-                  </ActionButton>
-                </Box>
-              </div>
-            }
-            dialogContent={contentEditProject}
-            modalId={`modal-project-${project.id}`}
-            className="subcard"
-          />
+                    <ActionButton
+                      texto={"Ver Descripción"}
+                      startIcon={<VisibilityIcon />}
+                      onClick={() => handleOpenModal(project)}
+                    >
+                    </ActionButton>
+                    <ActionButton
+                      texto={"Eliminar"}
+                      startIcon={<DeleteIcon />}
+                      onClick={() => handleDeleteClick(project)}
+                    >
+
+                    </ActionButton>
+                  </Box>
+                </div>
+              }
+              dialogContent={contentEditProject}
+              modalId={`modal-project-${project.id}`}
+              className="subcard"
+            />
           );
-      })
+        })
       ) : (
         <Typography variant="body1">No se encontraron proyectos.</Typography>
       )}

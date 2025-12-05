@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { useUserContext } from "../../../../contexts/userContext";
-import InfoBaseCard from "../profileBaseCards/InfoBaseCard";
+import InfoBaseCard from "../profileBaseCards/infoBaseCard";
 import CircularProgress from "@mui/material/CircularProgress";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import WorkExperienceForm from "../../forms/institucional/Edit/FormWorkExperience";
 import Button from "@mui/material/Button";
-import ActionButton from "../../../atoms/buttons/ActionButton";
+import ActionButton from "../../../atoms/buttons/actionButton";
 import Dialog from "@mui/material/Dialog";
 import DialogTitle from "@mui/material/DialogTitle";
 import DialogContent from "@mui/material/DialogContent";
@@ -124,18 +124,18 @@ const WorkExperienceList = ({ experiences, setExperiences }) => {
                     Fecha inicio: {experience.startDate} - Fecha fin: {experience.endDate}
                   </Typography>
                   <br />
-                  <Box 
-                    display="flex" 
-                    justifyContent="space-between" 
-                    flexWrap="wrap" 
+                  <Box
+                    display="flex"
+                    justifyContent="space-between"
+                    flexWrap="wrap"
                     gap={2}
                   >
-                    <ActionButton 
+                    <ActionButton
                       texto={"Ver Descripción"}
                       startIcon={<VisibilityIcon />}
                       onClick={() => handleOpenModal(experience)}
                     />
-                    <ActionButton 
+                    <ActionButton
                       texto={"Eliminar"}
                       startIcon={<DeleteIcon />}
                       onClick={() => handleDeleteClick(experience)}
@@ -154,7 +154,7 @@ const WorkExperienceList = ({ experiences, setExperiences }) => {
       )}
 
       {/* Description Modal */}
-      <Dialog open={openModal} onClose={handleCloseModal} maxWidth="sm" fullWidth  disableEnforceFocus aria-hidden={!openModal} > 
+      <Dialog open={openModal} onClose={handleCloseModal} maxWidth="sm" fullWidth disableEnforceFocus aria-hidden={!openModal} >
         <DialogTitle>Descripción:</DialogTitle>
         <DialogContent>
           <textarea

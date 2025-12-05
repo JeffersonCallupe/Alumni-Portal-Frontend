@@ -1,8 +1,8 @@
 import Typography from "@mui/material/Typography";
-import Footer from "../../components/atoms/footer/Footer";
+import Footer from "../../components/atoms/footer/footer";
 import imgLogo from "../../assets/logoUNMSM.png";
 import imgFondo from "../../assets/fondoRectorado.png";
-import RegisterInstitucionalForm from "../../components/organisms/forms/login/RegisterInstitucionalForm";
+import RegisterInstitucionalForm from "../../components/organisms/forms/login/registerInstitucionalForm";
 import useLogin from "../../hooks/useLogin";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
@@ -26,9 +26,9 @@ function RegistroSUM() {
 
   const handleLogin = (formData) => {
     const dataToSubmit = { ...formData };
-            if(dataToSubmit.confirmPassword) {
-                delete dataToSubmit.confirmPassword;
-            }
+    if (dataToSubmit.confirmPassword) {
+      delete dataToSubmit.confirmPassword;
+    }
     login(dataToSubmit);
   };
 

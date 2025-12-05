@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
-import ActividadCard from "../../components/organisms/cards/dashboard/ActividadCard";
+import ActividadCard from "../../components/organisms/cards/dashboard/actividadCard";
 import HomeBase from "../../components/templates/home/HomeBase";
-import ConfirmationDialog from "../../components/organisms/dialog/ConfirmationDialog"; // Modal reutilizable
+import ConfirmationDialog from "../../components/organisms/dialog/confirmationDialog"; // Modal reutilizable
 import { useUserContext } from "../../contexts/userContext";
 import { useAlert } from "../../contexts/alertContext";
 import useGet from "../../hooks/useGet";
@@ -22,14 +22,12 @@ function ActividadesRegistradas() {
   const [startDateFilter, setStartDateFilter] = useState("");
   const [filteredActivities, setFilteredActivities] = useState(activities);
 
-  const enrollmentsEndpoint = `${
-    import.meta.env.VITE_API_URL
-  }/api/enrollment/user/${userData?.id}`;
+  const enrollmentsEndpoint = `${import.meta.env.VITE_API_URL
+    }/api/enrollment/user/${userData?.id}`;
   const { getData: getEnrollments } = useGet(enrollmentsEndpoint);
 
-  const deleteEnrollmentEndpoint = `${
-    import.meta.env.VITE_API_URL
-  }/api/enrollment`;
+  const deleteEnrollmentEndpoint = `${import.meta.env.VITE_API_URL
+    }/api/enrollment`;
   const { deleteData: deleteEnrollment } = useDelete(deleteEnrollmentEndpoint);
 
   // Fetch user's enrollments
@@ -156,9 +154,8 @@ function ActividadesRegistradas() {
                   userPaternalSurname: userData.paternalSurname,
                   userMaternalSurname: userData.maternalSurname,
                 }}
-                multimediaApi={`${
-                  import.meta.env.VITE_API_URL
-                }/api/activity/activity-image`}
+                multimediaApi={`${import.meta.env.VITE_API_URL
+                  }/api/activity/activity-image`}
                 onCancelEnrollment={() => handleOpenConfirmation(activity)}
               />
             ))
