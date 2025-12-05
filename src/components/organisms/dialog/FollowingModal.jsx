@@ -46,7 +46,7 @@ const FollowingModal = ({ open, onClose, following, onUnfollow, loading }) => {
                     alignItems: 'center'
                 }}
             >
-                <Typography variant="h6">
+                <Typography variant="h6" sx={{ color: 'white' }}>
                     Empresas Siguiendo ({following?.length || 0})
                 </Typography>
                 <IconButton

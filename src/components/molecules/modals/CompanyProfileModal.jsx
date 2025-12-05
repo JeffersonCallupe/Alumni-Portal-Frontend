@@ -17,10 +17,14 @@ import PhoneIcon from '@mui/icons-material/Phone';
 import LanguageIcon from '@mui/icons-material/Language';
 import LocationOnIcon from '@mui/icons-material/LocationOn';
 import FollowButton from '../../atoms/buttons/FollowButton';
+import useCompanyFollowerStats from '../../../hooks/useCompanyFollowerStats';
+import FollowersModal from '../../organisms/dialog/FollowersModal';
 
 const CompanyProfileModal = ({ open, onClose, companyId }) => {
     const [company, setCompany] = useState(null);
     const [loading, setLoading] = useState(false);
+    const { stats, followers, loading: followLoading, fetchFollowersCount, fetchFollowers } = useCompanyFollowerStats();
+    const [followersModalOpen, setFollowersModalOpen] = useState(false);
 
     useEffect(() => {
         const fetchCompanyProfile = async () => {
@@ -50,6 +54,19 @@ const CompanyProfileModal = ({ open, onClose, companyId }) => {
 
         fetchCompanyProfile();
     }, [companyId, open]);
+
+    useEffect(() => {
+        if (companyId && open) {
+            fetchFollowersCount(companyId);
+        }
+    }, [companyId, open, fetchFollowersCount]);
+
+    const handleFollowersClick = async () => {
+        if (companyId) {
+            await fetchFollowers(companyId);
+            setFollowersModalOpen(true);
+        }
+    };
 
     if (!open) return null;
 
@@ -118,6 +135,44 @@ const CompanyProfileModal = ({ open, onClose, companyId }) => {
                                     <Typography variant="body2" sx={{ color: '#6B7280', marginBottom: '8px' }}>
                                         {company.sector || 'Sector no especificado'}
                                     </Typography>
+
+                                    {/* Followers Stats - Social Media Style */}
+                                    <Box
+                                        onClick={handleFollowersClick}
+                                        sx={{
+                                            cursor: 'pointer',
+                                            padding: '0.5rem 0',
+                                            marginTop: '0.5rem',
+                                            transition: 'opacity 0.2s',
+                                            '&:hover': {
+                                                opacity: 0.7,
+                                            },
+                                            display: 'inline-block',
+                                        }}
+                                    >
+                                        <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.5 }}>
+                                            <Typography
+                                                variant="h6"
+                                                sx={{
+                                                    fontWeight: 700,
+                                                    color: '#111827',
+                                                    fontSize: '1rem',
+                                                }}
+                                            >
+                                                {stats.followersCount}
+                                            </Typography>
+                                            <Typography
+                                                variant="body2"
+                                                sx={{
+                                                    color: '#6B7280',
+                                                    fontSize: '0.875rem',
+                                                    fontWeight: 400,
+                                                }}
+                                            >
+                                                Seguidores
+                                            </Typography>
+                                        </Box>
+                                    </Box>
                                 </Box>
                                 <FollowButton userId={companyId} isCompany={true} size="medium" />
                             </Box>
@@ -223,6 +278,14 @@ const CompanyProfileModal = ({ open, onClose, companyId }) => {
                     </Box>
                 )}
             </DialogContent>
+
+            {/* Followers Modal */}
+            <FollowersModal
+                open={followersModalOpen}
+                onClose={() => setFollowersModalOpen(false)}
+                followers={followers}
+                loading={followLoading}
+            />
         </Dialog>
     );
 };

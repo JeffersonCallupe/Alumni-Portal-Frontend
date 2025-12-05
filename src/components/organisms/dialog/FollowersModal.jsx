@@ -39,7 +39,7 @@ const FollowersModal = ({ open, onClose, followers, loading }) => {
                     alignItems: 'center'
                 }}
             >
-                <Typography variant="h6">
+                <Typography variant="h6" sx={{ color: 'white' }}>
                     Seguidores ({followers?.length || 0})
                 </Typography>
                 <IconButton
