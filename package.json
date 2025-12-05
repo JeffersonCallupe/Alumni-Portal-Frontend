@@ -9,7 +9,7 @@
     "lint": "eslint .",
     "preview": "vite preview",
     "test": "vitest",
-     "coverage": "vitest run --coverage"
+    "coverage": "vitest run --coverage"
   },
   "dependencies": {
     "@emotion/react": "^11.13.3",
@@ -18,8 +18,10 @@
     "@mui/material": "^6.1.1",
     "alumni-portal-frontend": "file:",
     "jwt-decode": "^4.0.0",
+    "pdfjs-dist": "^5.4.449",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
+    "react-pdf": "^10.2.0",
     "react-router-dom": "^6.26.2"
   },
   "devDependencies": {

@@ -58,7 +58,7 @@ function Navbar() {
         >
           {/* Logo */}
           <Box sx={{ display: { xs: "none", md: "flex" } }}>
-            <a href="/actividades">
+            <a href="/actividadesHistorico">
               <img src={LogoSM} alt="Logo" style={{ height: "3rem" }} />
             </a>
           </Box>

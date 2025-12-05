@@ -1,9 +1,13 @@
-import React from "react";
+import React, { useState } from "react";
 import { Dialog, DialogTitle, DialogContent, Table, TableBody, TableCell, TableHead, TableRow, Typography, Button, IconButton, Tooltip } from "@mui/material";
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import DownloadIcon from '@mui/icons-material/Download';
+import PDFViewerModal from './PDFViewerModal';
 
 const ParticipantsDialogs = ({ open, onClose, participants, activityTitle }) => {
+  const [pdfModalOpen, setPdfModalOpen] = useState(false);
+  const [pdfUrl, setPdfUrl] = useState(null);
+  const [pdfFileName, setPdfFileName] = useState('');
 
   const handlePreviewCV = async (userId, userName) => {
     if (!userId) {
@@ -25,9 +29,9 @@ const ParticipantsDialogs = ({ open, onClose, participants, activityTitle }) => 
       if (response.ok) {
         const blob = await response.blob();
         const blobUrl = window.URL.createObjectURL(blob);
-        window.open(blobUrl, '_blank');
-        // Liberar la URL después de un tiempo
-        setTimeout(() => window.URL.revokeObjectURL(blobUrl), 100);
+        setPdfUrl(blobUrl);
+        setPdfFileName(`CV_${userName.replace(/\s+/g, '_')}.pdf`);
+        setPdfModalOpen(true);
       } else {
         alert(`No se pudo cargar el CV de ${userName}`);
       }
@@ -177,6 +181,14 @@ const ParticipantsDialogs = ({ open, onClose, participants, activityTitle }) => 
           </Button>
         </div>
       </DialogContent>
+
+      {/* Modal de previsualización de PDF */}
+      <PDFViewerModal
+        open={pdfModalOpen}
+        onClose={() => setPdfModalOpen(false)}
+        pdfUrl={pdfUrl}
+        fileName={pdfFileName}
+      />
     </Dialog>
   );
 };
