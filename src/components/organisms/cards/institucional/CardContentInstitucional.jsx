@@ -13,11 +13,15 @@ import PhoneIcon from '@mui/icons-material/Phone';
 import SchoolIcon from '@mui/icons-material/School';
 import WorkIcon from '@mui/icons-material/Work';
 import { useAlert } from "../../../../contexts/alertContext";
+import useCompanyFollowers from "../../../../hooks/useCompanyFollowers";
+import FollowingModal from "../../dialog/FollowingModal";
 
 const CardContentInstitucional = ({ loading, onSubmit }) => {
   const { open, handleOpen, handleClose } = useModal();
-  const { userData } = useUserContext();  // Desestructuramos solo userData
+  const { userData } = useUserContext();
   const { showAlert } = useAlert();
+  const { stats, following, loading: followLoading, fetchFollowingCount, fetchFollowing, unfollowCompany } = useCompanyFollowers();
+  const [followingModalOpen, setFollowingModalOpen] = useState(false);
 
   const handleDownloadCV = async () => {
     const userId = userData.id;
@@ -50,6 +54,33 @@ const CardContentInstitucional = ({ loading, onSubmit }) => {
       }
     } catch (error) {
       showAlert("Error al descargar el CV", "error");
+    }
+  };
+
+  // Fetch following count on mount
+  React.useEffect(() => {
+    if (userData?.id) {
+      fetchFollowingCount(userData.id);
+    }
+  }, [userData, fetchFollowingCount]);
+
+  const handleFollowingClick = async () => {
+    if (userData?.id) {
+      await fetchFollowing(userData.id);
+      setFollowingModalOpen(true);
+    }
+  };
+
+  const handleUnfollow = async (companyId) => {
+    if (userData?.id) {
+      const success = await unfollowCompany(userData.id, companyId);
+      if (success) {
+        showAlert("Dejaste de seguir la empresa", "success");
+        await fetchFollowing(userData.id);
+        await fetchFollowingCount(userData.id);
+      } else {
+        showAlert("Error al dejar de seguir", "error");
+      }
     }
   };
 
@@ -103,6 +134,43 @@ const CardContentInstitucional = ({ loading, onSubmit }) => {
             </Typography>
           </Box>
         )}
+
+        {/* Following Stats - Social Media Style */}
+        <Box
+          onClick={handleFollowingClick}
+          sx={{
+            cursor: 'pointer',
+            padding: '0.5rem 0',
+            marginTop: '0.75rem',
+            transition: 'opacity 0.2s',
+            '&:hover': {
+              opacity: 0.7,
+            }
+          }}
+        >
+          <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.5 }}>
+            <Typography
+              variant="h6"
+              sx={{
+                fontWeight: 700,
+                color: '#111827',
+                fontSize: '1rem',
+              }}
+            >
+              {stats.followingCount}
+            </Typography>
+            <Typography
+              variant="body2"
+              sx={{
+                color: '#6B7280',
+                fontSize: '0.875rem',
+                fontWeight: 400,
+              }}
+            >
+              Empresas Siguiendo
+            </Typography>
+          </Box>
+        </Box>
 
         {/* Divider */}
         <Box sx={{ borderTop: '1px solid #E5E7EB', my: 1 }} />
@@ -167,6 +235,15 @@ const CardContentInstitucional = ({ loading, onSubmit }) => {
         title="Información Personal"
         content={<FormHeader onSubmit={onSubmit} onCancel={handleClose} loading={loading} />}
         modalId="modal-profile"
+      />
+
+      {/* Following Modal */}
+      <FollowingModal
+        open={followingModalOpen}
+        onClose={() => setFollowingModalOpen(false)}
+        following={following}
+        onUnfollow={handleUnfollow}
+        loading={followLoading}
       />
     </div>
   );
